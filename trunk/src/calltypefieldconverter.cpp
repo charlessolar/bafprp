@@ -18,29 +18,33 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "calltypefieldconverter.h"
 
-// General purpose testing while building converters.
+namespace bafprp
+{
+	const CallTypeFieldMaker CallTypeFieldMaker::registerThis;
 
-#include <iostream>
-#include <cstdio>
+	IFieldConverter* CallTypeFieldMaker::make() const
+	{
+		return new CallTypeFieldConverter;
+	}
 
-#include "ifieldconverter.h"
+	CallTypeFieldConverter::CallTypeFieldConverter() : IFieldConverter()
+	{
+	}
 
-using namespace bafprp;
-using namespace std;
 
-int main ( int argc, char *argv[] )
-{	
-	IFieldConverter* tool = FieldMaker::newFieldConverter( "structuretype" );
-	
-	BYTE* test = (BYTE*)"\x12\x34\x56\x78";
-	cout << "Converting: " << test << endl;
-	tool->convert( test );
-	cout << "Here you go: " << tool->getLong() << " and " << tool->getString() << endl;
-	delete tool;
+	CallTypeFieldConverter::~CallTypeFieldConverter()
+	{
+	}
 
-	cout << "Press any key to exit..." << endl;
-	getchar();
+	bool CallTypeFieldConverter::convert ( const BYTE* data )
+	{
+		return true;
+	}
 
-	return EXIT_SUCCESS;
+	long CallTypeFieldConverter::getLong()
+	{
+		return 0;
+	}
 }

@@ -18,29 +18,20 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef BAFPRPBAFRECORD_H
+#define BAFPRPBAFRECORD_H
 
-// General purpose testing while building converters.
+namespace bafprp
+{
+	class BafRecord
+	{
+	public:
+		BafRecord();
 
-#include <iostream>
-#include <cstdio>
+		~BafRecord();
 
-#include "ifieldconverter.h"
+	};
 
-using namespace bafprp;
-using namespace std;
-
-int main ( int argc, char *argv[] )
-{	
-	IFieldConverter* tool = FieldMaker::newFieldConverter( "structuretype" );
-	
-	BYTE* test = (BYTE*)"\x12\x34\x56\x78";
-	cout << "Converting: " << test << endl;
-	tool->convert( test );
-	cout << "Here you go: " << tool->getLong() << " and " << tool->getString() << endl;
-	delete tool;
-
-	cout << "Press any key to exit..." << endl;
-	getchar();
-
-	return EXIT_SUCCESS;
 }
+
+#endif

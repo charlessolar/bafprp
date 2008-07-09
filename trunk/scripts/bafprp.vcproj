@@ -176,12 +176,52 @@
 				RelativePath="..\src\bafprp.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\src\bafrecord.cpp"
+				>
+			</File>
+			<Filter
+				Name="Converter"
+				>
+				<File
+					RelativePath="..\src\calltypefieldconverter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\structuretypefieldconverter.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\include\bafdefines.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\bafrecord.h"
+				>
+			</File>
+			<Filter
+				Name="Converter"
+				>
+				<File
+					RelativePath="..\include\calltypefieldconverter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\ifieldconverter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\structuretypefieldconverter.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
