@@ -18,14 +18,7 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPDNADEFINES_H
-#define BAFPRPDNADEFINES_H
+#include "baffile.h"
 
 namespace bafprp
 {
-
-#define BYTE unsigned char
-
-}
-
-#endif
