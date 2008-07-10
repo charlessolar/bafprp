@@ -21,20 +21,31 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPBAFFILE_H
 #define BAFPRPBAFFILE_H
 
+#include <string>
+#include <stdio.h>
+
+#include "bafdefines.h"
+
 namespace bafprp
 {
 	class BafFile
 	{
 	public:
-		baffile();
-		baffile( const std::string filename );
-		baffile( const char* filename );
-		~baffile();
+		BafFile();
+		BafFile( const std::string filename );
+		BafFile( const char* filename );
+		~BafFile();
 
-		// Some methods for decoding a file, have not decided what yet.
+		void open( const std::string filename );
+		void open( const char* filename );
+
+		BYTE* getNextRecord();
+		BYTE* getCurrentRecord();
 
 	private:
 		std::string _filename;
+		FILE* _fp;
+		long _offset;
 	};
 } 
 #endif
