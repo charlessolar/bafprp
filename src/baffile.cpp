@@ -22,3 +22,42 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
+	BafFile::BafFile() : _filename( "" )
+	{
+	}
+
+	BafFile::BafFile( const std::string filename ) : _filename( filename )
+	{
+	}
+
+	BafFile::BafFile(const char *filename) : _filename( filename )
+	{
+	}
+
+	BafFile::~BafFile()
+	{
+		_filename.clear();
+	}
+
+	BYTE* BafFile::getNextRecord()
+	{
+		return NULL;
+	}
+
+	BYTE* BafFile::getCurrentRecord()
+	{
+		return NULL;
+	}
+
+	void BafFile::open( const char* filename )
+	{
+		open( std::string( filename ) );
+	}
+
+	void BafFile::open( const std::string filename )
+	{
+		if( fopen_s( &_fp, filename.c_str(), "rb" ) != 0 ) return;
+		
+		
+	}
+}
