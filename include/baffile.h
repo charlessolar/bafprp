@@ -18,14 +18,23 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPDNADEFINES_H
-#define BAFPRPDNADEFINES_H
+#ifndef BAFPRPBAFFILE_H
+#define BAFPRPBAFFILE_H
 
 namespace bafprp
 {
+	class BafFile
+	{
+	public:
+		baffile();
+		baffile( const std::string filename );
+		baffile( const char* filename );
+		~baffile();
 
-#define BYTE unsigned char
+		// Some methods for decoding a file, have not decided what yet.
 
-}
-
+	private:
+		std::string _filename;
+	};
+} 
 #endif

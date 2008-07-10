@@ -173,6 +173,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\src\baffile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\bafprp.cpp"
 				>
 			</File>
@@ -200,6 +204,10 @@
 			>
 			<File
 				RelativePath="..\include\bafdefines.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\baffile.h"
 				>
 			</File>
 			<File
