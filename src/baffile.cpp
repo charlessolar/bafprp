@@ -56,13 +56,20 @@ namespace bafprp
 
 		_length_of_record = ( size[0] * 256 ) + size[1];
 
-		BYTE* data = new BYTE[ _length_of_record + 1 ];
-		if( fread_s( data, _length_of_record, 1, _length_of_record, _fp ) != _length_of_record ) return NULL;
+		BYTE* data;
+		BafRecord* record;
+		try
+		{
+			data = new BYTE[ _length_of_record + 1 ];
+			if( fread_s( data, _length_of_record, 1, _length_of_record, _fp ) != _length_of_record ) throw;
 
-		BafRecord* record = new BafRecord( data, _length_of_record );
+			record = new BafRecord( data, _length_of_record );
 		
-		_offset += _length_of_record;
+		}
+		catch( ... )
+		{}
 
+		_offset += _length_of_record;
 		delete[] data;
 		return record;
 	}
