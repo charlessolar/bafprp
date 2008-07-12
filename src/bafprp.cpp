@@ -26,23 +26,34 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <cstdio>
 
-#include "ifieldconverter.h"
+#include "baffile.h"
 
 using namespace bafprp;
 using namespace std;
 
 int main ( int argc, char *argv[] )
 {	
+	BafFile* file = new BafFile( "baf.pri" );
+	BafRecord* record;
+
+	while( file->isOpen() && ( record = file->getNextRecord() ) != NULL )
+	{
+		delete record;
+	}
+
+	file->close();
+
+	/*
 	IFieldConverter* tool = FieldMaker::newFieldConverter( "structuretype" );
-	
 	BYTE* test = (BYTE*)"\x12\x34\x56\x78";
 	cout << "Converting: " << test << endl;
 	tool->convert( test );
 	cout << "Here you go: " << tool->getLong() << " and " << tool->getString() << endl;
 	delete tool;
+	*/
 
 	cout << "Press any key to exit..." << endl;
-	getchar();
+	//getchar();
 
 	return EXIT_SUCCESS;
 }
