@@ -21,15 +21,20 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPBAFRECORD_H
 #define BAFPRPBAFRECORD_H
 
+#include "bafdefines.h"
+
 namespace bafprp
 {
 	class BafRecord
 	{
 	public:
-		BafRecord();
-
+		BafRecord( const BYTE* data, int length );
 		~BafRecord();
 
+	private:
+		
+		int _length;
+		BYTE* _data;
 	};
 
 }

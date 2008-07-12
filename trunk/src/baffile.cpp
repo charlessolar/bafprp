@@ -26,12 +26,14 @@ namespace bafprp
 	{
 	}
 
-	BafFile::BafFile( const std::string filename ) : _filename( filename )
+	BafFile::BafFile( const std::string filename ) : _filename( filename ), _fp( NULL )
 	{
+		if( !open( _filename ) ) return;
 	}
 
-	BafFile::BafFile(const char *filename) : _filename( filename )
+	BafFile::BafFile(const char *filename) : _filename( filename ), _fp( NULL )
 	{
+		if( !open( _filename ) ) return;
 	}
 
 	BafFile::~BafFile()
@@ -39,25 +41,55 @@ namespace bafprp
 		_filename.clear();
 	}
 
-	BYTE* BafFile::getNextRecord()
+	bool BafFile::isOpen()
 	{
+		return ( _fp ? true : false );
+	}
+
+	BafRecord* BafFile::getNextRecord()
+	{
+		BYTE size[2] = "\x0";
+
+		fseek( _fp, _offset, SEEK_SET );
+
+		if( fread_s( size, 2, 1, 2, _fp ) != 2 ) return NULL;
+
+		_length_of_record = ( size[0] * 256 ) + size[1];
+
+		BYTE* data = new BYTE[ _length_of_record + 1 ];
+		if( fread_s( data, _length_of_record, 1, _length_of_record, _fp ) != _length_of_record ) return NULL;
+
+		BafRecord* record = new BafRecord( data, _length_of_record );
+		
+		_offset += _length_of_record;
+
+		delete[] data;
+		return record;
+	}
+
+	BafRecord* BafFile::getCurrentRecord()
+	{
+		fseek( _fp, _offset - _length_of_record, SEEK_SET );
+
+		
+
 		return NULL;
 	}
 
-	BYTE* BafFile::getCurrentRecord()
+	bool BafFile::open( const char* filename )
 	{
-		return NULL;
+		return open( std::string( filename ) );
 	}
 
-	void BafFile::open( const char* filename )
+	bool BafFile::open( const std::string filename )
 	{
-		open( std::string( filename ) );
+		if( fopen_s( &_fp, filename.c_str(), "rb" ) != 0 ) return false;
+		_offset = 0;
+		return true;
 	}
 
-	void BafFile::open( const std::string filename )
+	void BafFile::close()
 	{
-		if( fopen_s( &_fp, filename.c_str(), "rb" ) != 0 ) return;
-		
-		
+		if( _fp ) fclose( _fp );
 	}
 }

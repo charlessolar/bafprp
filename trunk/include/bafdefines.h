@@ -24,7 +24,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-#define BYTE unsigned char
+typedef unsigned char BYTE;
 
 }
 
