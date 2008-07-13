@@ -199,6 +199,10 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Output"
+				>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -230,6 +234,14 @@
 				</File>
 				<File
 					RelativePath="..\include\structuretypefieldconverter.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Output"
+				>
+				<File
+					RelativePath="..\include\ioutput.h"
 					>
 				</File>
 			</Filter>

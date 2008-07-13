@@ -18,39 +18,39 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPCALLTYPEFIELDCONVERTER_H
-#define BAFPRPCALLTYPEFIELDCONVERTER_H
+#ifndef BAFPRPIOUTPUT_H
+#define BAFPRPIOUTPUT_H
 
-#include "ifieldconverter.h"
+#include <string>
+
+#include "bafrecord.h"
 
 namespace bafprp
 {
-	class CallTypeFieldConverter : public IFieldConverter
+	// Interface for defining custom output
+	class IOutput
 	{
-		friend class CallTypeFieldMaker;
-	public:
-		long getLong();
-		bool convert ( const BYTE* data );
-		std::string getError() const { return _lastError; }
-		int getSize() const { return 2; }
-
-		~CallTypeFieldConverter();
 	protected:
-		CallTypeFieldConverter();
-
-		std::string _lastError;
-	};
-
-	class CallTypeFieldMaker : public FieldMaker
-	{
+		IOutput() {}
 	public:
-		CallTypeFieldMaker() : FieldMaker ( "calltype" ) {}
-	protected:
-		IFieldConverter* make() const;
+		virtual void processRecord( BafRecord* record ) = 0;
+		virtual void processError( BafRecord* record, const std::string error ) = 0;
+		virtual void processLog( const std::string log ) = 0;
+
+		enum
+		{
+			LOG_LEVEL_TRACE = 0,
+			LOG_LEVEL_DEBUG,
+			LOG_LEVEL_WARN,
+			LOG_LEVEL_ERROR,
+			LOG_LEVEL_FATAL
+		} LOG_LEVEL;
+
+		void setLogLevel( LOG_LEVEL level ) { _level = level; }
+
 	private:
-		static const CallTypeFieldMaker registerThis;
+		LOG_LEVEL _level;
 	};
-
 }
 
 #endif
