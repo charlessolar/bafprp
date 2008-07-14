@@ -41,6 +41,20 @@ namespace bafprp
 		LOG_LEVEL_FATAL
 	};
 
+
+	/*
+		The output class functions as a gateway to output implentations and an interface to those implementations.
+		Subclasses of output must define the three types of program output, record, error, and log.  Record and error
+		are both in regards to BafRecords which  are passed through the system.  
+		Subclasses can output this data however they want, be it console, file, sql, xml, as long as its defined as a concrete class.
+		To register a new type of output, the class needs to call the Output constructor with the name of the format
+		for example see consoleoutput.h
+		Each class also needs to self instantiate themselves so they exist.  They can do this by creating a static variable of 
+		themselves.  Again see consoleoutput.h for an example.
+
+		The output class keeps a static list of all registered outputs and the user can switch between then with setOutput.  
+	*/
+
 	class Output
 	{
 	protected:
@@ -82,6 +96,8 @@ namespace bafprp
 	
 	std::string NowTime();
 
+
+	// Macros for easier logging
 	#define LOG_TRACE( logEvent ) \
 	do { \
 		std::ostringstream ssOutput; \
