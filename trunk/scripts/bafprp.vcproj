@@ -207,6 +207,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\fileoutput.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\output.cpp"
 					>
 				</File>
@@ -250,6 +254,10 @@
 				>
 				<File
 					RelativePath="..\include\consoleoutput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\fileoutput.h"
 					>
 				</File>
 				<File
