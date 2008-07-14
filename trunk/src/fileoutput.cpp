@@ -30,7 +30,7 @@ namespace bafprp
 	{
 		// Not sure if its a good idea to lock a file for the duration of the program,
 		// but I cannot find a way to unlock the file.
-		if( fopen_s( &_fp, "bafprp.log", "a+" ) != 0 )
+		if( fopen_s( &_fp, "bafprp.log", "a" ) != 0 )
 		{
 			Output::setOutput( "console" );
 			LOG_ERROR( "Could not open log file, falling back to console log" );
