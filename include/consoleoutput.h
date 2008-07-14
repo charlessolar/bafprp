@@ -18,15 +18,27 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPDNADEFINES_H
-#define BAFPRPDNADEFINES_H
+#ifndef BAFPRPCONSOLE_H
+#define BAFPRPCONSOLE_H
 
+#include "output.h"
 
 namespace bafprp
 {
+	class Console : public Output
+	{
+	public:
+		// Register the output type
+		Console() : Output( "console" ) {}
 
-	typedef unsigned char BYTE;
+		void record( BafRecord* record );
+		void error( BafRecord* record, const std::string error );
+		void log( const std::string log );
 
+	private:
+		// This variable simply initializes a class that registers with the main output code
+		static Console registerThis;
+	};
 }
 
 #endif

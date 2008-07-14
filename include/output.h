@@ -18,14 +18,15 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPIOUTPUT_H
-#define BAFPRPIOUTPUT_H
+#ifndef BAFPRPOUTPUT_H
+#define BAFPRPOUTPUT_H
 
 #include <map>
 #include <string>
 #include <sstream>
 #include <time.h>
 
+#include "bafdefines.h"
 #include "bafrecord.h"
 
 namespace bafprp
@@ -43,16 +44,17 @@ namespace bafprp
 	class Output
 	{
 	protected:
-		Output() {}
+		// For registering subclasses
 		Output( const std::string name );
-		virtual ~Output();
-
+		
 		// virtual methods for processing data
 		virtual void record( BafRecord* record ) = 0;
 		virtual void error( BafRecord* record, const std::string error ) = 0;
 		virtual void log( const std::string log ) = 0;
 	public:
-		void setLogLevel( LOG_LEVEL level ) { _level = level; }
+		virtual ~Output();
+
+		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
 
 		static void setOutput( const std::string name ) { _output = name; }
 
@@ -61,6 +63,9 @@ namespace bafprp
 		static void logOutput( LOG_LEVEL level, const std::string log );
 
 	private:
+		// Allow no one to make this class
+		Output() {}
+
 		typedef std::map< std::string, Output* > output_map;
 
 		static output_map& getReg()
@@ -69,18 +74,13 @@ namespace bafprp
 			return registry;
 		}
 
-		LOG_LEVEL _level;
+		static LOG_LEVEL _level;
 
 		static std::string _output;
 
 	};
-
-	char* NowTime()  
-	{  
-		time_t ltime; 
-		ltime = time(NULL);  
-		return asctime( localtime( &ltime ) );  
-	}  
+	
+	std::string NowTime();
 
 	#define LOG_TRACE( logEvent ) \
 	do { \

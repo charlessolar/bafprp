@@ -27,12 +27,18 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstdio>
 
 #include "baffile.h"
+#include "output.h"
 
 using namespace bafprp;
 using namespace std;
 
 int main ( int argc, char *argv[] )
 {	
+	Output::setLogLevel( LOG_LEVEL_TRACE );
+	Output::setOutput( "console" );
+	LOG_TRACE( "Global::main" );
+	
+
 	BafFile* file = new BafFile( "baf.pri" );
 	BafRecord* record;
 
@@ -52,8 +58,10 @@ int main ( int argc, char *argv[] )
 	delete tool;
 	*/
 
+	LOG_TRACE( "/Global::main" );
 	cout << "Press any key to exit..." << endl;
-	//getchar();
+	getchar();
 
+	
 	return EXIT_SUCCESS;
 }

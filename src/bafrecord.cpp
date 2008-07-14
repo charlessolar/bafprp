@@ -22,28 +22,32 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <memory.h>
 
 #include "bafrecord.h"
+#include "output.h"
 
 namespace bafprp
 {
 
 	BafRecord::BafRecord( const BYTE* data, int length ) : _length( length )
 	{
+		LOG_TRACE( "BafRecord::BafRecord" );
 		_data = new BYTE[ _length + 1 ];
 		memcpy_s( _data, _length, data, _length );
 
-		for( int i = 0; i < _length; i++ )
-		{
-			printf( " %X ", _data[i] );
-		}
-		printf( "\n" );
+		//for( int i = 0; i < _length; i++ )
+		//{
+		//	printf( " %X ", _data[i] );
+		//}
+		//printf( "\n" );
 
-
+		LOG_TRACE( "/BafRecord::BafRecord" );
 	}
 
 
 	BafRecord::~BafRecord()
 	{
+		LOG_TRACE( "BafRecord::~BafRecord" );
 		delete[] _data;
+		LOG_TRACE( "/BafRecord::~BafRecord" );
 	}
 
 
