@@ -23,6 +23,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 	std::string Output::_output;
+	LOG_LEVEL Output::_level;
 
 	Output::Output( const std::string name )
 	{
@@ -35,22 +36,47 @@ namespace bafprp
 
 	void Output::recordOutput( BafRecord* record )
 	{
+		LOG_TRACE( "Output::recordOutput" );
+		output_map::iterator itr = getReg().find( _output );
+		if( itr != getReg().end() )
+			itr->second->record( record );
+		else
+			LOG_ERROR( "Output type " << _output << " does not exist." );
+		LOG_TRACE( "/Output::recordOutput" );
 	}
 
 	void Output::errorOutput( BafRecord* record, const std::string error )
 	{
+		LOG_TRACE( "Output::errorOutput" );
+		output_map::iterator itr = getReg().find( _output );
+		if( itr != getReg().end() )
+			itr->second->error( record, error );
+		else
+			LOG_ERROR( "Output type " << _output << " does not exist." );
+		LOG_TRACE( "/Output::errorOutput" );
 	}
 
 	void Output::logOutput( LOG_LEVEL level, const std::string log )
 	{
-		std::ostringstream op;
+		if( level < _level ) return;
 
 		output_map::iterator itr = getReg().find( _output );
 		if( itr != getReg().end() )
 			itr->second->log( log );
 		else
-			getReg().begin()->second->log( "Output type " + _output + " does not exist." );  // If output is set wrong, use one that works.
+			getReg().begin()->second->log( "Output type " + _output + " does not exist." );		// If output is set wrong, use one that works.
+																								// there should always be at least one form of output
+																								// unfortunently we do not know which one thanks to static init.
 	}
 
-
+	std::string NowTime()
+	{  
+		char timestamp[100];
+		time_t ltime; 
+		struct tm* mytm = NULL;
+		ltime = time(NULL);  
+		mytm=localtime( &ltime );  
+		strftime( timestamp, sizeof( timestamp ), "%a, %d %b %Y %H:%M:%S", mytm );
+		return std::string( timestamp );  
+	}  
 }

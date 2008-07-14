@@ -20,34 +20,47 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "baffile.h"
 
+#include "output.h"
+
 namespace bafprp
 {
 	BafFile::BafFile() : _filename( "" )
 	{
+		LOG_TRACE( "BafFile::BafFile" );
+		LOG_TRACE( "/BafFile::BafFile" );
 	}
 
 	BafFile::BafFile( const std::string filename ) : _filename( filename ), _fp( NULL )
 	{
+		LOG_TRACE( "BafFile::BafFile" );
 		if( !open( _filename ) ) return;
+		LOG_TRACE( "/BafFile::BafFile" );
 	}
 
 	BafFile::BafFile(const char *filename) : _filename( filename ), _fp( NULL )
 	{
+		LOG_TRACE( "BafFile::BafFile" );
 		if( !open( _filename ) ) return;
+		LOG_TRACE( "/BafFile::BafFile" );
 	}
 
 	BafFile::~BafFile()
 	{
+		LOG_TRACE( "BafFile::~BafFile" );
 		_filename.clear();
+		LOG_TRACE( "/BafFile::~BafFile" );
 	}
 
 	bool BafFile::isOpen()
 	{
+		LOG_TRACE( "BafFile::isOpen" );
+		LOG_TRACE( "/BafFile::isOpen" );
 		return ( _fp ? true : false );
 	}
 
 	BafRecord* BafFile::getNextRecord()
 	{
+		LOG_TRACE( "BafFile::getNextRecord" );
 		BYTE size[2] = "\x0";
 
 		fseek( _fp, _offset, SEEK_SET );
@@ -71,15 +84,18 @@ namespace bafprp
 
 		_offset += _length_of_record;
 		delete[] data;
+
+		LOG_TRACE( "/BafFile::getNextRecord" );
 		return record;
 	}
 
 	BafRecord* BafFile::getCurrentRecord()
 	{
+		LOG_TRACE( "BafFile::getCurrentRecord" );
 		fseek( _fp, _offset - _length_of_record, SEEK_SET );
 
 		
-
+		LOG_TRACE( "/BafFile::getCurrentRecord" );
 		return NULL;
 	}
 
@@ -90,13 +106,21 @@ namespace bafprp
 
 	bool BafFile::open( const std::string filename )
 	{
-		if( fopen_s( &_fp, filename.c_str(), "rb" ) != 0 ) return false;
+		LOG_TRACE( "BafFile::open" );
+		if( fopen_s( &_fp, filename.c_str(), "rb" ) != 0 ) 
+		{
+			LOG_WARN( "File " << filename << " could not be opened." );
+			return false;
+		}
 		_offset = 0;
+		LOG_TRACE( "/BafFile::open" );
 		return true;
 	}
 
 	void BafFile::close()
 	{
+		LOG_TRACE( "BafFile::close" );
 		if( _fp ) fclose( _fp );
+		LOG_TRACE( "/BafFile::close" );
 	}
 }

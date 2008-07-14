@@ -19,6 +19,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "calltypefieldconverter.h"
+#include "output.h"
 
 namespace bafprp
 {
@@ -26,25 +27,35 @@ namespace bafprp
 
 	IFieldConverter* CallTypeFieldMaker::make() const
 	{
+		LOG_TRACE( "CallTypeFieldMaker::make" );
 		return new CallTypeFieldConverter;
+		LOG_TRACE( "/CallTypeFieldMaker::make" );
 	}
 
 	CallTypeFieldConverter::CallTypeFieldConverter() : IFieldConverter()
 	{
+		LOG_TRACE( "CallTypeFieldConverter::CallTypeFieldConverter" );
+		LOG_TRACE( "/CallTypeFieldConverter::CallTypeFieldConverter" );
 	}
 
 
 	CallTypeFieldConverter::~CallTypeFieldConverter()
 	{
+		LOG_TRACE( "CallTypeFieldConverter::~CallTypeFieldConverter" );
+		LOG_TRACE( "/CallTypeFieldConverter::~CallTypeFieldConverter" );
 	}
 
 	bool CallTypeFieldConverter::convert ( const BYTE* data )
 	{
+		LOG_TRACE( "CallTypeFieldConverter::convert" );
+		LOG_TRACE( "/CallTypeFieldConverter::convert" );
 		return true;
 	}
 
 	long CallTypeFieldConverter::getLong()
 	{
+		LOG_TRACE( "CallTypeFieldConverter::getLong" );
+		LOG_TRACE( "/CallTypeFieldConverter::getLong" );
 		return 0;
 	}
 }

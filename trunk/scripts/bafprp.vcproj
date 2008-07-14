@@ -203,6 +203,10 @@
 				Name="Output"
 				>
 				<File
+					RelativePath="..\src\consoleoutput.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\output.cpp"
 					>
 				</File>
@@ -244,6 +248,10 @@
 			<Filter
 				Name="Output"
 				>
+				<File
+					RelativePath="..\include\consoleoutput.h"
+					>
+				</File>
 				<File
 					RelativePath="..\include\output.h"
 					>

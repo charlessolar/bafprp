@@ -20,27 +20,36 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "structuretypefieldconverter.h"
 
+#include "output.h"
+
 namespace bafprp
 {
 	const StructureTypeFieldMaker StructureTypeFieldMaker::registerThis;
 
 	IFieldConverter* StructureTypeFieldMaker::make() const
 	{
+		LOG_TRACE( "StructureTypeFieldMaker::make" );
 		return new StructureTypeFieldConverter();
+		LOG_TRACE( "StructureTypeFieldMaker::make" );
 	}
 
 	StructureTypeFieldConverter::StructureTypeFieldConverter()
 			: IFieldConverter()
 	{
+		LOG_TRACE( "StructureTypeFieldConverter::StructureTypeFieldConverter" );
+		LOG_TRACE( "/StructureTypeFieldConverter::StructureTypeFieldConverter" );
 	}
 
 
 	StructureTypeFieldConverter::~StructureTypeFieldConverter()
 	{
+		LOG_TRACE( "StructureTypeFieldConverter::~StructureTypeFieldConverter" );
+		LOG_TRACE( "/StructureTypeFieldConverter::~StructureTypeFieldConverter" );
 	}
 
 	bool StructureTypeFieldConverter::convert ( const BYTE* data )
 	{
+		LOG_TRACE( "StructureTypeFieldConverter::convert" );
 		_return = "";
 
 		char nibble[2];
@@ -61,16 +70,22 @@ namespace bafprp
 
 			_return.append( nibble );
 		}
+
+		LOG_TRACE( "/StructureTypeFieldConverter::convert" );
 		return true;
 	}
 
 	long StructureTypeFieldConverter::getLong()
 	{
+		LOG_TRACE( "StructureTypeFieldConverter::getLong" );
+		LOG_TRACE( "/StructureTypeFieldConverter::getLong" );
 		return atol( _return.c_str() );
 	}
 
 	std::string StructureTypeFieldConverter::getString()
 	{
+		LOG_TRACE( "StructureTypeFieldConverter::getString" );
+		LOG_TRACE( "/StructureTypeFieldConverter::getString" );
 		return _return;
 	}
 }
