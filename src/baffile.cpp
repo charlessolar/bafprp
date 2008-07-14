@@ -74,7 +74,7 @@ namespace bafprp
 		try
 		{
 			data = new BYTE[ _length_of_record + 1 ];
-			if( fread_s( data, _length_of_record, 1, _length_of_record, _fp ) != _length_of_record ) throw;
+			fread_s( data, _length_of_record, 1, _length_of_record, _fp );
 
 			record = new BafRecord( data, _length_of_record );
 		
