@@ -202,6 +202,10 @@
 			<Filter
 				Name="Output"
 				>
+				<File
+					RelativePath="..\src\output.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -241,7 +245,7 @@
 				Name="Output"
 				>
 				<File
-					RelativePath="..\include\ioutput.h"
+					RelativePath="..\include\output.h"
 					>
 				</File>
 			</Filter>
