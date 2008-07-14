@@ -18,39 +18,39 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPIOUTPUT_H
-#define BAFPRPIOUTPUT_H
-
-#include <string>
-
-#include "bafrecord.h"
+#include "output.h"
 
 namespace bafprp
 {
-	// Interface for defining custom output
-	class IOutput
+	std::string Output::_output;
+
+	Output::Output( const std::string name )
 	{
-	protected:
-		IOutput() {}
-	public:
-		virtual void processRecord( BafRecord* record ) = 0;
-		virtual void processError( BafRecord* record, const std::string error ) = 0;
-		virtual void processLog( const std::string log ) = 0;
+		getReg().insert( std::make_pair( name, this ) );
+	}
 
-		enum
-		{
-			LOG_LEVEL_TRACE = 0,
-			LOG_LEVEL_DEBUG,
-			LOG_LEVEL_WARN,
-			LOG_LEVEL_ERROR,
-			LOG_LEVEL_FATAL
-		} LOG_LEVEL;
+	Output::~Output()
+	{
+	}
 
-		void setLogLevel( LOG_LEVEL level ) { _level = level; }
+	void Output::recordOutput( BafRecord* record )
+	{
+	}
 
-	private:
-		LOG_LEVEL _level;
-	};
+	void Output::errorOutput( BafRecord* record, const std::string error )
+	{
+	}
+
+	void Output::logOutput( LOG_LEVEL level, const std::string log )
+	{
+		std::ostringstream op;
+
+		output_map::iterator itr = getReg().find( _output );
+		if( itr != getReg().end() )
+			itr->second->log( log );
+		else
+			getReg().begin()->second->log( "Output type " + _output + " does not exist." );  // If output is set wrong, use one that works.
+	}
+
+
 }
-
-#endif
