@@ -32,7 +32,7 @@ namespace bafprp
 		// but I cannot find a way to unlock the file.
 		if( fopen_s( &_fp, "bafprp.log", "a" ) != 0 )
 		{
-			Output::setOutput( "console" );
+			Output::setLogOutput( "console" );
 			LOG_ERROR( "Could not open log file, falling back to console log" );
 		}
 	}
@@ -46,7 +46,7 @@ namespace bafprp
 	{
 		if( !_fp )
 		{
-			Output::setOutput( "console" );
+			Output::setLogOutput( "console" );
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 
@@ -58,7 +58,7 @@ namespace bafprp
 	{
 		if( !_fp )
 		{
-			Output::setOutput( "console" );
+			Output::setLogOutput( "console" );
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 		fwrite( log.c_str(), 1, log.length(), _fp );
@@ -68,7 +68,7 @@ namespace bafprp
 	{
 		if( !_fp )
 		{
-			Output::setOutput( "console" );
+			Output::setLogOutput( "console" );
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 		LOG_TRACE( "File::record" );

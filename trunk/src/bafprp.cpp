@@ -35,7 +35,9 @@ using namespace std;
 int main ( int argc, char *argv[] )
 {	
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
-	Output::setOutput( "file" );
+	Output::setRecordOutput( "file" );
+	Output::setErrorOutput( "file" );
+	Output::setLogOutput( "file" );
 	LOG_TRACE( "Global::main" );
 	
 
@@ -44,19 +46,11 @@ int main ( int argc, char *argv[] )
 
 	while( file->isOpen() && ( record = file->getNextRecord() ) != NULL )
 	{
+		Output::recordOutput( record );
 		delete record;
 	}
 
 	file->close();
-
-	/*
-	IFieldConverter* tool = FieldMaker::newFieldConverter( "structuretype" );
-	BYTE* test = (BYTE*)"\x12\x34\x56\x78";
-	cout << "Converting: " << test << endl;
-	tool->convert( test );
-	cout << "Here you go: " << tool->getLong() << " and " << tool->getString() << endl;
-	delete tool;
-	*/
 
 	LOG_TRACE( "/Global::main" );
 	cout << "Press any key to exit..." << endl;
