@@ -19,7 +19,6 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "structuretype.h"
-
 #include "output.h"
 
 namespace bafprp
@@ -35,7 +34,7 @@ namespace bafprp
 
 	StructureType::StructureType() : IField()
 	{
-		LOG_TRACE( "StructureType::StructureTyper" );
+		LOG_TRACE( "StructureType::StructureType" );
 		LOG_TRACE( "/StructureType::StructureType" );
 	}
 
