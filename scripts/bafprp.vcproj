@@ -188,18 +188,18 @@
 				>
 			</File>
 			<Filter
-				Name="Converter"
+				Name="Fields"
 				>
 				<File
-					RelativePath="..\src\calltypefieldconverter.cpp"
+					RelativePath="..\src\calltype.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\ifieldconverter.cpp"
+					RelativePath="..\src\ifield.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\structuretypefieldconverter.cpp"
+					RelativePath="..\src\structuretype.cpp"
 					>
 				</File>
 			</Filter>
@@ -220,7 +220,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Record"
+				Name="Records"
 				>
 				<File
 					RelativePath="..\src\9013.cpp"
@@ -246,18 +246,22 @@
 				>
 			</File>
 			<Filter
-				Name="Converter"
+				Name="Fields"
 				>
 				<File
-					RelativePath="..\include\calltypefieldconverter.h"
+					RelativePath="..\include\calltype.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\ifieldconverter.h"
+					RelativePath="..\include\ifield.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\structuretypefieldconverter.h"
+					RelativePath="..\include\sensortype.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\structuretype.h"
 					>
 				</File>
 			</Filter>
@@ -278,7 +282,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Record"
+				Name="Records"
 				>
 				<File
 					RelativePath="..\include\9013.h"

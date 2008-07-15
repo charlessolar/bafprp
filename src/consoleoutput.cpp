@@ -41,7 +41,7 @@ namespace bafprp
 	{
 		LOG_TRACE( "Console::record" );
 
-		IFieldConverter* field;
+		IField* field;
 		std::string value = "";
 		std::string name = "";
 

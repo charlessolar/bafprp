@@ -32,6 +32,7 @@ namespace bafprp
 		LOG_TRACE( "IBafRecord::IBafRecord" );
 		_data = new BYTE[ _length + 1 ];
 		memcpy_s( _data, _length, data, _length );
+		_fieldData = _data;
 
 		//for( int i = 0; i < _length; i++ )
 		//{
@@ -46,11 +47,10 @@ namespace bafprp
 	IBafRecord::~IBafRecord()
 	{
 		LOG_TRACE( "IBafRecord::~IBafRecord" );
-		delete[] _data;
-
 		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 			delete (*itr);
 
+		delete[] _data;
 		LOG_TRACE( "/IBafRecord::~IBafRecord" );
 	}
 
@@ -73,7 +73,7 @@ namespace bafprp
 		data++;
 		length -= 1;
 		// We should no be standing on the structure type field
-		IFieldConverter* structuretype = FieldMaker::newFieldConverter( "structuretype" );
+		IField* structuretype = FieldMaker::newField( "structuretype" );
 		if( !structuretype->convert( data ) )
 		{
 			LOG_ERROR( "Could not convert structure type" );
@@ -90,7 +90,7 @@ namespace bafprp
 		return NULL;
 	}
 
-	IFieldConverter* IBafRecord::getField( const std::string name )
+	IField* IBafRecord::getField( const std::string name )
 	{
 		if( _fields.empty() ) return NULL;
 
@@ -104,7 +104,7 @@ namespace bafprp
 		return NULL;
 	}
 
-	IFieldConverter* IBafRecord::getNextField( const std::string last )
+	IField* IBafRecord::getNextField( const std::string last )
 	{
 		if( _fields.empty() ) return NULL;
 
@@ -119,6 +119,15 @@ namespace bafprp
 
 		// last not found, assume they sent "" meaning start at begining
 		return *_fields.begin();
+	}
+
+	void IBafRecord::addField( const std::string name )
+	{
+		IField* field = FieldMaker::newField( name );
+		field->convert( _fieldData );
+		// update data position, the mod is to make the size even for nice division
+		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
+		_fields.push_back( field );
 	}
 
 }

@@ -18,24 +18,62 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPIFIELD
-#define BAFPRPIFIELD
+#ifndef BAFPRPIFIELD_H
+#define BAFPRPIFIELD_H
+
+#include <string>
+#include <map>
 
 #include "bafdefines.h"
+
 
 namespace bafprp
 {
 	class IField
 	{
+		friend class FieldMaker;
 	public:
-		IField( std::string name, BYTE* data );
-		virtual ~IField();
+		virtual bool getBool() { return 0; }
+		virtual int getInt() { return 0; }
+		virtual long getLong() { return 0; }
+		virtual std::string getString() { return ""; }
 
-		virtual std::string getName() = 0;
-		virtual std::string getType() = 0;
+		
+		virtual bool convert ( const BYTE* data ) = 0;
+		virtual std::string getError() const = 0;
+		virtual int getSize() const = 0;
+		// returns a generic type that would most easily be asociated with the type of data
+		// useful for sql output
+		virtual std::string getType() const = 0;
+		virtual std::string getName() const = 0;
 
+		~IField() {}
+	protected:
+		IField() {}
+
+		std::string _return;
+		std::string _lastError;
+	};
+
+	class FieldMaker
+	{
 	private:
-		std::string _name;
+		typedef std::map<std::string, FieldMaker*> maker_map;
+
+		static maker_map& getReg()
+		{
+			static maker_map registry;
+			return registry;
+		}
+		FieldMaker() {}
+	public:
+		static IField* newField( std::string type );
+	protected:
+		FieldMaker( std::string type )
+		{
+			getReg().insert( std::make_pair ( type, this ) );
+		}
+		virtual IField* make() const = 0;
 	};
 }
 
