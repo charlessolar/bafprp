@@ -72,6 +72,21 @@ namespace bafprp
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 		LOG_TRACE( "File::record" );
+
+		IFieldConverter* field;
+		std::string value = "";
+		std::string name = "";
+		std::string output = "";
+
+		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
+		while( ( field = record->getNextField( name ) ) != NULL )
+		{
+			value = field->getString();
+			name = field->getName();
+			output = name + ": " + value + "\n";
+			fwrite( output.c_str(), 1, output.length(), _fp );
+		}
+
 		LOG_TRACE( "/File::record" );
 	}
 }

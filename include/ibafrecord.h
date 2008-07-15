@@ -21,7 +21,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPBAFRECORD_H
 #define BAFPRPBAFRECORD_H
 
-#include <map>
+#include <vector>
 
 #include "bafdefines.h"
 #include "ifieldconverter.h"
@@ -32,15 +32,16 @@ namespace bafprp
 	class IBafRecord
 	{
 	public:
-		virtual IFieldConverter* getField( std::string name ) = 0;
-		virtual IFieldConverter* getNextField() = 0;
+		// Allow override because I feel like it
+		virtual IFieldConverter* getField( const std::string name );
+		virtual IFieldConverter* getNextField( const std::string last = "" );
 		
 		virtual ~IBafRecord();	
 	protected:
 		IBafRecord( const BYTE* data, int length );
 			
-		typedef std::map<std::string, IFieldConverter*> field_map;
-		field_map _fields;
+		typedef std::vector<IFieldConverter*> field_vector;
+		field_vector _fields;
 
 		int _length;
 		BYTE* _data;

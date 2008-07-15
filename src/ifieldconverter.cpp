@@ -33,4 +33,5 @@ namespace bafprp
 		LOG_ERROR( "Field Converter of type \"" << type << "\" could not be found" );
 		return NULL;
 	}
+
 }

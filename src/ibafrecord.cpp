@@ -48,11 +48,9 @@ namespace bafprp
 		LOG_TRACE( "IBafRecord::~IBafRecord" );
 		delete[] _data;
 
-		for( field_map::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
-		{
-			delete itr->second;
-			_fields.erase( itr );
-		}
+		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+			delete (*itr);
+
 		LOG_TRACE( "/IBafRecord::~IBafRecord" );
 	}
 
@@ -90,6 +88,37 @@ namespace bafprp
 
 		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
 		return NULL;
+	}
+
+	IFieldConverter* IBafRecord::getField( const std::string name )
+	{
+		if( _fields.empty() ) return NULL;
+
+		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		{
+			if( (*itr)->getName() == name )
+				return *itr;
+		}
+		
+		LOG_WARN( "Did not find field named: " << name );
+		return NULL;
+	}
+
+	IFieldConverter* IBafRecord::getNextField( const std::string last )
+	{
+		if( _fields.empty() ) return NULL;
+
+		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		{
+			if( (*itr)->getName() == last )
+				if( ( itr + 1 ) != _fields.end() )
+					return *(++itr);
+				else
+					return NULL;  // end of the road
+		}
+
+		// last not found, assume they sent "" meaning start at begining
+		return *_fields.begin();
 	}
 
 }

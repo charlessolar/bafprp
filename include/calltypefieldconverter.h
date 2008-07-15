@@ -31,10 +31,13 @@ namespace bafprp
 	public:
 		int getInt();
 		long getLong();
+		std::string getString();
+
 		bool convert ( const BYTE* data );
 		std::string getError() const { return _lastError; }
-		int getSize() const { return 2; }
+		int getSize() const { return 3; }
 		std::string getType() const { return "int"; }
+		std::string getName() const { return "Call Type"; }
 
 		~CallTypeFieldConverter();
 	protected:
