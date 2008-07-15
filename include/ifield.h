@@ -18,33 +18,25 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFRECORD_H
-#define BAFPRPBAFRECORD_H
-
-#include <map>
+#ifndef BAFPRPIFIELD
+#define BAFPRPIFIELD
 
 #include "bafdefines.h"
-#include "ifieldconverter.h"
 
 namespace bafprp
 {
-	class BafRecord
+	class IField
 	{
 	public:
-		BafRecord( const BYTE* data, int length );
-		~BafRecord();
+		IField( std::string name, BYTE* data );
+		virtual ~IField();
 
-		
-		
+		virtual std::string getName() = 0;
+		virtual std::string getType() = 0;
+
 	private:
-		typedef std::map<std::string, IFieldConverter*> field_map;
-
-		field_map _fields;
-
-		int _length;
-		BYTE* _data;
+		std::string _name;
 	};
-
 }
 
 #endif

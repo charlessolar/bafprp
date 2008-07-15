@@ -215,6 +215,10 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Field"
+				>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -262,6 +266,14 @@
 				</File>
 				<File
 					RelativePath="..\include\output.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Field"
+				>
+				<File
+					RelativePath="..\include\ifield.h"
 					>
 				</File>
 			</Filter>
