@@ -199,6 +199,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\sensortype.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\structuretype.cpp"
 					>
 				</File>

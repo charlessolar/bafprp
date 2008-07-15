@@ -34,16 +34,15 @@ namespace bafprp
 		std::string getString();
 
 		bool convert ( const BYTE* data );
+
 		std::string getError() const { return _lastError; }
 		int getSize() const { return 3; }
 		std::string getType() const { return "int"; }
 		std::string getName() const { return "Call Type"; }
 
 		~CallType();
-	protected:
+	private:
 		CallType();
-
-		std::string _lastError;
 	};
 
 	class CallTypeFieldMaker : public FieldMaker

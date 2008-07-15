@@ -23,7 +23,36 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	class SensorType
+	class SensorType : public IField
+	{
+		friend class SensorTypeFieldMaker;
+	public:
+		int getInt();
+		long getLong();
+		std::string getString();
+
+		bool convert ( const BYTE* data );
+
+		std::string getError() const { return _lastError; }
+		int getSize() const { return 3; }
+		std::string getType() const { return "int"; }
+		std::string getName() const { return "Sensor Type"; }
+
+		~SensorType();
+	private:
+		SensorType();
+
+	};
+
+	class SensorTypeFieldMaker : public FieldMaker
+	{
+	public:
+		SensorTypeFieldMaker() : FieldMaker ( "sensortype" ) {}
+	protected:
+		IField* make() const;
+	private:
+		static const SensorTypeFieldMaker registerThis;
+	};
 
 }
 
