@@ -72,23 +72,30 @@ namespace bafprp
 
 		fseek( _fp, _offset, SEEK_SET );
 
-		if( fread_s( size, 2, 1, 2, _fp ) != 2 ) return NULL;
-
-		_length_of_record = ( size[0] * 256 ) + size[1];
-
 		BYTE* data;
-		try
+
+		if( fread_s( size, 2, 1, 2, _fp ) != 2 ) 
 		{
-			data = new BYTE[ _length_of_record + 1 ];
-			fread_s( data, _length_of_record, 1, _length_of_record, _fp );
-
-			_record = RecordMaker::newRecord( data, _length_of_record );
-		
+			LOG_DEBUG( "Reached end of file" );
+			close();
+			return NULL;
 		}
-		catch( ... )
-		{}
 
-		_offset += _length_of_record;
+		// The length of the record includes the first 2 bytes we already read
+		_length_of_record = ( size[0] * 256 ) + size[1] - 2;
+
+		data = new BYTE[ _length_of_record + 1 ];
+		if( fread_s( data, _length_of_record, 1, _length_of_record, _fp ) != _length_of_record )
+		{
+			LOG_ERROR( "Error reading record at " << _offset );
+			close();
+			return NULL;
+		}
+
+		_record = RecordMaker::newRecord( data, _length_of_record );
+		
+		// for proper offset calculation
+		_offset += _length_of_record + 2;
 		delete[] data;
 
 		LOG_TRACE( "/BafFile::getNextRecord" );
@@ -124,6 +131,7 @@ namespace bafprp
 	{
 		LOG_TRACE( "BafFile::close" );
 		if( _fp ) fclose( _fp );
+		_fp = NULL;
 		LOG_TRACE( "/BafFile::close" );
 	}
 }

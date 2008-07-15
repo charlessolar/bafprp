@@ -38,9 +38,13 @@ namespace bafprp
 		virtual long getLong() { return 0; }
 		virtual std::string getString() { return ""; }
 
+		
 		virtual bool convert ( const BYTE* data ) = 0;
 		virtual std::string getError() const = 0;
 		virtual int getSize() const = 0;
+		// returns a generic type that would most easily be asociated with the type of data
+		// useful for sql output
+		virtual std::string getType() const= 0;
 
 		~IFieldConverter() {}
 	protected:
