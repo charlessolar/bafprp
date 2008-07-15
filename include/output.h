@@ -70,7 +70,9 @@ namespace bafprp
 
 		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
 
-		static void setOutput( const std::string name ) { _output = name; }
+		static void setRecordOutput( const std::string name ) { _recordoutput = name; }
+		static void setErrorOutput( const std::string name ) { _erroroutput = name; }
+		static void setLogOutput( const std::string name ) { _logoutput = name; }
 
 		static void recordOutput( BafRecord* record );
 		static void errorOutput( BafRecord* record, const std::string error );
@@ -90,7 +92,9 @@ namespace bafprp
 
 		static LOG_LEVEL _level;
 
-		static std::string _output;
+		static std::string _recordoutput;
+		static std::string _erroroutput;
+		static std::string _logoutput;
 
 	};
 	

@@ -22,7 +22,9 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	std::string Output::_output;
+	std::string Output::_recordoutput;
+	std::string Output::_erroroutput;
+	std::string Output::_logoutput;
 	LOG_LEVEL Output::_level;
 
 	Output::Output( const std::string name )
@@ -37,22 +39,22 @@ namespace bafprp
 	void Output::recordOutput( BafRecord* record )
 	{
 		LOG_TRACE( "Output::recordOutput" );
-		output_map::iterator itr = getReg().find( _output );
+		output_map::iterator itr = getReg().find( _recordoutput );
 		if( itr != getReg().end() )
 			itr->second->record( record );
 		else
-			LOG_ERROR( "Output type " << _output << " does not exist." );
+			LOG_ERROR( "Output type " << _recordoutput << " does not exist." );
 		LOG_TRACE( "/Output::recordOutput" );
 	}
 
 	void Output::errorOutput( BafRecord* record, const std::string error )
 	{
 		LOG_TRACE( "Output::errorOutput" );
-		output_map::iterator itr = getReg().find( _output );
+		output_map::iterator itr = getReg().find( _erroroutput );
 		if( itr != getReg().end() )
 			itr->second->error( record, error );
 		else
-			LOG_ERROR( "Output type " << _output << " does not exist." );
+			LOG_ERROR( "Output type " << _erroroutput << " does not exist." );
 		LOG_TRACE( "/Output::errorOutput" );
 	}
 
@@ -60,11 +62,11 @@ namespace bafprp
 	{
 		if( level < _level ) return;
 
-		output_map::iterator itr = getReg().find( _output );
+		output_map::iterator itr = getReg().find( _logoutput );
 		if( itr != getReg().end() )
 			itr->second->log( log );
 		else
-			getReg().begin()->second->log( "Output type " + _output + " does not exist." );		// If output is set wrong, use one that works.
+			getReg().begin()->second->log( "Output type " + _logoutput + " does not exist." );		// If output is set wrong, use one that works.
 																								// there should always be at least one form of output
 																								// unfortunently we do not know which one thanks to static init.
 	}
