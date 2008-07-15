@@ -47,16 +47,25 @@ namespace bafprp
 	{
 		LOG_TRACE( "IBafRecord::~IBafRecord" );
 		delete[] _data;
+
+		for( field_map::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		{
+			delete itr->second;
+			_fields.erase( itr );
+		}
 		LOG_TRACE( "/IBafRecord::~IBafRecord" );
 	}
 
 
-	IBafRecord* RecordMaker::newRecord( BYTE* data, int length )
+	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length )
 	{
 		// This function will take the full record data, extract the structure type, and create a new
 		// record object from that type
 		if( *data == 0x0 )
+		{
 			data += 2;  // Record is usually prefixed by x0000
+			length -= 2;
+		}
 		if( *data != 0xAA ) 
 		{
 			// No matter what AA always starts a valid record
@@ -64,14 +73,22 @@ namespace bafprp
 			return NULL; 
 		}
 		data++;
+		length -= 1;
 		// We should no be standing on the structure type field
 		IFieldConverter* structuretype = FieldMaker::newFieldConverter( "structuretype" );
+		if( !structuretype->convert( data ) )
+		{
+			LOG_ERROR( "Could not convert structure type" );
+			return NULL;
+		}
 		int type = structuretype->getInt();
 		delete structuretype;
 		
 		maker_map::iterator itr = getReg().find ( type );
 		if ( itr != getReg().end() )
-			return itr->second->make();
+			return itr->second->make( data, length );
+
+		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
 		return NULL;
 	}
 

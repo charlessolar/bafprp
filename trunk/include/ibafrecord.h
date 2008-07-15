@@ -32,13 +32,12 @@ namespace bafprp
 	class IBafRecord
 	{
 	public:
-		IBafRecord( const BYTE* data, int length );
-		~IBafRecord();
-
 		
-	private:
+		virtual ~IBafRecord();	
+	protected:
+		IBafRecord( const BYTE* data, int length );
+			
 		typedef std::map<std::string, IFieldConverter*> field_map;
-
 		field_map _fields;
 
 		int _length;
@@ -57,13 +56,13 @@ namespace bafprp
 		}
 		RecordMaker() {}
 	public:
-		static IBafRecord* newRecord( BYTE* data, int length );
+		static IBafRecord* newRecord( const BYTE* data, int length );
 	protected:
 		RecordMaker( int type )
 		{
 			getReg().insert ( std::make_pair ( type, this ) );
 		}
-		virtual IBafRecord* make() const = 0;
+		virtual IBafRecord* make( const BYTE* data, int length ) const = 0;
 	};
 }
 

@@ -50,6 +50,7 @@ namespace bafprp
 	private:
 		std::string _filename;
 		FILE* _fp;
+		IBafRecord* _record;
 		long _offset;
 		int _length_of_record;
 	};

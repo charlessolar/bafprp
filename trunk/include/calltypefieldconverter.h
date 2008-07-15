@@ -29,6 +29,7 @@ namespace bafprp
 	{
 		friend class CallTypeFieldMaker;
 	public:
+		int getInt();
 		long getLong();
 		bool convert ( const BYTE* data );
 		std::string getError() const { return _lastError; }
@@ -44,7 +45,7 @@ namespace bafprp
 	class CallTypeFieldMaker : public FieldMaker
 	{
 	public:
-		CallTypeFieldMaker() : FieldMaker ( "calltype" ) {}
+		CallTypeFieldMaker() : FieldMaker( "calltype" ) {}
 	protected:
 		IFieldConverter* make() const;
 	private:

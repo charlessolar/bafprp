@@ -24,7 +24,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	File File::registerThis;
+	const File File::registerThis;
 
 	File::File() : Output( "file" )
 	{

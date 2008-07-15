@@ -24,7 +24,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	Console Console::registerThis;
+	const Console Console::registerThis;
 
 	void Console::error( IBafRecord* record, const std::string error )
 	{

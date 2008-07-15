@@ -219,6 +219,10 @@
 				Name="Record"
 				>
 				<File
+					RelativePath="..\src\9013.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\ibafrecord.cpp"
 					>
 				</File>
@@ -272,6 +276,10 @@
 			<Filter
 				Name="Record"
 				>
+				<File
+					RelativePath="..\include\9013.h"
+					>
+				</File>
 				<File
 					RelativePath="..\include\ibafrecord.h"
 					>
