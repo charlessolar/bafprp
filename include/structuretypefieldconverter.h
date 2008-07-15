@@ -36,6 +36,7 @@ namespace bafprp
 		bool convert ( const BYTE* data );
 		std::string getError() const { return _lastError; }
 		int getSize() const { return 5; }
+		std::string getType() const { return "int"; }
 
 		~StructureTypeFieldConverter();
 	protected:

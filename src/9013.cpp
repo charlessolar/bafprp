@@ -42,5 +42,13 @@ namespace bafprp
 	{
 	}
 
+	IFieldConverter* r9013::getField( std::string name )
+	{
+		return NULL;
+	}
 
+	IFieldConverter* r9013::getNextField()
+	{
+		return NULL;
+	}
 }

@@ -32,6 +32,8 @@ namespace bafprp
 	class IBafRecord
 	{
 	public:
+		virtual IFieldConverter* getField( std::string name ) = 0;
+		virtual IFieldConverter* getNextField() = 0;
 		
 		virtual ~IBafRecord();	
 	protected:
