@@ -50,26 +50,7 @@ namespace bafprp
 	bool StructureTypeFieldConverter::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "StructureTypeFieldConverter::convert" );
-		_return = "";
-
-		char nibble[2];
-
-		for( int i = 0; i < getSize(); i++ )
-		{
-			nibble[0] = ( ( *data & 0xF0 ) >> 4 );
-			if( i % 2 == 1 ) 
-			{
-				nibble[0] = ( *data & 0x0F );
-				data++;
-			}
-			
-			// Cheating
-			nibble[0] += 0x30;
-			nibble[1] = 0;
-
-
-			_return.append( nibble );
-		}
+		_return = getChars( data, getSize() );
 
 		LOG_TRACE( "/StructureTypeFieldConverter::convert" );
 		return true;

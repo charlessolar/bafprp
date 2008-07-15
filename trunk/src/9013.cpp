@@ -36,19 +36,22 @@ namespace bafprp
 	r9013::r9013( const BYTE* data, int length ) : IBafRecord( data, length )
 	{
 		// make the real structure
+
+		// This is really messy... Fix this.
+		IFieldConverter* field;
+		field = FieldMaker::newFieldConverter( "structuretype" );
+		field->convert( data );
+		data += ( field->getSize() + 1 ) / 2;
+		_fields.push_back( field );
+		field = FieldMaker::newFieldConverter( "calltype" );
+		field->convert( data );
+		data += ( field->getSize() + 1 ) / 2;
+		_fields.push_back( field );
+
 	}
 
 	r9013::~r9013()
 	{
 	}
 
-	IFieldConverter* r9013::getField( std::string name )
-	{
-		return NULL;
-	}
-
-	IFieldConverter* r9013::getNextField()
-	{
-		return NULL;
-	}
 }

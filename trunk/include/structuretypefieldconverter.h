@@ -37,13 +37,11 @@ namespace bafprp
 		std::string getError() const { return _lastError; }
 		int getSize() const { return 5; }
 		std::string getType() const { return "int"; }
+		std::string getName() const { return "Structure Type"; }
 
 		~StructureTypeFieldConverter();
 	protected:
 		StructureTypeFieldConverter();
-
-		std::string _return;
-		std::string _lastError;
 	};
 
 	class StructureTypeFieldMaker : public FieldMaker

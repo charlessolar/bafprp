@@ -18,17 +18,32 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPDNADEFINES_H
-#define BAFPRPDNADEFINES_H
-
-#include <string>
+#include "bafdefines.h"
 
 namespace bafprp
 {
 
-	typedef unsigned char BYTE;
+	std::string getChars( const BYTE* data, int length )
+	{
+		std::string ret = "";
+		char nibble[2];
 
-	std::string getChars( const BYTE* data, int length );
+		for( int i = 0; i < length; i++ )
+		{
+			nibble[0] = ( ( *data & 0xF0 ) >> 4 );
+			if( i % 2 == 1 ) 
+			{
+				nibble[0] = ( *data & 0x0F );
+				data++;
+			}
+			
+			// Cheating
+			nibble[0] += 0x30;
+			nibble[1] = 0;
+
+
+			ret.append( nibble );
+		}
+		return ret;
+	}
 }
-
-#endif

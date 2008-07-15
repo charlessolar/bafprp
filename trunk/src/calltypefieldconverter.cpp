@@ -49,6 +49,7 @@ namespace bafprp
 	bool CallTypeFieldConverter::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "CallTypeFieldConverter::convert" );
+		_return = getChars( data, getSize() );
 		LOG_TRACE( "/CallTypeFieldConverter::convert" );
 		return true;
 	}
@@ -57,13 +58,20 @@ namespace bafprp
 	{
 		LOG_TRACE( "CallTypeFieldConverter::getInt" );
 		LOG_TRACE( "/CallTypeFieldConverter::getInt" );
-		return 0;
+		return atoi( _return.c_str() );
 	}
 
 	long CallTypeFieldConverter::getLong()
 	{
 		LOG_TRACE( "CallTypeFieldConverter::getLong" );
 		LOG_TRACE( "/CallTypeFieldConverter::getLong" );
-		return 0;
+		return atol( _return.c_str() );
+	}
+
+	std::string CallTypeFieldConverter::getString()
+	{
+		LOG_TRACE( "CallTypeFieldConverter::getString" );
+		LOG_TRACE( "/CallTypeFieldConverter::getString" );
+		return _return;
 	}
 }

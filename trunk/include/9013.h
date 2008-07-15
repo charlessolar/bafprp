@@ -29,9 +29,6 @@ namespace bafprp
 	{
 		friend class r9013Maker;
 	public:
-		IFieldConverter* getField( std::string name );
-		IFieldConverter* getNextField();
-
 		~r9013();
 	protected:
 		r9013( const BYTE* data, int length );

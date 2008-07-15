@@ -44,11 +44,15 @@ namespace bafprp
 		virtual int getSize() const = 0;
 		// returns a generic type that would most easily be asociated with the type of data
 		// useful for sql output
-		virtual std::string getType() const= 0;
+		virtual std::string getType() const = 0;
+		virtual std::string getName() const = 0;
 
 		~IFieldConverter() {}
 	protected:
 		IFieldConverter() {}
+
+		std::string _return;
+		std::string _lastError;
 	};
 
 	class FieldMaker

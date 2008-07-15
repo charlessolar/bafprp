@@ -40,6 +40,19 @@ namespace bafprp
 	void Console::record( IBafRecord* record )
 	{
 		LOG_TRACE( "Console::record" );
+
+		IFieldConverter* field;
+		std::string value = "";
+		std::string name = "";
+
+		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
+		while( ( field = record->getNextField( name ) ) != NULL )
+		{
+			value = field->getString();
+			name = field->getName();
+			std::cout << name << ": " << value << std::endl;
+		}
+
 		LOG_TRACE( "/Console::record" );
 	}
 
