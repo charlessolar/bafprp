@@ -18,30 +18,13 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "9013.h"
-#include "output.h"
+#ifndef SENSORTYPE_H
+#define SENSORTYPE_H
 
 namespace bafprp
 {
-
-	const r9013Maker r9013Maker::registerThis;
-
-	IBafRecord* r9013Maker::make( const BYTE* data, int length ) const
-	{
-		LOG_TRACE( "r9013Maker::make" );
-		LOG_TRACE( "/r9013Maker::make" );
-		return new r9013( data, length );
-	}
-
-	r9013::r9013( const BYTE* data, int length ) : IBafRecord( data, length )
-	{
-		// make the real structure
-		addField( "structuretype" );
-		addField( "calltype" );
-	}
-
-	r9013::~r9013()
-	{
-	}
+	class SensorType
 
 }
+
+#endif

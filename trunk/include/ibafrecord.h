@@ -24,7 +24,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include "bafdefines.h"
-#include "ifieldconverter.h"
+#include "ifield.h"
 
 
 namespace bafprp
@@ -33,17 +33,22 @@ namespace bafprp
 	{
 	public:
 		// Allow override because I feel like it
-		virtual IFieldConverter* getField( const std::string name );
-		virtual IFieldConverter* getNextField( const std::string last = "" );
+		virtual IField* getField( const std::string name );
+		virtual IField* getNextField( const std::string last = "" );
 		
 		virtual ~IBafRecord();	
 	protected:
 		IBafRecord( const BYTE* data, int length );
+
+		void addField( const std::string name );
 			
-		typedef std::vector<IFieldConverter*> field_vector;
+		typedef std::vector<IField*> field_vector;
 		field_vector _fields;
 
 		int _length;
+		
+		BYTE* _fieldData;  // The data pointer we are allowed to modify
+	private:
 		BYTE* _data;
 	};
 

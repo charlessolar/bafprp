@@ -18,41 +18,44 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPSTRUCTURETYPEFIELDCONVERTER_H
-#define BAFPRPSTRUCTURETYPEFIELDCONVERTER_H
+#ifndef BAFPRPCALLTYPE_H
+#define BAFPRPCALLTYPE_H
 
-#include <ifieldconverter.h>
+#include "ifield.h"
 
 namespace bafprp
 {
-
-	class StructureTypeFieldConverter : public IFieldConverter
+	class CallType : public IField
 	{
-	friend class StructureTypeFieldMaker;
+		friend class CallTypeFieldMaker;
 	public:
 		int getInt();
 		long getLong();
 		std::string getString();
+
 		bool convert ( const BYTE* data );
 		std::string getError() const { return _lastError; }
-		int getSize() const { return 5; }
+		int getSize() const { return 3; }
 		std::string getType() const { return "int"; }
-		std::string getName() const { return "Structure Type"; }
+		std::string getName() const { return "Call Type"; }
 
-		~StructureTypeFieldConverter();
+		~CallType();
 	protected:
-		StructureTypeFieldConverter();
+		CallType();
+
+		std::string _lastError;
 	};
 
-	class StructureTypeFieldMaker : public FieldMaker
+	class CallTypeFieldMaker : public FieldMaker
 	{
 	public:
-		StructureTypeFieldMaker() : FieldMaker ( "structuretype" ) {}
+		CallTypeFieldMaker() : FieldMaker( "calltype" ) {}
 	protected:
-		IFieldConverter* make() const;
+		IField* make() const;
 	private:
-		static const StructureTypeFieldMaker registerThis;
+		static const CallTypeFieldMaker registerThis;
 	};
+
 }
 
 #endif

@@ -73,7 +73,7 @@ namespace bafprp
 		}
 		LOG_TRACE( "File::record" );
 
-		IFieldConverter* field;
+		IField* field;
 		std::string value = "";
 		std::string name = "";
 		std::string output = "";

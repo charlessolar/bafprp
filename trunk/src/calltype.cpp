@@ -18,60 +18,60 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "calltypefieldconverter.h"
+#include "calltype.h"
 #include "output.h"
 
 namespace bafprp
 {
 	const CallTypeFieldMaker CallTypeFieldMaker::registerThis;
 
-	IFieldConverter* CallTypeFieldMaker::make() const
+	IField* CallTypeFieldMaker::make() const
 	{
 		LOG_TRACE( "CallTypeFieldMaker::make" );
 		LOG_TRACE( "/CallTypeFieldMaker::make" );
-		return new CallTypeFieldConverter;
+		return new CallType;
 		
 	}
 
-	CallTypeFieldConverter::CallTypeFieldConverter() : IFieldConverter()
+	CallType::CallType() : IField()
 	{
-		LOG_TRACE( "CallTypeFieldConverter::CallTypeFieldConverter" );
-		LOG_TRACE( "/CallTypeFieldConverter::CallTypeFieldConverter" );
+		LOG_TRACE( "CallType::CallTypeFieldConverter" );
+		LOG_TRACE( "/CallType::CallTypeFieldConverter" );
 	}
 
 
-	CallTypeFieldConverter::~CallTypeFieldConverter()
+	CallType::~CallType()
 	{
-		LOG_TRACE( "CallTypeFieldConverter::~CallTypeFieldConverter" );
-		LOG_TRACE( "/CallTypeFieldConverter::~CallTypeFieldConverter" );
+		LOG_TRACE( "CallType::~CallTypeFieldConverter" );
+		LOG_TRACE( "/CallType::~CallTypeFieldConverter" );
 	}
 
-	bool CallTypeFieldConverter::convert ( const BYTE* data )
+	bool CallType::convert ( const BYTE* data )
 	{
-		LOG_TRACE( "CallTypeFieldConverter::convert" );
+		LOG_TRACE( "CallType::convert" );
 		_return = getChars( data, getSize() );
-		LOG_TRACE( "/CallTypeFieldConverter::convert" );
+		LOG_TRACE( "/CallType::convert" );
 		return true;
 	}
 
-	int CallTypeFieldConverter::getInt()
+	int CallType::getInt()
 	{
-		LOG_TRACE( "CallTypeFieldConverter::getInt" );
-		LOG_TRACE( "/CallTypeFieldConverter::getInt" );
+		LOG_TRACE( "CallType::getInt" );
+		LOG_TRACE( "/CallType::getInt" );
 		return atoi( _return.c_str() );
 	}
 
-	long CallTypeFieldConverter::getLong()
+	long CallType::getLong()
 	{
-		LOG_TRACE( "CallTypeFieldConverter::getLong" );
-		LOG_TRACE( "/CallTypeFieldConverter::getLong" );
+		LOG_TRACE( "CallType::getLong" );
+		LOG_TRACE( "/CallType::getLong" );
 		return atol( _return.c_str() );
 	}
 
-	std::string CallTypeFieldConverter::getString()
+	std::string CallType::getString()
 	{
-		LOG_TRACE( "CallTypeFieldConverter::getString" );
-		LOG_TRACE( "/CallTypeFieldConverter::getString" );
+		LOG_TRACE( "CallType::getString" );
+		LOG_TRACE( "/CallType::getString" );
 		return _return;
 	}
 }
