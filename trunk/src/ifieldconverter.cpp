@@ -18,33 +18,19 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFRECORD_H
-#define BAFPRPBAFRECORD_H
-
-#include <map>
-
-#include "bafdefines.h"
 #include "ifieldconverter.h"
+#include "output.h"
 
 namespace bafprp
 {
-	class BafRecord
+
+	IFieldConverter* FieldMaker::newFieldConverter( std::string type )
 	{
-	public:
-		BafRecord( const BYTE* data, int length );
-		~BafRecord();
+		maker_map::iterator itr = getReg().find ( type );
+		if ( itr != getReg().end() )
+			return itr->second->make();
 
-		
-		
-	private:
-		typedef std::map<std::string, IFieldConverter*> field_map;
-
-		field_map _fields;
-
-		int _length;
-		BYTE* _data;
-	};
-
+		LOG_ERROR( "Field Converter of type \"" << type << "\" could not be found" );
+		return NULL;
+	}
 }
-
-#endif

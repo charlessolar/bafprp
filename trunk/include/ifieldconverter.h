@@ -26,6 +26,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "bafdefines.h"
 
+
 namespace bafprp
 {
 	class IFieldConverter
@@ -58,17 +59,11 @@ namespace bafprp
 		}
 		FieldMaker() {}
 	public:
-		static IFieldConverter* newFieldConverter ( std::string type )
-		{
-			maker_map::iterator itr = getReg().find ( type );
-			if ( itr != getReg().end() )
-				return itr->second->make();
-			return NULL;
-		}
+		static IFieldConverter* newFieldConverter( std::string type );
 	protected:
-		FieldMaker ( std::string type )
+		FieldMaker( std::string type )
 		{
-			getReg().insert ( std::make_pair ( type, this ) );
+			getReg().insert( std::make_pair ( type, this ) );
 		}
 		virtual IFieldConverter* make() const = 0;
 	};

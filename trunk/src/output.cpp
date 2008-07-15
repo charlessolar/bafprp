@@ -36,7 +36,7 @@ namespace bafprp
 	{
 	}
 
-	void Output::recordOutput( BafRecord* record )
+	void Output::recordOutput( IBafRecord* record )
 	{
 		LOG_TRACE( "Output::recordOutput" );
 		output_map::iterator itr = getReg().find( _recordoutput );
@@ -47,7 +47,7 @@ namespace bafprp
 		LOG_TRACE( "/Output::recordOutput" );
 	}
 
-	void Output::errorOutput( BafRecord* record, const std::string error )
+	void Output::errorOutput( IBafRecord* record, const std::string error )
 	{
 		LOG_TRACE( "Output::errorOutput" );
 		output_map::iterator itr = getReg().find( _erroroutput );

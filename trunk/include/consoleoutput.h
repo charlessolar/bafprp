@@ -31,8 +31,8 @@ namespace bafprp
 		// Register the output type
 		Console() : Output( "console" ) {}
 
-		void record( BafRecord* record );
-		void error( BafRecord* record, const std::string error );
+		void record( IBafRecord* record );
+		void error( IBafRecord* record, const std::string error );
 		void log( const std::string log );
 
 	private:

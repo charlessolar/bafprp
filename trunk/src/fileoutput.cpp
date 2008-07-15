@@ -42,7 +42,7 @@ namespace bafprp
 		if( _fp ) fclose( _fp );
 	}
 
-	void File::error( BafRecord* record, const std::string error )
+	void File::error( IBafRecord* record, const std::string error )
 	{
 		if( !_fp )
 		{
@@ -64,7 +64,7 @@ namespace bafprp
 		fwrite( log.c_str(), 1, log.length(), _fp );
 	}
 
-	void File::record( BafRecord* record )
+	void File::record( IBafRecord* record )
 	{
 		if( !_fp )
 		{

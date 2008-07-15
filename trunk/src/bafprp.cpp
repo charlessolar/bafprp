@@ -42,7 +42,7 @@ int main ( int argc, char *argv[] )
 	
 
 	BafFile* file = new BafFile( "baf.pri" );
-	BafRecord* record;
+	IBafRecord* record;
 
 	while( file->isOpen() && ( record = file->getNextRecord() ) != NULL )
 	{
