@@ -183,15 +183,15 @@
 				RelativePath="..\src\bafprp.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\src\bafrecord.cpp"
-				>
-			</File>
 			<Filter
 				Name="Converter"
 				>
 				<File
 					RelativePath="..\src\calltypefieldconverter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\ifieldconverter.cpp"
 					>
 				</File>
 				<File
@@ -216,8 +216,12 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Field"
+				Name="Record"
 				>
+				<File
+					RelativePath="..\src\ibafrecord.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -231,10 +235,6 @@
 			</File>
 			<File
 				RelativePath="..\include\baffile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\bafrecord.h"
 				>
 			</File>
 			<Filter
@@ -270,10 +270,10 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Field"
+				Name="Record"
 				>
 				<File
-					RelativePath="..\include\ifield.h"
+					RelativePath="..\include\ibafrecord.h"
 					>
 				</File>
 			</Filter>

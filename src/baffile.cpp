@@ -58,7 +58,7 @@ namespace bafprp
 		return ( _fp ? true : false );
 	}
 
-	BafRecord* BafFile::getNextRecord()
+	IBafRecord* BafFile::getNextRecord()
 	{
 		LOG_TRACE( "BafFile::getNextRecord" );
 		BYTE size[2] = "\x0";
@@ -70,13 +70,13 @@ namespace bafprp
 		_length_of_record = ( size[0] * 256 ) + size[1];
 
 		BYTE* data;
-		BafRecord* record;
+		IBafRecord* record;
 		try
 		{
 			data = new BYTE[ _length_of_record + 1 ];
 			fread_s( data, _length_of_record, 1, _length_of_record, _fp );
 
-			record = new BafRecord( data, _length_of_record );
+			record = new IBafRecord( data, _length_of_record );
 		
 		}
 		catch( ... )
@@ -89,7 +89,7 @@ namespace bafprp
 		return record;
 	}
 
-	BafRecord* BafFile::getCurrentRecord()
+	IBafRecord* BafFile::getCurrentRecord()
 	{
 		LOG_TRACE( "BafFile::getCurrentRecord" );
 		fseek( _fp, _offset - _length_of_record, SEEK_SET );

@@ -18,30 +18,53 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPFILE_H
-#define BAFPRPFILE_H
+#ifndef BAFPRPBAFRECORD_H
+#define BAFPRPBAFRECORD_H
 
-#include "output.h"
+#include <map>
+
+#include "bafdefines.h"
+#include "ifieldconverter.h"
+
 
 namespace bafprp
 {
-	class File : public Output
+	class IBafRecord
 	{
 	public:
-		// Register the output type
-		File();
-		~File();
+		IBafRecord( const BYTE* data, int length );
+		~IBafRecord();
 
-		void record( IBafRecord* record );
-		void error( IBafRecord* record, const std::string error );
-		void log( const std::string log );
-
+		
 	private:
-		FILE* _fp;
-		// This variable simply initializes a class that registers with the main output code
-		static File registerThis;
+		typedef std::map<std::string, IFieldConverter*> field_map;
+
+		field_map _fields;
+
+		int _length;
+		BYTE* _data;
+	};
+
+	class RecordMaker
+	{
+	private:
+		typedef std::map<int, RecordMaker*> maker_map;
+
+		static maker_map& getReg()
+		{
+			static maker_map registry;
+			return registry;
+		}
+		RecordMaker() {}
+	public:
+		static IBafRecord* newRecord( BYTE* data, int length );
+	protected:
+		RecordMaker( int type )
+		{
+			getReg().insert ( std::make_pair ( type, this ) );
+		}
+		virtual IBafRecord* make() const = 0;
 	};
 }
-
 
 #endif

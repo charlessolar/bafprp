@@ -25,7 +25,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 
 #include "bafdefines.h"
-#include "bafrecord.h"
+#include "ibafrecord.h"
 
 namespace bafprp
 {
@@ -40,8 +40,8 @@ namespace bafprp
 		bool open( const std::string filename );
 		bool open( const char* filename );
 
-		BafRecord* getNextRecord();
-		BafRecord* getCurrentRecord();
+		IBafRecord* getNextRecord();
+		IBafRecord* getCurrentRecord();
 
 		bool isOpen();
 

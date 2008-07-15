@@ -82,6 +82,13 @@ namespace bafprp
 		return atol( _return.c_str() );
 	}
 
+	int StructureTypeFieldConverter::getInt()
+	{
+		LOG_TRACE( "StructureTypeFieldConverter::getInt" );
+		LOG_TRACE( "/StructureTypeFieldConverter::getInt" );
+		return atol( _return.c_str() );
+	}
+
 	std::string StructureTypeFieldConverter::getString()
 	{
 		LOG_TRACE( "StructureTypeFieldConverter::getString" );
