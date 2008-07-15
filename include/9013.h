@@ -18,30 +18,32 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPFILE_H
-#define BAFPRPFILE_H
+#ifndef BAFPRP9013_H
+#define BAFPRP9013_H
 
-#include "output.h"
+#include "ibafrecord.h"
 
 namespace bafprp
 {
-	class File : public Output
+	class r9013 : public IBafRecord
+	{
+		friend class r9013Maker;
+	public:
+
+		~r9013();
+	protected:
+		r9013( const BYTE* data, int length );
+	};
+
+	class r9013Maker : public RecordMaker
 	{
 	public:
-		// Register the output type
-		File();
-		~File();
-
-		void record( IBafRecord* record );
-		void error( IBafRecord* record, const std::string error );
-		void log( const std::string log );
-
+		r9013Maker() : RecordMaker( 9013 ) {}
+	protected:
+		IBafRecord* make( const BYTE* data, int length ) const;
 	private:
-		FILE* _fp;
-		// This variable simply initializes a class that registers with the main output code
-		static const File registerThis;
+		static const r9013Maker registerThis;
 	};
 }
-
 
 #endif

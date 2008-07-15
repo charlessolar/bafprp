@@ -37,7 +37,7 @@ namespace bafprp
 
 	private:
 		// This variable simply initializes a class that registers with the main output code
-		static Console registerThis;
+		static const Console registerThis;
 	};
 }
 

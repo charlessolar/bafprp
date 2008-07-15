@@ -27,6 +27,10 @@ namespace bafprp
 	BafFile::BafFile() : _filename( "" )
 	{
 		LOG_TRACE( "BafFile::BafFile" );
+		_record = NULL;
+		_filename = "";
+		_offset = 0;
+		_length_of_record = 0;
 		LOG_TRACE( "/BafFile::BafFile" );
 	}
 
@@ -48,6 +52,9 @@ namespace bafprp
 	{
 		LOG_TRACE( "BafFile::~BafFile" );
 		_filename.clear();
+		// Its not the file's responsibility to clean up records.
+		// On second thought, it might be a good idea for the file object
+		// to store the record list.  hmmmmm
 		LOG_TRACE( "/BafFile::~BafFile" );
 	}
 
@@ -70,13 +77,12 @@ namespace bafprp
 		_length_of_record = ( size[0] * 256 ) + size[1];
 
 		BYTE* data;
-		IBafRecord* record;
 		try
 		{
 			data = new BYTE[ _length_of_record + 1 ];
 			fread_s( data, _length_of_record, 1, _length_of_record, _fp );
 
-			record = new IBafRecord( data, _length_of_record );
+			_record = RecordMaker::newRecord( data, _length_of_record );
 		
 		}
 		catch( ... )
@@ -86,17 +92,14 @@ namespace bafprp
 		delete[] data;
 
 		LOG_TRACE( "/BafFile::getNextRecord" );
-		return record;
+		return _record;
 	}
 
 	IBafRecord* BafFile::getCurrentRecord()
 	{
 		LOG_TRACE( "BafFile::getCurrentRecord" );
-		fseek( _fp, _offset - _length_of_record, SEEK_SET );
-
-		
 		LOG_TRACE( "/BafFile::getCurrentRecord" );
-		return NULL;
+		return _record;
 	}
 
 	bool BafFile::open( const char* filename )
@@ -109,7 +112,7 @@ namespace bafprp
 		LOG_TRACE( "BafFile::open" );
 		if( fopen_s( &_fp, filename.c_str(), "rb" ) != 0 ) 
 		{
-			LOG_WARN( "File " << filename << " could not be opened." );
+			LOG_WARN( "File \"" << filename << "\" could not be opened." );
 			return false;
 		}
 		_offset = 0;

@@ -28,8 +28,9 @@ namespace bafprp
 	IFieldConverter* CallTypeFieldMaker::make() const
 	{
 		LOG_TRACE( "CallTypeFieldMaker::make" );
-		return new CallTypeFieldConverter;
 		LOG_TRACE( "/CallTypeFieldMaker::make" );
+		return new CallTypeFieldConverter;
+		
 	}
 
 	CallTypeFieldConverter::CallTypeFieldConverter() : IFieldConverter()
@@ -50,6 +51,13 @@ namespace bafprp
 		LOG_TRACE( "CallTypeFieldConverter::convert" );
 		LOG_TRACE( "/CallTypeFieldConverter::convert" );
 		return true;
+	}
+
+	int CallTypeFieldConverter::getInt()
+	{
+		LOG_TRACE( "CallTypeFieldConverter::getInt" );
+		LOG_TRACE( "/CallTypeFieldConverter::getInt" );
+		return 0;
 	}
 
 	long CallTypeFieldConverter::getLong()
