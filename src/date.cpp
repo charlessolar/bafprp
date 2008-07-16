@@ -50,36 +50,48 @@ namespace bafprp
 	bool Date::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "Date::convert" );
-		_return = "";
-		
-		char year[6] = "";
-		time_t ltime; 
-		struct tm* mytm = NULL;
-		ltime = time( NULL );  
-		mytm = localtime( &ltime );  
-		strftime( year, sizeof( year ), "%Y", mytm );
+		_return = getChars( data, getSize() );
+		_converted = true;
 
-		// First
-		year[4] = ( *data & 0xF0 ) >> 4;
-		int month = ( *data & 0x0F ) * 10;
-		data++;
-		month += ( *data & 0xF0 ) >> 4;
-		int day = ( *data & 0x0F ) * 10;
-		data++;
-		day += ( *data & 0xF0 ) >> 4;
-
-		char date[20];
-		sprintf_s( date, sizeof( date ), "%d/%d/%s", day, month, year );
-		_return.append( date );
+		if( _return.length() != getSize() ) 
+		{
+			_lastError = "Data read is not the correct size";
+			_converted = false;
+		}
 
 		LOG_TRACE( "/Date::convert" );
-		return true;
+		return _converted;
 	}
 
 	std::string Date::getString()
 	{
 		LOG_TRACE( "Date::getString" );
+
+		std::string ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get string before field was converted";
+			ret = "";
+		}
+		else
+		{
+			char year[5] = "";
+			time_t ltime; 
+			struct tm* mytm = NULL;
+			ltime = time( NULL );  
+			mytm = localtime( &ltime );  
+			strftime( year, sizeof( year ), "%Y", mytm );
+			year[3] = _return[0];
+
+			std::ostringstream os;
+			os << _return[1] << _return[2] << "/" << _return[3] << _return[4] << "/" << year;
+			// In case you live in europe
+			// os << _return[3] << _return[4] << "/" << _return[1] << _return[2] << "/" << year;
+
+			ret = os.str();
+		}
+
 		LOG_TRACE( "/Date::getString" );
-		return _return;
+		return ret;
 	}
 }

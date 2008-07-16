@@ -48,29 +48,37 @@ namespace bafprp
 	bool GenericID::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "GenericID::convert" );
+
 		_return = getChars( data, getSize() );
+		_converted = true;
+
+		if( _return.length() != getSize() ) 
+		{
+			_lastError = "Data read is not the correct size";
+			_converted = false;
+		}
+
 		LOG_TRACE( "/GenericID::convert" );
-		return true;
-	}
-
-	long GenericID::getLong()
-	{
-		LOG_TRACE( "GenericID::getLong" );
-		LOG_TRACE( "/GenericID::getLong" );
-		return atol( _return.c_str() );
-	}
-
-	int GenericID::getInt()
-	{
-		LOG_TRACE( "GenericID::getInt" );
-		LOG_TRACE( "/GenericID::getInt" );
-		return atoi( _return.c_str() );
+		return _converted;
 	}
 
 	std::string GenericID::getString()
 	{
 		LOG_TRACE( "GenericID::getString" );
+		
+		std::string ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get string before field was converted";
+			ret = "";
+		}
+		else
+		{		
+			std::ostringstream os;
+			os << "Software Release ID : " << "Generic issue number = " << _return[0] << _return[1] << " : Point issue level = " << _return[2] << _return[3] << " : Overwrite level = " << _return[4];
+			ret = os.str();
+		}
 		LOG_TRACE( "/GenericID::getString" );
-		return _return;
+		return ret;
 	}
 }

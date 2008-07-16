@@ -48,29 +48,68 @@ namespace bafprp
 	bool FileSequenceNo::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "FileSequenceNo::convert" );
+
 		_return = getChars( data, getSize() );
+		_converted = true;
+
+		if( _return.length() != getSize() ) 
+		{
+			_lastError = "Data read is not the correct size";
+			_converted = false;
+		}
+
 		LOG_TRACE( "/FileSequenceNo::convert" );
-		return true;
+		return _converted;
 	}
 
 	long FileSequenceNo::getLong()
 	{
 		LOG_TRACE( "FileSequenceNo::getLong" );
+
+		long ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get long before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atol( _return.c_str() );
+
 		LOG_TRACE( "/FileSequenceNo::getLong" );
-		return atol( _return.c_str() );
+		return ret;
 	}
 
 	int FileSequenceNo::getInt()
 	{
 		LOG_TRACE( "FileSequenceNo::getInt" );
+		
+		int ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get int before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atoi( _return.c_str() );
+
 		LOG_TRACE( "/FileSequenceNo::getInt" );
-		return atoi( _return.c_str() );
+		return ret;
 	}
 
 	std::string FileSequenceNo::getString()
 	{
 		LOG_TRACE( "FileSequenceNo::getString" );
+		
+		std::string ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get string before field was converted";
+			ret = "";
+		}
+		else
+			ret = _return;
+
 		LOG_TRACE( "/FileSequenceNo::getString" );
-		return _return;
+		return ret;
 	}
 }

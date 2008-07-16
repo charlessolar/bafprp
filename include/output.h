@@ -133,6 +133,13 @@ namespace bafprp
 		Output::logOutput( LOG_LEVEL_FATAL, ssOutput.str() ); \
 	} while(0);
  
+	#define ERROR_OUTPUT( record, error ) \
+	do { \
+		std::ostringstream ssOutput; \
+		ssOutput << "- " << NowTime() << " - RECORD ERROR: " << error << "\n"; \
+		Output::errorOutput( record, ssOutput.str() ); \
+	} while(0);
+
 }
 
 #endif
