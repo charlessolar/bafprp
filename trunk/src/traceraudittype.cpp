@@ -107,7 +107,24 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			int type = getInt();
+			std::string sType;
+			switch( type )
+			{
+			case 7:
+				ret = "Transfer in";
+				break;
+			case 8:
+				ret = "End of recording";
+				break;
+			case 52:
+				ret = "Hourly AMA audit";
+				break;
+			default:
+				ret = "Unknown Type" + type;
+			}
+		}
 
 		LOG_TRACE( "/TracerAuditType::getString" );
 		return ret;
