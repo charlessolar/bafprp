@@ -36,8 +36,17 @@ namespace bafprp
 	r9013::r9013( const BYTE* data, int length ) : IBafRecord( data, length )
 	{
 		// make the real structure
-		addField( "structuretype" );
-		addField( "calltype" );
+		addField( "structuretype" ); 
+		addField( "calltype" ); 
+		addField( "sensortype" ); 
+		addField( "sensorid" ); 
+		addField( "recordofficetype" );
+		addField( "recordofficeid" );
+		addField( "date" );
+		addField( "time" );
+		addField( "genericid" );
+		addField( "traceraudittype" );
+		addField( "filesequenceno" );
 	}
 
 	r9013::~r9013()

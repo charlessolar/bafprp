@@ -18,16 +18,16 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SENSORTYPE_H
-#define SENSORTYPE_H
+#ifndef GenericID_H
+#define GenericID_H
 
 #include "ifield.h"
 
 namespace bafprp
 {
-	class SensorType : public IField
+	class GenericID : public IField
 	{
-		friend class SensorTypeFieldMaker;
+		friend class GenericIDFieldMaker;
 	public:
 		int getInt();
 		long getLong();
@@ -36,24 +36,24 @@ namespace bafprp
 		bool convert ( const BYTE* data );
 
 		std::string getError() const { return _lastError; }
-		int getSize() const { return 3; }
+		int getSize() const { return 5; }
 		std::string getType() const { return "int"; }
-		std::string getName() const { return "Sensor Type"; }
+		std::string getName() const { return "Generic ID"; }
 
-		~SensorType();
+		~GenericID();
 	private:
-		SensorType();
+		GenericID();
 
 	};
 
-	class SensorTypeFieldMaker : public FieldMaker
+	class GenericIDFieldMaker : public FieldMaker
 	{
 	public:
-		SensorTypeFieldMaker() : FieldMaker ( "sensortype" ) {}
+		GenericIDFieldMaker() : FieldMaker ( "genericid" ) {}
 	protected:
 		IField* make() const;
 	private:
-		static const SensorTypeFieldMaker registerThis;
+		static const GenericIDFieldMaker registerThis;
 	};
 
 }
