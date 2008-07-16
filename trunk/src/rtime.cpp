@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "time.h"
+#include "rtime.h"
 #include "output.h"
 
 namespace bafprp
@@ -51,20 +51,6 @@ namespace bafprp
 		_return = getChars( data, getSize() );
 		LOG_TRACE( "/Time::convert" );
 		return true;
-	}
-
-	long Time::getLong()
-	{
-		LOG_TRACE( "Time::getLong" );
-		LOG_TRACE( "/Time::getLong" );
-		return atol( _return.c_str() );
-	}
-
-	int Time::getInt()
-	{
-		LOG_TRACE( "Time::getInt" );
-		LOG_TRACE( "/Time::getInt" );
-		return atoi( _return.c_str() );
 	}
 
 	std::string Time::getString()

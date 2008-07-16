@@ -29,15 +29,13 @@ namespace bafprp
 	{
 		friend class DateFieldMaker;
 	public:
-		int getInt();
-		long getLong();
 		std::string getString();
 
 		bool convert ( const BYTE* data );
 
 		std::string getError() const { return _lastError; }
 		int getSize() const { return 5; }
-		std::string getType() const { return "datetime"; }
+		std::string getType() const { return "string"; }
 		std::string getName() const { return "Date"; }
 
 		~Date();

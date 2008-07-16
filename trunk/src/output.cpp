@@ -76,8 +76,8 @@ namespace bafprp
 		char timestamp[100];
 		time_t ltime; 
 		struct tm* mytm = NULL;
-		ltime = time(NULL);  
-		mytm=localtime( &ltime );  
+		ltime = time( NULL );  
+		mytm = localtime( &ltime );  
 		strftime( timestamp, sizeof( timestamp ), "%a, %d %b %Y %H:%M:%S", mytm );
 		return std::string( timestamp );  
 	}  

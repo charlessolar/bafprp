@@ -219,6 +219,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\rtime.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\sensorid.cpp"
 					>
 				</File>
@@ -228,10 +232,6 @@
 				</File>
 				<File
 					RelativePath="..\src\structuretype.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\time.cpp"
 					>
 				</File>
 				<File
@@ -313,6 +313,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\rtime.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\sensorid.h"
 					>
 				</File>
@@ -322,10 +326,6 @@
 				</File>
 				<File
 					RelativePath="..\include\structuretype.h"
-					>
-				</File>
-				<File
-					RelativePath="..\include\time.h"
 					>
 				</File>
 				<File
