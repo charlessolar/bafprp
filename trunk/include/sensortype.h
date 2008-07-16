@@ -35,7 +35,6 @@ namespace bafprp
 
 		bool convert ( const BYTE* data );
 
-		std::string getError() const { return _lastError; }
 		int getSize() const { return 3; }
 		std::string getType() const { return "int"; }
 		std::string getName() const { return "Sensor Type"; }

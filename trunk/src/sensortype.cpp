@@ -48,29 +48,68 @@ namespace bafprp
 	bool SensorType::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "SensorType::convert" );
+		
 		_return = getChars( data, getSize() );
+		_converted = true;
+
+		if( _return.length() != getSize() ) 
+		{
+			_lastError = "Data read is not the correct size";
+			_converted = false;
+		}
+
 		LOG_TRACE( "/SensorType::convert" );
-		return true;
+		return _converted;
 	}
 
 	long SensorType::getLong()
 	{
 		LOG_TRACE( "SensorType::getLong" );
+		
+		long ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get long before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atol( _return.c_str() );
+
 		LOG_TRACE( "/SensorType::getLong" );
-		return atol( _return.c_str() );
+		return ret;
 	}
 
 	int SensorType::getInt()
 	{
 		LOG_TRACE( "SensorType::getInt" );
+		
+		int ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get int before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atoi( _return.c_str() );
+
 		LOG_TRACE( "/SensorType::getInt" );
-		return atoi( _return.c_str() );
+		return ret;
 	}
 
 	std::string SensorType::getString()
 	{
 		LOG_TRACE( "SensorType::getString" );
+		
+		std::string ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get string before field was converted";
+			ret = "";
+		}
+		else
+			ret = _return;
+
 		LOG_TRACE( "/SensorType::getString" );
-		return _return;
+		return ret;
 	}
 }

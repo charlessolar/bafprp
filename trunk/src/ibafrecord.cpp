@@ -124,7 +124,10 @@ namespace bafprp
 	void IBafRecord::addField( const std::string name )
 	{
 		IField* field = FieldMaker::newField( name );
-		field->convert( _fieldData );
+		if( !field->convert( _fieldData ) )
+		{
+			ERROR_OUTPUT( this, "Could not convert field " << field->getName() << " of type " << field->getType() << " and size " << field->getSize() << ". ERROR: " << field->getError() );
+		}
 		// update data position, the mod is to make the size even for nice division
 		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
 		_fields.push_back( field );

@@ -48,29 +48,68 @@ namespace bafprp
 	bool RecordOfficeID::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "RecordOfficeID::convert" );
+
 		_return = getChars( data, getSize() );
+		_converted = true;
+
+		if( _return.length() != getSize() ) 
+		{
+			_lastError = "Data read is not the correct size";
+			_converted = false;
+		}
+
 		LOG_TRACE( "/RecordOfficeID::convert" );
-		return true;
+		return _converted;
 	}
 
 	long RecordOfficeID::getLong()
 	{
 		LOG_TRACE( "RecordOfficeID::getLong" );
+		
+		long ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get long before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atol( _return.c_str() );
+
 		LOG_TRACE( "/RecordOfficeID::getLong" );
-		return atol( _return.c_str() );
+		return ret;
 	}
 
 	int RecordOfficeID::getInt()
 	{
 		LOG_TRACE( "RecordOfficeID::getInt" );
+		
+		int ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get int before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atoi( _return.c_str() );
+
 		LOG_TRACE( "/RecordOfficeID::getInt" );
-		return atoi( _return.c_str() );
+		return ret;
 	}
 
 	std::string RecordOfficeID::getString()
 	{
 		LOG_TRACE( "RecordOfficeID::getString" );
+		
+		std::string ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get string before field was converted";
+			ret = "";
+		}
+		else
+			ret = _return;
+
 		LOG_TRACE( "/RecordOfficeID::getString" );
-		return _return;
+		return ret;
 	}
 }

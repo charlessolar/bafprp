@@ -48,29 +48,68 @@ namespace bafprp
 	bool TracerAuditType::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "TracerAuditType::convert" );
+		
 		_return = getChars( data, getSize() );
+		_converted = true;
+
+		if( _return.length() != getSize() ) 
+		{
+			_lastError = "Data read is not the correct size";
+			_converted = false;
+		}
+
 		LOG_TRACE( "/TracerAuditType::convert" );
-		return true;
+		return _converted;
 	}
 
 	long TracerAuditType::getLong()
 	{
 		LOG_TRACE( "TracerAuditType::getLong" );
+		
+		long ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get long before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atol( _return.c_str() );
+
 		LOG_TRACE( "/TracerAuditType::getLong" );
-		return atol( _return.c_str() );
+		return ret;
 	}
 
 	int TracerAuditType::getInt()
 	{
 		LOG_TRACE( "TracerAuditType::getInt" );
+		
+		int ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get int before field was converted";
+			ret = 0;
+		}
+		else
+			ret = atoi( _return.c_str() );
+
 		LOG_TRACE( "/TracerAuditType::getInt" );
-		return atoi( _return.c_str() );
+		return ret;
 	}
 
 	std::string TracerAuditType::getString()
 	{
 		LOG_TRACE( "TracerAuditType::getString" );
+		
+		std::string ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get string before field was converted";
+			ret = "";
+		}
+		else
+			ret = _return;
+
 		LOG_TRACE( "/TracerAuditType::getString" );
-		return _return;
+		return ret;
 	}
 }
