@@ -195,7 +195,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\date.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\filesequenceno.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\genericid.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\ifield.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\recordofficeid.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\recordofficetype.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\sensorid.cpp"
 					>
 				</File>
 				<File
@@ -204,6 +228,14 @@
 				</File>
 				<File
 					RelativePath="..\src\structuretype.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\time.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\traceraudittype.cpp"
 					>
 				</File>
 			</Filter>
@@ -257,7 +289,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\date.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\filesequenceno.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\genericid.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\ifield.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\recordofficeid.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\recordofficetype.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\sensorid.h"
 					>
 				</File>
 				<File
@@ -266,6 +322,14 @@
 				</File>
 				<File
 					RelativePath="..\include\structuretype.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\time.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\traceraudittype.h"
 					>
 				</File>
 			</Filter>
