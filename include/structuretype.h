@@ -36,7 +36,7 @@ namespace bafprp
 
 		bool convert ( const BYTE* data );
 
-		int getSize() const { return 5; }
+		int getSize() const { return 4; }
 		std::string getType() const { return "int"; }
 		std::string getName() const { return "Structure Type"; }
 

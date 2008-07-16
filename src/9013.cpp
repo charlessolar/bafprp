@@ -26,14 +26,14 @@ namespace bafprp
 
 	const r9013Maker r9013Maker::registerThis;
 
-	IBafRecord* r9013Maker::make( const BYTE* data, int length ) const
+	IBafRecord* r9013Maker::make( const BYTE* data, int length, long filePos ) const
 	{
 		LOG_TRACE( "r9013Maker::make" );
 		LOG_TRACE( "/r9013Maker::make" );
-		return new r9013( data, length );
+		return new r9013( data, length, filePos );
 	}
 
-	r9013::r9013( const BYTE* data, int length ) : IBafRecord( data, length )
+	r9013::r9013( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 
