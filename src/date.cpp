@@ -18,6 +18,8 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <time.h>
+
 #include "date.h"
 #include "output.h"
 
@@ -48,23 +50,30 @@ namespace bafprp
 	bool Date::convert ( const BYTE* data )
 	{
 		LOG_TRACE( "Date::convert" );
-		_return = getChars( data, getSize() );
+		_return = "";
+		
+		char year[6] = "";
+		time_t ltime; 
+		struct tm* mytm = NULL;
+		ltime = time( NULL );  
+		mytm = localtime( &ltime );  
+		strftime( year, sizeof( year ), "%Y", mytm );
+
+		// First
+		year[4] = ( *data & 0xF0 ) >> 4;
+		int month = ( *data & 0x0F ) * 10;
+		data++;
+		month += ( *data & 0xF0 ) >> 4;
+		int day = ( *data & 0x0F ) * 10;
+		data++;
+		day += ( *data & 0xF0 ) >> 4;
+
+		char date[20];
+		sprintf_s( date, sizeof( date ), "%d/%d/%s", day, month, year );
+		_return.append( date );
+
 		LOG_TRACE( "/Date::convert" );
 		return true;
-	}
-
-	long Date::getLong()
-	{
-		LOG_TRACE( "Date::getLong" );
-		LOG_TRACE( "/Date::getLong" );
-		return atol( _return.c_str() );
-	}
-
-	int Date::getInt()
-	{
-		LOG_TRACE( "Date::getInt" );
-		LOG_TRACE( "/Date::getInt" );
-		return atoi( _return.c_str() );
 	}
 
 	std::string Date::getString()
