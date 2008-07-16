@@ -31,6 +31,7 @@ namespace bafprp
 {
 	class IBafRecord
 	{
+		friend class RecordMaker;
 	public:
 		// Allow override because I feel like it
 		virtual IField* getField( const std::string name );
@@ -39,10 +40,13 @@ namespace bafprp
 		virtual std::string getType() const = 0;
 
 		int getSize() const { return _length + 5; }
+
+		std::string getData() { return getChars( _data, _length ); }
+		long getFilePosition() { return _filePos; }
 		
 		virtual ~IBafRecord();	
 	protected:
-		IBafRecord( const BYTE* data, int length );
+		IBafRecord( const BYTE* data, int length, long filePos );
 
 		void addField( const std::string name );
 			
@@ -53,6 +57,7 @@ namespace bafprp
 		
 		BYTE* _fieldData;  // The data pointer we are allowed to modify
 	private:
+		long _filePos;
 		BYTE* _data;  // This one needs to stay constant since we have to delete it later
 	};
 
@@ -68,13 +73,13 @@ namespace bafprp
 		}
 		RecordMaker() {}
 	public:
-		static IBafRecord* newRecord( const BYTE* data, int length );
+		static IBafRecord* newRecord( const BYTE* data, int length, long filePos );
 	protected:
 		RecordMaker( int type )
 		{
 			getReg().insert ( std::make_pair ( type, this ) );
 		}
-		virtual IBafRecord* make( const BYTE* data, int length ) const = 0;
+		virtual IBafRecord* make( const BYTE* data, int length, long filePos ) const = 0;
 	};
 }
 

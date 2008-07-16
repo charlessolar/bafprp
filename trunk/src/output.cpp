@@ -73,7 +73,7 @@ namespace bafprp
 
 	std::string NowTime()
 	{  
-		char timestamp[100];
+		char timestamp[100] = "";
 		time_t ltime; 
 		struct tm* mytm = NULL;
 		ltime = time( NULL );  

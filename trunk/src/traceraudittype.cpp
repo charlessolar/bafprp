@@ -59,7 +59,8 @@ namespace bafprp
 		}
 
 		LOG_TRACE( "/TracerAuditType::convert" );
-		return _converted;
+		//return _converted;
+		return false;
 	}
 
 	long TracerAuditType::getLong()

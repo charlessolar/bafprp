@@ -136,7 +136,7 @@ namespace bafprp
 	#define ERROR_OUTPUT( record, error ) \
 	do { \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - RECORD ERROR: " << error << "\n"; \
+		ssOutput << error; \
 		Output::errorOutput( record, ssOutput.str() ); \
 	} while(0);
 

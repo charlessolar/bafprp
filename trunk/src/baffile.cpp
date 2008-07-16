@@ -92,7 +92,7 @@ namespace bafprp
 			return NULL;
 		}
 
-		_record = RecordMaker::newRecord( data, _length_of_record );
+		_record = RecordMaker::newRecord( data, _length_of_record, _offset );
 		
 		// for proper offset calculation
 		_offset += _length_of_record + 2;

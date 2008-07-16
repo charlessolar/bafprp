@@ -27,7 +27,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-	IBafRecord::IBafRecord( const BYTE* data, int length ) : _length( length )
+	IBafRecord::IBafRecord( const BYTE* data, int length, long filePos ) : _length( length ), _filePos( filePos )
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
 		_data = new BYTE[ _length + 1 ];
@@ -55,7 +55,7 @@ namespace bafprp
 	}
 
 
-	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length )
+	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, long filePos )
 	{
 		// This function will take the full record data, extract the structure type, and create a new
 		// record object from that type
@@ -72,7 +72,11 @@ namespace bafprp
 		}
 		data++;
 		length -= 1;
-		// We should no be standing on the structure type field
+		// We should now be standing on the structure type field and the module flag
+
+		// Module flag is 4 for some reason, and no its not the number of modules
+		bool modules = ( *data & 0xF0 ) == 4;
+
 		IField* structuretype = FieldMaker::newField( "structuretype" );
 		if( !structuretype->convert( data ) )
 		{
@@ -84,7 +88,7 @@ namespace bafprp
 		
 		maker_map::iterator itr = getReg().find ( type );
 		if ( itr != getReg().end() )
-			return itr->second->make( data, length );
+			return itr->second->make( data, length, filePos );
 
 		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
 		return NULL;
