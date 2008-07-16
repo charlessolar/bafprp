@@ -35,6 +35,10 @@ namespace bafprp
 		// Allow override because I feel like it
 		virtual IField* getField( const std::string name );
 		virtual IField* getNextField( const std::string last = "" );
+
+		virtual std::string getType() const = 0;
+
+		int getSize() const { return _length + 5; }
 		
 		virtual ~IBafRecord();	
 	protected:
@@ -49,7 +53,7 @@ namespace bafprp
 		
 		BYTE* _fieldData;  // The data pointer we are allowed to modify
 	private:
-		BYTE* _data;
+		BYTE* _data;  // This one needs to stay constant since we have to delete it later
 	};
 
 	class RecordMaker

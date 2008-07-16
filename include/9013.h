@@ -29,6 +29,8 @@ namespace bafprp
 	{
 		friend class r9013Maker;
 	public:
+		std::string getType() const;
+
 		~r9013();
 	protected:
 		r9013( const BYTE* data, int length );

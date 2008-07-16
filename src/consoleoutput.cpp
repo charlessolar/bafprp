@@ -45,6 +45,12 @@ namespace bafprp
 		std::string value = "";
 		std::string name = "";
 
+		std::cout << "---------------------------------------" << std::endl;
+		std::cout << record->getType() << std::endl;
+		std::cout << "---------------------------------------" << std::endl;
+		std::cout << "Length of record: " << record->getSize() << std::endl;
+		std::cout << "---------------------------------------" << std::endl;
+
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
 		while( ( field = record->getNextField( name ) ) != NULL )
 		{
