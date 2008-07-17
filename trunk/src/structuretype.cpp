@@ -62,21 +62,21 @@ namespace bafprp
 		return _converted;
 	}
 
-	long StructureType::getLong()
+	long StructureType::getLong() const
 	{
 		LOG_TRACE( "StructureType::getLong" );
 		LOG_TRACE( "/StructureType::getLong" );
 		return atol( _return.c_str() );
 	}
 
-	int StructureType::getInt()
+	int StructureType::getInt() const
 	{
 		LOG_TRACE( "StructureType::getInt" );
 		
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -86,14 +86,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string StructureType::getString()
+	std::string StructureType::getString() const
 	{
 		LOG_TRACE( "StructureType::getString" );
 		
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

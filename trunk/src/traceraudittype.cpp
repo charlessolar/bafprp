@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	long TracerAuditType::getLong()
+	long TracerAuditType::getLong() const
 	{
 		LOG_TRACE( "TracerAuditType::getLong" );
 		
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -79,14 +79,14 @@ namespace bafprp
 		return ret;
 	}
 
-	int TracerAuditType::getInt()
+	int TracerAuditType::getInt() const
 	{
 		LOG_TRACE( "TracerAuditType::getInt" );
 		
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -96,14 +96,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string TracerAuditType::getString()
+	std::string TracerAuditType::getString() const
 	{
 		LOG_TRACE( "TracerAuditType::getString" );
 		
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

@@ -30,9 +30,9 @@ namespace bafprp
 	{
 		friend class StructureTypeFieldMaker;
 	public:
-		int getInt();
-		long getLong();
-		std::string getString();
+		int getInt() const;
+		long getLong() const;
+		std::string getString() const;
 
 		bool convert ( const BYTE* data );
 

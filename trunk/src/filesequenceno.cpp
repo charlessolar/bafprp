@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	long FileSequenceNo::getLong()
+	long FileSequenceNo::getLong() const
 	{
 		LOG_TRACE( "FileSequenceNo::getLong" );
 
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -79,14 +79,14 @@ namespace bafprp
 		return ret;
 	}
 
-	int FileSequenceNo::getInt()
+	int FileSequenceNo::getInt() const
 	{
 		LOG_TRACE( "FileSequenceNo::getInt" );
 		
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -96,14 +96,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string FileSequenceNo::getString()
+	std::string FileSequenceNo::getString() const
 	{
 		LOG_TRACE( "FileSequenceNo::getString" );
 		
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

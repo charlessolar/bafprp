@@ -157,7 +157,7 @@ namespace bafprp
 		}
 		LOG_TRACE( "File::record" );
 
-		IField* field;
+		const IField* field;
 		std::string lastName = "";
 		
 		fprintf_s( _fp, "---------------------------------------\n" );

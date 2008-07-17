@@ -29,9 +29,9 @@ namespace bafprp
 	{
 		friend class StudyIndicatorFieldMaker;
 	public:
-		int getInt();
-		long getLong();
-		std::string getString();
+		int getInt() const;
+		long getLong() const;
+		std::string getString() const;
 
 		bool convert ( const BYTE* data );
 

@@ -88,7 +88,7 @@ namespace bafprp
 		return NULL;
 	}
 
-	IField* IBafRecord::getField( const std::string name ) const
+	const IField* IBafRecord::getField( const std::string name ) const
 	{
 		if( _fields.empty() ) return NULL;
 
@@ -102,7 +102,7 @@ namespace bafprp
 		return NULL;
 	}
 
-	IField* IBafRecord::getNextField( const std::string last ) const
+	const IField* IBafRecord::getNextField( const std::string last ) const
 	{
 		if( _fields.empty() ) return NULL;
 
