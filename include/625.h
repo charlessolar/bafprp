@@ -18,32 +18,32 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRP9013_H
-#define BAFPRP9013_H
+#ifndef BAFPRP625_H
+#define BAFPRP625_H
 
 #include "ibafrecord.h"
 
 namespace bafprp
 {
-	class r9013 : public IBafRecord
+	class r625 : public IBafRecord
 	{
-		friend class r9013Maker;
+		friend class r625Maker;
 	public:
 		std::string getType();
 
-		~r9013();
+		~r625();
 	protected:
-		r9013( const BYTE* data, int length, long filePos );
+		r625( const BYTE* data, int length, long filePos );
 	};
 
-	class r9013Maker : public RecordMaker
+	class r625Maker : public RecordMaker
 	{
 	public:
-		r9013Maker() : RecordMaker( 9013 ) {}
+		r625Maker() : RecordMaker( 625 ) {}
 	protected:
 		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
 	private:
-		static const r9013Maker registerThis;
+		static const r625Maker registerThis;
 	};
 }
 

@@ -18,33 +18,42 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRP9013_H
-#define BAFPRP9013_H
+#ifndef BAFPRPCALLEDPARTYOFFHOOK_H
+#define BAFPRPCALLEDPARTYOFFHOOK_H
 
-#include "ibafrecord.h"
+#include "ifield.h"
 
 namespace bafprp
 {
-	class r9013 : public IBafRecord
+	class CalledPartyOffHook : public IField
 	{
-		friend class r9013Maker;
+		friend class CalledPartyOffHookFieldMaker;
 	public:
-		std::string getType();
+		int getInt();
+		long getLong();
+		std::string getString();
 
-		~r9013();
-	protected:
-		r9013( const BYTE* data, int length, long filePos );
-	};
+		bool convert ( const BYTE* data );
 
-	class r9013Maker : public RecordMaker
-	{
-	public:
-		r9013Maker() : RecordMaker( 9013 ) {}
-	protected:
-		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+		int getSize() const { return 1; }
+		std::string getType() const { return "bool"; }
+		std::string getName() const { return "Call Party Off-Hook"; }
+
+		~CalledPartyOffHook();
 	private:
-		static const r9013Maker registerThis;
+		CalledPartyOffHook();
 	};
+
+	class CalledPartyOffHookFieldMaker : public FieldMaker
+	{
+	public:
+		CalledPartyOffHookFieldMaker() : FieldMaker( "calledpartyoffhook" ) {}
+	protected:
+		IField* make() const;
+	private:
+		static const CalledPartyOffHookFieldMaker registerThis;
+	};
+
 }
 
 #endif
