@@ -41,7 +41,7 @@ namespace bafprp
 
 		int getSize() const { return _length + 5; }
 
-		std::string getData() { return getChars( _data, _length ); }
+		std::string getData() { return getChars( _data, _length * 2 ); }
 		long getFilePosition() { return _filePos; }
 		
 		virtual ~IBafRecord();	

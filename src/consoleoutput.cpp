@@ -21,6 +21,8 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include "consoleoutput.h"
 
 #include <iostream>
+#include <ios>
+#include <iomanip>
 
 namespace bafprp
 {
@@ -29,6 +31,73 @@ namespace bafprp
 	void Console::error( IBafRecord* record, const std::string error )
 	{
 		LOG_TRACE( "Console::error" );
+
+		std::cout.setf( std::ios::left );
+
+		std::cout << "* Record Error *********************************************" << std::endl;
+		std::cout << "*                                                          *" << std::endl;
+		std::cout << "*    " << NowTime() << "                             *" << std::endl;
+
+		std::cout << "*                                                          *" << std::endl;
+
+		std::string rest = "";
+		int space = 0;
+
+		space = error.substr( 0, 48 ).find_last_of( " " );
+		if( space == std::string::npos )
+				space = 48;
+
+		std::cout << "* Report: " << std::setw( 48 ) << error.substr( 0, space ) << " *" << std::endl;
+
+		// Avoid the out_of_range exception
+		if( error.length() > 48 )
+			rest = error.substr( space + 1 );		
+		
+		// I like neatly formated messages.
+		while( rest != "" )
+		{
+			if( rest.length() > 49 ) 
+			{
+				space = rest.substr( 0, 48 ).find_last_of( " " );
+				if( space == std::string::npos )
+					space = 48;
+			}
+			
+
+			std::cout << "*         " << std::setw( 48 ) << rest.substr( 0, space ) << " *" << std::endl;
+
+			if( rest.length() > 49 )	
+				rest = rest.substr( space + 1 );
+			else
+				rest = "";
+		}
+
+		std::cout << "*                                                          *" << std::endl;
+		std::cout << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
+		std::cout << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
+		std::cout << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;	
+
+		std::cout << "*                                                          *" << std::endl;
+		std::string bytes = record->getData();
+		std::cout << "* BYTES: " << std::setw(49) << bytes.substr( 0, 48 ) << " *" << std::endl;
+
+		rest = "";
+
+		if( bytes.length() > 48 )
+			rest = bytes.substr( 48 );
+		
+		while( rest != "" )
+		{
+			std::cout << "*        " << std::setw(49) << rest.substr( 0, 48 ) << " *" << std::endl;
+
+			if( rest.length() > 48 )
+				rest = rest.substr( 48 );
+			else
+				rest = "";
+		}
+		std::cout << "*                                                          *" << std::endl;
+		std::cout << "************************************************************" << std::endl;
+
 		LOG_TRACE( "/Console::error" );
 	}
 

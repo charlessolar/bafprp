@@ -44,6 +44,7 @@ namespace bafprp
 		if( _fp ) fclose( _fp );
 	}
 
+	// Best to avert your eyes.
 	void File::error( IBafRecord* record, const std::string error )
 	{
 		if( !_fp )
@@ -61,24 +62,39 @@ namespace bafprp
 		os.setf( std::ios::left );
 
 		fprintf_s( _fp, "*                                                          *\n" );
-		os << "* Report: " << std::setw(48) << error.substr(0,48) << " *" << std::endl;
+
+		std::string rest = "";
+		int space = 0;
+
+		space = error.substr( 0, 48 ).find_last_of( " " );
+		if( space == std::string::npos )
+				space = 48;
+
+		os << "* Report: " << std::setw( 48 ) << error.substr( 0, space ) << " *" << std::endl;
 		fprintf_s( _fp, os.str().c_str() );
 		os.str("");
-		std::string rest = "";
-		
+
 		// Avoid the out_of_range exception
 		if( error.length() > 48 )
-			rest = error.substr( 48 );
-
+			rest = error.substr( space + 1 );		
+		
 		// I like neatly formated messages.
 		while( rest != "" )
 		{
-			os << "*         " << std::setw(48) << rest.substr(0,48) << " *" << std::endl;
+			if( rest.length() > 49 ) 
+			{
+				space = rest.substr( 0, 48 ).find_last_of( " " );
+				if( space == std::string::npos )
+					space = 48;
+			}
+			
+
+			os << "*         " << std::setw( 48 ) << rest.substr( 0, space ) << " *" << std::endl;
 			fprintf_s( _fp, os.str().c_str() );
 			os.str("");
 
-			if( rest.length() > 48 )
-				rest = rest.substr( 48 );
+			if( rest.length() > 49 )	
+				rest = rest.substr( space + 1 );
 			else
 				rest = "";
 		}
@@ -94,24 +110,31 @@ namespace bafprp
 		fprintf_s( _fp, os.str().c_str() );
 		os.str("");
 
-
-		//const BYTE* dp = record->getDataPointer();
-
 		fprintf_s( _fp, "*                                                          *\n" );
-		os << "* BYTES: " << std::setw(49) << record->getData() << " *" << std::endl;
-
-		//os.unsetf( std::ios::dec );
-		//os.unsetf( std::ios::showbase );
-		//os.setf( std::ios::uppercase | std::ios::hex );
-		//for( int i = 0; i < 42; i++ )
-		//{
-		//	os << (( dp[i] & 0xF0 ) >> 4 ) + 0x30;
-		//	os << ( dp[i] & 0x0F ) + 0x30;
-		//}
-		//os << " *" << std::endl;	
+		std::string bytes = record->getData();
+		os << "* BYTES: " << std::setw(49) << bytes.substr( 0, 48 ) << " *" << std::endl;
 		fprintf_s( _fp, os.str().c_str() );
 		os.str("");
 
+		rest = "";
+
+		if( bytes.length() > 48 )
+			rest = bytes.substr( 48 );
+		
+		while( rest != "" )
+		{
+			os << "*        " << std::setw(49) << rest.substr( 0, 48 ) << " *" << std::endl;
+			fprintf_s( _fp, os.str().c_str() );
+			os.str("");
+
+			if( rest.length() > 48 )
+				rest = rest.substr( 48 );
+			else
+				rest = "";
+		}
+		fprintf_s( _fp, "*                                                          *\n" );
+		fprintf_s( _fp, "************************************************************\n" );
+	
 		LOG_TRACE( "/File::error" );
 	}
 

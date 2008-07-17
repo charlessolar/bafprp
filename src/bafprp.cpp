@@ -35,8 +35,8 @@ using namespace std;
 int main ( int argc, char *argv[] )
 {	
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
-	Output::setRecordOutput( "file" );
-	Output::setErrorOutput( "file" );
+	Output::setRecordOutput( "console" );
+	Output::setErrorOutput( "console" );
 	Output::setLogOutput( "file" );
 	LOG_TRACE( "Global::main" );
 	
