@@ -107,7 +107,41 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "NPA dialed by customer";
+				break;
+			case '1':
+				ret = "NPA determined by the network element";
+				break;
+			case '2':
+				ret = "Non-NANP number dialed (non-international)";
+				break;
+			case '3':
+				ret = "7-digits international number";
+				break;
+			case '4':
+				ret = "8-digits international number";
+				break;
+			case '5':
+				ret = "9-digits international number";
+				break;
+			case '6':
+				ret = "10-digits international number";
+				break;
+			case '7':
+				ret = "11-digits international number";
+				break;
+			case '8':
+				ret = "12-digits international number";
+				break;
+			case '9':
+				ret = "Operator inward dialed-code";
+				break;
+			}
+		}
 
 		LOG_TRACE( "/OverseasIndicator::getString" );
 		return ret;

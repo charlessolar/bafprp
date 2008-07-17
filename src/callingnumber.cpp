@@ -57,43 +57,14 @@ namespace bafprp
 			_lastError = "Data read is not the correct size";
 			_converted = false;
 		}
+		if( _return[3] != 'C' )
+		{
+			_lastError = "Badly formated field";
+			_converted = false;
+		}		
 
 		LOG_TRACE( "/CallingNumber::convert" );
 		return _converted;
-	}
-
-	int CallingNumber::getInt()
-	{
-		LOG_TRACE( "CallingNumber::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/CallingNumber::getInt" );
-		return ret;
-	}
-
-	long CallingNumber::getLong()
-	{
-		LOG_TRACE( "CallingNumber::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/CallingNumber::getLong" );
-		return ret;
 	}
 
 	std::string CallingNumber::getString()
@@ -107,7 +78,9 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			ret = _return.substr(0,3) + "-" + _return.substr(4,3) + "-" + _return.substr(7,4);
+		}
 
 		LOG_TRACE( "/CallingNumber::getString" );
 		return ret;

@@ -36,7 +36,7 @@ namespace bafprp
 		bool convert ( const BYTE* data );
 
 		int getSize() const { return 3; }
-		std::string getType() const { return "string"; }
+		std::string getType() const { return "int"; }
 		std::string getName() const { return "Service Feature Code"; }
 
 		~ServiceFeature();

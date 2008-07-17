@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int OperatorAction::getInt()
-	{
-		LOG_TRACE( "OperatorAction::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/OperatorAction::getInt" );
-		return ret;
-	}
-
-	long OperatorAction::getLong()
-	{
-		LOG_TRACE( "OperatorAction::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/OperatorAction::getLong" );
-		return ret;
-	}
-
 	std::string OperatorAction::getString()
 	{
 		LOG_TRACE( "OperatorAction::getString" );
@@ -107,7 +73,25 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "Automatically identified, customer dialed";
+				break;
+			case '1':
+				ret = "Automatically identified, customer dialed with OSS";
+				break;
+			case '2':
+				ret = "Operator identified, customer dialed";
+				break;
+			case '3':
+				ret = "Operator identified, customer dialed with OSS";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
 
 		LOG_TRACE( "/OperatorAction::getString" );
 		return ret;

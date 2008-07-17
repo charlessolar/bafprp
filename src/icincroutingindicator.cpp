@@ -107,7 +107,31 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "Direct";
+				break;
+			case '1':
+				ret = "Tandem";
+				break;
+			case '2':
+				ret = "CAP direct from EO";
+				break;
+			case '3':
+				ret = "CAP direct from AP tandem";
+				break;
+			case '4':
+				ret = "Tandem sig. to TSP - CAP trunks";
+				break;
+			case '5':
+				ret = "Tandem from another LEC's EO";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
 
 		LOG_TRACE( "/ICINCRoutingIndicator::getString" );
 		return ret;

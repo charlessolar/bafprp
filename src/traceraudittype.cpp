@@ -59,8 +59,7 @@ namespace bafprp
 		}
 
 		LOG_TRACE( "/TracerAuditType::convert" );
-		//return _converted;
-		return false;
+		return _converted;
 	}
 
 	long TracerAuditType::getLong()
@@ -123,7 +122,7 @@ namespace bafprp
 				ret = "Hourly AMA audit";
 				break;
 			default:
-				ret = "Unknown Type" + type;
+				ret = "Unknown Type " + type;
 			}
 		}
 

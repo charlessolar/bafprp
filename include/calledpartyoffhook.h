@@ -29,14 +29,12 @@ namespace bafprp
 	{
 		friend class CalledPartyOffHookFieldMaker;
 	public:
-		int getInt();
-		long getLong();
 		std::string getString();
 
 		bool convert ( const BYTE* data );
 
 		int getSize() const { return 1; }
-		std::string getType() const { return "bool"; }
+		std::string getType() const { return "string"; }
 		std::string getName() const { return "Call Party Off-Hook"; }
 
 		~CalledPartyOffHook();

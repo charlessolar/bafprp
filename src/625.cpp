@@ -79,7 +79,10 @@ namespace bafprp
 		switch( field->getInt() )
 		{
 		case 119:
-			ret = "Incomming CDR";
+			ret = "Incoming CDR";
+			break;
+		case 110:
+			ret = "Interlata call";
 			break;
 		default:
 			ret = "Unknown";

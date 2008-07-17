@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int CarrierConnectTime::getInt()
-	{
-		LOG_TRACE( "CarrierConnectTime::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/CarrierConnectTime::getInt" );
-		return ret;
-	}
-
-	long CarrierConnectTime::getLong()
-	{
-		LOG_TRACE( "CarrierConnectTime::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/CarrierConnectTime::getLong" );
-		return ret;
-	}
-
 	std::string CarrierConnectTime::getString()
 	{
 		LOG_TRACE( "CarrierConnectTime::getString" );
@@ -107,7 +73,11 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			std::ostringstream os;
+			os << _return[0] << _return[1] << ":" << _return[2] << _return[3] << ":" << _return[4] << _return[5] << "." << _return[6];
+			ret = os.str();
+		}
 
 		LOG_TRACE( "/CarrierConnectTime::getString" );
 		return ret;

@@ -73,7 +73,7 @@ namespace bafprp
 			ret = 0;
 		}
 		else
-			ret = atoi( _return.c_str() );
+			ret = atoi( _return.substr(1).c_str() );
 
 		LOG_TRACE( "/TrunkGroupNumber::getInt" );
 		return ret;
@@ -90,7 +90,7 @@ namespace bafprp
 			ret = 0;
 		}
 		else
-			ret = atol( _return.c_str() );
+			ret = atol( _return.substr(1).c_str() );
 
 		LOG_TRACE( "/TrunkGroupNumber::getLong" );
 		return ret;
@@ -107,7 +107,36 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '1':
+				ret = "Non-SS7 direct";
+				break;
+			case '2':
+				ret = "Non-SS7 from IC to AT, non-SS7 to EO";
+				break;
+			case '3':
+				ret = "SS7 direct";
+				break;
+			case '4':
+				ret = "SS7 from IC to AT, SS7 to EO";
+				break;
+			case '5':
+				ret = "None-SS7 from IC to AT, SS7 to EO";
+				break;
+			case '6':
+				ret = "SS7 from IC to AT, non-SS7 to EO";
+				break;
+			case '9':
+				ret = "Signaling type not specified";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+
+			ret += " : " + _return.substr(1);
+		}
 
 		LOG_TRACE( "/TrunkGroupNumber::getString" );
 		return ret;
