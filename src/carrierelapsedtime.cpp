@@ -81,14 +81,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	int CarrierElapsedTime::getInt()
+	int CarrierElapsedTime::getInt() const
 	{
 		LOG_TRACE( "CarrierElapsedTime::getInt" );
 
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -98,14 +98,14 @@ namespace bafprp
 		return ret;
 	}
 
-	long CarrierElapsedTime::getLong()
+	long CarrierElapsedTime::getLong() const
 	{
 		LOG_TRACE( "CarrierElapsedTime::getLong" );
 
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -115,7 +115,7 @@ namespace bafprp
 		return ret;
 	}
 
-	float CarrierElapsedTime::getFloat()
+	float CarrierElapsedTime::getFloat() const
 	{
 		// Return time in seconds
 		LOG_TRACE( "CarrierElapsedTime::getFloat" );
@@ -123,7 +123,7 @@ namespace bafprp
 		float ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get float before field was converted";
+			LOG_WARN( "Tried to get float before field was converted" );
 			ret = 0.0f;
 		}
 		else
@@ -134,14 +134,14 @@ namespace bafprp
 	}
 
 
-	std::string CarrierElapsedTime::getString()
+	std::string CarrierElapsedTime::getString() const
 	{
 		LOG_TRACE( "CarrierElapsedTime::getString" );
 
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

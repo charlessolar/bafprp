@@ -84,14 +84,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	int Duration::getInt()
+	int Duration::getInt() const
 	{
 		LOG_TRACE( "Duration::getInt" );
 
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -101,14 +101,14 @@ namespace bafprp
 		return ret;
 	}
 
-	long Duration::getLong()
+	long Duration::getLong() const
 	{
 		LOG_TRACE( "Duration::getLong" );
 
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -118,7 +118,7 @@ namespace bafprp
 		return ret;
 	}
 
-	float Duration::getFloat()
+	float Duration::getFloat() const
 	{
 		// Return time in seconds
 		LOG_TRACE( "Duration::getFloat" );
@@ -126,7 +126,7 @@ namespace bafprp
 		float ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get float before field was converted";
+			LOG_WARN( "Tried to get float before field was converted" );
 			ret = 0.0f;
 		}
 		else
@@ -136,14 +136,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string Duration::getString()
+	std::string Duration::getString() const
 	{
 		LOG_TRACE( "Duration::getString" );
 
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

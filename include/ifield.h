@@ -33,11 +33,11 @@ namespace bafprp
 	{
 		friend class FieldMaker;
 	public:
-		virtual bool getBool() { return 0; }
-		virtual int getInt() { return 0; }
-		virtual long getLong() { return 0; }
-		virtual float getFloat() { return 0.0f; }
-		virtual std::string getString() { return ""; }
+		virtual bool getBool() const { return 0; }
+		virtual int getInt() const { return 0; }
+		virtual long getLong() const { return 0; }
+		virtual float getFloat() const { return 0.0f; }
+		virtual std::string getString() const { return ""; }
 
 		std::string getError() const { return _lastError; }
 		

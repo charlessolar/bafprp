@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	int ServiceFeature::getInt()
+	int ServiceFeature::getInt() const
 	{
 		LOG_TRACE( "ServiceFeature::getInt" );
 
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -79,14 +79,14 @@ namespace bafprp
 		return ret;
 	}
 
-	long ServiceFeature::getLong()
+	long ServiceFeature::getLong() const
 	{
 		LOG_TRACE( "ServiceFeature::getLong" );
 
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -96,14 +96,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string ServiceFeature::getString()
+	std::string ServiceFeature::getString() const
 	{
 		LOG_TRACE( "ServiceFeature::getString" );
 
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	long SensorID::getLong()
+	long SensorID::getLong() const
 	{
 		LOG_TRACE( "SensorID::getLong" );
 		
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -79,14 +79,14 @@ namespace bafprp
 		return ret;
 	}
 
-	int SensorID::getInt()
+	int SensorID::getInt() const
 	{
 		LOG_TRACE( "SensorID::getInt" );
 		
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -96,14 +96,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string SensorID::getString()
+	std::string SensorID::getString() const
 	{
 		LOG_TRACE( "SensorID::getString" );
 		
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

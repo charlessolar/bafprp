@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	long RecordOfficeID::getLong()
+	long RecordOfficeID::getLong() const
 	{
 		LOG_TRACE( "RecordOfficeID::getLong" );
 		
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -79,14 +79,14 @@ namespace bafprp
 		return ret;
 	}
 
-	int RecordOfficeID::getInt()
+	int RecordOfficeID::getInt() const
 	{
 		LOG_TRACE( "RecordOfficeID::getInt" );
 		
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -96,14 +96,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string RecordOfficeID::getString()
+	std::string RecordOfficeID::getString() const
 	{
 		LOG_TRACE( "RecordOfficeID::getString" );
 		
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

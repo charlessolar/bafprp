@@ -67,14 +67,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	std::string CallingNumber::getString()
+	std::string CallingNumber::getString() const
 	{
 		LOG_TRACE( "CallingNumber::getString" );
 
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

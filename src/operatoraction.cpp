@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	std::string OperatorAction::getString()
+	std::string OperatorAction::getString() const
 	{
 		LOG_TRACE( "OperatorAction::getString" );
 
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

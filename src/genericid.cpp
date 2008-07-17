@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	std::string GenericID::getString()
+	std::string GenericID::getString() const
 	{
 		LOG_TRACE( "GenericID::getString" );
 		
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

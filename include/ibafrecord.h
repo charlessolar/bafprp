@@ -34,8 +34,8 @@ namespace bafprp
 		friend class RecordMaker;
 	public:
 		// Allow override because I feel like it
-		virtual IField* getField( const std::string name ) const;
-		virtual IField* getNextField( const std::string last = "" ) const;
+		virtual const IField* getField( const std::string name ) const;
+		virtual const IField* getNextField( const std::string last = "" ) const;
 
 		virtual std::string getType() const = 0;
 

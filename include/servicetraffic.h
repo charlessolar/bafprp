@@ -29,7 +29,7 @@ namespace bafprp
 	{
 		friend class ServiceTrafficFieldMaker;
 	public:
-		std::string getString();
+		std::string getString() const;
 
 		bool convert ( const BYTE* data );
 

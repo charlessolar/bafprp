@@ -62,14 +62,14 @@ namespace bafprp
 		return _converted;
 	}
 
-	int ICINCRoutingIndicator::getInt()
+	int ICINCRoutingIndicator::getInt() const
 	{
 		LOG_TRACE( "ICINCRoutingIndicator::getInt" );
 
 		int ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get int before field was converted";
+			LOG_WARN( "Tried to get int before field was converted" );
 			ret = 0;
 		}
 		else
@@ -79,14 +79,14 @@ namespace bafprp
 		return ret;
 	}
 
-	long ICINCRoutingIndicator::getLong()
+	long ICINCRoutingIndicator::getLong() const
 	{
 		LOG_TRACE( "ICINCRoutingIndicator::getLong" );
 
 		long ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get long before field was converted";
+			LOG_WARN( "Tried to get long before field was converted" );
 			ret = 0;
 		}
 		else
@@ -96,14 +96,14 @@ namespace bafprp
 		return ret;
 	}
 
-	std::string ICINCRoutingIndicator::getString()
+	std::string ICINCRoutingIndicator::getString() const
 	{
 		LOG_TRACE( "ICINCRoutingIndicator::getString" );
 
 		std::string ret;
 		if( !_converted )
 		{
-			_lastError = "Tried to get string before field was converted";
+			LOG_WARN( "Tried to get string before field was converted" );
 			ret = "";
 		}
 		else

@@ -29,10 +29,10 @@ namespace bafprp
 	{
 		friend class DurationFieldMaker;
 	public:
-		int getInt();
-		long getLong();
-		float getFloat();
-		std::string getString();
+		int getInt() const;
+		long getLong() const;
+		float getFloat() const;
+		std::string getString() const;
 
 		bool convert ( const BYTE* data );
 
