@@ -35,9 +35,9 @@ using namespace std;
 int main ( int argc, char *argv[] )
 {	
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
-	Output::setRecordOutput( "file" );
-	Output::setErrorOutput( "console" );
-	Output::setLogOutput( "file" );
+	Output::setoutputRecord( "file" );
+	Output::setoutputError( "file" );
+	Output::setoutputLog( "file" );
 	LOG_TRACE( "Global::main" );
 	
 
@@ -49,7 +49,7 @@ int main ( int argc, char *argv[] )
 		record = file->getNextRecord();
 		if( record )
 		{
-			Output::recordOutput( record );
+			Output::outputRecord( record );
 			delete record;
 		}
 	}

@@ -70,13 +70,13 @@ namespace bafprp
 
 		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
 
-		static void setRecordOutput( const std::string name ) { _recordoutput = name; }
-		static void setErrorOutput( const std::string name ) { _erroroutput = name; }
-		static void setLogOutput( const std::string name ) { _logoutput = name; }
+		static void setoutputRecord( const std::string name ) { _outputRecord = name; }
+		static void setoutputError( const std::string name ) { _outputError = name; }
+		static void setoutputLog( const std::string name ) { _outputLog = name; }
 
-		static void recordOutput( IBafRecord* record );
-		static void errorOutput( IBafRecord* record, const std::string error );
-		static void logOutput( LOG_LEVEL level, const std::string log );
+		static void outputRecord( IBafRecord* record );
+		static void outputError( IBafRecord* record, const std::string error );
+		static void outputLog( LOG_LEVEL level, const std::string log );
 
 	private:
 		// Allow no one to make this class
@@ -92,9 +92,9 @@ namespace bafprp
 
 		static LOG_LEVEL _level;
 
-		static std::string _recordoutput;
-		static std::string _erroroutput;
-		static std::string _logoutput;
+		static std::string _outputRecord;
+		static std::string _outputError;
+		static std::string _outputLog;
 
 	};
 	
@@ -106,38 +106,38 @@ namespace bafprp
 	do { \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - TRACE: " << logEvent << "\n"; \
-		Output::logOutput( LOG_LEVEL_TRACE, ssOutput.str() ); \
+		Output::outputLog( LOG_LEVEL_TRACE, ssOutput.str() ); \
 	} while(0);
 	#define LOG_DEBUG( logEvent ) \
 	do { \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent << "\n"; \
-		Output::logOutput( LOG_LEVEL_DEBUG, ssOutput.str() ); \
+		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} while(0);
 	#define LOG_WARN( logEvent ) \
 	do { \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - WARN: " << logEvent << "\n"; \
-		Output::logOutput( LOG_LEVEL_WARN, ssOutput.str() ); \
+		Output::outputLog( LOG_LEVEL_WARN, ssOutput.str() ); \
 	} while(0);
 	#define LOG_ERROR( logEvent ) \
 	do { \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - ERROR: " << logEvent << "\n"; \
-		Output::logOutput( LOG_LEVEL_ERROR, ssOutput.str() ); \
+		Output::outputLog( LOG_LEVEL_ERROR, ssOutput.str() ); \
 	} while(0);
 	#define LOG_FATAL( logEvent ) \
 	do { \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - FATAL: " << logEvent << "\n"; \
-		Output::logOutput( LOG_LEVEL_FATAL, ssOutput.str() ); \
+		Output::outputLog( LOG_LEVEL_FATAL, ssOutput.str() ); \
 	} while(0);
  
 	#define ERROR_OUTPUT( record, error ) \
 	do { \
 		std::ostringstream ssOutput; \
 		ssOutput << error; \
-		Output::errorOutput( record, ssOutput.str() ); \
+		Output::outputError( record, ssOutput.str() ); \
 	} while(0);
 
 }

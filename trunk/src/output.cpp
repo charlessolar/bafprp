@@ -22,9 +22,9 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	std::string Output::_recordoutput;
-	std::string Output::_erroroutput;
-	std::string Output::_logoutput;
+	std::string Output::_outputRecord;
+	std::string Output::_outputError;
+	std::string Output::_outputLog;
 	LOG_LEVEL Output::_level;
 
 	Output::Output( const std::string name )
@@ -36,37 +36,37 @@ namespace bafprp
 	{
 	}
 
-	void Output::recordOutput( IBafRecord* record )
+	void Output::outputRecord( IBafRecord* record )
 	{
-		LOG_TRACE( "Output::recordOutput" );
-		output_map::iterator itr = getReg().find( _recordoutput );
+		LOG_TRACE( "Output::outputRecord" );
+		output_map::iterator itr = getReg().find( _outputRecord );
 		if( itr != getReg().end() )
 			itr->second->record( record );
 		else
-			LOG_ERROR( "Output type " << _recordoutput << " does not exist." );
-		LOG_TRACE( "/Output::recordOutput" );
+			LOG_ERROR( "Output type " << _outputRecord << " does not exist." );
+		LOG_TRACE( "/Output::outputRecord" );
 	}
 
-	void Output::errorOutput( IBafRecord* record, const std::string error )
+	void Output::outputError( IBafRecord* record, const std::string error )
 	{
-		LOG_TRACE( "Output::errorOutput" );
-		output_map::iterator itr = getReg().find( _erroroutput );
+		LOG_TRACE( "Output::outputError" );
+		output_map::iterator itr = getReg().find( _outputError );
 		if( itr != getReg().end() )
 			itr->second->error( record, error );
 		else
-			LOG_ERROR( "Output type " << _erroroutput << " does not exist." );
-		LOG_TRACE( "/Output::errorOutput" );
+			LOG_ERROR( "Output type " << _outputError << " does not exist." );
+		LOG_TRACE( "/Output::outputError" );
 	}
 
-	void Output::logOutput( LOG_LEVEL level, const std::string log )
+	void Output::outputLog( LOG_LEVEL level, const std::string log )
 	{
 		if( level < _level ) return;
 
-		output_map::iterator itr = getReg().find( _logoutput );
+		output_map::iterator itr = getReg().find( _outputLog );
 		if( itr != getReg().end() )
 			itr->second->log( log );
 		else
-			getReg().begin()->second->log( "Output type " + _logoutput + " does not exist." );		// If output is set wrong, use one that works.
+			getReg().begin()->second->log( "Output type " + _outputLog + " does not exist." );		// If output is set wrong, use one that works.
 																								// there should always be at least one form of output
 																								// unfortunently we do not know which one thanks to static init.
 	}
