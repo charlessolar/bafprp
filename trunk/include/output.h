@@ -62,20 +62,20 @@ namespace bafprp
 		Output( const std::string name );
 		
 		// virtual methods for processing data
-		virtual void record( IBafRecord* record ) = 0;
-		virtual void error( IBafRecord* record, const std::string error ) = 0;
+		virtual void record( const IBafRecord* record ) = 0;
+		virtual void error( const IBafRecord* record, const std::string error ) = 0;
 		virtual void log( const std::string log ) = 0;
 	public:
 		virtual ~Output();
 
 		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
 
-		static void setoutputRecord( const std::string name ) { _outputRecord = name; }
-		static void setoutputError( const std::string name ) { _outputError = name; }
-		static void setoutputLog( const std::string name ) { _outputLog = name; }
+		static void setOutputRecord( const std::string name ) { _outputRecord = name; }
+		static void setOutputError( const std::string name ) { _outputError = name; }
+		static void setOutputLog( const std::string name ) { _outputLog = name; }
 
-		static void outputRecord( IBafRecord* record );
-		static void outputError( IBafRecord* record, const std::string error );
+		static void outputRecord( const IBafRecord* record );
+		static void outputError( const IBafRecord* record, const std::string error );
 		static void outputLog( LOG_LEVEL level, const std::string log );
 
 	private:

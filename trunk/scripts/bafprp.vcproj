@@ -360,10 +360,6 @@
 				RelativePath="..\include\baffile.h"
 				>
 			</File>
-			<File
-				RelativePath="..\doc\gpl.txt"
-				>
-			</File>
 			<Filter
 				Name="Fields"
 				>

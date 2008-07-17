@@ -27,7 +27,6 @@ namespace bafprp
 	BafFile::BafFile() : _filename( "" )
 	{
 		LOG_TRACE( "BafFile::BafFile" );
-		_record = NULL;
 		_filename = "";
 		_offset = 0;
 		_length_of_record = 0;
@@ -52,9 +51,13 @@ namespace bafprp
 	{
 		LOG_TRACE( "BafFile::~BafFile" );
 		_filename.clear();
-		// Its not the file's responsibility to clean up records.
-		// On second thought, it might be a good idea for the file object
-		// to store the record list.  hmmmmm
+		
+		// Clean up records
+		for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
+		{
+			delete *itr;
+		}
+
 		LOG_TRACE( "/BafFile::~BafFile" );
 	}
 
@@ -65,7 +68,7 @@ namespace bafprp
 		return ( _fp ? true : false );
 	}
 
-	IBafRecord* BafFile::getNextRecord()
+	bool BafFile::readRecord()
 	{
 		LOG_TRACE( "BafFile::getNextRecord" );
 		BYTE size[2] = "\x0";
@@ -78,7 +81,7 @@ namespace bafprp
 		{
 			LOG_DEBUG( "Reached end of file" );
 			close();
-			return NULL;
+			return false;
 		}
 
 		// The length of the record includes the first 2 bytes we already read
@@ -89,24 +92,25 @@ namespace bafprp
 		{
 			LOG_ERROR( "Error reading record at " << _offset );
 			close();
-			return NULL;
+			return false;
 		}
 
-		_record = RecordMaker::newRecord( data, _length_of_record, _offset );
+		_records.push_back( RecordMaker::newRecord( data, _length_of_record, _offset ) );
 		
+
 		// for proper offset calculation
 		_offset += _length_of_record + 2;
 		delete[] data;
 
 		LOG_TRACE( "/BafFile::getNextRecord" );
-		return _record;
+		return true;
 	}
 
-	IBafRecord* BafFile::getCurrentRecord()
+	IBafRecord* BafFile::getCurrentRecord() const
 	{
 		LOG_TRACE( "BafFile::getCurrentRecord" );
 		LOG_TRACE( "/BafFile::getCurrentRecord" );
-		return _record;
+		return _records.back();
 	}
 
 	bool BafFile::open( const char* filename )

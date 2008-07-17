@@ -29,7 +29,7 @@ namespace bafprp
 	{
 		friend class r625Maker;
 	public:
-		std::string getType();
+		std::string getType() const;
 
 		~r625();
 	protected:
