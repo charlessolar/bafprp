@@ -34,12 +34,6 @@ namespace bafprp
 		memcpy_s( _data, _length, data, _length );
 		_fieldData = _data;
 
-		//for( int i = 0; i < _length; i++ )
-		//{
-		//	printf( " %X ", _data[i] );
-		//}
-		//printf( "\n" );
-
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
 	}
 
@@ -130,7 +124,7 @@ namespace bafprp
 		IField* field = FieldMaker::newField( name );
 		if( !field->convert( _fieldData ) )
 		{
-			ERROR_OUTPUT( this, "Could not convert field " << field->getName() << " of type " << field->getType() << " and size " << field->getSize() << ". ERROR: " << field->getError() );
+			ERROR_OUTPUT( this, "Could not convert field '" << field->getName() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
 		}
 		// update data position, the mod is to make the size even for nice division
 		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
