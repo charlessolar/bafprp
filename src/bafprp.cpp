@@ -35,23 +35,18 @@ using namespace std;
 int main ( int argc, char *argv[] )
 {	
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
-	Output::setoutputRecord( "file" );
-	Output::setoutputError( "file" );
-	Output::setoutputLog( "file" );
+	Output::setOutputRecord( "file" );
+	Output::setOutputError( "file" );
+	Output::setOutputLog( "file" );
 	LOG_TRACE( "Global::main" );
 	
 
 	BafFile* file = new BafFile( "baf.pri" );
 	IBafRecord* record;
 
-	while( file->isOpen()  )
+	while( file->readRecord()  )
 	{
-		record = file->getNextRecord();
-		if( record )
-		{
-			Output::outputRecord( record );
-			delete record;
-		}
+		Output::outputRecord( file->getCurrentRecord() );
 	}
 
 	file->close();

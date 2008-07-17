@@ -32,8 +32,8 @@ namespace bafprp
 		File();
 		~File();
 
-		void record( IBafRecord* record );
-		void error( IBafRecord* record, const std::string error );
+		void record( const IBafRecord* record );
+		void error( const IBafRecord* record, const std::string error );
 		void log( const std::string log );
 
 	private:

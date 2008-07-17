@@ -28,7 +28,7 @@ namespace bafprp
 {
 	const Console Console::registerThis;
 
-	void Console::error( IBafRecord* record, const std::string error )
+	void Console::error( const IBafRecord* record, const std::string error )
 	{
 		LOG_TRACE( "Console::error" );
 
@@ -106,7 +106,7 @@ namespace bafprp
 		std::cout << log << std::endl;
 	}
 
-	void Console::record( IBafRecord* record )
+	void Console::record( const IBafRecord* record )
 	{
 		LOG_TRACE( "Console::record" );
 
@@ -127,6 +127,8 @@ namespace bafprp
 			name = field->getName();
 			std::cout << name << ": " << value << std::endl;
 		}
+
+		std::cout << "End of record" << std::endl << std::endl;
 
 		LOG_TRACE( "/Console::record" );
 	}

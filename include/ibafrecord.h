@@ -34,15 +34,15 @@ namespace bafprp
 		friend class RecordMaker;
 	public:
 		// Allow override because I feel like it
-		virtual IField* getField( const std::string name );
-		virtual IField* getNextField( const std::string last = "" );
+		virtual IField* getField( const std::string name ) const;
+		virtual IField* getNextField( const std::string last = "" ) const;
 
-		virtual std::string getType() = 0;
+		virtual std::string getType() const = 0;
 
 		int getSize() const { return _length + 5; }
 
-		std::string getData() { return getChars( _data, _length * 2 ); }
-		long getFilePosition() { return _filePos; }
+		std::string getData() const { return getChars( _data, _length * 2 ); }
+		long getFilePosition() const { return _filePos; }
 		
 		virtual ~IBafRecord();	
 	protected:

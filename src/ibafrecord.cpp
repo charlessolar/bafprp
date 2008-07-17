@@ -88,11 +88,11 @@ namespace bafprp
 		return NULL;
 	}
 
-	IField* IBafRecord::getField( const std::string name )
+	IField* IBafRecord::getField( const std::string name ) const
 	{
 		if( _fields.empty() ) return NULL;
 
-		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 		{
 			if( (*itr)->getName() == name )
 				return *itr;
@@ -102,11 +102,11 @@ namespace bafprp
 		return NULL;
 	}
 
-	IField* IBafRecord::getNextField( const std::string last )
+	IField* IBafRecord::getNextField( const std::string last ) const
 	{
 		if( _fields.empty() ) return NULL;
 
-		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 		{
 			if( (*itr)->getName() == last )
 				if( ( itr + 1 ) != _fields.end() )

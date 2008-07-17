@@ -40,8 +40,8 @@ namespace bafprp
 		bool open( const std::string filename );
 		bool open( const char* filename );
 
-		IBafRecord* getNextRecord();
-		IBafRecord* getCurrentRecord();
+		bool readRecord();
+		IBafRecord* getCurrentRecord() const;
 
 		bool isOpen();
 
@@ -50,9 +50,10 @@ namespace bafprp
 	private:
 		std::string _filename;
 		FILE* _fp;
-		IBafRecord* _record;
 		long _offset;
 		int _length_of_record;
+
+		std::vector<IBafRecord*> _records;
 	};
 } 
 #endif

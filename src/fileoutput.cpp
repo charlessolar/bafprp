@@ -34,7 +34,7 @@ namespace bafprp
 		// but I cannot find a way to unlock the file.
 		if( fopen_s( &_fp, "bafprp.log", "w" ) != 0 )
 		{
-			Output::setoutputLog( "console" );
+			Output::setOutputLog( "console" );
 			LOG_ERROR( "Could not open log file, falling back to console log" );
 		}
 	}
@@ -45,11 +45,11 @@ namespace bafprp
 	}
 
 	// Best to avert your eyes.
-	void File::error( IBafRecord* record, const std::string error )
+	void File::error( const IBafRecord* record, const std::string error )
 	{
 		if( !_fp )
 		{
-			Output::setoutputLog( "console" );
+			Output::setOutputLog( "console" );
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 		LOG_TRACE( "File::error" );
@@ -142,17 +142,17 @@ namespace bafprp
 	{
 		if( !_fp )
 		{
-			Output::setoutputLog( "console" );
+			Output::setOutputLog( "console" );
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 		fprintf_s( _fp, "%s\n", log.c_str() );
 	}
 
-	void File::record( IBafRecord* record )
+	void File::record( const IBafRecord* record )
 	{
 		if( !_fp )
 		{
-			Output::setoutputLog( "console" );
+			Output::setOutputLog( "console" );
 			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
 		}
 		LOG_TRACE( "File::record" );
@@ -172,6 +172,9 @@ namespace bafprp
 			lastName = field->getName();
 			fprintf_s( _fp, "%s: %s\n", lastName.c_str(), field->getString().c_str() );
 		}
+
+		fprintf_s( _fp, "End of record\n" );
+		fprintf_s( _fp, "\n" );
 
 		LOG_TRACE( "/File::record" );
 	}

@@ -65,7 +65,7 @@ namespace bafprp
 		addField( "anicpnindicator" );
 	}
 
-	std::string r625::getType()
+	std::string r625::getType() const
 	{
 		// Need to look at the call type field
 		std::string ret;
