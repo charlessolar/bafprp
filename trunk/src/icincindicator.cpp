@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int ICINCIndicator::getInt()
-	{
-		LOG_TRACE( "ICINCIndicator::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/ICINCIndicator::getInt" );
-		return ret;
-	}
-
-	long ICINCIndicator::getLong()
-	{
-		LOG_TRACE( "ICINCIndicator::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/ICINCIndicator::getLong" );
-		return ret;
-	}
-
 	std::string ICINCIndicator::getString()
 	{
 		LOG_TRACE( "ICINCIndicator::getString" );
@@ -107,7 +73,41 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			ret = "CIC = " + _return.substr(0,4) + " : ";
+			switch( _return[4] )
+			{
+			case '0':
+				ret += "FGD, IC/INC involved";
+				break;
+			case '1':
+				ret += "FGD, IC/INC not involved";
+				break;
+			case '2':
+				ret += "FGD, IC/INC involvement unknown";
+				break;
+			case '3':
+				ret += "FGB, IC/INC involved";
+				break;
+			case '4':
+				ret += "FGB, IC/INC not involved";
+				break;
+			case '5':
+				ret += "FGB, IC/INC involvement unknown";
+				break;
+			case '7':
+				ret += "CIC unknown, IC/INC involved";
+				break;
+			case '8':
+				ret += "CIC unknown, IC/INC not involved";
+				break;
+			case '9':
+				ret += "CIC unknown, IC/INC involvement unknown";
+				break;
+			default:
+				ret += "Unknown " + _return;
+			}
+		}
 
 		LOG_TRACE( "/ICINCIndicator::getString" );
 		return ret;

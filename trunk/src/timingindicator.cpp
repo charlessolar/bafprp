@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int TimingIndicator::getInt()
-	{
-		LOG_TRACE( "TimingIndicator::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/TimingIndicator::getInt" );
-		return ret;
-	}
-
-	long TimingIndicator::getLong()
-	{
-		LOG_TRACE( "TimingIndicator::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/TimingIndicator::getLong" );
-		return ret;
-	}
-
 	std::string TimingIndicator::getString()
 	{
 		LOG_TRACE( "TimingIndicator::getString" );
@@ -107,7 +73,53 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			ret = "";
+			switch( _return[1] )
+			{
+			case '0':
+				ret += "Default";
+				break;
+			case '2':
+				ret += "Timing guard condition";
+				break;
+			case '4':
+				ret += "Unanswered call release";
+				break;
+			default:
+				ret += "Unknown " + _return;
+			}
+			ret += " : ";
+			switch( _return[2] )
+			{
+			case '0':
+				ret += "Default";
+				break;
+			case '1':
+				ret += "Short called party off hook";
+				break;
+			default:
+				ret += "Unknown " + _return;
+			}
+			ret += " : ";
+			switch( _return[3] )
+			{
+			case '0':
+				ret += "Default";
+				break;
+			case '1':
+				ret += "Start of long duration call";
+				break;
+			case '2':
+				ret += "Continuation of long duration call";
+				break;
+			case '3':
+				ret += "Service capability series: deactivation";
+				break;
+			default:
+				ret += "Unknown " + _return;
+			}
+		}
 
 		LOG_TRACE( "/TimingIndicator::getString" );
 		return ret;

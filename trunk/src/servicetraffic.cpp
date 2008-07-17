@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int ServiceTraffic::getInt()
-	{
-		LOG_TRACE( "ServiceTraffic::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/ServiceTraffic::getInt" );
-		return ret;
-	}
-
-	long ServiceTraffic::getLong()
-	{
-		LOG_TRACE( "ServiceTraffic::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/ServiceTraffic::getLong" );
-		return ret;
-	}
-
 	std::string ServiceTraffic::getString()
 	{
 		LOG_TRACE( "ServiceTraffic::getString" );
@@ -107,7 +73,25 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "Default";
+				break;
+			case '1':
+				ret = "Service observed";
+				break;
+			case '2':
+				ret = "Traffic sampled";
+				break;
+			case '3':
+				ret = "Service observed and traffic sampled";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
 
 		LOG_TRACE( "/ServiceTraffic::getString" );
 		return ret;

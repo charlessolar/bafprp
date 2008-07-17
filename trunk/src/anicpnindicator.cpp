@@ -107,7 +107,26 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "Neither ANI nor CPN provided";
+				break;
+			case '1':
+				ret = "ANI provided";
+				break;
+			case '2':
+				ret = "CPN provided";
+				break;
+			case '3':
+				ret = "Both ANI and CPN provided";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
+
 
 		LOG_TRACE( "/ANICPNIndicator::getString" );
 		return ret;

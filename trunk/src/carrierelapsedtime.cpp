@@ -57,6 +57,25 @@ namespace bafprp
 			_lastError = "Data read is not the correct size";
 			_converted = false;
 		}
+		if( _return[0] != '0' )
+		{
+			_lastError = "Badly formated field";
+			_converted = false;
+		}
+
+		// in milliseconds
+
+												// Fractions of a second
+		int milli = atoi( _return.substr( _return.length() - 1 ).c_str() ) * 100;
+												// Seconds
+		milli += atoi( _return.substr( _return.length() - 3, 2 ).c_str() ) * 1000;
+												// Minutes
+		milli += atoi( _return.substr( _return.length() - 5, 2 ).c_str() ) * 60 * 1000;
+												// Hours  - 3 digits are reserved for hours
+		milli += atoi( _return.substr( _return.length() - 8, 3 ).c_str() ) * 60 * 60 * 1000;
+		std::ostringstream os;
+		os << milli;
+		_return = os.str();
 
 		LOG_TRACE( "/CarrierElapsedTime::convert" );
 		return _converted;
@@ -96,6 +115,25 @@ namespace bafprp
 		return ret;
 	}
 
+	float CarrierElapsedTime::getFloat()
+	{
+		// Return time in seconds
+		LOG_TRACE( "CarrierElapsedTime::getFloat" );
+
+		float ret;
+		if( !_converted )
+		{
+			_lastError = "Tried to get float before field was converted";
+			ret = 0.0f;
+		}
+		else
+			ret = getInt() / 1000.0f;
+
+		LOG_TRACE( "/CarrierElapsedTime::getFloat" );
+		return ret;
+	}
+
+
 	std::string CarrierElapsedTime::getString()
 	{
 		LOG_TRACE( "CarrierElapsedTime::getString" );
@@ -107,7 +145,23 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			std::ostringstream os;
+			os.setf( std::ios::fixed, std::ios::floatfield);
+			os.precision( 1 );
+
+			int duration = getInt();
+
+			int milli = ( duration % 1000 ) / 100;  // divide by 100 since our ms will always be 1 digit ( we dont need a 3 digit float )
+			int seconds = ( duration / 1000 ) % 60;
+			int minutes = ( duration / 1000 / 60 ) % 60;
+			int hours = ( duration / 1000 / 60 / 60);
+
+			
+			os << hours << ":" <<  ( ( minutes < 10 ) ? "0" : "" ) << minutes << ":" << ( ( seconds < 10 ) ? "0" : "" ) << seconds << "." << milli;
+			ret = os.str();
+			
+		}
 
 		LOG_TRACE( "/CarrierElapsedTime::getString" );
 		return ret;

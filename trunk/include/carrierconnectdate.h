@@ -29,8 +29,6 @@ namespace bafprp
 	{
 		friend class CarrierConnectDateFieldMaker;
 	public:
-		int getInt();
-		long getLong();
 		std::string getString();
 
 		bool convert ( const BYTE* data );

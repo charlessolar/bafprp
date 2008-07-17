@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int CalledPartyOffHook::getInt()
-	{
-		LOG_TRACE( "CalledPartyOffHook::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/CalledPartyOffHook::getInt" );
-		return ret;
-	}
-
-	long CalledPartyOffHook::getLong()
-	{
-		LOG_TRACE( "CalledPartyOffHook::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/CalledPartyOffHook::getLong" );
-		return ret;
-	}
-
 	std::string CalledPartyOffHook::getString()
 	{
 		LOG_TRACE( "CalledPartyOffHook::getString" );
@@ -107,8 +73,25 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
-
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "Called party off-hook detected";
+				break;
+			case '1':
+				ret = "Called party off-hook not detected";
+				break;
+			case '2':
+				ret = "Answered attempt (OSS person / collect call)";
+				break;
+			case '3':
+				ret = "Simulated called party off-hook";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
 		LOG_TRACE( "/CalledPartyOffHook::getString" );
 		return ret;
 	}

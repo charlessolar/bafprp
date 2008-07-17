@@ -31,12 +31,13 @@ namespace bafprp
 	public:
 		int getInt();
 		long getLong();
+		float getFloat();
 		std::string getString();
 
 		bool convert ( const BYTE* data );
 
 		int getSize() const { return 9; }
-		std::string getType() const { return "string"; }
+		std::string getType() const { return "long"; }
 		std::string getName() const { return "Carrier Elapsed Time"; }
 
 		~CarrierElapsedTime();

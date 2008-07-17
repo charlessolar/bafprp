@@ -107,7 +107,44 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[0] )
+			{
+			case '0':
+				ret = "Dialed digits cannot be determined";
+				break;
+			case '1':
+				ret = "CAC not dialed, cust presub, no presub ind";
+				break;
+			case '2':
+				ret = "CAC dialed, cust not presub, no presub ind";
+				break;
+			case '3':
+				ret = "950-XXXX dialed";
+				break;
+			case '4':
+				ret = "CAC not dialed, cust not presub, presub ind";
+				break;
+			case '5':
+				ret = "CAC dialed, cust not presub, presub ind";
+				break;
+			case '6':
+				ret = "CAC dialed, cust presub, presub ind";
+				break;
+			case '7':
+				ret = "CAC dialed, cust presub, no presub ind";
+				break;
+			case '8':
+				ret = "CAC not dialed, station not presub, no presub ind";
+				break;
+			case '9':
+				ret = "CAC dialed unknown, station presub, presub ind";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
+
 
 		LOG_TRACE( "/DialingPresubIndicator::getString" );
 		return ret;

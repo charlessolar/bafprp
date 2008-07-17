@@ -107,7 +107,37 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch ( getInt() )
+			{
+			case 0:
+				ret = "None";
+				break;
+			case 10:
+				ret = "Three way calling";
+				break;
+			case 12:
+				ret = "Unconditional call forwarding";
+				break;
+			case 14:
+				ret = "Busy or delay call forwarding";
+				break;
+			case 18:
+				ret = "Three way calling usage";
+				break;
+			case 27:
+				ret = "Advanced Intelligent Network - Default";
+				break;
+			case 801:
+				ret = "Basic line hunting (MetaSwitch specific)";
+				break;
+			case 802:
+				ret = "Find-me-follow-me (MetaSwitch specific)";
+				break;
+			default:
+				ret = "Unknown " + getInt();
+		  }
+		}
 
 		LOG_TRACE( "/ServiceFeature::getString" );
 		return ret;

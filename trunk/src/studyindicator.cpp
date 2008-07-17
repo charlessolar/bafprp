@@ -107,7 +107,34 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( _return[5] )
+			{
+			case '0':
+				ret = "Default";
+				break;
+			case '1':
+				ret = "No originating number";
+				break;
+			case '3':
+				ret = "No terminating number";
+				break;
+			case '4':
+				ret = "No orig. and term. numbers";
+				break;
+			case '5':
+				ret = "No terminating NANP station number";
+				break;
+			case '6':
+				ret = "No originating NANP station number";
+				break;
+			case '7':
+				ret = "No orig. and term. NANP station numbers";
+				break;
+			default:
+				ret = "Unknown " + _return;
+			}
+		}
 
 		LOG_TRACE( "/StudyIndicator::getString" );
 		return ret;

@@ -36,6 +36,7 @@ namespace bafprp
 		virtual bool getBool() { return 0; }
 		virtual int getInt() { return 0; }
 		virtual long getLong() { return 0; }
+		virtual float getFloat() { return 0.0f; }
 		virtual std::string getString() { return ""; }
 
 		std::string getError() const { return _lastError; }

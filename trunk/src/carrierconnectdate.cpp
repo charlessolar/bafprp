@@ -62,40 +62,6 @@ namespace bafprp
 		return _converted;
 	}
 
-	int CarrierConnectDate::getInt()
-	{
-		LOG_TRACE( "CarrierConnectDate::getInt" );
-
-		int ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get int before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atoi( _return.c_str() );
-
-		LOG_TRACE( "/CarrierConnectDate::getInt" );
-		return ret;
-	}
-
-	long CarrierConnectDate::getLong()
-	{
-		LOG_TRACE( "CarrierConnectDate::getLong" );
-
-		long ret;
-		if( !_converted )
-		{
-			_lastError = "Tried to get long before field was converted";
-			ret = 0;
-		}
-		else
-			ret = atol( _return.c_str() );
-
-		LOG_TRACE( "/CarrierConnectDate::getLong" );
-		return ret;
-	}
-
 	std::string CarrierConnectDate::getString()
 	{
 		LOG_TRACE( "CarrierConnectDate::getString" );
@@ -107,7 +73,22 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			char year[5] = "";
+			time_t ltime; 
+			struct tm* mytm = NULL;
+			ltime = time( NULL );  
+			mytm = localtime( &ltime );  
+			strftime( year, sizeof( year ), "%Y", mytm );
+			year[3] = _return[0];
+
+			std::ostringstream os;
+			os << _return[1] << _return[2] << "/" << _return[3] << _return[4] << "/" << year;
+			// In case you live in europe
+			// os << _return[3] << _return[4] << "/" << _return[1] << _return[2] << "/" << year;
+
+			ret = os.str();
+		}
 
 		LOG_TRACE( "/CarrierConnectDate::getString" );
 		return ret;
