@@ -135,7 +135,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="log4cplus.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\libs"
 				GenerateDebugInformation="true"
