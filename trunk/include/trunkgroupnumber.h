@@ -18,33 +18,42 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRP9013_H
-#define BAFPRP9013_H
+#ifndef BAFPRPTRUNKGROUPNUMBER_H
+#define BAFPRPTRUNKGROUPNUMBER_H
 
-#include "ibafrecord.h"
+#include "ifield.h"
 
 namespace bafprp
 {
-	class r9013 : public IBafRecord
+	class TrunkGroupNumber : public IField
 	{
-		friend class r9013Maker;
+		friend class TrunkGroupNumberFieldMaker;
 	public:
-		std::string getType();
+		int getInt();
+		long getLong();
+		std::string getString();
 
-		~r9013();
-	protected:
-		r9013( const BYTE* data, int length, long filePos );
-	};
+		bool convert ( const BYTE* data );
 
-	class r9013Maker : public RecordMaker
-	{
-	public:
-		r9013Maker() : RecordMaker( 9013 ) {}
-	protected:
-		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+		int getSize() const { return 5; }
+		std::string getType() const { return "int"; }
+		std::string getName() const { return "Trunk Group Number"; }
+
+		~TrunkGroupNumber();
 	private:
-		static const r9013Maker registerThis;
+		TrunkGroupNumber();
 	};
+
+	class TrunkGroupNumberFieldMaker : public FieldMaker
+	{
+	public:
+		TrunkGroupNumberFieldMaker() : FieldMaker( "trunkgroupnumber" ) {}
+	protected:
+		IField* make() const;
+	private:
+		static const TrunkGroupNumberFieldMaker registerThis;
+	};
+
 }
 
 #endif

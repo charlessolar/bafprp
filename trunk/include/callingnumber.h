@@ -18,33 +18,42 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRP9013_H
-#define BAFPRP9013_H
+#ifndef BAFPRPCALLINGNUMBER_H
+#define BAFPRPCALLINGNUMBER_H
 
-#include "ibafrecord.h"
+#include "ifield.h"
 
 namespace bafprp
 {
-	class r9013 : public IBafRecord
+	class CallingNumber : public IField
 	{
-		friend class r9013Maker;
+		friend class CallingNumberFieldMaker;
 	public:
-		std::string getType();
+		int getInt();
+		long getLong();
+		std::string getString();
 
-		~r9013();
-	protected:
-		r9013( const BYTE* data, int length, long filePos );
-	};
+		bool convert ( const BYTE* data );
 
-	class r9013Maker : public RecordMaker
-	{
-	public:
-		r9013Maker() : RecordMaker( 9013 ) {}
-	protected:
-		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+		int getSize() const { return 11; }
+		std::string getType() const { return "string"; }
+		std::string getName() const { return "Calling Number"; }
+
+		~CallingNumber();
 	private:
-		static const r9013Maker registerThis;
+		CallingNumber();
 	};
+
+	class CallingNumberFieldMaker : public FieldMaker
+	{
+	public:
+		CallingNumberFieldMaker() : FieldMaker( "callingnumber" ) {}
+	protected:
+		IField* make() const;
+	private:
+		static const CallingNumberFieldMaker registerThis;
+	};
+
 }
 
 #endif

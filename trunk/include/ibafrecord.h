@@ -37,7 +37,7 @@ namespace bafprp
 		virtual IField* getField( const std::string name );
 		virtual IField* getNextField( const std::string last = "" );
 
-		virtual std::string getType() const = 0;
+		virtual std::string getType() = 0;
 
 		int getSize() const { return _length + 5; }
 

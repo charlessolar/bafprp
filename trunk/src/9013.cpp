@@ -49,7 +49,7 @@ namespace bafprp
 		addField( "filesequenceno" );
 	}
 
-	std::string r9013::getType() const
+	std::string r9013::getType()
 	{
 		// This type of record only has 1 use
 		return "File Start Marker";

@@ -191,11 +191,47 @@
 				Name="Fields"
 				>
 				<File
+					RelativePath="..\src\anicpnindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\callednumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\calledpartyoffhook.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\callingnumber.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\calltype.cpp"
 					>
 				</File>
 				<File
+					RelativePath="..\src\carrierconnectdate.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\carrierconnecttime.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\carrierelapsedtime.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\date.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\dialingpresubindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\duration.cpp"
 					>
 				</File>
 				<File
@@ -207,7 +243,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\icinccalleventstatus.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\icincindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\icincroutingindicator.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\ifield.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\operatoraction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\overseasindicator.cpp"
 					>
 				</File>
 				<File
@@ -231,11 +287,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\servicefeature.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\servicetraffic.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\structuretype.cpp"
 					>
 				</File>
 				<File
+					RelativePath="..\src\studyindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\timingindicator.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\traceraudittype.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\trunkgroupnumber.cpp"
 					>
 				</File>
 			</Filter>
@@ -258,6 +334,10 @@
 			<Filter
 				Name="Records"
 				>
+				<File
+					RelativePath="..\src\625.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\src\9013.cpp"
 					>
@@ -285,11 +365,47 @@
 				Name="Fields"
 				>
 				<File
+					RelativePath="..\include\anicpnindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\callednumber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\calledpartyoffhook.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\callingnumber.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\calltype.h"
 					>
 				</File>
 				<File
+					RelativePath="..\include\carrierconnectdate.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\carrierconnecttime.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\carrierelapsedtime.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\date.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\dialingpresubindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\duration.h"
 					>
 				</File>
 				<File
@@ -301,7 +417,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\icinccalleventstatus.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\icincindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\icincroutingindicator.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\ifield.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\operatoraction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\overseasindicator.h"
 					>
 				</File>
 				<File
@@ -325,11 +461,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\servicefeature.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\servicetraffic.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\structuretype.h"
 					>
 				</File>
 				<File
+					RelativePath="..\include\studyindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\timingindicator.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\traceraudittype.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\trunkgroupnumber.h"
 					>
 				</File>
 			</Filter>
@@ -352,6 +508,10 @@
 			<Filter
 				Name="Records"
 				>
+				<File
+					RelativePath="..\include\625.h"
+					>
+				</File>
 				<File
 					RelativePath="..\include\9013.h"
 					>
