@@ -42,15 +42,7 @@ int main ( int argc, char *argv[] )
 	
 
 	BafFile* file = new BafFile( "baf.pri" );
-	IBafRecord* record;
-
-	while( file->readRecord()  )
-	{
-		Output::outputRecord( file->getCurrentRecord() );
-	}
-
-	file->close();
-
+	
 	LOG_TRACE( "/Global::main" );
 	cout << "Press any key to exit..." << endl;
 	getchar();

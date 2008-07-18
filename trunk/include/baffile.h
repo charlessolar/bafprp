@@ -22,7 +22,6 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #define BAFPRPBAFFILE_H
 
 #include <string>
-#include <stdio.h>
 
 #include "bafdefines.h"
 #include "ibafrecord.h"
@@ -32,24 +31,18 @@ namespace bafprp
 	class BafFile
 	{
 	public:
-		BafFile();
 		BafFile( const std::string filename );
 		BafFile( const char* filename );
 		~BafFile();
 
-		bool open( const std::string filename );
-		bool open( const char* filename );
-
-		bool readRecord();
-		IBafRecord* getCurrentRecord() const;
-
-		bool isOpen();
-
-		void close();
+		
 
 	private:
+		bool open( const std::string filename );
+		bool readRecord();
+
 		std::string _filename;
-		FILE* _fp;
+		BYTE* _fileData;
 		long _offset;
 		int _length_of_record;
 
