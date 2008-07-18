@@ -69,6 +69,7 @@ namespace bafprp
 		virtual ~Output();
 
 		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
+		static LOG_LEVEL getLogLevel() { return _level; }
 
 		static void setOutputRecord( const std::string name ) { _outputRecord = name; }
 		static void setOutputError( const std::string name ) { _outputError = name; }
@@ -103,35 +104,40 @@ namespace bafprp
 
 	// Macros for easier logging
 	#define LOG_TRACE( logEvent ) \
-	do { \
+	if( Output::getLogLevel() <= LOG_LEVEL_TRACE ) \
+	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - TRACE: " << logEvent << "\n"; \
 		Output::outputLog( LOG_LEVEL_TRACE, ssOutput.str() ); \
-	} while(0);
+	}
 	#define LOG_DEBUG( logEvent ) \
-	do { \
+	if( Output::getLogLevel() <= LOG_LEVEL_DEBUG ) \
+	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent << "\n"; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
-	} while(0);
+	} 
 	#define LOG_WARN( logEvent ) \
-	do { \
+	if( Output::getLogLevel() <= LOG_LEVEL_WARN ) \
+	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - WARN: " << logEvent << "\n"; \
 		Output::outputLog( LOG_LEVEL_WARN, ssOutput.str() ); \
-	} while(0);
+	}
 	#define LOG_ERROR( logEvent ) \
-	do { \
+	if( Output::getLogLevel() <= LOG_LEVEL_ERROR ) \
+	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - ERROR: " << logEvent << "\n"; \
 		Output::outputLog( LOG_LEVEL_ERROR, ssOutput.str() ); \
-	} while(0);
+	}
 	#define LOG_FATAL( logEvent ) \
-	do { \
+	if( Output::getLogLevel() <= LOG_LEVEL_FATAL ) \
+	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - FATAL: " << logEvent << "\n"; \
 		Output::outputLog( LOG_LEVEL_FATAL, ssOutput.str() ); \
-	} while(0);
+	} 
  
 	#define ERROR_OUTPUT( record, error ) \
 	do { \

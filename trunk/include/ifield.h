@@ -69,7 +69,7 @@ namespace bafprp
 		}
 		FieldMaker() {}
 	public:
-		static IField* newField( std::string type );
+		static IField* newField( const std::string type );
 	protected:
 		FieldMaker( std::string type )
 		{

@@ -40,8 +40,12 @@ int main ( int argc, char *argv[] )
 	Output::setOutputLog( "file" );
 	LOG_TRACE( "Global::main" );
 	
+	cout << "Press return to start process" << endl;
+	getchar();
 
+	cout << "File processing started at " << NowTime() << endl;
 	BafFile* file = new BafFile( "baf.pri" );
+	cout << "File processing ended at " << NowTime() << endl;
 	
 	LOG_TRACE( "/Global::main" );
 	cout << "Press any key to exit..." << endl;
