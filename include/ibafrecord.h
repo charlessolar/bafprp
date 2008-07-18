@@ -55,10 +55,10 @@ namespace bafprp
 
 		int _length;
 		
-		BYTE* _fieldData;  // The data pointer we are allowed to modify
+		const BYTE* _fieldData;  // The data pointer we are allowed to modify
 	private:
 		long _filePos;
-		BYTE* _data;  // This one needs to stay constant since we have to delete it later
+		const BYTE* _data;  // This one needs to stay constant since we have to delete it later
 	};
 
 	class RecordMaker

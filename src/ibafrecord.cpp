@@ -30,9 +30,10 @@ namespace bafprp
 	IBafRecord::IBafRecord( const BYTE* data, int length, long filePos ) : _length( length ), _filePos( filePos )
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
-		_data = new BYTE[ _length + 1 ];
-		memcpy_s( _data, _length, data, _length );
-		_fieldData = _data;
+		_data = data;
+		_fieldData = _data + 0;
+		//memcpy_s( _data, _length, data, _length );
+		//_fieldData = _data;
 
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
 	}
@@ -44,7 +45,7 @@ namespace bafprp
 		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 			delete (*itr);
 
-		delete[] _data;
+		//delete[] _data;
 		LOG_TRACE( "/IBafRecord::~IBafRecord" );
 	}
 
@@ -53,6 +54,8 @@ namespace bafprp
 	{
 		// This function will take the full record data, extract the structure type, and create a new
 		// record object from that type
+
+		data += 2; // ignore the length
 		if( *data == 0x0 )
 		{
 			data += 2;  // Record is usually prefixed by x0000
