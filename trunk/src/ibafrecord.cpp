@@ -52,6 +52,7 @@ namespace bafprp
 
 	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, long filePos )
 	{
+		LOG_TRACE( "IBafRecord::newRecord" );
 		// This function will take the full record data, extract the structure type, and create a new
 		// record object from that type
 
@@ -88,11 +89,13 @@ namespace bafprp
 			return itr->second->make( data, length, filePos );
 
 		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
+		LOG_TRACE( "/IBafRecord::getField" );
 		return NULL;
 	}
 
 	const IField* IBafRecord::getField( const std::string name ) const
 	{
+		LOG_TRACE( "IBafRecord::getField" );
 		if( _fields.empty() ) return NULL;
 
 		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
@@ -102,11 +105,13 @@ namespace bafprp
 		}
 		
 		LOG_WARN( "Did not find field named: " << name );
+		LOG_TRACE( "/IBafRecord::getField" );
 		return NULL;
 	}
 
 	const IField* IBafRecord::getNextField( const std::string last ) const
 	{
+		LOG_TRACE( "IBafRecord::getNextField" );
 		if( _fields.empty() ) return NULL;
 
 		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
@@ -119,12 +124,20 @@ namespace bafprp
 		}
 
 		// last not found, assume they sent "" meaning start at begining
+		LOG_TRACE( "/IBafRecord::getNextField" );
 		return *_fields.begin();
 	}
 
 	void IBafRecord::addField( const std::string name )
 	{
+		LOG_TRACE( "IBafRecord::addField" );
 		IField* field = FieldMaker::newField( name );
+		if( !field )
+		{
+			LOG_ERROR( "Could not find field name '" << name << ".'  We will continue processing this record, but the record will be corrupt" );
+			_fieldData += 4;  // aprox avg length of a field
+			return;
+		}
 		if( !field->convert( _fieldData ) )
 		{
 			ERROR_OUTPUT( this, "Could not convert field '" << field->getName() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
@@ -132,6 +145,7 @@ namespace bafprp
 		// update data position, the mod is to make the size even for nice division
 		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
 		_fields.push_back( field );
+		LOG_TRACE( "/IBafRecord::addField" );
 	}
 
 }

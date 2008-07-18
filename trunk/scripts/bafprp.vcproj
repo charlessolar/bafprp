@@ -190,7 +190,23 @@
 				Name="Fields"
 				>
 				<File
+					RelativePath="..\src\abortedbafrecords.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\amacallslostdata.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\anicpnindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\bafrecords.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\bafrecordstimeerror.cpp"
 					>
 				</File>
 				<File
@@ -222,6 +238,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\completionindicator.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\date.cpp"
 					>
 				</File>
@@ -235,6 +255,10 @@
 				</File>
 				<File
 					RelativePath="..\src\filesequenceno.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\flaggedbafrecords.cpp"
 					>
 				</File>
 				<File
@@ -255,6 +279,26 @@
 				</File>
 				<File
 					RelativePath="..\src\ifield.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numberofamacalls.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numberofcalls.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numorigcalls.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numoutgoingcalls.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numtermcalls.cpp"
 					>
 				</File>
 				<File
@@ -287,6 +331,10 @@
 				</File>
 				<File
 					RelativePath="..\src\servicefeature.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\servicelogicid.cpp"
 					>
 				</File>
 				<File
@@ -326,6 +374,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\nooutput.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\output.cpp"
 					>
 				</File>
@@ -334,11 +386,27 @@
 				Name="Records"
 				>
 				<File
+					RelativePath="..\src\1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\220.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\625.cpp"
 					>
 				</File>
 				<File
+					RelativePath="..\src\653.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\9013.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\9102.cpp"
 					>
 				</File>
 				<File
@@ -364,7 +432,23 @@
 				Name="Fields"
 				>
 				<File
+					RelativePath="..\include\abortedbafrecords.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\amacallslostdata.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\anicpnindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\bafrecords.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\bafrecordstimeerr.h"
 					>
 				</File>
 				<File
@@ -396,6 +480,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\completionindicator.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\date.h"
 					>
 				</File>
@@ -409,6 +497,10 @@
 				</File>
 				<File
 					RelativePath="..\include\filesequenceno.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\flaggedbafrecords.h"
 					>
 				</File>
 				<File
@@ -429,6 +521,26 @@
 				</File>
 				<File
 					RelativePath="..\include\ifield.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numberofamacalls.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numberofcalls.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numorigcalls.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numoutgoingcalls.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numtermcalls.h"
 					>
 				</File>
 				<File
@@ -461,6 +573,10 @@
 				</File>
 				<File
 					RelativePath="..\include\servicefeature.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\servicelogicid.h"
 					>
 				</File>
 				<File
@@ -500,6 +616,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\nooutput.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\output.h"
 					>
 				</File>
@@ -508,11 +628,27 @@
 				Name="Records"
 				>
 				<File
+					RelativePath="..\include\1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\220.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\625.h"
 					>
 				</File>
 				<File
+					RelativePath="..\include\653.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\9013.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\9102.h"
 					>
 				</File>
 				<File
