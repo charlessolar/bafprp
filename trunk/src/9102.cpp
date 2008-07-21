@@ -57,6 +57,8 @@ namespace bafprp
 		addField( "numorigcalls" );
 		addField( "numtermcalls" );
 		addField( "numoutgoingcalls" );
+		decodeModules();
+		addField( "endofrecord" );
 	}
 
 	std::string r9102::getType() const

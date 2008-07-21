@@ -158,7 +158,7 @@ namespace bafprp
 		LOG_TRACE( "File::record" );
 
 		const IField* field;
-		std::string lastName = "";
+		DWORD lastUID = 0;
 		
 		fprintf_s( _fp, "---------------------------------------\n" );
 		fprintf_s( _fp, "%s\n", record->getType().c_str() );
@@ -167,10 +167,10 @@ namespace bafprp
 		fprintf_s( _fp, "---------------------------------------\n" );
 
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
-		while( ( field = record->getNextField( lastName ) ) != NULL )
+		while( ( field = record->getNextField( lastUID ) ) != NULL )
 		{
-			lastName = field->getName();
-			fprintf_s( _fp, "%s: %s\n", lastName.c_str(), field->getString().c_str() );
+			lastUID = field->getUID();
+			fprintf_s( _fp, "%s: %s\n", field->getName().c_str(), field->getString().c_str() );
 		}
 
 		fprintf_s( _fp, "End of record\n" );

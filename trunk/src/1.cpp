@@ -54,6 +54,8 @@ namespace bafprp
 		addField( "callednumber" );
 		addField( "time" );
 		addField( "duration" );
+		decodeModules();
+		addField( "endofrecord" );
 	}
 
 	std::string r1::getType() const

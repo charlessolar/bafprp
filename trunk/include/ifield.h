@@ -40,6 +40,7 @@ namespace bafprp
 		virtual std::string getString() const { return ""; }
 
 		std::string getError() const { return _lastError; }
+		DWORD getUID() const { return _uid; }
 		
 		virtual bool convert ( const BYTE* data ) = 0;
 		virtual int getSize() const = 0;
@@ -50,11 +51,18 @@ namespace bafprp
 
 		~IField() {}
 	protected:
-		IField() : _converted(false), _return(""), _lastError("") {}
+		IField() : _converted(false), _return(""), _lastError("") 
+		{
+			// each field needs a unique id so we can safely list them with a 'getNext' in the record class.
+			static DWORD uid_counter = 0;
+			_uid = uid_counter++;
+		}
 
 		bool _converted;
 		std::string _return;
 		std::string _lastError;
+	private:
+		DWORD _uid;
 	};
 
 	class FieldMaker

@@ -112,7 +112,7 @@ namespace bafprp
 
 		const IField* field;
 		std::string value = "";
-		std::string name = "";
+		DWORD lastUID = 0;
 
 		std::cout << "---------------------------------------" << std::endl;
 		std::cout << record->getType() << std::endl;
@@ -121,11 +121,10 @@ namespace bafprp
 		std::cout << "---------------------------------------" << std::endl;
 
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
-		while( ( field = record->getNextField( name ) ) != NULL )
+		while( ( field = record->getNextField( lastUID ) ) != NULL )
 		{
-			value = field->getString();
-			name = field->getName();
-			std::cout << name << ": " << value << std::endl;
+			lastUID = field->getUID();
+			std::cout << field->getName() << ": " << field->getString() << std::endl;
 		}
 
 		std::cout << "End of record" << std::endl << std::endl;

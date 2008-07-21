@@ -47,6 +47,8 @@ namespace bafprp
 		addField( "genericid" );
 		addField( "traceraudittype" );
 		addField( "filesequenceno" );
+		addField( "numberofrecords" );
+		addField( "fileblocks" );
 	}
 
 	std::string r9014::getType() const

@@ -18,38 +18,37 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <time.h>
-
-#include "date.h"
+#include "linenumber.h"
 #include "output.h"
 
 namespace bafprp
 {
-	const DateFieldMaker DateFieldMaker::registerThis;
+	const LineNumberFieldMaker LineNumberFieldMaker::registerThis;
 
-	IField* DateFieldMaker::make() const
+	IField* LineNumberFieldMaker::make() const
 	{
-		LOG_TRACE( "DateFieldMaker::make" );
-		return new Date();
-		LOG_TRACE( "DateFieldMaker::make" );
+		LOG_TRACE( "LineNumberFieldMaker::make" );
+		LOG_TRACE( "/LineNumberFieldMaker::make" );
+		return new LineNumber;
+		
 	}
 
-	Date::Date() : IField()
+	LineNumber::LineNumber() : IField()
 	{
-		LOG_TRACE( "Date::Date" );
-		LOG_TRACE( "/Date::Date" );
+		LOG_TRACE( "LineNumber::LineNumberFieldConverter" );
+		LOG_TRACE( "/LineNumber::LineNumberFieldConverter" );
 	}
 
 
-	Date::~Date()
+	LineNumber::~LineNumber()
 	{
-		LOG_TRACE( "Date::~Date" );
-		LOG_TRACE( "/Date::~Date" );
+		LOG_TRACE( "LineNumber::~LineNumberFieldConverter" );
+		LOG_TRACE( "/LineNumber::~LineNumberFieldConverter" );
 	}
 
-	bool Date::convert ( const BYTE* data )
+	bool LineNumber::convert ( const BYTE* data )
 	{
-		LOG_TRACE( "Date::convert" );
+		LOG_TRACE( "LineNumber::convert" );
 		_return = getChars( data, getSize() );
 		_converted = true;
 
@@ -59,13 +58,13 @@ namespace bafprp
 			_converted = false;
 		}
 
-		LOG_TRACE( "/Date::convert" );
+		LOG_TRACE( "/LineNumber::convert" );
 		return _converted;
 	}
 
-	std::string Date::getString() const
+	std::string LineNumber::getString() const
 	{
-		LOG_TRACE( "Date::getString" );
+		LOG_TRACE( "LineNumber::getString" );
 
 		std::string ret;
 		if( !_converted )
@@ -75,23 +74,13 @@ namespace bafprp
 		}
 		else
 		{
-			char year[5] = "";
-			time_t ltime; 
-			struct tm mytm;
-			ltime = time( NULL );  
-			localtime_s( &mytm, &ltime );  
-			strftime( year, sizeof( year ), "%Y", &mytm );
-			year[3] = _return[0];
-
-			std::ostringstream os;
-			os << _return[1] << _return[2] << "/" << _return[3] << _return[4] << "/" << year;
-			// In case you live in europe
-			// os << _return[3] << _return[4] << "/" << _return[1] << _return[2] << "/" << year;
-
-			ret = os.str();
+			ret = "";
+			if( _return[0] != '0' || _return[1] != '0' )
+				ret += _return.substr(0,2) + "-";
+			ret += _return.substr(2,3) + "-" + _return.substr(6,3) + "-" + _return.substr(9,4);
 		}
 
-		LOG_TRACE( "/Date::getString" );
+		LOG_TRACE( "/LineNumber::getString" );
 		return ret;
 	}
 }

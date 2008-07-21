@@ -258,6 +258,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\endofrecord.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\fileblocks.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\filesequenceno.cpp"
 					>
 				</File>
@@ -286,11 +294,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\linenumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\linenumbertype.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\modulenumber.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\numberofamacalls.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\src\numberofcalls.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numberofrecords.cpp"
 					>
 				</File>
 				<File
@@ -367,6 +391,10 @@
 				</File>
 				<File
 					RelativePath="..\src\trunkgroupnumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\trunkidentification.cpp"
 					>
 				</File>
 			</Filter>
@@ -540,6 +568,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\endofrecord.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\fileblocks.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\filesequenceno.h"
 					>
 				</File>
@@ -568,11 +604,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\linenumber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\linenumbertype.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\modulenumber.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\numberofamacalls.h"
 					>
 				</File>
 				<File
 					RelativePath="..\include\numberofcalls.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numberofrecords.h"
 					>
 				</File>
 				<File
@@ -649,6 +701,10 @@
 				</File>
 				<File
 					RelativePath="..\include\trunkgroupnumber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\trunkidentification.h"
 					>
 				</File>
 			</Filter>
