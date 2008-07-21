@@ -107,6 +107,7 @@ namespace bafprp
 		{
 			readRecord();
 		}
+		LOG_INFO( "Read and Parsed " << _records.size() << " records" );
 
 		LOG_TRACE( "/BafFile::open" );
 		return true;

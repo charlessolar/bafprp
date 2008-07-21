@@ -76,10 +76,10 @@ namespace bafprp
 		{
 			char year[5] = "";
 			time_t ltime; 
-			struct tm* mytm = NULL;
+			struct tm mytm;
 			ltime = time( NULL );  
-			mytm = localtime( &ltime );  
-			strftime( year, sizeof( year ), "%Y", mytm );
+			localtime_s( &mytm, &ltime );  
+			strftime( year, sizeof( year ), "%Y", &mytm );
 			year[3] = _return[0];
 
 			std::ostringstream os;

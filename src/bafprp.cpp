@@ -37,7 +37,7 @@ int main ( int argc, char *argv[] )
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
 	Output::setOutputRecord( "file" );
 	Output::setOutputError( "console" );
-	Output::setOutputLog( "console" );
+	Output::setOutputLog( "file" );
 
 	LOG_TRACE( "Global::main" );
 	

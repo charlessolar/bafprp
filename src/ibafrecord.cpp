@@ -34,6 +34,9 @@ namespace bafprp
 		_data = data;
 		_fieldData = _data;
 
+		// Module flag is 4 for some reason, and no its not the number of modules
+		_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
+
 		CRC32::Encode( _fieldData, length, _crc );
 
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
@@ -73,9 +76,6 @@ namespace bafprp
 		length -= 1;
 		// We should now be standing on the structure type field and the module flag
 
-		// Module flag is 4 for some reason, and no its not the number of modules
-		bool modules = ( *data & 0xF0 ) == 4;
-
 		IField* structuretype = FieldMaker::newField( "structuretype" );
 		if( !structuretype->convert( data ) )
 		{
@@ -89,8 +89,9 @@ namespace bafprp
 		if ( itr != getReg().end() )
 			return itr->second->make( data, length, filePos );
 
+
 		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
-		LOG_TRACE( "/IBafRecord::getField" );
+		LOG_TRACE( "/IBafRecord::newRecord" );
 		return NULL;
 	}
 
@@ -110,21 +111,21 @@ namespace bafprp
 		return NULL;
 	}
 
-	const IField* IBafRecord::getNextField( const std::string last ) const
+	const IField* IBafRecord::getNextField( DWORD lastUID ) const
 	{
 		LOG_TRACE( "IBafRecord::getNextField" );
 		if( _fields.empty() ) return NULL;
 
 		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 		{
-			if( (*itr)->getName() == last )
+			if( (*itr)->getUID() == lastUID )
 				if( ( itr + 1 ) != _fields.end() )
 					return *(++itr);
 				else
 					return NULL;  // end of the road
 		}
 
-		// last not found, assume they sent "" meaning start at begining
+		// last not found, assume they sent 0 meaning start at begining
 		LOG_TRACE( "/IBafRecord::getNextField" );
 		return *_fields.begin();
 	}
@@ -146,7 +147,159 @@ namespace bafprp
 		// update data position, the mod is to make the size even for nice division
 		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
 		_fields.push_back( field );
+		
+		if( ( _fieldData - _data ) > _length ) // overstepping our bounds here, not a good place to be
+		{
+			LOG_ERROR( "Record has outgrown its stated length of " << _length << ". It is now " << ( _fieldData - _data ) );
+		}
+
 		LOG_TRACE( "/IBafRecord::addField" );
+	}
+
+
+	// Modules are extra fields attached to the record.  Therefore we will use a giant switch
+	void IBafRecord::decodeModules()
+	{
+		if( !_modules ) return;
+		LOG_TRACE( "IBafRecord::decodeModules" );
+
+		int count = 0;
+		// Just to be safe
+		while( count < 20 )
+		{
+			count++;
+
+			addField( "modulenumber" );
+		
+			// Will be the mudule number
+			switch( _fields.back()->getInt() )
+			{
+			case 0:
+				// All done here
+				return;
+			case 21:
+				addField( "icincindicator" );
+				addField( "carrierconnectdate" );
+				addField( "carrierconnecttime" );
+				addField( "carrierelapsedtime" );
+				addField( "icinccalleventstatus" );
+				addField( "trunkgroupnumber" );
+				addField( "icincroutingindicator" );
+				addField( "dialingpresubindicator" );
+				addField( "anicpnindicator" );
+				break;
+			case 22:
+				addField( "presentdate" );
+				addField( "presenttime" );
+				break;
+			case 25:
+				addField( "date" );
+				addField( "time" );
+				break;
+			case 27:
+				addField( "businessid" );
+				break;
+			case 29:
+				addField( "altbillnumber" );
+				break;
+			case 30:
+				addField( "contextid" );
+				addField( "transsetfield" );
+				break;
+			case 40:
+				addField( "digitsid" );
+				addField( "significantdigits" );
+				addField( "digits" );
+				addField( "digitslong" );
+				break;
+			case 49:
+				addField( "callcountnameonly" );
+				addField( "callcountnumonly" );
+				break;
+			case 68:
+				addField( "calleddndescription" );
+				break;
+			case 70:
+				addField( "bearercaps" );
+				addField( "networkinterworking" );
+				addField( "sigsuppservusage" );
+				addField( "releasecauseind" );
+				break;
+			case 71:
+				addField( "bearercaps" );
+				addField( "networkinterworking" );
+				addField( "releasecauseindicator" );
+				break;
+			case 74:
+				addField( "bbg" );
+				addField( "chargeablenpa" );
+				addField( "chargeableepn" );
+				addField( "trunkgroupnumber" );
+				break;
+			case 102:
+				addField( "significantdigits" );
+				addField( "number" );
+				break;
+			case 103:
+				addField( "significantdigits" );
+				addField( "number" );
+				break;
+			case 104:
+				addField( "trunkidentification" );
+				break;
+			case 109:
+				addField( "classfeaturecode" );
+				addField( "classfunctions" );
+				addField( "screenlistsizegen" );
+				break;
+			case 119:
+				addField( "trunkgroupinfo" );
+				addField( "carrierinterface" );
+				addField( "networkidentifier" );
+				break;
+			case 164:
+				addField( "numberidentity" );
+				addField( "countrycode" );
+				addField( "significantdigits" );
+				addField( "number" );
+				break;
+			case 203:
+				addField( "contextid" );
+				addField( "servproviderid" );
+				addField( "amasequencenumber" );
+				break;
+			case 204:
+				addField( "indicatorid" );
+				break;
+			case 306:
+				addField( "callinglineinfo" );
+				break;
+			case 307:
+				addField( "linenumbertype" );
+				addField( "linenumber" );
+				break;
+			case 611:
+				addField( "genericcontextid" );
+				addField( "number" );
+				break;
+			case 719:
+				addField( "partyid" );
+				addField( "lrn" );
+				addField( "supportinginfo" );
+				break;
+			case 720:
+				addField( "partyid" );
+				addField( "lrn" );
+				addField( "serviceproviderid" );
+				addField( "location" );
+				addField( "supportinginfo" );
+				break;
+			default:
+				LOG_ERROR( "Unknown modules id: " << _fields.back()->getInt() << " at " << _filePos << "." << (DWORD)( _fieldData - _data ) << " record type " << getType() );
+			}
+		}
+
+		LOG_TRACE( "/IBafRecord::decodeModules" );
 	}
 
 }

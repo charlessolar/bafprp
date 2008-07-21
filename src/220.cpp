@@ -53,6 +53,8 @@ namespace bafprp
 		addField( "time" );
 		addField( "duration" );
 		addField( "servicelogicid" );
+		decodeModules();
+		addField( "endofrecord" );
 	}
 
 	std::string r220::getType() const
