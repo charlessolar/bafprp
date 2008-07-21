@@ -43,6 +43,8 @@ namespace bafprp
 
 		std::string getData() const { return getChars( _data, _length * 2 ); }
 		long getFilePosition() const { return _filePos; }
+
+		DWORD getCRC() const { return _crc; }
 		
 		virtual ~IBafRecord();	
 	protected:
@@ -57,6 +59,7 @@ namespace bafprp
 		
 		const BYTE* _fieldData;  // The data pointer we are allowed to modify
 	private:
+		DWORD _crc;
 		long _filePos;
 		const BYTE* _data;  // This one needs to stay constant since we have to delete it later
 	};

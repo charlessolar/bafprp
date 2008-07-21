@@ -179,10 +179,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\baffile.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\src\bafprp.cpp"
 				>
 			</File>
@@ -199,6 +195,10 @@
 				</File>
 				<File
 					RelativePath="..\src\anicpnindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\baflostblockwrite.cpp"
 					>
 				</File>
 				<File
@@ -219,6 +219,10 @@
 				</File>
 				<File
 					RelativePath="..\src\callingnumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\callslostdata.cpp"
 					>
 				</File>
 				<File
@@ -299,6 +303,10 @@
 				</File>
 				<File
 					RelativePath="..\src\numtermcalls.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numtrunklegsused.cpp"
 					>
 				</File>
 				<File
@@ -394,6 +402,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\28.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\625.cpp"
 					>
 				</File>
@@ -402,7 +414,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\76.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\9013.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\9014.cpp"
 					>
 				</File>
 				<File
@@ -414,6 +434,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Process"
+				>
+				<File
+					RelativePath="..\src\duplicate.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tools"
+				>
+				<File
+					RelativePath="..\src\baffile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\crc32.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -422,10 +462,6 @@
 			>
 			<File
 				RelativePath="..\include\bafdefines.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\baffile.h"
 				>
 			</File>
 			<Filter
@@ -441,6 +477,10 @@
 				</File>
 				<File
 					RelativePath="..\include\anicpnindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\baflostblockwrite.h"
 					>
 				</File>
 				<File
@@ -461,6 +501,10 @@
 				</File>
 				<File
 					RelativePath="..\include\callingnumber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\callslostdata.h"
 					>
 				</File>
 				<File
@@ -541,6 +585,10 @@
 				</File>
 				<File
 					RelativePath="..\include\numtermcalls.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numtrunklegsused.h"
 					>
 				</File>
 				<File
@@ -636,6 +684,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\28.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\625.h"
 					>
 				</File>
@@ -644,7 +696,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\76.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\9013.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\9014.h"
 					>
 				</File>
 				<File
@@ -653,6 +713,26 @@
 				</File>
 				<File
 					RelativePath="..\include\ibafrecord.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Process"
+				>
+				<File
+					RelativePath="..\include\duplicate.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tools"
+				>
+				<File
+					RelativePath="..\include\baffile.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\crc32.h"
 					>
 				</File>
 			</Filter>

@@ -23,6 +23,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "ibafrecord.h"
 #include "output.h"
+#include "crc32.h"
 
 namespace bafprp
 {
@@ -31,9 +32,9 @@ namespace bafprp
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
 		_data = data;
-		_fieldData = _data + 0;
-		//memcpy_s( _data, _length, data, _length );
-		//_fieldData = _data;
+		_fieldData = _data;
+
+		CRC32::Encode( _fieldData, length, _crc );
 
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
 	}

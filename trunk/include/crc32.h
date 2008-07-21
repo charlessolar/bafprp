@@ -18,35 +18,28 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+// code modified from http://www.gamedev.net/reference/programming/features/crc32/default.asp
 
-#include <string>
+#ifndef BAFPRPCRC32_H
+#define BAFPRPCRC32_H
 
 #include "bafdefines.h"
-#include "ibafrecord.h"
+
 
 namespace bafprp
 {
-	class BafFile
+
+	class CRC32 
 	{
 	public:
-		BafFile( const std::string filename );
-		BafFile( const char* filename );
-		~BafFile();
-
-		void process();
+		static bool Encode( const BYTE* data, DWORD dwSize, DWORD& crc ); 
 
 	private:
-		bool open( const std::string filename );
-		bool readRecord();
+		static inline void GetCRC32( const BYTE byte, DWORD& crc );
 
-		std::string _filename;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		static DWORD CRC32Table[256];
 	};
-} 
+
+}
+
 #endif

@@ -18,35 +18,33 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+#ifndef BAFPRP76_H
+#define BAFPRP76_H
 
-#include <string>
-
-#include "bafdefines.h"
 #include "ibafrecord.h"
 
 namespace bafprp
 {
-	class BafFile
+	class r76 : public IBafRecord
+	{
+		friend class r76Maker;
+	public:
+		std::string getType() const;
+
+		~r76();
+	protected:
+		r76( const BYTE* data, int length, long filePos );
+	};
+
+	class r76Maker : public RecordMaker
 	{
 	public:
-		BafFile( const std::string filename );
-		BafFile( const char* filename );
-		~BafFile();
-
-		void process();
-
+		r76Maker() : RecordMaker( 76 ) {}
+	protected:
+		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
 	private:
-		bool open( const std::string filename );
-		bool readRecord();
-
-		std::string _filename;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		static const r76Maker registerThis;
 	};
-} 
+}
+
 #endif

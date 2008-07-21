@@ -18,35 +18,22 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+// Class to detect and remove duplicates from the record list
 
-#include <string>
+#ifndef BAFPRPDUPLICATE_H
+#define BAFPRPDUPLICATE_H
 
-#include "bafdefines.h"
 #include "ibafrecord.h"
 
 namespace bafprp
 {
-	class BafFile
+	class Duplicate
 	{
 	public:
-		BafFile( const std::string filename );
-		BafFile( const char* filename );
-		~BafFile();
-
-		void process();
-
-	private:
-		bool open( const std::string filename );
-		bool readRecord();
-
-		std::string _filename;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		// remove all duplicates
+		static void remove( std::vector<IBafRecord*>& records );
+		// list duplicates in info log
+		static void list( std::vector<IBafRecord*>& records );
 	};
-} 
+}
 #endif

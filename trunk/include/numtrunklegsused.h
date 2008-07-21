@@ -18,35 +18,42 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+#ifndef BAFPRPNUMTRUBKLEGSUSED_H
+#define BAFPRPNUMTRUNKLEGSUSED_H
 
-#include <string>
-
-#include "bafdefines.h"
-#include "ibafrecord.h"
+#include "ifield.h"
 
 namespace bafprp
 {
-	class BafFile
+	class NumTrunkLegsUsed : public IField
+	{
+		friend class NumTrunkLegsUsedFieldMaker;
+	public:
+		int getInt() const;
+		long getLong() const;
+		std::string getString() const;
+
+		bool convert ( const BYTE* data );
+
+		int getSize() const { return 1; }
+		std::string getType() const { return "int"; }
+		std::string getName() const { return "Number of trunk legs used"; }
+
+		~NumTrunkLegsUsed();
+	private:
+		NumTrunkLegsUsed();
+	};
+
+	class NumTrunkLegsUsedFieldMaker : public FieldMaker
 	{
 	public:
-		BafFile( const std::string filename );
-		BafFile( const char* filename );
-		~BafFile();
-
-		void process();
-
+		NumTrunkLegsUsedFieldMaker() : FieldMaker( "numtrunklegsused" ) {}
+	protected:
+		IField* make() const;
 	private:
-		bool open( const std::string filename );
-		bool readRecord();
-
-		std::string _filename;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		static const NumTrunkLegsUsedFieldMaker registerThis;
 	};
-} 
+
+}
+
 #endif
