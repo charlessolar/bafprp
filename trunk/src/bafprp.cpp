@@ -35,9 +35,9 @@ using namespace std;
 int main ( int argc, char *argv[] )
 {	
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
-	Output::setOutputRecord( "file" );
-	Output::setOutputError( "console" );
-	Output::setOutputLog( "file" );
+	Output::setOutputRecord( "no" );
+	Output::setOutputError( "no" );
+	Output::setOutputLog( "no" );
 
 	LOG_TRACE( "Global::main" );
 	
@@ -48,7 +48,8 @@ int main ( int argc, char *argv[] )
 	BafFile* file = new BafFile( "baf.pri" );
 	//file->process();
 	cout << "File processing ended at " << NowTime() << endl;
-	
+	delete file;
+
 	LOG_TRACE( "/Global::main" );
 	cout << "Press any key to exit..." << endl;
 	getchar();
