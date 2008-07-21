@@ -18,35 +18,42 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+#ifndef BAFPRPCALLSLOSTDATA_H
+#define BAFPRPCALLSLOSTDATA_H
 
-#include <string>
-
-#include "bafdefines.h"
-#include "ibafrecord.h"
+#include "ifield.h"
 
 namespace bafprp
 {
-	class BafFile
+	class CallsLostData : public IField
+	{
+		friend class CallsLostDataFieldMaker;
+	public:
+		int getInt() const;
+		long getLong() const;
+		std::string getString() const;
+
+		bool convert ( const BYTE* data );
+
+		int getSize() const { return 7; }
+		std::string getType() const { return "long"; }
+		std::string getName() const { return "Number of calls with lost data"; }
+
+		~CallsLostData();
+	private:
+		CallsLostData();
+	};
+
+	class CallsLostDataFieldMaker : public FieldMaker
 	{
 	public:
-		BafFile( const std::string filename );
-		BafFile( const char* filename );
-		~BafFile();
-
-		void process();
-
+		CallsLostDataFieldMaker() : FieldMaker( "callslostdata" ) {}
+	protected:
+		IField* make() const;
 	private:
-		bool open( const std::string filename );
-		bool readRecord();
-
-		std::string _filename;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		static const CallsLostDataFieldMaker registerThis;
 	};
-} 
+
+}
+
 #endif

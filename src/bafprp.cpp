@@ -35,9 +35,10 @@ using namespace std;
 int main ( int argc, char *argv[] )
 {	
 	Output::setLogLevel( LOG_LEVEL_DEBUG );
-	Output::setOutputRecord( "no" );
-	Output::setOutputError( "file" );
-	Output::setOutputLog( "file" );
+	Output::setOutputRecord( "file" );
+	Output::setOutputError( "console" );
+	Output::setOutputLog( "console" );
+
 	LOG_TRACE( "Global::main" );
 	
 	cout << "Press return to start process" << endl;
@@ -45,6 +46,7 @@ int main ( int argc, char *argv[] )
 
 	cout << "File processing started at " << NowTime() << endl;
 	BafFile* file = new BafFile( "baf.pri" );
+	//file->process();
 	cout << "File processing ended at " << NowTime() << endl;
 	
 	LOG_TRACE( "/Global::main" );

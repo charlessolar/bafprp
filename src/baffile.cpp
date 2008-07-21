@@ -21,8 +21,9 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <fstream>
 
 #include "baffile.h"
-
 #include "output.h"
+
+#include "Duplicate.h"
 
 namespace bafprp
 {
@@ -109,5 +110,12 @@ namespace bafprp
 
 		LOG_TRACE( "/BafFile::open" );
 		return true;
+	}
+
+	void BafFile::process()
+	{
+		LOG_INFO( "Records: " << _records.size() );
+		Duplicate::remove( _records );
+		LOG_INFO( "Records: " << _records.size() );
 	}
 }

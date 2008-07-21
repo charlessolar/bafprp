@@ -163,7 +163,7 @@ namespace bafprp
 		fprintf_s( _fp, "---------------------------------------\n" );
 		fprintf_s( _fp, "%s\n", record->getType().c_str() );
 		fprintf_s( _fp, "---------------------------------------\n" );
-		fprintf_s( _fp, "Length of record: %d\n", record->getSize() );
+		fprintf_s( _fp, "Length of record: %d, CRC32: %u\n", record->getSize(), record->getCRC() );
 		fprintf_s( _fp, "---------------------------------------\n" );
 
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.

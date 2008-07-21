@@ -18,22 +18,22 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "9102.h"
+#include "76.h"
 #include "output.h"
 
 namespace bafprp
 {
 
-	const r9102Maker r9102Maker::registerThis;
+	const r76Maker r76Maker::registerThis;
 
-	IBafRecord* r9102Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r76Maker::make( const BYTE* data, int length, long filePos ) const
 	{
-		LOG_TRACE( "r9102Maker::make" );
-		LOG_TRACE( "/r9102Maker::make" );
-		return new r9102( data, length, filePos );
+		LOG_TRACE( "r76Maker::make" );
+		LOG_TRACE( "/r76Maker::make" );
+		return new r76( data, length, filePos );
 	}
 
-	r9102::r9102( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r76::r76( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 
@@ -43,37 +43,33 @@ namespace bafprp
 		addField( "recordofficetype" );
 		addField( "recordofficeid" );
 		addField( "date" );
+		addField( "timingindicator" );
+		addField( "studyindicator" );
+		addField( "calledpartyoffhook" );
+		addField( "servicetraffic" );
+		addField( "operatoraction" );
+		addField( "servicefeature" );
+		addField( "callingnumber" );
 		addField( "time" );
-		addField( "traceraudittype" );
-		addField( "numberofcalls" );
-		addField( "numberofamacalls" );
-		addField( "callslostdata" );
-		addField( "amacallslostdata" );
-		addField( "abortedbafrecords" );
-		addField( "bafrecords" );
-		addField( "flaggedbafrecords" );
-		addField( "bafrecordstimeerr" );
-		addField( "baflostblockwrite" );
-		addField( "numorigcalls" );
-		addField( "numtermcalls" );
-		addField( "numoutgoingcalls" );
+		addField( "duration" );
+		addField( "numtrunklegsused" );
 	}
 
-	std::string r9102::getType() const
+	std::string r76::getType() const
 	{
 		// Need to look at the call type field
 		std::string ret;
 		const IField* field = getField( "Call Type" );
 		if( !field ) 
 		{
-			LOG_ERROR( "No 'calltype' field in record 9102" );
+			LOG_ERROR( "No 'calltype' field in record 76" );
 			return "";
 		}
 
 		switch( field->getInt() )
 		{
-		case 90:
-			ret = "Sensor Audit Record";
+		case 26:
+			ret = "Conference Trunk Usage";
 			break;
 		default:
 			ret = "Unknown";
@@ -81,7 +77,7 @@ namespace bafprp
 		return ret;
 	}
 
-	r9102::~r9102()
+	r76::~r76()
 	{
 	}
 

@@ -36,6 +36,7 @@ namespace bafprp
 	{
 		LOG_LEVEL_TRACE = 0,
 		LOG_LEVEL_DEBUG,
+		LOG_LEVEL_INFO,
 		LOG_LEVEL_WARN,
 		LOG_LEVEL_ERROR,
 		LOG_LEVEL_FATAL
@@ -115,6 +116,13 @@ namespace bafprp
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent << "\n"; \
+		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
+	} 
+	#define LOG_INFO( logEvent ) \
+	if( Output::getLogLevel() <= LOG_LEVEL_INFO ) \
+	{ \
+		std::ostringstream ssOutput; \
+		ssOutput << "- " << NowTime() << " - INFO: " << logEvent << "\n"; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} 
 	#define LOG_WARN( logEvent ) \
