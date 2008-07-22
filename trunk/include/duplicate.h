@@ -18,40 +18,26 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPRELEASECAUSEINDICATOR_H
-#define BAFPRPRELEASECAUSEINDICATOR_H
+// Class to detect and remove duplicates from the record list
+// Ask me to explain why I made these processing functions seperate classes
+// and I will give you a new answer every day.
 
-#include "ifield.h"
+#ifndef BAFPRPDUPLICATE_H
+#define BAFPRPDUPLICATE_H
+
+#include "ibafrecord.h"
 
 namespace bafprp
 {
-	class ReleaseCauseIndicator : public IField
-	{
-		friend class ReleaseCauseIndicatorFieldMaker;
-	public:
-		std::string getString() const;
-
-		bool convert ( const BYTE* data );
-
-		int getSize() const { return 5; }
-		std::string getType() const { return "string"; }
-		std::string getName() const { return "Release Cause indicator"; }
-
-		~ReleaseCauseIndicator();
-	private:
-		ReleaseCauseIndicator();
-	};
-
-	class ReleaseCauseIndicatorFieldMaker : public FieldMaker
+	class Duplicate
 	{
 	public:
-		ReleaseCauseIndicatorFieldMaker() : FieldMaker( "releasecauseind" ) {}
-	protected:
-		IField* make() const;
-	private:
-		static const ReleaseCauseIndicatorFieldMaker registerThis;
+		// remove all duplicates
+		static void remove( std::vector<IBafRecord*>& records );
+		// list duplicates in info log
+		static void list( std::vector<IBafRecord*>& records );
 	};
 
+	bool recordcrcequal( const IBafRecord* record, DWORD value );
 }
-
 #endif

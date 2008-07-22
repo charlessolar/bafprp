@@ -44,7 +44,7 @@ namespace bafprp
 		long getFilePosition() const { return _filePos; }
 
 		DWORD getCRC() const { return _crc; }
-		
+
 		virtual ~IBafRecord();	
 	protected:
 		IBafRecord( const BYTE* data, int length, long filePos );
@@ -85,6 +85,10 @@ namespace bafprp
 		}
 		virtual IBafRecord* make( const BYTE* data, int length, long filePos ) const = 0;
 	};
+
+	bool recordequal( const IBafRecord* left, const IBafRecord* right );
+	bool recordsort( const IBafRecord* left, const IBafRecord* right );
+
 }
 
 #endif

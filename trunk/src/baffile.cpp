@@ -116,6 +116,7 @@ namespace bafprp
 	void BafFile::process()
 	{
 		LOG_INFO( "Records: " << _records.size() );
+		Duplicate::list( _records );
 		Duplicate::remove( _records );
 		LOG_INFO( "Records: " << _records.size() );
 	}
