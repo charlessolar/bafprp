@@ -250,6 +250,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\countrycode.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\date.cpp"
 					>
 				</File>
@@ -319,6 +323,14 @@
 				</File>
 				<File
 					RelativePath="..\src\networkinterworking.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\number.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\numberidentity.cpp"
 					>
 				</File>
 				<File
@@ -399,6 +411,10 @@
 				</File>
 				<File
 					RelativePath="..\src\servicetraffic.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\significantdigits.cpp"
 					>
 				</File>
 				<File
@@ -596,6 +612,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\countrycode.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\date.h"
 					>
 				</File>
@@ -665,6 +685,14 @@
 				</File>
 				<File
 					RelativePath="..\include\networkinterworking.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\number.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\numberidentity.h"
 					>
 				</File>
 				<File
@@ -745,6 +773,10 @@
 				</File>
 				<File
 					RelativePath="..\include\servicetraffic.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\significantdigits.h"
 					>
 				</File>
 				<File
