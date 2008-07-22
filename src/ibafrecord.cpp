@@ -302,4 +302,13 @@ namespace bafprp
 		LOG_TRACE( "/IBafRecord::decodeModules" );
 	}
 
+	bool recordequal( const IBafRecord* left, const IBafRecord* right )
+	{
+		return ( left->getCRC() == right->getCRC() );
+	}
+
+	bool recordsort( const IBafRecord* left, const IBafRecord* right )
+	{
+		return ( left->getCRC() < right->getCRC() );
+	}
 }

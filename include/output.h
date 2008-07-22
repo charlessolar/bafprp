@@ -108,42 +108,42 @@ namespace bafprp
 	if( Output::getLogLevel() <= LOG_LEVEL_TRACE ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - TRACE: " << logEvent << "\n"; \
+		ssOutput << "- " << NowTime() << " - TRACE: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_TRACE, ssOutput.str() ); \
 	}
 	#define LOG_DEBUG( logEvent ) \
 	if( Output::getLogLevel() <= LOG_LEVEL_DEBUG ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent << "\n"; \
+		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} 
 	#define LOG_INFO( logEvent ) \
 	if( Output::getLogLevel() <= LOG_LEVEL_INFO ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - INFO: " << logEvent << "\n"; \
+		ssOutput << "- " << NowTime() << " - INFO: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} 
 	#define LOG_WARN( logEvent ) \
 	if( Output::getLogLevel() <= LOG_LEVEL_WARN ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - WARN: " << logEvent << "\n"; \
+		ssOutput << "- " << NowTime() << " - WARN: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_WARN, ssOutput.str() ); \
 	}
 	#define LOG_ERROR( logEvent ) \
 	if( Output::getLogLevel() <= LOG_LEVEL_ERROR ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - ERROR: " << logEvent << "\n"; \
+		ssOutput << "- " << NowTime() << " - ERROR: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_ERROR, ssOutput.str() ); \
 	}
 	#define LOG_FATAL( logEvent ) \
 	if( Output::getLogLevel() <= LOG_LEVEL_FATAL ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - FATAL: " << logEvent << "\n"; \
+		ssOutput << "- " << NowTime() << " - FATAL: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_FATAL, ssOutput.str() ); \
 	} 
  
