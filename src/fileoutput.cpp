@@ -173,7 +173,6 @@ namespace bafprp
 			fprintf_s( _fp, "%s: %s\n", field->getName().c_str(), field->getString().c_str() );
 		}
 
-		fprintf_s( _fp, "End of record\n" );
 		fprintf_s( _fp, "\n" );
 
 		LOG_TRACE( "/File::record" );

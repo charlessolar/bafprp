@@ -210,6 +210,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\bearercaps.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\callednumber.cpp"
 					>
 				</File>
@@ -302,7 +306,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\location.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lrn.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\modulenumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\networkinterworking.cpp"
 					>
 				</File>
 				<File
@@ -342,11 +358,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\partyid.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\recordofficeid.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\src\recordofficetype.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\releasecauseindicator.cpp"
 					>
 				</File>
 				<File
@@ -370,7 +394,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\serviceproviderid.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\servicetraffic.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\sigsuppservusage.cpp"
 					>
 				</File>
 				<File
@@ -379,6 +411,10 @@
 				</File>
 				<File
 					RelativePath="..\src\studyindicator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\supportinginfo.cpp"
 					>
 				</File>
 				<File
@@ -520,6 +556,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\bearercaps.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\callednumber.h"
 					>
 				</File>
@@ -612,7 +652,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\location.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\lrn.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\modulenumber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\networkinterworking.h"
 					>
 				</File>
 				<File
@@ -652,11 +704,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\partyid.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\recordofficeid.h"
 					>
 				</File>
 				<File
 					RelativePath="..\include\recordofficetype.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\releasecauseindicator.h"
 					>
 				</File>
 				<File
@@ -680,7 +740,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\serviceproviderid.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\servicetraffic.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\sigsuppservusage.h"
 					>
 				</File>
 				<File
@@ -689,6 +757,10 @@
 				</File>
 				<File
 					RelativePath="..\include\studyindicator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\supportinginfo.h"
 					>
 				</File>
 				<File
@@ -799,6 +871,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<File
+			RelativePath="..\src\partyid.vsprops"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
