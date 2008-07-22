@@ -127,8 +127,6 @@ namespace bafprp
 			std::cout << field->getName() << ": " << field->getString() << std::endl;
 		}
 
-		std::cout << "End of record" << std::endl << std::endl;
-
 		LOG_TRACE( "/Console::record" );
 	}
 
