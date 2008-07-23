@@ -27,6 +27,8 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
+	bool BafFile::listDups = false;
+
 	BafFile::BafFile( const std::string filename ) : _filename( filename )
 	{
 		LOG_TRACE( "BafFile::BafFile" );
@@ -115,9 +117,11 @@ namespace bafprp
 
 	void BafFile::process()
 	{
+		LOG_TRACE( "BafFile::process" );
 		LOG_INFO( "Records: " << _records.size() );
-		Duplicate::list( _records );
+		if( listDups ) Duplicate::list( _records );
 		Duplicate::remove( _records );
 		LOG_INFO( "Records: " << _records.size() );
+		LOG_TRACE( "/BafFile::process" );
 	}
 }

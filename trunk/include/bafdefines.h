@@ -26,6 +26,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 	typedef unsigned char BYTE;
+
 	typedef unsigned long DWORD;
 
 	std::string getChars( const BYTE* data, int length );

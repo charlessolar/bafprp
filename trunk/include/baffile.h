@@ -37,6 +37,8 @@ namespace bafprp
 
 		void process();
 
+		static bool listDups;
+
 	private:
 		bool open( const std::string filename );
 		bool readRecord();
