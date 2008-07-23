@@ -34,12 +34,12 @@ namespace bafprp
 
 	enum LOG_LEVEL
 	{
-		LOG_LEVEL_TRACE = 0,
-		LOG_LEVEL_DEBUG,
-		LOG_LEVEL_INFO,
-		LOG_LEVEL_WARN,
+		LOG_LEVEL_FATAL = 0,
 		LOG_LEVEL_ERROR,
-		LOG_LEVEL_FATAL
+		LOG_LEVEL_WARN,
+		LOG_LEVEL_INFO,
+		LOG_LEVEL_DEBUG,
+		LOG_LEVEL_TRACE
 	};
 
 
@@ -70,6 +70,7 @@ namespace bafprp
 		virtual ~Output();
 
 		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
+		static void setLogLevel( int level );
 		static LOG_LEVEL getLogLevel() { return _level; }
 
 		static void setOutputRecord( const std::string name ) { _outputRecord = name; }
@@ -105,42 +106,42 @@ namespace bafprp
 
 	// Macros for easier logging
 	#define LOG_TRACE( logEvent ) \
-	if( Output::getLogLevel() <= LOG_LEVEL_TRACE ) \
+	if( Output::getLogLevel() >= LOG_LEVEL_TRACE ) \
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - TRACE: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_TRACE, ssOutput.str() ); \
 	}
 	#define LOG_DEBUG( logEvent ) \
-	if( Output::getLogLevel() <= LOG_LEVEL_DEBUG ) \
+	if( Output::getLogLevel() >= LOG_LEVEL_DEBUG ) \
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} 
 	#define LOG_INFO( logEvent ) \
-	if( Output::getLogLevel() <= LOG_LEVEL_INFO ) \
+	if( Output::getLogLevel() >= LOG_LEVEL_INFO ) \
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - INFO: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} 
 	#define LOG_WARN( logEvent ) \
-	if( Output::getLogLevel() <= LOG_LEVEL_WARN ) \
+	if( Output::getLogLevel() >= LOG_LEVEL_WARN ) \
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - WARN: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_WARN, ssOutput.str() ); \
 	}
 	#define LOG_ERROR( logEvent ) \
-	if( Output::getLogLevel() <= LOG_LEVEL_ERROR ) \
+	if( Output::getLogLevel() >= LOG_LEVEL_ERROR ) \
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - ERROR: " << logEvent; \
 		Output::outputLog( LOG_LEVEL_ERROR, ssOutput.str() ); \
 	}
 	#define LOG_FATAL( logEvent ) \
-	if( Output::getLogLevel() <= LOG_LEVEL_FATAL ) \
+	if( Output::getLogLevel() >= LOG_LEVEL_FATAL ) \
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - FATAL: " << logEvent; \

@@ -71,6 +71,32 @@ namespace bafprp
 																								// unfortunently we do not know which one thanks to static init.
 	}
 
+	void Output::setLogLevel( int level )
+	{
+		switch( level )
+		{
+		default:
+		case 0:
+			_level = LOG_LEVEL_FATAL;
+			break;
+		case 1:
+			_level = LOG_LEVEL_ERROR;
+			break;
+		case 2:
+			_level = LOG_LEVEL_WARN;
+			break;
+		case 3:
+			_level = LOG_LEVEL_INFO;
+			break;
+		case 4:
+			_level = LOG_LEVEL_DEBUG;
+			break;
+		case 5:
+			_level = LOG_LEVEL_TRACE;
+			break;
+		}
+	}
+
 	std::string NowTime()
 	{  
 		char timestamp[100] = "";
@@ -81,4 +107,6 @@ namespace bafprp
 		strftime( timestamp, sizeof( timestamp ), "%a, %d %b %Y %H:%M:%S", &mytm );
 		return std::string( timestamp );  
 	}  
+
+	
 }
