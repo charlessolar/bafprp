@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef Date_H
-#define Date_H
+#ifndef BAFPRPDATE_H
+#define BAFPRPDATE_H
 
 #include "ifield.h"
 

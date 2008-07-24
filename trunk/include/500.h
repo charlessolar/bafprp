@@ -18,41 +18,33 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPTIME_H
-#define BAFPRPTIME_H
+#ifndef BAFPRP500_H
+#define BAFPRP500_H
 
-#include "ifield.h"
+#include "ibafrecord.h"
 
 namespace bafprp
 {
-	class Time : public IField
+	class r500 : public IBafRecord
 	{
-		friend class TimeFieldMaker;
+		friend class r500Maker;
 	public:
-		std::string getString() const;
+		std::string getType() const;
 
-		bool convert ( const BYTE* data );
-
-		int getSize() const { return 7; }
-		std::string getType() const { return "string"; }
-		std::string getName() const { return "Time"; }
-
-		~Time();
-	private:
-		Time();
-
-	};
-
-	class TimeFieldMaker : public FieldMaker
-	{
-	public:
-		TimeFieldMaker() : FieldMaker ( "time" ) {}
+		~r500();
 	protected:
-		IField* make() const;
-	private:
-		static const TimeFieldMaker registerThis;
+		r500( const BYTE* data, int length, long filePos );
 	};
 
+	class r500Maker : public RecordMaker
+	{
+	public:
+		r500Maker() : RecordMaker( 500 ) {}
+	protected:
+		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+	private:
+		static const r500Maker registerThis;
+	};
 }
 
 #endif

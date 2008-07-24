@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2008 by Charles Solar
+Copyright (C) 7908 by Charles Solar
 charlessolar@gmail.com
 
 This file is part of bafprp.
@@ -18,22 +18,22 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "220.h"
+#include "79.h"
 #include "output.h"
 
 namespace bafprp
 {
 
-	const r220Maker r220Maker::registerThis;
+	const r79Maker r79Maker::registerThis;
 
-	IBafRecord* r220Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r79Maker::make( const BYTE* data, int length, long filePos ) const
 	{
-		LOG_TRACE( "r220Maker::make" );
-		LOG_TRACE( "/r220Maker::make" );
-		return new r220( data, length, filePos );
+		LOG_TRACE( "r79Maker::make" );
+		LOG_TRACE( "/r79Maker::make" );
+		return new r79( data, length, filePos );
 	}
 
-	r220::r220( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r79::r79( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 
@@ -45,7 +45,8 @@ namespace bafprp
 		addField( "date" );
 		addField( "timingindicator" );
 		addField( "studyindicator" );
-		addField( "completionindicator" );
+		addField( "calledpartyoffhook" );
+		addField( "servicetraffic" );
 		addField( "operatoraction" );
 		addField( "servicefeature" );
 		addField( "callingnumber" );
@@ -53,37 +54,17 @@ namespace bafprp
 		addField( "callednumber" );
 		addField( "time" );
 		addField( "duration" );
-		addField( "servicelogicid" );
 		decodeModules();
 		addField( "endofrecord" );
 	}
 
-	std::string r220::getType() const
+	std::string r79::getType() const
 	{
-		// Need to look at the call type field
-		std::string ret;
-		const IField* field = getField( "Call Type" );
-		if( !field ) 
-		{
-			LOG_ERROR( "No 'calltype' field in record 220" );
-			return "";
-		}
-
-		switch( field->getInt() )
-		{
-		case 119:
-			ret = "Incoming CDR";
-			break;
-		case 110:
-			ret = "Interlata call";
-			break;
-		default:
-			ret = "Unknown";
-		}
-		return ret;
+		// This type of record only has 1 use
+		return "Unknown";
 	}
 
-	r220::~r220()
+	r79::~r79()
 	{
 	}
 

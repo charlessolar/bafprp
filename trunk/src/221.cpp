@@ -18,22 +18,22 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "220.h"
+#include "221.h"
 #include "output.h"
 
 namespace bafprp
 {
 
-	const r220Maker r220Maker::registerThis;
+	const r221Maker r221Maker::registerThis;
 
-	IBafRecord* r220Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r221Maker::make( const BYTE* data, int length, long filePos ) const
 	{
-		LOG_TRACE( "r220Maker::make" );
-		LOG_TRACE( "/r220Maker::make" );
-		return new r220( data, length, filePos );
+		LOG_TRACE( "r221Maker::make" );
+		LOG_TRACE( "/r221Maker::make" );
+		return new r221( data, length, filePos );
 	}
 
-	r220::r220( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r221::r221( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 
@@ -46,10 +46,7 @@ namespace bafprp
 		addField( "timingindicator" );
 		addField( "studyindicator" );
 		addField( "completionindicator" );
-		addField( "operatoraction" );
 		addField( "servicefeature" );
-		addField( "callingnumber" );
-		addField( "overseasindicator" );
 		addField( "callednumber" );
 		addField( "time" );
 		addField( "duration" );
@@ -58,14 +55,14 @@ namespace bafprp
 		addField( "endofrecord" );
 	}
 
-	std::string r220::getType() const
+	std::string r221::getType() const
 	{
 		// Need to look at the call type field
 		std::string ret;
 		const IField* field = getField( "Call Type" );
 		if( !field ) 
 		{
-			LOG_ERROR( "No 'calltype' field in record 220" );
+			LOG_ERROR( "No 'calltype' field in record 221" );
 			return "";
 		}
 
@@ -83,7 +80,7 @@ namespace bafprp
 		return ret;
 	}
 
-	r220::~r220()
+	r221::~r221()
 	{
 	}
 
