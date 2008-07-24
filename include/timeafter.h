@@ -18,16 +18,16 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPTIME_H
-#define BAFPRPTIME_H
+#ifndef BAFPRPTIMEAFTER_H
+#define BAFPRPTIMEAFTER_H
 
 #include "ifield.h"
 
 namespace bafprp
 {
-	class Time : public IField
+	class TimeAfter : public IField
 	{
-		friend class TimeFieldMaker;
+		friend class TimeAfterFieldMaker;
 	public:
 		std::string getString() const;
 
@@ -35,22 +35,22 @@ namespace bafprp
 
 		int getSize() const { return 7; }
 		std::string getType() const { return "string"; }
-		std::string getName() const { return "Time"; }
+		std::string getName() const { return "Time after change"; }
 
-		~Time();
+		~TimeAfter();
 	private:
-		Time();
+		TimeAfter();
 
 	};
 
-	class TimeFieldMaker : public FieldMaker
+	class TimeAfterFieldMaker : public FieldMaker
 	{
 	public:
-		TimeFieldMaker() : FieldMaker ( "time" ) {}
+		TimeAfterFieldMaker() : FieldMaker ( "timeafter" ) {}
 	protected:
 		IField* make() const;
 	private:
-		static const TimeFieldMaker registerThis;
+		static const TimeAfterFieldMaker registerThis;
 	};
 
 }

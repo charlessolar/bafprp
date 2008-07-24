@@ -18,22 +18,22 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "220.h"
+#include "96.h"
 #include "output.h"
 
 namespace bafprp
 {
 
-	const r220Maker r220Maker::registerThis;
+	const r96Maker r96Maker::registerThis;
 
-	IBafRecord* r220Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r96Maker::make( const BYTE* data, int length, long filePos ) const
 	{
-		LOG_TRACE( "r220Maker::make" );
-		LOG_TRACE( "/r220Maker::make" );
-		return new r220( data, length, filePos );
+		LOG_TRACE( "r96Maker::make" );
+		LOG_TRACE( "/r96Maker::make" );
+		return new r96( data, length, filePos );
 	}
 
-	r220::r220( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r96::r96( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 
@@ -42,48 +42,28 @@ namespace bafprp
 		addField( "sensorid" ); 
 		addField( "recordofficetype" );
 		addField( "recordofficeid" );
-		addField( "date" );
+		addField( "activationdate" );
 		addField( "timingindicator" );
 		addField( "studyindicator" );
-		addField( "completionindicator" );
-		addField( "operatoraction" );
 		addField( "servicefeature" );
 		addField( "callingnumber" );
 		addField( "overseasindicator" );
-		addField( "callednumber" );
-		addField( "time" );
+		addField( "forwardtonumber" );
+		addField( "activationtime" );
 		addField( "duration" );
-		addField( "servicelogicid" );
+		addField( "presentdate" );
+		addField( "presenttime" );
 		decodeModules();
 		addField( "endofrecord" );
 	}
 
-	std::string r220::getType() const
+	std::string r96::getType() const
 	{
-		// Need to look at the call type field
-		std::string ret;
-		const IField* field = getField( "Call Type" );
-		if( !field ) 
-		{
-			LOG_ERROR( "No 'calltype' field in record 220" );
-			return "";
-		}
-
-		switch( field->getInt() )
-		{
-		case 119:
-			ret = "Incoming CDR";
-			break;
-		case 110:
-			ret = "Interlata call";
-			break;
-		default:
-			ret = "Unknown";
-		}
-		return ret;
+		// This type of record only has 1 use
+		return "Unknown";
 	}
 
-	r220::~r220()
+	r96::~r96()
 	{
 	}
 

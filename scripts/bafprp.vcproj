@@ -190,6 +190,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\activationtime.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\amacallslostdata.cpp"
 					>
 				</File>
@@ -211,6 +215,14 @@
 				</File>
 				<File
 					RelativePath="..\src\bearercaps.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\callcountinfoanon.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\callcountinfodeliv.cpp"
 					>
 				</File>
 				<File
@@ -262,6 +274,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\dateafter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\datebefore.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\dialednumber.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\dialingpresubindicator.cpp"
 					>
 				</File>
@@ -286,6 +310,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\forwardtonumber.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\genericid.cpp"
 					>
 				</File>
@@ -303,6 +331,10 @@
 				</File>
 				<File
 					RelativePath="..\src\ifield.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lata.cpp"
 					>
 				</File>
 				<File
@@ -375,6 +407,10 @@
 				</File>
 				<File
 					RelativePath="..\src\partyid.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\rao.cpp"
 					>
 				</File>
 				<File
@@ -454,6 +490,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\timeafter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\timebefore.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\timingindicator.cpp"
 					>
 				</File>
@@ -502,11 +546,39 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\110.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\20.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\220.cpp"
 					>
 				</File>
 				<File
+					RelativePath="..\src\221.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\28.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\360.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\364.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\500.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\614.cpp"
 					>
 				</File>
 				<File
@@ -522,6 +594,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\79.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\9000.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\9013.cpp"
 					>
 				</File>
@@ -531,6 +611,10 @@
 				</File>
 				<File
 					RelativePath="..\src\9102.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\96.cpp"
 					>
 				</File>
 				<File
@@ -576,6 +660,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\activationtime.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\amacallslostdata.h"
 					>
 				</File>
@@ -597,6 +685,14 @@
 				</File>
 				<File
 					RelativePath="..\include\bearercaps.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\callcountinfoanon.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\callcountinfodeliv.h"
 					>
 				</File>
 				<File
@@ -648,6 +744,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\dateafter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\datebefore.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\dialednumber.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\dialingpresubindicator.h"
 					>
 				</File>
@@ -672,6 +780,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\forwardtonumber.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\genericid.h"
 					>
 				</File>
@@ -689,6 +801,10 @@
 				</File>
 				<File
 					RelativePath="..\include\ifield.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\lata.h"
 					>
 				</File>
 				<File
@@ -761,6 +877,10 @@
 				</File>
 				<File
 					RelativePath="..\include\partyid.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\rao.h"
 					>
 				</File>
 				<File
@@ -840,6 +960,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\timeafter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\timebefore.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\timingindicator.h"
 					>
 				</File>
@@ -888,11 +1016,39 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\110.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\20.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\220.h"
 					>
 				</File>
 				<File
+					RelativePath="..\include\221.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\28.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\360.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\364.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\500.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\614.h"
 					>
 				</File>
 				<File
@@ -908,6 +1064,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\79.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\9000.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\9013.h"
 					>
 				</File>
@@ -917,6 +1081,10 @@
 				</File>
 				<File
 					RelativePath="..\include\9102.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\96.h"
 					>
 				</File>
 				<File

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2008 by Charles Solar
+Copyright (C) 7908 by Charles Solar
 charlessolar@gmail.com
 
 This file is part of bafprp.
@@ -18,41 +18,33 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPTIME_H
-#define BAFPRPTIME_H
+#ifndef BAFPRP79_H
+#define BAFPRP79_H
 
-#include "ifield.h"
+#include "ibafrecord.h"
 
 namespace bafprp
 {
-	class Time : public IField
+	class r79 : public IBafRecord
 	{
-		friend class TimeFieldMaker;
+		friend class r79Maker;
 	public:
-		std::string getString() const;
+		std::string getType() const;
 
-		bool convert ( const BYTE* data );
-
-		int getSize() const { return 7; }
-		std::string getType() const { return "string"; }
-		std::string getName() const { return "Time"; }
-
-		~Time();
-	private:
-		Time();
-
-	};
-
-	class TimeFieldMaker : public FieldMaker
-	{
-	public:
-		TimeFieldMaker() : FieldMaker ( "time" ) {}
+		~r79();
 	protected:
-		IField* make() const;
-	private:
-		static const TimeFieldMaker registerThis;
+		r79( const BYTE* data, int length, long filePos );
 	};
 
+	class r79Maker : public RecordMaker
+	{
+	public:
+		r79Maker() : RecordMaker( 79 ) {}
+	protected:
+		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+	private:
+		static const r79Maker registerThis;
+	};
 }
 
 #endif
