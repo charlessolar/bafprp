@@ -246,6 +246,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\classfunctions.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\completionindicator.cpp"
 					>
 				</File>
@@ -390,6 +394,22 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\screenlistfeatstat.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\screenlistsizedrcw.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\screenlistsizescfa.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\screenlistsizescr.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\sensorid.cpp"
 					>
 				</File>
@@ -475,6 +495,10 @@
 				>
 				<File
 					RelativePath="..\src\1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\1030.cpp"
 					>
 				</File>
 				<File
@@ -605,6 +629,10 @@
 				</File>
 				<File
 					RelativePath="..\include\carrierelapsedtime.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\classfunctions.h"
 					>
 				</File>
 				<File
@@ -752,6 +780,22 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\screenlistfeatstat.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\screenlistsizedrcw.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\screenlistsizescfa.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\screenlistsizescr.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\sensorid.h"
 					>
 				</File>
@@ -837,6 +881,10 @@
 				>
 				<File
 					RelativePath="..\include\1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\1030.h"
 					>
 				</File>
 				<File
