@@ -72,7 +72,7 @@ namespace bafprp
 	std::string r360::getType() const
 	{
 		// This type of record only has 1 use
-		return "Unknown";
+		return "Record 360: Unknown";
 	}
 
 	r360::~r360()

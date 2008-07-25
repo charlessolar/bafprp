@@ -25,6 +25,9 @@ namespace bafprp
 	std::string Output::_outputRecord;
 	std::string Output::_outputError;
 	std::string Output::_outputLog;
+	Output::property_map Output::_errorProperties;
+	Output::property_map Output::_recordProperties;
+	Output::property_map Output::_logProperties;
 	LOG_LEVEL Output::_level;
 
 	Output::Output( const std::string name )
@@ -95,6 +98,21 @@ namespace bafprp
 			_level = LOG_LEVEL_TRACE;
 			break;
 		}
+	}
+
+	void Output::setErrorProperty( const std::string name, const std::string value )
+	{
+		_errorProperties.insert( std::make_pair( name, value ) );
+	}
+
+	void Output::setRecordProperty( const std::string name, const std::string value )
+	{
+		_recordProperties.insert( std::make_pair( name, value ) );
+	}
+
+	void Output::setLogProperty( const std::string name, const std::string value )
+	{
+		_logProperties.insert( std::make_pair( name, value ) );
 	}
 
 	std::string NowTime()

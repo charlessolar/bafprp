@@ -47,9 +47,8 @@ namespace bafprp
 	{
 		LOG_TRACE( "IBafRecord::~IBafRecord" );
 		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
-			delete (*itr);
-
-		//delete[] _data;
+			if( *itr ) delete (*itr);
+		_fields.clear();
 		LOG_TRACE( "/IBafRecord::~IBafRecord" );
 	}
 
@@ -66,7 +65,11 @@ namespace bafprp
 			data += 2;  // Record is usually prefixed by x0000
 			length -= 2;
 		}
-		if( *data != 0xAA ) 
+		if( *data == 0xAB )
+		{
+			LOG_WARN( "This record has indicated that it contains errors" );
+		}
+		else if( *data != 0xAA ) 
 		{
 			// No matter what AA always starts a valid record
 			LOG_WARN( "Record did not have 0xAA prefix, or we failed to find it" );
@@ -77,13 +80,20 @@ namespace bafprp
 		// We should now be standing on the structure type field and the module flag
 
 		IField* structuretype = FieldMaker::newField( "structuretype" );
+		if( !structuretype ) 
+		{
+			LOG_ERROR( "Could not retrieve 'structuretype' field" );
+			return NULL;
+		}
 		if( !structuretype->convert( data ) )
 		{
 			LOG_ERROR( "Could not convert structure type" );
+			delete structuretype;
 			return NULL;
 		}
 		int type = structuretype->getInt();
 		delete structuretype;
+		
 		
 		maker_map::iterator itr = getReg().find ( type );
 		if ( itr != getReg().end() )

@@ -22,7 +22,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iomanip>
 #include <ios>
-#include <stdio.h>
+
 
 namespace bafprp
 {
@@ -30,38 +30,25 @@ namespace bafprp
 
 	File::File() : Output( "file" )
 	{
-		// Not sure if its a good idea to lock a file for the duration of the program,
-		// but I cannot find a way to unlock the file.
-		if( fopen_s( &_fp, "bafprp.log", "w" ) != 0 )
-		{
-			Output::setOutputLog( "console" );
-			LOG_ERROR( "Could not open log file, falling back to console log" );
-		}
+		//_file.setf( std::ios::left );
 	}
 
 	File::~File()
 	{
-		if( _fp ) fclose( _fp );
+		if( _file.is_open() ) _file.close();
 	}
 
 	// Best to avert your eyes.
 	void File::error( const IBafRecord* record, const std::string error )
 	{
-		if( !_fp )
-		{
-			Output::setOutputLog( "console" );
-			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
-		}
 		LOG_TRACE( "File::error" );
+		checkFile( _errorProperties );
 
-		fprintf_s( _fp, "* Record Error *********************************************\n" );
-		fprintf_s( _fp, "*                                                          *\n" );
-		fprintf_s( _fp, "*    %s                             *\n", NowTime().c_str() );
+		_file << "* Record Error *********************************************" << std::endl;
+		_file << "*                                                          *" << std::endl;
+		_file << "*    " << std::setw(28) << NowTime << " *" << std::endl;
 
-		std::ostringstream os;
-		os.setf( std::ios::left );
-
-		fprintf_s( _fp, "*                                                          *\n" );
+		_file << "*                                                          *" << std::endl;
 
 		std::string rest = "";
 		int space = 0;
@@ -70,10 +57,8 @@ namespace bafprp
 		if( space == std::string::npos )
 				space = 48;
 
-		os << "* Report: " << std::setw( 48 ) << error.substr( 0, space ) << " *" << std::endl;
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
-
+		_file << "* Report: " << std::setw( 48 ) << error.substr( 0, space ) << " *" << std::endl;
+		
 		// Avoid the out_of_range exception
 		if( error.length() > 48 )
 			rest = error.substr( space + 1 );		
@@ -89,37 +74,28 @@ namespace bafprp
 			}
 			
 
-			os << "*         " << std::setw( 48 ) << rest.substr( 0, space ) << " *" << std::endl;
-			fprintf_s( _fp, os.str().c_str() );
-			os.str("");
-
+			_file << "*         " << std::setw( 48 ) << rest.substr( 0, space ) << " *" << std::endl;
+			
 			if( rest.length() > 49 )	
 				rest = rest.substr( space + 1 );
 			else
 				rest = "";
 		}
 
-		fprintf_s( _fp, "*                                                          *\n" );
-		os << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
-		os << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
-		os << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;	
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
+		_file << "*                                                          *" << std::endl;
+		_file << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
+		_file << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
+		_file << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;	
 
 		const IField* structtype = record->getField( "structuretype" );
-		if( structtype ) os << "*          Structure Type: " << std::setw(30) << structtype->getString() << " *" << std::endl;
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
+		if( structtype ) 
+			_file << "*          Structure Type: " << std::setw(30) << structtype->getString() << " *" << std::endl;
+		else
+			_file << "*          Structure Type: " << std::setw(30) << "Unknown" << " *" << std::endl;
 
-		fprintf_s( _fp, "*                                                          *\n" );
+		_file << "*                                                          *" << std::endl;
 		std::string bytes = record->getData();
-		os << "* BYTES: " << std::setw(49) << bytes.substr( 0, 48 ) << " *" << std::endl;
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
+		_file << "* BYTES: " << std::setw(49) << bytes.substr( 0, 48 ) << " *" << std::endl;
 
 		rest = "";
 
@@ -128,58 +104,90 @@ namespace bafprp
 		
 		while( rest != "" )
 		{
-			os << "*        " << std::setw(49) << rest.substr( 0, 48 ) << " *" << std::endl;
-			fprintf_s( _fp, os.str().c_str() );
-			os.str("");
+			_file << "*        " << std::setw(49) << rest.substr( 0, 48 ) << " *" << std::endl;
 
 			if( rest.length() > 48 )
 				rest = rest.substr( 48 );
 			else
 				rest = "";
 		}
-		fprintf_s( _fp, "*                                                          *\n" );
-		fprintf_s( _fp, "************************************************************\n" );
+		_file << "*                                                          *" << std::endl;
+		_file << "************************************************************" << std::endl;
+
+		_file.flush();
 	
 		LOG_TRACE( "/File::error" );
 	}
 
 	void File::log( const std::string log )
 	{
-		if( !_fp )
-		{
-			Output::setOutputLog( "console" );
-			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
-		}
-		fprintf_s( _fp, "%s\n", log.c_str() );
+		checkFile( _logProperties );
+		_file << log << std::endl;
+		_file.flush();
 	}
 
 	void File::record( const IBafRecord* record )
 	{
-		if( !_fp )
-		{
-			Output::setOutputLog( "console" );
-			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
-		}
 		LOG_TRACE( "File::record" );
+		checkFile( _recordProperties );
 
 		const IField* field;
 		DWORD lastUID = 0;
 		
-		fprintf_s( _fp, "---------------------------------------\n" );
-		fprintf_s( _fp, "%s\n", record->getType().c_str() );
-		fprintf_s( _fp, "---------------------------------------\n" );
-		fprintf_s( _fp, "Length of record: %d, CRC32: %u\n", record->getSize(), record->getCRC() );
-		fprintf_s( _fp, "---------------------------------------\n" );
+		_file << "---------------------------------------" << std::endl;
+		_file << record->getType() << std::endl;
+		_file << "---------------------------------------" << std::endl;
+		_file << "Length of record: " << record->getSize() << ", CRC32: " << record->getCRC() << std::endl;
+		_file << "---------------------------------------" << std::endl;
 
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
 		while( ( field = record->getNextField( lastUID ) ) != NULL )
 		{
 			lastUID = field->getUID();
-			fprintf_s( _fp, "%s: %s\n", field->getName().c_str(), field->getString().c_str() );
+			_file << field->getName() << ": " << field->getString() << std::endl;
 		}
 
-		fprintf_s( _fp, "\n" );
+		_file << std::endl;
+		_file.flush();
 
 		LOG_TRACE( "/File::record" );
+	}
+
+	void File::checkFile( property_map props )
+	{
+		property_map::iterator filename = props.find( "filename" );
+		if( filename != props.end() )
+		{
+			if( _filename != filename->second )
+			{
+				if( _file.is_open() ) _file.close();
+				_file.open( filename->second.c_str() );
+				if( _file.is_open() ) 
+					_filename = filename->second;
+				else
+				{
+					Output::setOutputLog( "console" );
+					LOG_ERROR( "Could not open " << filename->second << " for output" );
+					return;
+				}
+			}
+		}
+		
+		if( !_file.is_open() )
+		{
+			if( _filename != "bafprp.log" )
+			{
+				if( _file.is_open() ) _file.close();
+				_file.open( "bafprp.log" );
+				if( _file.is_open() )
+					_filename = "bafprp.log";
+				else
+				{
+					Output::setOutputLog( "console" );
+					LOG_ERROR( "Could not open bafprp.log for output" );
+					return;
+				}
+			}
+		}
 	}
 }

@@ -57,7 +57,7 @@ namespace bafprp
 	std::string r500::getType() const
 	{
 		// This type of record only has 1 use
-		return "Unknown";
+		return "Record 500: Unknown";
 	}
 
 	r500::~r500()

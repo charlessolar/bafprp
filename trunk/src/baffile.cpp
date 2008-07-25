@@ -51,11 +51,7 @@ namespace bafprp
 			if( _records.size() > 0 )
 			{
 				for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
-				{
 					if( *itr ) delete *itr;
-					//itr = _records.erase( itr );
-					//if( itr == _records.end() ) break;
-				}
 			}
 
 			_records.clear();
@@ -100,6 +96,7 @@ namespace bafprp
 
 			LOG_DEBUG( "Reading record of length " << _length_of_record << " at file offset " << _offset );
 			IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _offset ); 
+			LOG_DEBUG( "Read " << record->getType() << " at " << record->getFilePosition() );
 			if( record )
 				_records.push_back( record );
 			

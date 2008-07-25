@@ -75,10 +75,10 @@ namespace bafprp
 		switch( field->getInt() )
 		{
 		case 90:
-			ret = "Sensor Audit Record";
+			ret = "Record 9102: Sensor Audit Record";
 			break;
 		default:
-			ret = "Unknown";
+			ret = "Record 9102: Unknown";
 		}
 		return ret;
 	}

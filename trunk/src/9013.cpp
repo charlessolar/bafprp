@@ -54,7 +54,7 @@ namespace bafprp
 	std::string r9013::getType() const
 	{
 		// This type of record only has 1 use
-		return "File Start Marker";
+		return "Record 9013: File Start Marker";
 	}
 
 	r9013::~r9013()

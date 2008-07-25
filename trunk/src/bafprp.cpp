@@ -82,8 +82,12 @@ int main( int argc, char* argv[] )
 	}
 
 	Output::setOutputRecord( "file" );
-	Output::setOutputError( "file2" );
-	Output::setOutputLog( "file3" );
+	Output::setRecordProperty( "filename", "record.log" );
+	Output::setOutputError( "file" );
+	Output::setErrorProperty( "filename", "error.log" );
+	Output::setOutputLog( "file" );
+	Output::setLogProperty( "filename", "log.log" );
+	
 
 	LOG_TRACE( "Global::main" );
 
@@ -94,6 +98,7 @@ int main( int argc, char* argv[] )
 
 	BafFile* file = new BafFile();
 
+	LOG_INFO( "Running Program" );
 	for( int ii = 1; ii < argc; ii++ )
 	{
 		if( argv[ii][0] != '-' )
@@ -109,18 +114,18 @@ int main( int argc, char* argv[] )
 			do
 			{
 		#endif
-				
+				std::string dir = std::string( argv[ii] ).substr( 0, std::string( argv[ii] ).find_last_of( "\\" ) + 1 );
 				LOG_INFO( "Processing " << fdata.cFileName << " started" );
-				if ( !file->process( string( fdata.cFileName ), listDups ) )
+				if ( !file->process( dir + string( fdata.cFileName ), listDups ) )
 				{
-					LOG_ERROR( "Error processing " << fdata.cFileName );
+					LOG_ERROR( "Error processing " << dir << fdata.cFileName );
 				}
-				LOG_INFO( "Processing " << fdata.cFileName << " ended" );
+				LOG_INFO( "Processing " << dir << fdata.cFileName << " ended" );
 				
 				LOG_INFO( "Cleanup started" );
 				if( !file->clear() )
 				{
-					LOG_ERROR( "Error clearing " << fdata.cFileName << " record data" );
+					LOG_ERROR( "Error clearing " << dir << fdata.cFileName << " record data" );
 				}
 				LOG_INFO( "Cleanup ended" );
 
@@ -129,10 +134,10 @@ int main( int argc, char* argv[] )
 		#endif
 		}
 	}
-	delete file;
+	if( file ) delete file;
+	LOG_INFO( "Program Terminated" );
 	
 	LOG_TRACE( "/Global::main" );
-
 	return 0;
 }
 

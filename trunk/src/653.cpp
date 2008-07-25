@@ -78,10 +78,10 @@ namespace bafprp
 		switch( field->getInt() )
 		{
 		case 119:
-			ret = "Incoming CDR";
+			ret = "Record 653: Incoming CDR";
 			break;
 		default:
-			ret = "Unknown";
+			ret = "Record 653: Unknown";
 		}
 		return ret;
 	}

@@ -60,7 +60,7 @@ namespace bafprp
 	std::string r96::getType() const
 	{
 		// This type of record only has 1 use
-		return "Unknown";
+		return "Record 96: Unknown";
 	}
 
 	r96::~r96()

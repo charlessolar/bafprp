@@ -57,8 +57,9 @@ namespace bafprp
 	*/
 
 	class Output
-	{
+	{	
 	protected:
+	
 		// For registering subclasses
 		Output( const std::string name );
 		
@@ -66,27 +67,18 @@ namespace bafprp
 		virtual void record( const IBafRecord* record ) = 0;
 		virtual void error( const IBafRecord* record, const std::string error ) = 0;
 		virtual void log( const std::string log ) = 0;
-	public:
-		virtual ~Output();
 
-		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
-		static void setLogLevel( int level );
-		static LOG_LEVEL getLogLevel() { return _level; }
-
-		static void setOutputRecord( const std::string name ) { _outputRecord = name; }
-		static void setOutputError( const std::string name ) { _outputError = name; }
-		static void setOutputLog( const std::string name ) { _outputLog = name; }
-
-		static void outputRecord( const IBafRecord* record );
-		static void outputError( const IBafRecord* record, const std::string error );
-		static void outputLog( LOG_LEVEL level, const std::string log );
+		typedef std::map<std::string, std::string> property_map;
+		static property_map _recordProperties;
+		static property_map _errorProperties;
+		static property_map _logProperties;
 
 	private:
 		// Allow no one to make this class
 		Output() {}
 
 		typedef std::map< std::string, Output* > output_map;
-
+		
 		static output_map& getReg()
 		{
 			static output_map registry;
@@ -98,6 +90,26 @@ namespace bafprp
 		static std::string _outputRecord;
 		static std::string _outputError;
 		static std::string _outputLog;
+
+	public:
+		virtual ~Output();
+
+		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
+		static void setLogLevel( int level );
+		static LOG_LEVEL getLogLevel() { return _level; }
+
+		static void setOutputRecord( const std::string name ) { _outputRecord = name; }
+		static void setRecordProperty( const std::string name, const std::string value );
+
+		static void setOutputError( const std::string name ) { _outputError = name; }
+		static void setErrorProperty( const std::string name, const std::string value );
+
+		static void setOutputLog( const std::string name ) { _outputLog = name; }
+		static void setLogProperty( const std::string name, const std::string value );
+
+		static void outputRecord( const IBafRecord* record );
+		static void outputError( const IBafRecord* record, const std::string error );
+		static void outputLog( LOG_LEVEL level, const std::string log );
 
 	};
 	
