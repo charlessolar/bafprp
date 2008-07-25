@@ -35,7 +35,7 @@ namespace bafprp
 
 		bool convert ( const BYTE* data );
 
-		int getSize() const { return 5; }
+		int getSize() const { return 3; }
 		std::string getType() const { return "string"; }
 		std::string getName() const { return "Completion indicator"; }
 

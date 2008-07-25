@@ -2,7 +2,7 @@
 Copyright (C) 2008 by Charles Solar
 charlessolar@gmail.com
 
-This file is part of bafprp.
+This File2 is part of bafprp.
 
 bafprp is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,37 +18,30 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+#ifndef BAFPRPFile2_H
+#define BAFPRPFile2_H
 
-#include <string>
-
-#include "bafdefines.h"
-#include "ibafrecord.h"
+#include "output.h"
 
 namespace bafprp
 {
-	class BafFile
+	class File2 : public Output
 	{
 	public:
-		BafFile();
-		~BafFile();
+		// Register the output type
+		File2();
+		~File2();
 
-		bool read( const std::string filename );
-		bool parse( const std::string filename );
-		bool process( const std::string filename, bool listDups = false );
-		bool clear();  // reset 
+		void record( const IBafRecord* record );
+		void error( const IBafRecord* record, const std::string error );
+		void log( const std::string log );
 
 	private:
-		bool readRecord();
-
-		std::string _filename;
-		long _fileSize;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		FILE* _fp;
+		// This variable simply initializes a class that registers with the main output code
+		static const File2 registerThis;
 	};
-} 
+}
+
+
 #endif

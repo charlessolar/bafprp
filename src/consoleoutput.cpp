@@ -77,6 +77,9 @@ namespace bafprp
 		std::cout << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
 		std::cout << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;	
 
+		const IField* structtype = record->getField( "structuretype" );
+		if( structtype ) std::cout << "*          Structure Type: " << std::setw(30) << structtype->getString() << " *" << std::endl;
+
 		std::cout << "*                                                          *" << std::endl;
 		std::string bytes = record->getData();
 		std::cout << "* BYTES: " << std::setw(49) << bytes.substr( 0, 48 ) << " *" << std::endl;

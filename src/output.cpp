@@ -60,7 +60,7 @@ namespace bafprp
 
 	void Output::outputLog( LOG_LEVEL level, const std::string log )
 	{
-		if( level < _level ) return;
+		if( level > _level ) return;
 
 		output_map::iterator itr = getReg().find( _outputLog );
 		if( itr != getReg().end() )

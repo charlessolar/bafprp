@@ -18,37 +18,42 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPBAFFILE_H
-#define BAFPRPBAFFILE_H
+#ifndef BAFPRPCLASSFEATURECODE_H
+#define BAFPRPCLASSFEATURECODE_H
 
-#include <string>
-
-#include "bafdefines.h"
-#include "ibafrecord.h"
+#include "ifield.h"
 
 namespace bafprp
 {
-	class BafFile
+	class ClassFeatureCode : public IField
+	{
+		friend class ClassFeatureCodeFieldMaker;
+	public:
+		int getInt() const;
+		long getLong() const;
+		std::string getString() const;
+
+		bool convert ( const BYTE* data );
+
+		int getSize() const { return 3; }
+		std::string getType() const { return "string"; }
+		std::string getName() const { return "CLASS Feature code"; }
+
+		~ClassFeatureCode();
+	private:
+		ClassFeatureCode();
+	};
+
+	class ClassFeatureCodeFieldMaker : public FieldMaker
 	{
 	public:
-		BafFile();
-		~BafFile();
-
-		bool read( const std::string filename );
-		bool parse( const std::string filename );
-		bool process( const std::string filename, bool listDups = false );
-		bool clear();  // reset 
-
+		ClassFeatureCodeFieldMaker() : FieldMaker( "classfeaturecode" ) {}
+	protected:
+		IField* make() const;
 	private:
-		bool readRecord();
-
-		std::string _filename;
-		long _fileSize;
-		BYTE* _fileData;
-		long _offset;
-		int _length_of_record;
-
-		std::vector<IBafRecord*> _records;
+		static const ClassFeatureCodeFieldMaker registerThis;
 	};
-} 
+
+}
+
 #endif

@@ -124,7 +124,7 @@ namespace bafprp
 	{ \
 		std::ostringstream ssOutput; \
 		ssOutput << "- " << NowTime() << " - INFO: " << logEvent; \
-		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
+		Output::outputLog( LOG_LEVEL_INFO, ssOutput.str() ); \
 	} 
 	#define LOG_WARN( logEvent ) \
 	if( Output::getLogLevel() >= LOG_LEVEL_WARN ) \

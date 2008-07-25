@@ -2,7 +2,7 @@
 Copyright (C) 2008 by Charles Solar
 charlessolar@gmail.com
 
-This file is part of bafprp.
+This File3 is part of bafprp.
 
 bafprp is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "fileoutput.h"
+#include "File3output.h"
 
 #include <iomanip>
 #include <ios>
@@ -26,33 +26,33 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	const File File::registerThis;
+	const File3 File3::registerThis;
 
-	File::File() : Output( "file" )
+	File3::File3() : Output( "file3" )
 	{
-		// Not sure if its a good idea to lock a file for the duration of the program,
-		// but I cannot find a way to unlock the file.
-		if( fopen_s( &_fp, "bafprp.log", "w" ) != 0 )
+		// Not sure if its a good idea to lock a File3 for the duration of the program,
+		// but I cannot find a way to unlock the File3.
+		if( fopen_s( &_fp, "bafprp3.log", "w" ) != 0 )
 		{
 			Output::setOutputLog( "console" );
-			LOG_ERROR( "Could not open log file, falling back to console log" );
+			LOG_ERROR( "Could not open log File3, falling back to console log" );
 		}
 	}
 
-	File::~File()
+	File3::~File3()
 	{
 		if( _fp ) fclose( _fp );
 	}
 
 	// Best to avert your eyes.
-	void File::error( const IBafRecord* record, const std::string error )
+	void File3::error( const IBafRecord* record, const std::string error )
 	{
 		if( !_fp )
 		{
 			Output::setOutputLog( "console" );
-			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
+			LOG_ERROR( "File3 pointer no longer valid, falling back to console output" );
 		}
-		LOG_TRACE( "File::error" );
+		LOG_TRACE( "File3::error" );
 
 		fprintf_s( _fp, "* Record Error *********************************************\n" );
 		fprintf_s( _fp, "*                                                          *\n" );
@@ -110,14 +110,14 @@ namespace bafprp
 		fprintf_s( _fp, os.str().c_str() );
 		os.str("");
 
-		const IField* structtype = record->getField( "structuretype" );
-		if( structtype ) os << "*          Structure Type: " << std::setw(30) << structtype->getString() << " *" << std::endl;
-		fprintf_s( _fp, os.str().c_str() );
-		os.str("");
-
 		fprintf_s( _fp, "*                                                          *\n" );
 		std::string bytes = record->getData();
 		os << "* BYTES: " << std::setw(49) << bytes.substr( 0, 48 ) << " *" << std::endl;
+		fprintf_s( _fp, os.str().c_str() );
+		os.str("");
+
+		const IField* structtype = record->getField( "structuretype" );
+		if( structtype ) os << "*          Structure Type: " << std::setw(30) << structtype->getString() << " *" << std::endl;
 		fprintf_s( _fp, os.str().c_str() );
 		os.str("");
 
@@ -140,27 +140,27 @@ namespace bafprp
 		fprintf_s( _fp, "*                                                          *\n" );
 		fprintf_s( _fp, "************************************************************\n" );
 	
-		LOG_TRACE( "/File::error" );
+		LOG_TRACE( "/File3::error" );
 	}
 
-	void File::log( const std::string log )
+	void File3::log( const std::string log )
 	{
 		if( !_fp )
 		{
 			Output::setOutputLog( "console" );
-			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
+			LOG_ERROR( "File3 pointer no longer valid, falling back to console output" );
 		}
 		fprintf_s( _fp, "%s\n", log.c_str() );
 	}
 
-	void File::record( const IBafRecord* record )
+	void File3::record( const IBafRecord* record )
 	{
 		if( !_fp )
 		{
 			Output::setOutputLog( "console" );
-			LOG_ERROR( "File pointer no longer valid, falling back to console output" );
+			LOG_ERROR( "File3 pointer no longer valid, falling back to console output" );
 		}
-		LOG_TRACE( "File::record" );
+		LOG_TRACE( "File3::record" );
 
 		const IField* field;
 		DWORD lastUID = 0;
@@ -180,6 +180,6 @@ namespace bafprp
 
 		fprintf_s( _fp, "\n" );
 
-		LOG_TRACE( "/File::record" );
+		LOG_TRACE( "/File3::record" );
 	}
 }

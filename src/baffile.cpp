@@ -23,75 +23,107 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include "baffile.h"
 #include "output.h"
 
-#include "Duplicate.h"
+#include "duplicate.h"
 
 namespace bafprp
 {
-	bool BafFile::listDups = false;
-
-	BafFile::BafFile( const std::string filename ) : _filename( filename )
+	BafFile::BafFile() : _offset(0), _filename(""), _fileSize(0), _fileData(NULL), _length_of_record(0)
 	{
-		LOG_TRACE( "BafFile::BafFile" );
-		if( !open( _filename ) ) return;
-		LOG_TRACE( "/BafFile::BafFile" );
-	}
-
-	BafFile::BafFile(const char *filename) : _filename( filename )
-	{
-		LOG_TRACE( "BafFile::BafFile" );
-		if( !open( _filename ) ) return;
-		LOG_TRACE( "/BafFile::BafFile" );
 	}
 
 	BafFile::~BafFile()
 	{
 		LOG_TRACE( "BafFile::~BafFile" );
-
-		_filename.clear();
-		
-		// Clean up records
-		for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
-		{
-			delete *itr;
-		}
-
-		delete[] _fileData;
-
+		clear();
 		LOG_TRACE( "/BafFile::~BafFile" );
 	}
 
-	bool BafFile::readRecord()
+	bool BafFile::clear()
 	{
-		LOG_TRACE( "BafFile::getNextRecord" );
-		
-		_length_of_record = ( _fileData[_offset] * 256 ) + _fileData[_offset + 1];
-
-		IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _offset ); 
-		if( record )
+		try
 		{
-			Output::outputRecord( record );	
-			_records.push_back( record );
-		}
-		
-		_offset += _length_of_record;
+			_offset = 0;
+			_fileSize = 0;
+			_length_of_record = 0;
+			_filename.clear();
 
-		LOG_TRACE( "/BafFile::getNextRecord" );
+			// Clean up records
+			if( _records.size() > 0 )
+			{
+				for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
+				{
+					if( *itr ) delete *itr;
+					//itr = _records.erase( itr );
+					//if( itr == _records.end() ) break;
+				}
+			}
+
+			_records.clear();
+
+			if( _fileData )
+			{
+				delete[] _fileData;
+				_fileData = NULL;
+			}
+		}
+		catch( ... )
+		{
+			LOG_ERROR( "Encountered an error while clearing file object" );
+			return false;
+		}
+
 		return true;
 	}
 
-	bool BafFile::open( const std::string filename )
+	bool BafFile::parse( const std::string filename )
 	{
-		LOG_TRACE( "BafFile::open" );
+		LOG_TRACE( "BafFile::parse" );
+		if( filename != _filename ) 
+		{
+			if( !read( filename ) )
+			{
+				LOG_ERROR( "File::Parse failed to read the file" );
+				return false;
+			}
+		}
 
+		while( _offset < _fileSize )
+		{
+		
+			_length_of_record = ( _fileData[_offset] * 256 ) + _fileData[_offset + 1];
+
+			if( _length_of_record == 0 )
+			{
+				LOG_FATAL( "Length of record is zero, bad baf file." );
+				return false;
+			}
+
+			LOG_DEBUG( "Reading record of length " << _length_of_record << " at file offset " << _offset );
+			IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _offset ); 
+			if( record )
+				_records.push_back( record );
+			
+			_offset += _length_of_record;
+		}
+
+		LOG_INFO( "Parsed " << _records.size() << " records" );
+
+		LOG_TRACE( "/BafFile::parse" );
+		return true;
+	}
+
+	bool BafFile::read( const std::string filename )
+	{
+		LOG_TRACE( "BafFile::read" );
+		_offset = 0;
 
 		std::ifstream file( filename.c_str(), std::ios::in | std::ios::binary | std::ios::ate );
-		int size;
 		if( file.is_open() )
 		{
-			size = file.tellg();
-			_fileData = new BYTE[size];
+			_fileSize = file.tellg();
+			_fileData = new BYTE[_fileSize];
 			file.seekg( 0, std::ios::beg );
-			file.read( (char*)_fileData, size );
+			file.read( (char*)_fileData, _fileSize );
 			file.close();
 		}
 		else
@@ -100,28 +132,30 @@ namespace bafprp
 			return false;
 		}
 
-		//std::string string = getChars( _fileData, 41 );
-		//printf( string.c_str() );
+		_filename = filename;
 
-		_offset = 0;
-		// This needs a redesign
-		while( _offset < size )
-		{
-			readRecord();
-		}
-		LOG_INFO( "Read and Parsed " << _records.size() << " records" );
-
-		LOG_TRACE( "/BafFile::open" );
+		LOG_TRACE( "/BafFile::read" );
 		return true;
 	}
 
-	void BafFile::process()
+	bool BafFile::process( const std::string filename, bool listDups )
 	{
-		LOG_TRACE( "BafFile::process" );
-		LOG_INFO( "Records: " << _records.size() );
+		if( filename != _filename ) 
+		{
+			if( !parse( filename ) ) // has the effect of calling both read and parse
+			{
+				LOG_ERROR( "File::Process failed to parse the file" );
+				return false;
+			}
+		}
+
+		long size = _records.size();
+
 		if( listDups ) Duplicate::list( _records );
 		Duplicate::remove( _records );
-		LOG_INFO( "Records: " << _records.size() );
-		LOG_TRACE( "/BafFile::process" );
+		
+		LOG_INFO( "Removed " << size - _records.size() << " duplicates" );
+		
+		return true;
 	}
 }

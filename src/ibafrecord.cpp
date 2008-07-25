@@ -98,7 +98,11 @@ namespace bafprp
 	const IField* IBafRecord::getField( const std::string name ) const
 	{
 		LOG_TRACE( "IBafRecord::getField" );
-		if( _fields.empty() ) return NULL;
+		if( _fields.empty() ) 
+		{
+			LOG_WARN( "Tried to pull a field from a record with no fields" );
+			return NULL;
+		}
 
 		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 		{
