@@ -71,10 +71,10 @@ namespace bafprp
 		switch( field->getInt() )
 		{
 		case 26:
-			ret = "Conference Trunk Usage";
+			ret = "Record 76: Conference Trunk Usage";
 			break;
 		default:
-			ret = "Unknown";
+			ret = "Record 76: Unknown";
 		}
 		return ret;
 	}

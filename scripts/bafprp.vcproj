@@ -526,14 +526,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\file2output.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\file3output.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\fileoutput.cpp"
 					>
 				</File>
@@ -1005,14 +997,6 @@
 				>
 				<File
 					RelativePath="..\include\consoleoutput.h"
-					>
-				</File>
-				<File
-					RelativePath="..\include\file2output.h"
-					>
-				</File>
-				<File
-					RelativePath="..\include\file3output.h"
 					>
 				</File>
 				<File

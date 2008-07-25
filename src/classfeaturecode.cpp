@@ -107,7 +107,119 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			switch( getInt() )
+			{
+			case 1:
+				ret = "Outgoingcallbarringdailycontination";
+				break;
+			case 2:
+				ret = "Outgoingcallbarringactivation";
+				break;
+			case 3:
+				ret = "Outgoingcallbarringdeactivation";
+				break;
+			case 32:
+				ret = "ARreactivation,delayedprocessing,setup";
+				break;
+			case 33:
+				ret = "ACreactivation,delayedprocessing,setup";
+				break;
+			case 34:
+				ret = "ARreactivation,busyringback,noscanning";
+				break;
+			case 35:
+				ret = "ACreactivation,busyringback,noscanning";
+				break;
+			case 36:
+				ret = "ARreactivation,delayedprocessing,timeout";
+				break;
+			case 37:
+				ret = "ACreactivation,delayedprocessing,timeout";
+				break;
+			case 38:
+				ret = "ARreactivation,delayedprocessing,de/react";
+				break;
+			case 39:
+				ret = "ACreactivation,delayedprocessing,de/react";
+				break;
+			case 52:
+				ret = "Selectivecallforwarding";
+				break;
+			case 57:
+				ret = "Anonymouscallrejectionactivation";
+				break;
+			case 58:
+				ret = "Anonymouscallrejectiondeactivation";
+				break;
+			case 59:
+				ret = "Anonymouscallrejectioncontinuation";
+				break;
+			case 60:
+				ret = "ARactivation,immediateprocessing,setup";
+				break;
+			case 61:
+				ret = "ACactivation,immediateprocessing,setup";
+				break;
+			case 62:
+				ret = "ARactivation,delayedprocessing,setup";
+				break;
+			case 63:
+				ret = "ACactivation,delayedprocessing,setup";
+				break;
+			case 64:
+				ret = "ARactivation,busyringback,noscanning";
+				break;
+			case 65:
+				ret = "ACactivation,busyringback,noscanning";
+				break;
+			case 66:
+				ret = "ARactivation,delayedprocessing,timeout";
+				break;
+			case 67:
+				ret = "ACactivation,delayedprocessing,timeout";
+				break;
+			case 68:
+				ret = "ARactivation,delayedprocessing,de/react";
+				break;
+			case 69:
+				ret = "ACactivation,delayedprocessing,de/react";
+				break;
+			case 70:
+				ret = "Customeroriginatedtraceactivation";
+				break;
+			case 72:
+				ret = "Selectivecallrejection";
+				break;
+			case 73:
+				ret = "DistinctiveRinging/CallWaiting";
+				break;
+			case 74:
+				ret = "ScreenListeditingdailycontination";
+				break;
+			case 75:
+				ret = "Callingnumberdeliveryblockingactivation";
+				break;
+			case 79:
+				ret = "Selectivecallacceptance";
+				break;
+			case 80:
+				ret = "Callingnumberdelivery";
+				break;
+			case 82:
+				ret = "Callingnamedelivery";
+				break;
+			case 85:
+				ret = "Callingidentitydeliveryandsuppression";
+				break;
+			case 95:
+				ret = "ARtwo-levelactivation";
+				break;
+			default:
+				ret = "Unknown " + _return;
+				break;
+			}
+		}
 
 		LOG_TRACE( "/ClassFeatureCode::getString" );
 		return ret;

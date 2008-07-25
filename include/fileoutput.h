@@ -21,6 +21,8 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPFILE_H
 #define BAFPRPFILE_H
 
+#include <fstream>
+
 #include "output.h"
 
 namespace bafprp
@@ -37,7 +39,10 @@ namespace bafprp
 		void log( const std::string log );
 
 	private:
-		FILE* _fp;
+		void checkFile( property_map props );
+
+		std::ofstream _file;
+		std::string _filename;
 		// This variable simply initializes a class that registers with the main output code
 		static const File registerThis;
 	};

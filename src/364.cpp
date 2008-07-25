@@ -64,7 +64,7 @@ namespace bafprp
 	std::string r364::getType() const
 	{
 		// This type of record only has 1 use
-		return "Unknown";
+		return "Record 364: Unknown";
 	}
 
 	r364::~r364()

@@ -69,10 +69,10 @@ namespace bafprp
 		switch( field->getInt() )
 		{
 		case 9:
-			ret = "411 Directory Assistance";
+			ret = "Record 28: 411 Directory Assistance";
 			break;
 		default:
-			ret = "Unknown";
+			ret = "Record 28: Unknown";
 		}
 		return ret;
 	}

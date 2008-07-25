@@ -54,7 +54,7 @@ namespace bafprp
 	std::string r9014::getType() const
 	{
 		// This type of record only has 1 use
-		return "File End Marker";
+		return "Record 9014: File End Marker";
 	}
 
 	r9014::~r9014()
