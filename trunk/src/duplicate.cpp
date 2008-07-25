@@ -30,7 +30,6 @@ namespace bafprp
 
 	void Duplicate::remove( std::vector<IBafRecord*>& records )
 	{
-		LOG_TRACE( "Duplicate::remove" );
 		std::sort( records.begin(), records.end(), recordsort );
 
 		// Notes:
@@ -43,28 +42,21 @@ namespace bafprp
 		// and add my own since once the records are sorted its fairly easy (and fast) to do it myself.
 
 		//records.erase( std::unique( records.begin(), records.end(), recordequal ), records.end() );
-		LOG_TRACE( "Removing duplicates" );
+
 		for(std::vector<IBafRecord*>::iterator itr = records.begin() + 1; itr != records.end(); itr++ )
 		{
 			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
 			{
 				itr = records.erase( itr );
-				// If records.end() - 1 gets deleted here erase returns records.end()
-				// our loop then increments that pointer to records.end() + 1 and passes
-				// the condition since itr != records.end()
-				// Therefore I had to add this extra check.
-				if( itr == records.end() ) break;
+				if( itr == records.end() ) break;   // We need this in case we end up deleting the iterator right before the end().  If that happens the iterator would be
+													// incremented and would produce a very bad error
 			}
 		}
-		LOG_TRACE( "/Duplicate::remove" );
 	}
 
 	void Duplicate::list( std::vector<IBafRecord*>& records )
 	{
-		LOG_TRACE( "Duplicate::list" );
 		std::sort( records.begin(), records.end(), recordsort );
-
-		// see above
 		//std::vector<IBafRecord*>::iterator itr = std::unique( records.begin(), records.end(), recordequal );
 
 		for(std::vector<IBafRecord*>::iterator itr = records.begin() + 1; itr != records.end(); itr++ )
@@ -74,6 +66,7 @@ namespace bafprp
 				LOG_INFO( "* " << std::setw(30) << (*itr)->getType() << "\t" << (*itr)->getSize() << "\t" << (*itr)->getFilePosition() << "\t" << (*itr)->getCRC() << " collided with " << std::setw(30) << (*(itr - 1))->getType() << "\t" << (*(itr - 1))->getSize() << "\t" << (*(itr - 1))->getFilePosition() << "\t" << (*(itr - 1))->getCRC() );
 			}
 		}
-		LOG_TRACE( "/Duplicate::list" );
 	}
+
+
 }

@@ -40,6 +40,7 @@ void print_usage();
 
 int main( int argc, char* argv[] ) 
 {	
+	bool listDups = false;
 	Output::setLogLevel( LOG_LEVEL_INFO );
 
 	bool usage_error = true;
@@ -62,7 +63,7 @@ int main( int argc, char* argv[] )
 					break;
 				case 'l':
 				case 'L':
-					BafFile::listDups = true;
+					listDups = true;
 				case 's':
 				case 'S':
 					Output::setLogLevel( LOG_LEVEL_FATAL );
@@ -80,19 +81,18 @@ int main( int argc, char* argv[] )
 		return 1;
 	}
 
-	Output::setOutputRecord( "no" );
-	Output::setOutputError( "file" );
-	Output::setOutputLog( "file" );
+	Output::setOutputRecord( "file" );
+	Output::setOutputError( "file2" );
+	Output::setOutputLog( "file3" );
 
 	LOG_TRACE( "Global::main" );
-	
-	cout << "Press return to start process" << endl;
-	getchar();
 
 #ifdef _WIN32
 	WIN32_FIND_DATAA fdata;
 	HANDLE findh = INVALID_HANDLE_VALUE;	
 #endif
+
+	BafFile* file = new BafFile();
 
 	for( int ii = 1; ii < argc; ii++ )
 	{
@@ -109,34 +109,31 @@ int main( int argc, char* argv[] )
 			do
 			{
 		#endif
-				cout << "Parsing " << fdata.cFileName << " started at " << NowTime() << endl;
-				LOG_INFO( "Parsing " << fdata.cFileName << " started" );
-				BafFile* file = new BafFile( fdata.cFileName );
-				cout << "Parsing " << fdata.cFileName << " ended at " << NowTime() << endl;
-				LOG_INFO( "Parsing " << fdata.cFileName << " ended" );
-				cout << "Processing " << fdata.cFileName << " started at " << NowTime() << endl;
+				
 				LOG_INFO( "Processing " << fdata.cFileName << " started" );
-				file->process();
-				cout << "Processing " << fdata.cFileName << " ended at " << NowTime() << endl;
+				if ( !file->process( string( fdata.cFileName ), listDups ) )
+				{
+					LOG_ERROR( "Error processing " << fdata.cFileName );
+				}
 				LOG_INFO( "Processing " << fdata.cFileName << " ended" );
-				cout << "Cleanup started at " << NowTime() << endl;
+				
 				LOG_INFO( "Cleanup started" );
-				delete file;
-				cout << "Cleanup ended at " << NowTime() << endl;
+				if( !file->clear() )
+				{
+					LOG_ERROR( "Error clearing " << fdata.cFileName << " record data" );
+				}
 				LOG_INFO( "Cleanup ended" );
+
 		#ifdef _WIN32
 			} while( FindNextFileA( findh, &fdata ) != 0);
 		#endif
 		}
 	}
-
+	delete file;
 	
 	LOG_TRACE( "/Global::main" );
-	cout << "Press any key to exit..." << endl;
-	getchar();
 
-	
-	return EXIT_SUCCESS;
+	return 0;
 }
 
 void print_usage()

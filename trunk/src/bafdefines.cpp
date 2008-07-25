@@ -20,8 +20,9 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "bafdefines.h"
 
-#include <algorithm>
 #include <assert.h>
+
+#include "output.h"
 
 namespace bafprp
 {
@@ -56,6 +57,9 @@ namespace bafprp
 		// Increase the data pointer because we will be reading the data backwards.
 		data += ( length + length % 2 ) / 2;
 
+		if( hex[( *data & 0x0F )] != 'C' )
+			LOG_DEBUG( "Decoding a record without a terminating 'C'  This is usually a sign of an incorrect field size. Length of field: " << length );
+
 		// We are reading the data backwards to be more compatable with varying field sizes.
 		// The old way was to read starting at the beginning of a byte and continue 
 		// however there are fields that start in the middle of a byte, so the only accurate
@@ -77,9 +81,6 @@ namespace bafprp
 			else
 				ret[i-1] = hex[ ( *data & 0x0F ) ];
 		}
-
-		// need to reverse the string to make it right
-		//std::reverse( ret.begin(), ret.end() );
 		
 		return ret;
 	}

@@ -19,8 +19,6 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // Class to detect and remove duplicates from the record list
-// Ask me to explain why I made these processing functions seperate classes
-// and I will give you a new answer every day.
 
 #ifndef BAFPRPDUPLICATE_H
 #define BAFPRPDUPLICATE_H
@@ -37,7 +35,5 @@ namespace bafprp
 		// list duplicates in info log
 		static void list( std::vector<IBafRecord*>& records );
 	};
-
-	bool recordcrcequal( const IBafRecord* record, DWORD value );
 }
 #endif
