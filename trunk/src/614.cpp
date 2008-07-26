@@ -51,7 +51,6 @@ namespace bafprp
 		addField( "forwardtonumber" );
 		addField( "activationtime" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r614::getType() const

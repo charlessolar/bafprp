@@ -57,7 +57,6 @@ namespace bafprp
 		addField( "watsindicator" );
 		addField( "msgbillingindex" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r20::getType() const

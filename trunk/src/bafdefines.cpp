@@ -57,7 +57,7 @@ namespace bafprp
 		// Increase the data pointer because we will be reading the data backwards.
 		data += ( length + length % 2 ) / 2;
 
-		if( hex[( *data & 0x0F )] != 'C' )
+		if( hex[( *data & 0x0F )] != 'C' && hex[( *data & 0x0F )] != 'F' )
 			LOG_DEBUG( "Decoding a record without a terminating 'C'  This is usually a sign of an incorrect field size. Length of field: " << length );
 
 		// We are reading the data backwards to be more compatable with varying field sizes.

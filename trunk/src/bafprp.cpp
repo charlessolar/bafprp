@@ -138,6 +138,7 @@ int main( int argc, char* argv[] )
 	LOG_INFO( "Program Terminated" );
 	
 	LOG_TRACE( "/Global::main" );
+
 	return 0;
 }
 

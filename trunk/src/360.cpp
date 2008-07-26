@@ -66,7 +66,6 @@ namespace bafprp
 		addField( "rao" );
 		addField( "lata" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r360::getType() const

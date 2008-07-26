@@ -64,7 +64,6 @@ namespace bafprp
 		addField( "dialingpresubindicator" );
 		addField( "anicpnindicator" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r625::getType() const

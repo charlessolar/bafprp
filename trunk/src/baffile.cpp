@@ -119,6 +119,7 @@ namespace bafprp
 		{
 			_fileSize = file.tellg();
 			_fileData = new BYTE[_fileSize];
+			memset( _fileData, 0, sizeof(BYTE) * _fileSize );
 			file.seekg( 0, std::ios::beg );
 			file.read( (char*)_fileData, _fileSize );
 			file.close();

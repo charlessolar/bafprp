@@ -55,7 +55,6 @@ namespace bafprp
 		addField( "time" );
 		addField( "duration" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r79::getType() const

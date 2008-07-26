@@ -61,7 +61,6 @@ namespace bafprp
 		addField( "trunkgroupnumber" );
 		addField( "icincroutingindicator" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r653::getType() const
