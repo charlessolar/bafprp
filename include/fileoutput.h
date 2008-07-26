@@ -39,10 +39,13 @@ namespace bafprp
 		void log( const std::string log );
 
 	private:
-		void checkFile( property_map props );
+		void checkFile( property_map props, bool start );
 
 		std::ofstream _file;
 		std::string _filename;
+		std::vector<std::string> _storedFilenames;  // For different output with different filenames
+		std::vector<std::string> _usedFilenames;
+
 		// This variable simply initializes a class that registers with the main output code
 		static const File registerThis;
 	};
