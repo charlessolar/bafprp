@@ -28,16 +28,16 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-	IBafRecord::IBafRecord( const BYTE* data, int length, long filePos ) : _length( length ), _filePos( filePos )
+	IBafRecord::IBafRecord( const BYTE* data, int length, long filePos ) : _length( length ), _filePos( filePos ), _crc(0)
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
-		_data = data;
-		_fieldData = _data;
+		
+		_data = _fieldData = data;
 
 		// Module flag is 4 for some reason, and no its not the number of modules
 		_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
 
-		CRC32::Encode( _fieldData, length, _crc );
+		CRC32::Encode( _fieldData, _length, _crc );
 
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
 	}
@@ -60,6 +60,7 @@ namespace bafprp
 		// record object from that type
 
 		data += 2; // ignore the length
+		length -= 2;
 		if( *data == 0x0 )
 		{
 			data += 2;  // Record is usually prefixed by x0000
@@ -77,7 +78,7 @@ namespace bafprp
 		}
 		data++;
 		length -= 1;
-		// We should now be standing on the structure type field and the module flag
+		// We should now be standing on the structure type field
 
 		IField* structuretype = FieldMaker::newField( "structuretype" );
 		if( !structuretype ) 
@@ -98,7 +99,6 @@ namespace bafprp
 		maker_map::iterator itr = getReg().find ( type );
 		if ( itr != getReg().end() )
 			return itr->second->make( data, length, filePos );
-
 
 		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
 		LOG_TRACE( "/IBafRecord::newRecord" );
@@ -186,6 +186,7 @@ namespace bafprp
 			addField( "modulenumber" );
 		
 			// Will be the mudule number
+			LOG_DEBUG( "Decoding module number " << _fields.back()->getInt() );
 			switch( _fields.back()->getInt() )
 			{
 			case 0:
@@ -312,6 +313,9 @@ namespace bafprp
 				LOG_ERROR( "Unknown modules id: " << _fields.back()->getInt() << " at " << _filePos << "." << (DWORD)( _fieldData - _data ) << " record type " << getType() );
 			}
 		}
+
+		if( ( _fieldData - _data ) != _length )
+			LOG_WARN( "The record " << getType() << " was not the correct length to fit the data.  There were " << ( _fieldData - _data ) << " bytes left" );
 
 		LOG_TRACE( "/IBafRecord::decodeModules" );
 	}

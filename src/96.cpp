@@ -54,7 +54,6 @@ namespace bafprp
 		addField( "presentdate" );
 		addField( "presenttime" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r96::getType() const

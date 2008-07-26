@@ -55,7 +55,6 @@ namespace bafprp
 		addField( "screenlistsizescr" );
 		addField( "screenlistsizedrcw" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r1030::getType() const

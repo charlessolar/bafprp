@@ -54,7 +54,6 @@ namespace bafprp
 		addField( "duration" );
 		addField( "numtrunklegsused" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r76::getType() const

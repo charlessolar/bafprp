@@ -49,6 +49,7 @@ namespace bafprp
 		addField( "filesequenceno" );
 		addField( "numberofrecords" );
 		addField( "fileblocks" );
+		//decodeModules();
 	}
 
 	std::string r9014::getType() const

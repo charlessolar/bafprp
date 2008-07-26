@@ -20,6 +20,8 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "crc32.h"
 
+#include "output.h"
+
 namespace bafprp
 {
 
@@ -101,17 +103,17 @@ namespace bafprp
 
 	bool CRC32::Encode( const BYTE* data, DWORD size, DWORD& crc )
 	{
-			if( !data )
-					return false;
+		if( !data )
+				return false;
 
-			crc = 0xFFFFFFFF;
+		crc = 0xFFFFFFFF;
 
-			for( DWORD i = 0; i < size; i++ ){
-					GetCRC32( *data, crc );
-					data++;
-			}
+		for( DWORD i = 0; i < size; i++ ){
+				GetCRC32( *data, crc );
+				data++;
+		}
 
-			crc = ~crc;
-			return true;
+		crc = ~crc;
+		return true;
 	}
 }

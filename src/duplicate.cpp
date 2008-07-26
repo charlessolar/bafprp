@@ -47,6 +47,7 @@ namespace bafprp
 		{
 			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
 			{
+				if( *itr ) delete *itr;
 				itr = records.erase( itr );
 				if( itr == records.end() ) break;   // We need this in case we end up deleting the iterator right before the end().  If that happens the iterator would be
 													// incremented and would produce a very bad error

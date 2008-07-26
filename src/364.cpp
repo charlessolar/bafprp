@@ -58,7 +58,6 @@ namespace bafprp
 		addField( "rao" );
 		addField( "lata" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r364::getType() const

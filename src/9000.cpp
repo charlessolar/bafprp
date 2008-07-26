@@ -47,8 +47,6 @@ namespace bafprp
 		addField( "datebefore" );
 		addField( "dateafter" );
 		decodeModules();
-		addField( "endofrecord" );
-
 	}
 
 	std::string r9000::getType() const

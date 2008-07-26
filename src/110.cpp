@@ -49,7 +49,6 @@ namespace bafprp
 		addField( "callcountinfodeliv" );
 		addField( "callcountinfoanon" );
 		decodeModules();
-		addField( "endofrecord" );
 	}
 
 	std::string r110::getType() const
