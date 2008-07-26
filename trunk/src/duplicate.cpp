@@ -30,6 +30,8 @@ namespace bafprp
 
 	void Duplicate::remove( std::vector<IBafRecord*>& records )
 	{
+		if( records.size() == 0 ) return;
+
 		std::sort( records.begin(), records.end(), recordsort );
 
 		// Notes:

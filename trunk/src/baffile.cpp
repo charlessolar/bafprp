@@ -27,7 +27,10 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
-	BafFile::BafFile() : _offset(0), _filename(""), _fileSize(0), _fileData(NULL), _length_of_record(0)
+
+	std::string BafFile::_filename = "";
+
+	BafFile::BafFile() : _offset(0), _fileSize(0), _fileData(NULL), _length_of_record(0)
 	{
 	}
 
@@ -153,6 +156,11 @@ namespace bafprp
 		Duplicate::remove( _records );
 		
 		LOG_INFO( "Removed " << size - _records.size() << " duplicates" );
+
+		for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
+		{
+			if( *itr ) Output::outputRecord( *itr );
+		}
 		
 		return true;
 	}

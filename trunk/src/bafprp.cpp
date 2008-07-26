@@ -81,7 +81,7 @@ int main( int argc, char* argv[] )
 		return 1;
 	}
 
-	Output::setOutputRecord( "file" );
+	Output::setOutputRecord( "no" );
 	Output::setRecordProperty( "filename", "record.log" );
 	Output::setOutputError( "file" );
 	Output::setErrorProperty( "filename", "error.log" );
@@ -99,6 +99,7 @@ int main( int argc, char* argv[] )
 	BafFile* file = new BafFile();
 
 	LOG_INFO( "Running Program" );
+
 	for( int ii = 1; ii < argc; ii++ )
 	{
 		if( argv[ii][0] != '-' )

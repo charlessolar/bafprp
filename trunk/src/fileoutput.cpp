@@ -18,10 +18,11 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "fileoutput.h"
-
 #include <iomanip>
 #include <ios>
+
+#include "fileoutput.h"
+#include "baffile.h"
 
 
 namespace bafprp
@@ -42,11 +43,13 @@ namespace bafprp
 	void File::error( const IBafRecord* record, const std::string error )
 	{
 		LOG_TRACE( "File::error" );
-		checkFile( _errorProperties );
+		checkFile( _errorProperties, true );
+
+		_file.setf( std::ios::left );
 
 		_file << "* Record Error *********************************************" << std::endl;
 		_file << "*                                                          *" << std::endl;
-		_file << "*    " << std::setw(28) << NowTime << " *" << std::endl;
+		_file << "*    " << std::setw(53) << NowTime() << " *" << std::endl;
 
 		_file << "*                                                          *" << std::endl;
 
@@ -85,13 +88,8 @@ namespace bafprp
 		_file << "*                                                          *" << std::endl;
 		_file << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
 		_file << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
-		_file << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;	
-
-		const IField* structtype = record->getField( "structuretype" );
-		if( structtype ) 
-			_file << "*          Structure Type: " << std::setw(30) << structtype->getString() << " *" << std::endl;
-		else
-			_file << "*          Structure Type: " << std::setw(30) << "Unknown" << " *" << std::endl;
+		_file << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;
+		_file << "*          Filename: " << std::setw(37) << BafFile::getFilename() << " *" << std::endl;
 
 		_file << "*                                                          *" << std::endl;
 		std::string bytes = record->getData();
@@ -116,20 +114,22 @@ namespace bafprp
 
 		_file.flush();
 	
+		checkFile( _errorProperties, false );
 		LOG_TRACE( "/File::error" );
 	}
 
 	void File::log( const std::string log )
 	{
-		checkFile( _logProperties );
+		checkFile( _logProperties, true );
 		_file << log << std::endl;
 		_file.flush();
+		checkFile( _logProperties, false );
 	}
 
 	void File::record( const IBafRecord* record )
 	{
 		LOG_TRACE( "File::record" );
-		checkFile( _recordProperties );
+		checkFile( _recordProperties, true );
 
 		const IField* field;
 		DWORD lastUID = 0;
@@ -150,43 +150,72 @@ namespace bafprp
 		_file << std::endl;
 		_file.flush();
 
+		checkFile( _recordProperties, false );
 		LOG_TRACE( "/File::record" );
 	}
 
-	void File::checkFile( property_map props )
+
+	// This function is in dire need of some cleaning...
+	void File::checkFile( property_map props, bool start )
 	{
+		// We must use printf here because if log output is set to file we could get outselves
+		// into a nice infinite loop here.
+
+
 		property_map::iterator filename = props.find( "filename" );
-		if( filename != props.end() )
+		// add check for filename == props.end()
+
+		if( start )
 		{
-			if( _filename != filename->second )
+			if( _file.is_open() )
 			{
-				if( _file.is_open() ) _file.close();
-				_file.open( filename->second.c_str() );
-				if( _file.is_open() ) 
-					_filename = filename->second;
-				else
+				if( _filename != filename->second )
 				{
-					Output::setOutputLog( "console" );
-					LOG_ERROR( "Could not open " << filename->second << " for output" );
-					return;
+					_storedFilenames.push_back( _filename );
+					_filename = "";
+					_file.close();
+
+					bool bFound = false;
+					for( std::vector<std::string>::iterator itr = _usedFilenames.begin(); itr != _usedFilenames.end(); itr++ )
+					{
+						if( (*itr) == filename->second )
+						{
+							bFound = true;
+							break;
+						}
+					}
+
+					if( !bFound )
+						_file.open( filename->second.c_str() );
+					else
+						_file.open( filename->second.c_str(), std::ios::app );
+
+					// add checks to see if file is actually open
+
+					_filename = filename->second;
+					_usedFilenames.push_back( _filename );
 				}
+				// current open file matches desired file.
+			}
+			else // Need to open a new file for output
+			{
+				_file.open( filename->second.c_str() );
+
+				// add file open check
+
+				_filename = filename->second;
+				_usedFilenames.push_back( _filename );
 			}
 		}
-		
-		if( !_file.is_open() )
+		else  // end of function file check
 		{
-			if( _filename != "bafprp.log" )
+			if( _storedFilenames.size() > 0 )  // we had to push off another file to output
 			{
-				if( _file.is_open() ) _file.close();
-				_file.open( "bafprp.log" );
-				if( _file.is_open() )
-					_filename = "bafprp.log";
-				else
-				{
-					Output::setOutputLog( "console" );
-					LOG_ERROR( "Could not open bafprp.log for output" );
-					return;
-				}
+				// restore that file
+				_file.close();
+				_file.open( _storedFilenames.back().c_str(), std::ios::app );
+				_filename = _storedFilenames.back();
+				_storedFilenames.pop_back();
 			}
 		}
 	}
