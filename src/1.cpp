@@ -73,6 +73,9 @@ namespace bafprp
 		case 5:
 			ret = "Record 1: Local message rate call";
 			break;
+		case 6:
+			ret = "Record 1: Toll call or non-US";
+			break;
 		default:
 			ret = "Record 1: Unknown";
 		}
