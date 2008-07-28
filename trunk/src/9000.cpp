@@ -51,8 +51,24 @@ namespace bafprp
 
 	std::string r9000::getType() const
 	{
-		// This type of record only has 1 use
-		return "Record 9000: Unknown";
+		// Need to look at the call type field
+		std::string ret;
+		const IField* field = getField( "Call Type" );
+		if( !field ) 
+		{
+			LOG_ERROR( "No 'calltype' field in record 9000" );
+			return "";
+		}
+
+		switch( field->getInt() )
+		{
+		case 42:
+			ret = "Record 9000: Time change marker";
+			break;
+		default:
+			ret = "Record 9000: Unknown";
+		}
+		return ret;
 	}
 
 	r9000::~r9000()
