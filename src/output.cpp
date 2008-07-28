@@ -102,17 +102,29 @@ namespace bafprp
 
 	void Output::setErrorProperty( const std::string name, const std::string value )
 	{
-		_errorProperties.insert( std::make_pair( name, value ) );
+		property_map::iterator itr = _errorProperties.find( name );
+		if( itr != _errorProperties.end() )
+			itr->second = value;
+		else
+			_errorProperties.insert( std::make_pair( name, value ) );
 	}
 
 	void Output::setRecordProperty( const std::string name, const std::string value )
 	{
-		_recordProperties.insert( std::make_pair( name, value ) );
+		property_map::iterator itr = _recordProperties.find( name );
+		if( itr != _recordProperties.end() )
+			itr->second = value;
+		else
+			_recordProperties.insert( std::make_pair( name, value ) );
 	}
 
 	void Output::setLogProperty( const std::string name, const std::string value )
 	{
-		_logProperties.insert( std::make_pair( name, value ) );
+		property_map::iterator itr = _logProperties.find( name );
+		if( itr != _logProperties.end() )
+			itr->second = value;
+		else
+			_logProperties.insert( std::make_pair( name, value ) );
 	}
 
 	void Output::setOutputRecord( const std::string name )

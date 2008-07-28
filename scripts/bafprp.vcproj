@@ -61,8 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="jwsmtp.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -135,8 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="jwsmtp.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\libs"
+				AdditionalLibraryDirectories="..\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -530,6 +532,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\emailoutput.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\fileoutput.cpp"
 					>
 				</File>
@@ -646,7 +652,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\base64.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\compat.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\crc32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\mailer.cpp"
 					>
 				</File>
 			</Filter>
@@ -1008,6 +1026,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\emailoutput.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\fileoutput.h"
 					>
 				</File>
@@ -1124,7 +1146,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\include\base64.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\compat.h"
+					>
+				</File>
+				<File
 					RelativePath="..\include\crc32.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\jwsmtp.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\mailer.h"
 					>
 				</File>
 			</Filter>

@@ -5,3 +5,12 @@
 			
 2. Once this is done, fix getField to reference the field type name, not the type description.
 			Who the hell thought of referencing the type description anyway, geese
+			
+			
+
+Things to finish before v1.0
+
+	- Add mssql and email output type
+	- Finish scanning baf file archives and eliminate any unknowns
+	- wrap up email output
+	- fix static getFilename in BafFile, that was a stupid idea

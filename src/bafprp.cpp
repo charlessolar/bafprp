@@ -50,7 +50,11 @@ int main( int argc, char* argv[] )
 	Output::setOutputLog( "file" );
 	Output::setLogProperty( "filename", "log.log" );
 
+
 	bool usage_error = true;
+
+	std::string prop = "";
+
 	if( argc > 1 )
 	{
 		usage_error = false;
@@ -60,6 +64,7 @@ int main( int argc, char* argv[] )
 			if ( argv[ii][0] == '-' )
 			{
 				int i = 1;
+				int size = strlen( argv[ii] );
 				switch ( argv[ii][i] )
 				{
 				case 'v':
@@ -87,6 +92,34 @@ int main( int argc, char* argv[] )
 				case 'l':
 				case 'L':
 					Output::setOutputLog( argv[ii] + 2 );
+					break;
+				case 'p':
+				case 'P':
+					int j;
+					prop.clear();
+					for( j = 3; j < size; j++ )
+					{
+						if( argv[ii][j] == ':' ) break;
+					}
+					prop.append( argv[ii], 3, j - 3 );
+					j++;
+					switch( argv[ii][2] )
+					{
+					case 'r':
+					case 'R':
+						Output::setRecordProperty( prop, argv[ii] + j );
+						break;
+					case 'e':
+					case 'E':
+						Output::setErrorProperty( prop, argv[ii] + j );
+						break;
+					case 'l':
+					case 'L':
+						Output::setLogProperty( prop, argv[ii] + j );
+						break;
+					default:
+						printf( "Invalid output type while setting property: %s\n", argv[ii] );
+					}
 					break;
 				default:
 					printf( "Invalid option selected: %s\n", argv[ii] );
