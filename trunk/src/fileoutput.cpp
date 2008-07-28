@@ -160,7 +160,7 @@ namespace bafprp
 
 
 	// This function is in dire need of some cleaning...
-	void File::checkFile( property_map props, bool start )
+	void File::checkFile( property_map& props, bool start )
 	{
 		// We must use printf here because if log output is set to file we could get outselves
 		// into a nice infinite loop here.

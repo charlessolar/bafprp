@@ -18,38 +18,41 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPFILE_H
-#define BAFPRPFILE_H
-
-#include <fstream>
+#ifndef BAFPRPEMAIL_H
+#define BAFPRPEMAIL_H
 
 #include "output.h"
 
 namespace bafprp
 {
-	class File : public Output
+	class Email : public Output
 	{
 	public:
 		// Register the output type
-		File();
-		~File();
+		Email() : Output( "email" ) {}
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string error );
 		void log( const std::string log );
 
 	private:
-		void checkFile( property_map& props, bool start );
+		void checkProperties( property_map& props );
 
-		std::ofstream _file;
-		std::string _filename;
-		std::vector<std::string> _storedFilenames;  // For different output with different filenames
-		std::vector<std::string> _usedFilenames;
+		std::string _to;
+		std::string _from;
+		std::string _server;
+		int _serverPort;
+		std::string _user;
+		std::string _password;
 
+		bool _bCache;
+		int _iCache;
+
+		std::vector<IBafRecord*> _cachedRecords;
+		std::vector<std::string> _cachedLogs;
 		// This variable simply initializes a class that registers with the main output code
-		static const File registerThis;
+		static const Email registerThis;
 	};
 }
-
 
 #endif

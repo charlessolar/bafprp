@@ -18,11 +18,12 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "consoleoutput.h"
-
 #include <iostream>
 #include <ios>
 #include <iomanip>
+
+#include "consoleoutput.h"
+#include "baffile.h"
 
 namespace bafprp
 {
@@ -36,7 +37,7 @@ namespace bafprp
 
 		std::cout << "* Record Error *********************************************" << std::endl;
 		std::cout << "*                                                          *" << std::endl;
-		std::cout << "*    " << NowTime() << "                             *" << std::endl;
+		std::cout << "*    " << std::setw(53) << NowTime() << " *" << std::endl;
 
 		std::cout << "*                                                          *" << std::endl;
 
@@ -75,7 +76,8 @@ namespace bafprp
 		std::cout << "*                                                          *" << std::endl;
 		std::cout << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
 		std::cout << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
-		std::cout << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;	
+		std::cout << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;
+		std::cout << "*          Filename: " << std::setw(37) << BafFile::getFilename() << " *" << std::endl;
 
 		std::cout << "*                                                          *" << std::endl;
 		std::string bytes = record->getData();
@@ -114,11 +116,15 @@ namespace bafprp
 		std::string value = "";
 		DWORD lastUID = 0;
 
-		std::cout << "---------------------------------------" << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
 		std::cout << record->getType() << std::endl;
-		std::cout << "---------------------------------------" << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
 		std::cout << "Length of record: " << record->getSize() << std::endl;
-		std::cout << "---------------------------------------" << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
+		std::cout << "File: " << BafFile::getFilename() << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
+		std::cout << "Position: " << record->getFilePosition() << std::endl;
+		std::cout << "--------------------------------------------------------------------------" << std::endl;
 
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
 		while( ( field = record->getNextField( lastUID ) ) != NULL )
