@@ -111,109 +111,109 @@ namespace bafprp
 			switch( getInt() )
 			{
 			case 1:
-				ret = "Outgoingcallbarringdailycontination";
+				ret = "Outgoing call barring daily contination";
 				break;
 			case 2:
-				ret = "Outgoingcallbarringactivation";
+				ret = "Outgoing call barring activation";
 				break;
 			case 3:
-				ret = "Outgoingcallbarringdeactivation";
+				ret = "Outgoing call barring deactivation";
 				break;
 			case 32:
-				ret = "ARreactivation,delayedprocessing,setup";
+				ret = "AR reactivation, delayed processing, setup";
 				break;
 			case 33:
-				ret = "ACreactivation,delayedprocessing,setup";
+				ret = "AC reactivation, delayed processing, setup";
 				break;
 			case 34:
-				ret = "ARreactivation,busyringback,noscanning";
+				ret = "AR reactivation, busy ringback, no scanning";
 				break;
 			case 35:
-				ret = "ACreactivation,busyringback,noscanning";
+				ret = "AC reactivation, busy ringback, noscanning";
 				break;
 			case 36:
-				ret = "ARreactivation,delayedprocessing,timeout";
+				ret = "AR reactivation, delayed processing, timeout";
 				break;
 			case 37:
-				ret = "ACreactivation,delayedprocessing,timeout";
+				ret = "AC reactivation, delayed processing, timeout";
 				break;
 			case 38:
-				ret = "ARreactivation,delayedprocessing,de/react";
+				ret = "AR reactivation, delayed processing, de/react";
 				break;
 			case 39:
-				ret = "ACreactivation,delayedprocessing,de/react";
+				ret = "AC reactivation, delayed processing, de/react";
 				break;
 			case 52:
-				ret = "Selectivecallforwarding";
+				ret = "Selective call forwarding";
 				break;
 			case 57:
-				ret = "Anonymouscallrejectionactivation";
+				ret = "Anonymous call rejection activation";
 				break;
 			case 58:
-				ret = "Anonymouscallrejectiondeactivation";
+				ret = "Anonymous call rejection deactivation";
 				break;
 			case 59:
-				ret = "Anonymouscallrejectioncontinuation";
+				ret = "Anonymous call rejection continuation";
 				break;
 			case 60:
-				ret = "ARactivation,immediateprocessing,setup";
+				ret = "AR activation, immediate processing, setup";
 				break;
 			case 61:
-				ret = "ACactivation,immediateprocessing,setup";
+				ret = "AC activation, immediate processing, setup";
 				break;
 			case 62:
-				ret = "ARactivation,delayedprocessing,setup";
+				ret = "AR activation, delayed processing, setup";
 				break;
 			case 63:
-				ret = "ACactivation,delayedprocessing,setup";
+				ret = "AC activation, delayed processing, setup";
 				break;
 			case 64:
-				ret = "ARactivation,busyringback,noscanning";
+				ret = "AR activation, busy ring back, no scanning";
 				break;
 			case 65:
-				ret = "ACactivation,busyringback,noscanning";
+				ret = "AC activation, busy ringback, no scanning";
 				break;
 			case 66:
-				ret = "ARactivation,delayedprocessing,timeout";
+				ret = "AR activation, delayed processing, timeout";
 				break;
 			case 67:
-				ret = "ACactivation,delayedprocessing,timeout";
+				ret = "AC activation, delayed processing, timeout";
 				break;
 			case 68:
-				ret = "ARactivation,delayedprocessing,de/react";
+				ret = "AR activation, delayed processing, de/react";
 				break;
 			case 69:
-				ret = "ACactivation,delayedprocessing,de/react";
+				ret = "AC activation, delayed processing, de/react";
 				break;
 			case 70:
-				ret = "Customeroriginatedtraceactivation";
+				ret = "Customer originated trace activation";
 				break;
 			case 72:
-				ret = "Selectivecallrejection";
+				ret = "Selective call rejection";
 				break;
 			case 73:
-				ret = "DistinctiveRinging/CallWaiting";
+				ret = "Distinctive Ringing / Call Waiting";
 				break;
 			case 74:
-				ret = "ScreenListeditingdailycontination";
+				ret = "Screen List editing daily contination";
 				break;
 			case 75:
-				ret = "Callingnumberdeliveryblockingactivation";
+				ret = "Calling number delivery blocking activation";
 				break;
 			case 79:
-				ret = "Selectivecallacceptance";
+				ret = "Selective call acceptance";
 				break;
 			case 80:
-				ret = "Callingnumberdelivery";
+				ret = "Calling number delivery";
 				break;
 			case 82:
-				ret = "Callingnamedelivery";
+				ret = "Calling name delivery";
 				break;
 			case 85:
-				ret = "Callingidentitydeliveryandsuppression";
+				ret = "Calling identity delivery and suppression";
 				break;
 			case 95:
-				ret = "ARtwo-levelactivation";
+				ret = "AR two-level activation";
 				break;
 			default:
 				ret = "Unknown " + _return;

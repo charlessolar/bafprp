@@ -161,6 +161,9 @@ namespace bafprp
 			case 60:
 				ret = "Record closed - subsequent SDS record";
 				break;
+			case 999:
+				ret = "Not Used";
+				break;
 			default:
 				ret = "Unknown " + _return;
 			}

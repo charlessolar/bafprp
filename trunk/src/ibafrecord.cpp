@@ -154,14 +154,17 @@ namespace bafprp
 			_fieldData += 4;  // aprox avg length of a field
 			return;
 		}
-		if( !field->convert( _fieldData ) )
+		if( *( _fieldData + 1 ) != 0xFF )  // If field is used, else data will be just FFFFFFFF
 		{
-			ERROR_OUTPUT( this, "Could not convert field '" << field->getName() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
+			if( !field->convert( _fieldData ) )
+			{
+				ERROR_OUTPUT( this, "Could not convert field '" << field->getName() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
+			}
+			_fields.push_back( field );
 		}
 		// update data position, the mod is to make the size even for nice division
 		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
-		_fields.push_back( field );
-		
+				
 		if( ( _fieldData - _data ) > _length ) // overstepping our bounds here, not a good place to be
 		{
 			LOG_ERROR( "Record has outgrown its stated length of " << _length << ". It is now " << ( _fieldData - _data ) );

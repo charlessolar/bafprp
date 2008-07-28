@@ -410,6 +410,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\PresentDate.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\PresentTime.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\rao.cpp"
 					>
 				</File>
@@ -877,6 +885,14 @@
 				</File>
 				<File
 					RelativePath="..\include\partyid.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\presentdate.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\presenttime.h"
 					>
 				</File>
 				<File

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D818D26E-C597-4733-9A37-A64EA29B8D82}"
 	ProjectSection(SolutionItems) = preProject
 		..\doc\gpl.txt = ..\doc\gpl.txt
+		..\doc\todo.txt = ..\doc\todo.txt
 	EndProjectSection
 EndProject
 Global
@@ -29,8 +30,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		CodeStyleEnforcer_RulesLocation = 0
-		CodeStyleEnforcer_Active = -1
 		VisualSVNWorkingCopyRoot = ..
+		CodeStyleEnforcer_Active = -1
+		CodeStyleEnforcer_RulesLocation = 0
 	EndGlobalSection
 EndGlobal

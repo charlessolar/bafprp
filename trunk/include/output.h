@@ -98,13 +98,13 @@ namespace bafprp
 		static void setLogLevel( int level );
 		static LOG_LEVEL getLogLevel() { return _level; }
 
-		static void setOutputRecord( const std::string name ) { _outputRecord = name; }
+		static void setOutputRecord( const std::string name );
 		static void setRecordProperty( const std::string name, const std::string value );
 
-		static void setOutputError( const std::string name ) { _outputError = name; }
+		static void setOutputError( const std::string name );
 		static void setErrorProperty( const std::string name, const std::string value );
 
-		static void setOutputLog( const std::string name ) { _outputLog = name; }
+		static void setOutputLog( const std::string name );
 		static void setLogProperty( const std::string name, const std::string value );
 
 		static void outputRecord( const IBafRecord* record );

@@ -97,6 +97,12 @@ namespace bafprp
 				return false;
 			}
 
+			if( ( _offset + _length_of_record ) > _fileSize )
+			{
+				LOG_FATAL( "Unexpected end of file at " << _offset << ".  Record is " << _length_of_record << " bytes long, but only " << ( _fileSize - _offset ) << " bytes are left" );
+				return false;
+			}
+
 			LOG_DEBUG( "Reading record of length " << _length_of_record << " at file offset " << _offset );
 			IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _offset ); 
 			LOG_DEBUG( "Read " << record->getType() << " at " << record->getFilePosition() );

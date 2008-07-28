@@ -75,7 +75,7 @@ namespace bafprp
 		else
 		{
 			ret = "";
-			switch( _return[1] )
+			switch( _return[0] )
 			{
 			case '0':
 				ret += "Default";
@@ -90,7 +90,7 @@ namespace bafprp
 				ret += "Unknown " + _return;
 			}
 			ret += " : ";
-			switch( _return[2] )
+			switch( _return[1] )
 			{
 			case '0':
 				ret += "Default";
@@ -102,7 +102,7 @@ namespace bafprp
 				ret += "Unknown " + _return;
 			}
 			ret += " : ";
-			switch( _return[3] )
+			switch( _return[2] )
 			{
 			case '0':
 				ret += "Default";

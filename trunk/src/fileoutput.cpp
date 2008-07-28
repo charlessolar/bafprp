@@ -134,11 +134,15 @@ namespace bafprp
 		const IField* field;
 		DWORD lastUID = 0;
 		
-		_file << "---------------------------------------" << std::endl;
+		_file << "--------------------------------------------------------------------------" << std::endl;
 		_file << record->getType() << std::endl;
-		_file << "---------------------------------------" << std::endl;
+		_file << "--------------------------------------------------------------------------" << std::endl;
 		_file << "Length of record: " << record->getSize() << ", CRC32: " << record->getCRC() << std::endl;
-		_file << "---------------------------------------" << std::endl;
+		_file << "--------------------------------------------------------------------------" << std::endl;
+		_file << "File: " << BafFile::getFilename() << std::endl;
+		_file << "--------------------------------------------------------------------------" << std::endl;
+		_file << "Position: " << record->getFilePosition() << std::endl;
+		_file << "--------------------------------------------------------------------------" << std::endl;
 
 		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
 		while( ( field = record->getNextField( lastUID ) ) != NULL )
