@@ -104,6 +104,9 @@ namespace bafprp
 			case '9':
 				ret += "CIC unknown, IC/INC involvement unknown";
 				break;
+			case 'F':
+				ret = "Character Error";
+				break;
 			default:
 				ret += "Unknown " + _return;
 			}

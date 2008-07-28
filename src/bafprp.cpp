@@ -43,6 +43,13 @@ int main( int argc, char* argv[] )
 	bool listDups = false;
 	Output::setLogLevel( LOG_LEVEL_INFO );
 
+	Output::setOutputRecord( "file" );
+	Output::setRecordProperty( "filename", "record.log" );
+	Output::setOutputError( "file" );
+	Output::setErrorProperty( "filename", "error.log" );
+	Output::setOutputLog( "file" );
+	Output::setLogProperty( "filename", "log.log" );
+
 	bool usage_error = true;
 	if( argc > 1 )
 	{
@@ -61,12 +68,26 @@ int main( int argc, char* argv[] )
 						Output::setLogLevel( i++ );
 					printf( "Log level set to %d\n\n", i-1 );
 					break;
-				case 'l':
-				case 'L':
+				case 'd':
+				case 'D':
 					listDups = true;
+					break;
 				case 's':
 				case 'S':
 					Output::setLogLevel( LOG_LEVEL_FATAL );
+					break;
+				case 'r':
+				case 'R':
+					Output::setOutputRecord( argv[ii] + 2 );
+					break;
+				case 'e':
+				case 'E':
+					Output::setOutputError( argv[ii] + 2 );
+					break;
+				case 'l':
+				case 'L':
+					Output::setOutputLog( argv[ii] + 2 );
+					break;
 				default:
 					printf( "Invalid option selected: %s\n", argv[ii] );
 					usage_error = TRUE;
@@ -81,12 +102,6 @@ int main( int argc, char* argv[] )
 		return 1;
 	}
 
-	Output::setOutputRecord( "no" );
-	Output::setRecordProperty( "filename", "record.log" );
-	Output::setOutputError( "file" );
-	Output::setErrorProperty( "filename", "error.log" );
-	Output::setOutputLog( "file" );
-	Output::setLogProperty( "filename", "log.log" );
 	
 
 	LOG_TRACE( "Global::main" );
@@ -146,12 +161,18 @@ int main( int argc, char* argv[] )
 void print_usage()
 {
 	printf( 
-		"Usage: bafprp [-v+] file[s]\n"
+		"Usage: bafprp [-v+] [-rTYPE] [-lTYPE] [-eTYPE] file[s]\n"
+		"\n"
+		"-r    Set the record output type\n"
+		"\n"
+		"-l    Set the log output type\n"
+		"\n"
+		"-e    Set the error output type\n" 
 		"\n"
 		"-v+   Set log level to the number of consecutive v's\n"
 		"      Example: -vvvvv means log level 5\n"
 		"\n"
-		"-l    List duplicates as an info log message before removal\n"
+		"-d    List duplicates as an info log message before removal\n"
 		"\n"
 		"-s    Only log FATAL messages\n"
 		"\n"

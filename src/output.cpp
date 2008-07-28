@@ -115,6 +115,33 @@ namespace bafprp
 		_logProperties.insert( std::make_pair( name, value ) );
 	}
 
+	void Output::setOutputRecord( const std::string name )
+	{
+		output_map::iterator itr = getReg().find( name );
+		if( itr != getReg().end() )
+			_outputRecord = name;
+		else
+			printf( "Output type %s does not exist\n", name.c_str() );
+	}
+
+	void Output::setOutputError( const std::string name )
+	{
+		output_map::iterator itr = getReg().find( name );
+		if( itr != getReg().end() )
+			_outputError = name;
+		else
+			printf( "Output type %s does not exist\n", name.c_str() );
+	}
+
+	void Output::setOutputLog( const std::string name )
+	{
+		output_map::iterator itr = getReg().find( name );
+		if( itr != getReg().end() )
+			_outputLog = name;
+		else
+			printf( "Output type %s does not exist\n", name.c_str() );
+	}
+
 	std::string NowTime()
 	{  
 		char timestamp[100] = "";

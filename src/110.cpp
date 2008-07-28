@@ -53,8 +53,34 @@ namespace bafprp
 
 	std::string r110::getType() const
 	{
-		// This type of record only has 1 use
-		return "Record 110: Unknown";
+		// Need to look at the call type field
+		std::string ret;
+		const IField* field = getField( "Call Type" );
+		if( !field ) 
+		{
+			LOG_ERROR( "No 'calltype' field in record 110" );
+			return "Record 110: Error";
+		}
+		const IField* field2 = getField( "CLASS Feature code" );
+		if( !field2 ) 
+		{
+			LOG_ERROR( "No 'classfeaturecode' field in record 110" );
+			return "Record 110: Unknown";
+		}
+
+
+		switch( field->getInt() )
+		{
+		case 330:
+			if( field2->getInt() == 1 || field2->getInt() == 2 || field2->getInt() == 3 )
+				ret = "Record 110: CLASS feature: Outgoing Call Barring";
+			else
+				ret = "Record 110: CLASS feature: Anonymous call rejection";
+			break;
+		default:
+			ret = "Record 110: Unknown";
+		}
+		return ret;
 	}
 
 	r110::~r110()

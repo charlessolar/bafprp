@@ -59,8 +59,24 @@ namespace bafprp
 
 	std::string r1030::getType() const
 	{
-		// This type of record only has 1 use
-		return "Record 1030: Unknown";
+		// Need to look at the call type field
+		std::string ret;
+		const IField* field = getField( "Call Type" );
+		if( !field ) 
+		{
+			LOG_ERROR( "No 'calltype' field in record 1030" );
+			return "";
+		}
+
+		switch( field->getInt() )
+		{
+		case 330:
+			ret = "Record 1030: CLASS functions";
+			break;
+		default:
+			ret = "Record 1030: Unknown";
+		}
+		return ret;
 	}
 
 	r1030::~r1030()
