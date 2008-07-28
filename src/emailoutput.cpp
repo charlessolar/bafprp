@@ -123,8 +123,8 @@ namespace bafprp
 		checkProperties( _logProperties );
 		static int cache = 0;
 		cache++;
-		_cachedLogs.push_back( log );
-		if( cache >= _iCache )
+
+		if( cache >= _iCache || log == "" )
 		{
 			if( _to == "" || _from == "" ) 
 			{
@@ -142,21 +142,48 @@ namespace bafprp
 			m.setmessage( message.c_str() );
 			
 			m.send();
-			printf( "Response: %s\n", m.response().c_str() );
 			_cachedLogs.clear();
 			cache = 0;
+
+			if( log == "" ) return;
 		}
+
+		_cachedLogs.push_back( log );
 	}
 
 	void Email::record( const IBafRecord* record )
 	{
 		LOG_TRACE( "Email::record" );
 		checkProperties( _recordProperties );
-		if( _to == "" || _from == "" ) 
+		static int cache = 0;
+		cache++;
+
+		// sending null will clear out the cache (for use at the end of the program)
+		if( cache >= _iCache || record == NULL )
 		{
-			LOG_ERROR( "To or From property of email output is wrong" );
-			return;
+			if( _to == "" || _from == "" ) 
+			{
+				LOG_ERROR( "To or From property of email output is wrong" );
+				return;
+			}
+
+			jwsmtp::mailer m( _to.c_str(), _from.c_str(), "Records from BAFPRP", "Record:\n\n", _server.c_str(), _serverPort, false);
+			
+			std::string message = "";
+			for( std::vector<std::string>::iterator itr = _cachedRecords.begin(); itr != _cachedRecords.end(); itr++ )
+			{
+				message += (*itr) + "\n";
+			}
+			m.setmessage( message.c_str() );
+			
+			m.send();
+			_cachedRecords.clear();
+			cache = 0;
+
+			// Obviously there is no actual record to log
+			if( record == NULL ) return;
 		}
+
 
 		const IField* field;
 		std::string value = "";
@@ -180,6 +207,8 @@ namespace bafprp
 			lastUID = field->getUID();
 			os << field->getName() << ": " << field->getString() << std::endl;
 		}
+
+		_cachedRecords.push_back( os.str() );
 
 		LOG_TRACE( "/Email::record" );
 	}
