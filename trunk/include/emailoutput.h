@@ -30,6 +30,14 @@ namespace bafprp
 	public:
 		// Register the output type
 		Email() : Output( "email" ) {}
+		~Email()
+		{
+			// Sending empty data will make the functions clear the cache.
+			// This makes it so that when the program ends records or logs
+			// that are still in the cache will not be lost.
+			record( NULL );
+			log( "" );
+		}
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string error );
@@ -48,7 +56,7 @@ namespace bafprp
 		bool _bCache;
 		int _iCache;
 
-		std::vector<IBafRecord*> _cachedRecords;
+		std::vector<std::string> _cachedRecords;
 		std::vector<std::string> _cachedLogs;
 		// This variable simply initializes a class that registers with the main output code
 		static const Email registerThis;
