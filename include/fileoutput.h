@@ -36,7 +36,7 @@ namespace bafprp
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string error );
-		void log( const std::string log );
+		void log( LOG_LEVEL level, const std::string log );
 
 	private:
 		void checkFile( property_map& props, bool start );

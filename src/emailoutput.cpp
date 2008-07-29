@@ -118,7 +118,7 @@ namespace bafprp
 		LOG_TRACE( "/Email::error" );
 	}
 
-	void Email::log( const std::string log )
+	void Email::log( LOG_LEVEL level, const std::string log )
 	{
 		checkProperties( _logProperties );
 		static int cache = 0;
@@ -126,8 +126,10 @@ namespace bafprp
 
 		if( cache >= _iCache || log == "" )
 		{
+			if( _iCache == 0 ) return; // Dont clear an empty cache
 			if( _to == "" || _from == "" ) 
 			{
+				Output::setOutputLog( "console" );
 				LOG_ERROR( "To or From property of email output is wrong" );
 				return;
 			}
@@ -148,7 +150,9 @@ namespace bafprp
 			if( log == "" ) return;
 		}
 
-		_cachedLogs.push_back( log );
+		std::string logstr = NowTime() + " " + getStrLogLevel( level ) + ": " + log;
+
+		_cachedLogs.push_back( logstr );
 	}
 
 	void Email::record( const IBafRecord* record )

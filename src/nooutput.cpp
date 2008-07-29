@@ -37,7 +37,7 @@ namespace bafprp
 		// Do nothing!
 	}
 
-	void No::log( const std::string log )
+	void No::log( LOG_LEVEL level, const std::string log )
 	{
 		// Do nothing!
 	}

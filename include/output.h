@@ -66,7 +66,7 @@ namespace bafprp
 		// virtual methods for processing data
 		virtual void record( const IBafRecord* record ) = 0;
 		virtual void error( const IBafRecord* record, const std::string error ) = 0;
-		virtual void log( const std::string log ) = 0;
+		virtual void log( LOG_LEVEL level, const std::string log ) = 0;
 
 		typedef std::map<std::string, std::string> property_map;
 		static property_map _recordProperties;
@@ -97,6 +97,7 @@ namespace bafprp
 		static void setLogLevel( LOG_LEVEL level ) { _level = level; }
 		static void setLogLevel( int level );
 		static LOG_LEVEL getLogLevel() { return _level; }
+		static std::string getStrLogLevel( LOG_LEVEL level );
 
 		static void setOutputRecord( const std::string name );
 		static void setRecordProperty( const std::string name, const std::string value );
@@ -121,42 +122,42 @@ namespace bafprp
 	if( Output::getLogLevel() >= LOG_LEVEL_TRACE ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - TRACE: " << logEvent; \
+		ssOutput << logEvent; \
 		Output::outputLog( LOG_LEVEL_TRACE, ssOutput.str() ); \
 	}
 	#define LOG_DEBUG( logEvent ) \
 	if( Output::getLogLevel() >= LOG_LEVEL_DEBUG ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - DEBUG: " << logEvent; \
+		ssOutput << logEvent; \
 		Output::outputLog( LOG_LEVEL_DEBUG, ssOutput.str() ); \
 	} 
 	#define LOG_INFO( logEvent ) \
 	if( Output::getLogLevel() >= LOG_LEVEL_INFO ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - INFO: " << logEvent; \
+		ssOutput << logEvent; \
 		Output::outputLog( LOG_LEVEL_INFO, ssOutput.str() ); \
 	} 
 	#define LOG_WARN( logEvent ) \
 	if( Output::getLogLevel() >= LOG_LEVEL_WARN ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - WARN: " << logEvent; \
+		ssOutput << logEvent; \
 		Output::outputLog( LOG_LEVEL_WARN, ssOutput.str() ); \
 	}
 	#define LOG_ERROR( logEvent ) \
 	if( Output::getLogLevel() >= LOG_LEVEL_ERROR ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - ERROR: " << logEvent; \
+		ssOutput << logEvent; \
 		Output::outputLog( LOG_LEVEL_ERROR, ssOutput.str() ); \
 	}
 	#define LOG_FATAL( logEvent ) \
 	if( Output::getLogLevel() >= LOG_LEVEL_FATAL ) \
 	{ \
 		std::ostringstream ssOutput; \
-		ssOutput << "- " << NowTime() << " - FATAL: " << logEvent; \
+		ssOutput << logEvent; \
 		Output::outputLog( LOG_LEVEL_FATAL, ssOutput.str() ); \
 	} 
  
