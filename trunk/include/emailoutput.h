@@ -35,13 +35,13 @@ namespace bafprp
 			// Sending empty data will make the functions clear the cache.
 			// This makes it so that when the program ends records or logs
 			// that are still in the cache will not be lost.
-			record( NULL );
-			log( "" );
+			//record( NULL );
+			//log( 0, "" );
 		}
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string error );
-		void log( const std::string log );
+		void log( LOG_LEVEL level, const std::string log );
 
 	private:
 		void checkProperties( property_map& props );

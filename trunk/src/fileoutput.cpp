@@ -118,10 +118,10 @@ namespace bafprp
 		LOG_TRACE( "/File::error" );
 	}
 
-	void File::log( const std::string log )
+	void File::log( LOG_LEVEL level, const std::string log )
 	{
 		checkFile( _logProperties, true );
-		_file << log << std::endl;
+		_file << "- " << NowTime() << " " << getStrLogLevel( level ) << ": " << log << std::endl;
 		_file.flush();
 		checkFile( _logProperties, false );
 	}

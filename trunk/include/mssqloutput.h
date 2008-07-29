@@ -18,26 +18,49 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPCONSOLE_H
-#define BAFPRPCONSOLE_H
+#ifndef BAFPRPMSSQL_H
+#define BAFPRPMSSQL_H
+
+#include <sqltypes.h>
 
 #include "output.h"
 
 namespace bafprp
 {
-	class Console : public Output
+	class MSSQL : public Output
 	{
 	public:
 		// Register the output type
-		Console() : Output( "console" ) {}
+		MSSQL() : Output( "mssql" ) {}
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string error );
 		void log( LOG_LEVEL level, const std::string log );
 
 	private:
+		void checkDB( property_map& props, bool start );
+		void connect( std::string database, std::string server, std::string user, std::string password );
+		void disconnect();
+
+		// property variables
+		std::string _database;
+		std::string _server;
+		int _serverPort;
+		std::string _user;
+		std::string _password;
+
+		std::string _table;
+
+		// private non-property variables
+		SQLHENV _env;
+		SQLHDBC _dbc;
+		bool _dbConnected;
+		std::string _connDatabase;
+
+		std::vector<std::string> _storedDatabases;
+		
 		// This variable simply initializes a class that registers with the main output code
-		static const Console registerThis;
+		static const MSSQL registerThis;
 	};
 }
 

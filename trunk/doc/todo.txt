@@ -6,11 +6,11 @@
 2. Once this is done, fix getField to reference the field type name, not the type description.
 			Who the hell thought of referencing the type description anyway, geese
 			
-			
+3. Might be interesting to allow multiple types of output for one log, record, or error message
 
 Things to finish before v1.0
 
-	- Add mssql and email output type
-	- Finish scanning baf file archives and eliminate any unknowns
-	- wrap up email output
+	- Add mssql output type
 	- fix static getFilename in BafFile, that was a stupid idea
+	- Finish file output
+	- Change getType attribute of fields to return the type name, not the desired type, eugggg

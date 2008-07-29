@@ -61,7 +61,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="jwsmtp.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
 				GenerateDebugInformation="true"
@@ -136,7 +135,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="jwsmtp.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
 				GenerateDebugInformation="true"
@@ -537,6 +535,10 @@
 				</File>
 				<File
 					RelativePath="..\src\fileoutput.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\mssqloutput.cpp"
 					>
 				</File>
 				<File
@@ -1031,6 +1033,10 @@
 				</File>
 				<File
 					RelativePath="..\include\fileoutput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\mssqloutput.h"
 					>
 				</File>
 				<File

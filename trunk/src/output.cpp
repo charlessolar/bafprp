@@ -63,15 +63,17 @@ namespace bafprp
 
 	void Output::outputLog( LOG_LEVEL level, const std::string log )
 	{
-		if( level > _level ) return;
+		if( _level < level ) return;
 
 		output_map::iterator itr = getReg().find( _outputLog );
 		if( itr != getReg().end() )
-			itr->second->log( log );
+			itr->second->log( level, log );
 		else
-			getReg().begin()->second->log( "Output type " + _outputLog + " does not exist." );		// If output is set wrong, use one that works.
-																								// there should always be at least one form of output
-																								// unfortunently we do not know which one thanks to static init.
+		{
+			Output::setOutputLog( "console" );
+			LOG_ERROR( "Output type " + _outputLog + " does not exist." );		// If output is set wrong, use one that works.
+		}
+																								
 	}
 
 	void Output::setLogLevel( int level )
@@ -97,6 +99,27 @@ namespace bafprp
 		case 5:
 			_level = LOG_LEVEL_TRACE;
 			break;
+		}
+	}
+
+	std::string Output::getStrLogLevel( LOG_LEVEL level )
+	{
+		switch( level )
+		{
+		case 0:
+			return "FATAL";
+		case 1:
+			return "ERROR";
+		case 2:
+			return "WARN";
+		case 3:
+			return "INFO";
+		case 4:
+			return "DEBUG";
+		case 5:
+			return "TRACE";
+		default:
+			return "UNKNOWN";
 		}
 	}
 
@@ -161,7 +184,7 @@ namespace bafprp
 		struct tm mytm;
 		ltime = time( NULL );  
 		localtime_s( &mytm, &ltime );  
-		strftime( timestamp, sizeof( timestamp ), "%a, %d %b %Y %H:%M:%S", &mytm );
+		strftime( timestamp, sizeof( timestamp ), "%m/%d/%y %H:%M:%S", &mytm );
 		return std::string( timestamp );  
 	}  
 

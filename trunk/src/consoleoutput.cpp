@@ -103,9 +103,9 @@ namespace bafprp
 		LOG_TRACE( "/Console::error" );
 	}
 
-	void Console::log( const std::string log )
+	void Console::log( LOG_LEVEL level, const std::string log )
 	{
-		std::cout << log << std::endl;
+		std::cout << "- " << NowTime() << " " << getStrLogLevel( level ) << ": " << log << std::endl;
 	}
 
 	void Console::record( const IBafRecord* record )
