@@ -57,14 +57,32 @@ namespace bafprp
 			return;
 		}
 
-		std::vector<std::string> columns;
+		std::map<std::string,std::string> columns;
 
 		SQLCHAR columnName[50];
+		SQLCHAR columnType[50];
 		SQLINTEGER cbData;
 		while( SQLFetch(stmt) == SQL_SUCCESS )
 		{
-		  SQLGetData( stmt, 0, SQL_C_CHAR, columnName, sizeof(columnName), &cbData );
-		  columns.push_back( (char*)columnName );
+		  SQLGetData( stmt, 0, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
+		  SQLGetData( stmt, 1, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
+		  columns.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
+		}
+		
+		for( std::map<std::string,std::string>::iterator itr = columns.begin(); itr != columns.end(); itr++ )
+		{
+			if( itr->first == "id" ) continue;  // Skip 'id' field
+
+			// Find field in record (if it exists)
+			const IField* field = record->getField( itr->first );
+
+			if( !field ) 
+			{
+				LOG_WARN( "Failed to retreive field " << itr->first << " from record for sql output" );
+				continue;
+			}
+
+
 		}
 
 
@@ -97,6 +115,8 @@ namespace bafprp
 			LOG_ERROR( "Failed to insert log into database, falling back to console output" );
 			return;
 		}
+
+		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 		
 		checkDB( _logProperties, false );
 	}
@@ -118,7 +138,7 @@ namespace bafprp
 
 		std::ostringstream os;
 
-		os << "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
+		os << "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
 			Output::setOutputError( "console" );
@@ -133,21 +153,59 @@ namespace bafprp
 		SQLINTEGER cbData;
 		while( SQLFetch(stmt) == SQL_SUCCESS )
 		{
-		  SQLGetData( stmt, 0, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
-		  SQLGetData( stmt, 1, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
-		  columns.insert( std::make_pair( columnName, columnType );
-		}
-		
-		for( std::vector<std::string>::iterator itr = columns.begin(); itr != columns.end(); itr++ )
-		{
-			if( itr == "id" ) continue;  // Skip 'id' field
-
-			// Find field in record (if it exists)
-			record->getField( itr );
+		  SQLGetData( stmt, 1, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
+		  SQLGetData( stmt, 2, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
+		  columns.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
 		}
 
+		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
 		// Construct an insert query from the record values corresponding to those names
+		// Two part query, see below
+		std::ostringstream query1; 
+		std::ostringstream query2;
+
+		query1 << "INSERT INTO " << _table << " ( ";
+		query2 << "VALUES ( ";
+		
+		for( std::map<std::string,std::string>::iterator itr = columns.begin(); itr != columns.end(); itr++ )
+		{
+			if( itr->first == "id" ) continue;  // Skip 'id' field
+
+			// Find field in record (if it exists)
+			const IField* field = record->getField( itr->first );
+
+			if( !field ) 
+			{
+				LOG_WARN( "Failed to retreive field " << itr->first << " from record for sql output" );
+				continue;
+			}
+
+			if( itr->second == "int" || itr->second == "bigint" )
+			{
+				query1 << itr->first << ", ";
+				query2 << "'" << field->getLong() << "', ";
+			}
+			else if( itr->second == "decimal" || itr->second == "float" )
+			{
+				query1 << itr->first << ", ";
+				query2 << "'" << field->getFloat() << "', ";
+			}
+			else
+			{
+				query1 << itr->first << ", ";
+				query2 << "'" << field->getString() << "', ";
+			}
+		}
+
+		// Make the full query, trimming off the surplus commas
+		std::string fullQuery = query1.str().substr( 0, query1.str().length() - 2 ) + ") " + query2.str().substr( 0, query2.str().length() - 2 ) + ")";
+
+		SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
+
+		SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS);		
+
+		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
 		checkDB( _recordProperties, false );
 		LOG_TRACE( "/MSSQL::record" );

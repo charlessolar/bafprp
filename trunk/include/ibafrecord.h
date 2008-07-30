@@ -53,7 +53,12 @@ namespace bafprp
 		void decodeModules();
 
 		typedef std::vector<IField*> field_vector;
+		// To perform queries on field types we need to keep a second vector around
+		// using a map will cause the record output to be alphabetized which is not
+		// desired.
+		typedef std::vector<std::string> field_type_vector;  
 		field_vector _fields;
+		field_type_vector _field_types;
 
 		int _length;
 		

@@ -70,7 +70,7 @@ namespace bafprp
 	{
 		// Need to look at the call type field
 		std::string ret;
-		const IField* field = getField( "Call Type" );
+		const IField* field = getField( "calltype" );
 		if( !field ) 
 		{
 			LOG_ERROR( "No 'calltype' field in record 625" );
