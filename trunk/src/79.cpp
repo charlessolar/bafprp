@@ -26,14 +26,14 @@ namespace bafprp
 
 	const r79Maker r79Maker::registerThis;
 
-	IBafRecord* r79Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r79Maker::make( const BYTE* data, int length, const std::string filename, long filePos ) const
 	{
 		LOG_TRACE( "r79Maker::make" );
 		LOG_TRACE( "/r79Maker::make" );
-		return new r79( data, length, filePos );
+		return new r79( data, length, filename, filePos );
 	}
 
-	r79::r79( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r79::r79( const BYTE* data, int length, const std::string filename, long filePos ) : IBafRecord( data, length, filename, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 

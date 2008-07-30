@@ -39,12 +39,12 @@ namespace bafprp
 		bool process( const std::string filename, bool listDups = false );
 		bool clear();  // reset 
 
-		static std::string getFilename() { return _filename; }
+		std::string getFilename() { return _filename; }
 
 	private:
 		bool readRecord();
 
-		static std::string _filename;
+		std::string _filename;
 		long _fileSize;
 		BYTE* _fileData;
 		long _offset;

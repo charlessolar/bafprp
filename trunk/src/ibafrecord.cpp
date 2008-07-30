@@ -25,7 +25,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-	IBafRecord::IBafRecord( const BYTE* data, int length, long filePos ) : _length( length ), _filePos( filePos ), _crc(0)
+	IBafRecord::IBafRecord( const BYTE* data, int length, const std::string filename, long filePos ) : _length( length ), _filename(filename), _filePos( filePos ), _crc(0)
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
 		
@@ -51,7 +51,7 @@ namespace bafprp
 	}
 
 
-	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, long filePos )
+	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, const std::string filename, long filePos )
 	{
 		LOG_TRACE( "IBafRecord::newRecord" );
 		// This function will take the full record data, extract the structure type, and create a new
@@ -96,7 +96,7 @@ namespace bafprp
 		
 		maker_map::iterator itr = getReg().find ( type );
 		if ( itr != getReg().end() )
-			return itr->second->make( data, length, filePos );
+			return itr->second->make( data, length, filename, filePos );
 
 		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
 		LOG_TRACE( "/IBafRecord::newRecord" );

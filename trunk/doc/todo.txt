@@ -10,7 +10,4 @@
 
 Things to finish before v1.0
 
-	- Add mssql output type
-	- fix static getFilename in BafFile, that was a stupid idea
-	- Finish file output
-	- Change getType attribute of fields to return the type name, not the desired type, eugggg
+	- add stored server in ms sql output

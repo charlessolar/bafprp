@@ -39,54 +39,38 @@ namespace bafprp
 		checkDB( _errorProperties, true );
 		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
 		{
-			LOG_ERROR( "Failed to connect to the database, check your properties" );
+			Output::setOutputError( "console" );
+			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to console output" );
+
+			// Play nice
+			Output::outputError( record, error );
 			return;
 		}
 
-		// Query table to find out what the column names are
 		SQLHSTMT stmt;
 		SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
 
 		std::ostringstream os;
 
-		os << "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
+		os << "INSERT INTO " << _table << " ( ts, error, filename, filepos, type, length, bytes ) VALUES ( ";
+		os << "'" << sanitize( NowTime() ) << "', ";
+		os << "'" << sanitize( error ) << "', ";
+		os << "'" << sanitize( record->getFilename() ) << "', ";
+		os << "'" << record->getFilePosition() << "', ";
+		os << "'" << sanitize( record->getType() ) << "', ";
+		os << "'" << record->getSize() << "', ";
+		os << "'" << sanitize( record->getData() ) << "' ";
+		os << ")";
+
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
 			Output::setOutputError( "console" );
-			LOG_ERROR( "Failed to query columns in database, falling back to console output" );
-			return;
+			LOG_ERROR( "Failed to insert error message into database, falling back to console output" );
+
+			Output::outputError( record, error );
 		}
 
-		std::map<std::string,std::string> columns;
-
-		SQLCHAR columnName[50];
-		SQLCHAR columnType[50];
-		SQLINTEGER cbData;
-		while( SQLFetch(stmt) == SQL_SUCCESS )
-		{
-		  SQLGetData( stmt, 0, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
-		  SQLGetData( stmt, 1, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
-		  columns.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
-		}
-		
-		for( std::map<std::string,std::string>::iterator itr = columns.begin(); itr != columns.end(); itr++ )
-		{
-			if( itr->first == "id" ) continue;  // Skip 'id' field
-
-			// Find field in record (if it exists)
-			const IField* field = record->getField( itr->first );
-
-			if( !field ) 
-			{
-				LOG_WARN( "Failed to retreive field " << itr->first << " from record for sql output" );
-				continue;
-			}
-
-
-		}
-
-
-		// Query record for each column name and construct the insert query
+		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
 		checkDB( _errorProperties, false );
 		LOG_TRACE( "/MSSQL::error" );
@@ -100,6 +84,9 @@ namespace bafprp
 		{
 			Output::setOutputLog( "console" );
 			LOG_ERROR( "Failed to connect to the database, check your properties\n" );
+
+			// Play nice
+			Output::outputLog( level, log );
 			return;
 		}
 
@@ -107,13 +94,14 @@ namespace bafprp
 		SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
 
 		std::ostringstream os;
-		os << "INSERT INTO " << _table << " ( ts, loglevel, msg ) VALUES ( '" << NowTime() << "', '" << level << "', '" << log << "' )";
+		os << "INSERT INTO " << _table << " ( ts, loglevel, msg ) VALUES ( '" << NowTime() << "', '" << level << "', '" << sanitize( log ) << "' )";
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
 			Output::setOutputLog( "console" );
 			LOG_ERROR( "Failed to insert log into database, falling back to console output" );
-			return;
+
+			Output::outputLog( level, log );
 		}
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
@@ -128,7 +116,11 @@ namespace bafprp
 		
 		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
 		{
-			LOG_ERROR( "Failed to connect to the database, check your properties" );
+			Output::setOutputRecord( "console" );
+			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to console output" );
+
+			// Play nice
+			Output::outputRecord( record );
 			return;
 		}
 
@@ -143,6 +135,7 @@ namespace bafprp
 		{
 			Output::setOutputError( "console" );
 			LOG_ERROR( "Failed to query columns in database, falling back to console output" );
+			SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 			return;
 		}
 
@@ -172,6 +165,38 @@ namespace bafprp
 		{
 			if( itr->first == "id" ) continue;  // Skip 'id' field
 
+			// Check for 'special' columns
+			if( itr->first == "filename" )
+			{
+				query1 << "filename, ";
+				query2 << "'" << sanitize( record->getFilename() ) << "', ";
+				continue;
+			}
+			if( itr->first == "filepos" )
+			{
+				query1 << "filepos, ";
+				query2 << "'" << record->getFilePosition() << "', ";
+				continue;
+			}
+			if( itr->first == "type" )
+			{
+				query1 << "type, ";
+				query2 << "'" << sanitize( record->getType() ) << "', ";
+				continue;
+			}
+			if( itr->first == "size" )
+			{
+				query1 << "size, ";
+				query2 << "'" << record->getSize() << "', ";
+				continue;
+			}
+			if( itr->first == "crc" )
+			{
+				query1 << "crc, ";
+				query2 << "'" << record->getCRC() << "', ";
+				continue;
+			}
+
 			// Find field in record (if it exists)
 			const IField* field = record->getField( itr->first );
 
@@ -194,7 +219,7 @@ namespace bafprp
 			else
 			{
 				query1 << itr->first << ", ";
-				query2 << "'" << field->getString() << "', ";
+				query2 << "'" << sanitize( field->getString() ) << "', ";
 			}
 		}
 
@@ -203,7 +228,10 @@ namespace bafprp
 
 		SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
 
-		SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS);		
+		if( SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS) == SQL_ERROR )
+		{
+			LOG_WARN( "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery );
+		}
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
@@ -300,7 +328,7 @@ namespace bafprp
 		_dbConnected = false;
 	}
 
-	void MSSQL::connect( std::string database, std::string server, std::string user, std::string password )
+	void MSSQL::connect( const std::string database, const std::string server, const std::string user, const std::string password )
 	{
 		// We disconnect before the check because if the information passed is invalid, we want the program to
 		// not corrupt the current database.
@@ -351,6 +379,19 @@ namespace bafprp
 		{
 			disconnect();
 		}
+	}
+
+	// Sanitize a string so it works in a sql query
+	std::string MSSQL::sanitize( const std::string& string )
+	{
+		std::string retVal = string;
+		int pos = 0;
+		while( ( pos = retVal.find( "'" ) ) != std::string::npos )
+		{
+			retVal = retVal.replace( pos, 1, "\"" );
+		}
+		
+		return retVal;
 	}
 
 }

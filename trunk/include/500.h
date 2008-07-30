@@ -33,7 +33,7 @@ namespace bafprp
 
 		~r500();
 	protected:
-		r500( const BYTE* data, int length, long filePos );
+		r500( const BYTE* data, int length, const std::string filename, long filePos );
 	};
 
 	class r500Maker : public RecordMaker
@@ -41,7 +41,7 @@ namespace bafprp
 	public:
 		r500Maker() : RecordMaker( 500 ) {}
 	protected:
-		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+		IBafRecord* make( const BYTE* data, int length, const std::string filename, long filePos ) const;
 	private:
 		static const r500Maker registerThis;
 	};

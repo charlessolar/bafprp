@@ -44,6 +44,15 @@ namespace bafprp
 	{
 		LOG_TRACE( "File::error" );
 		checkFile( _errorProperties, true );
+		if( !_file.is_open() )
+		{
+			LOG_ERROR( "No valid file for error output, falling back to console output" );
+			Output::setOutputError( "console" );
+
+			// be nice
+			Output::outputError( record, error );
+			return;
+		}
 
 		_file.setf( std::ios::left );
 
@@ -89,7 +98,7 @@ namespace bafprp
 		_file << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
 		_file << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
 		_file << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;
-		_file << "*          Filename: " << std::setw(37) << BafFile::getFilename() << " *" << std::endl;
+		_file << "*          Filename: " << std::setw(37) << record->getFilename() << " *" << std::endl;
 
 		_file << "*                                                          *" << std::endl;
 		std::string bytes = record->getData();
@@ -121,6 +130,16 @@ namespace bafprp
 	void File::log( LOG_LEVEL level, const std::string log )
 	{
 		checkFile( _logProperties, true );
+		if( !_file.is_open() )
+		{
+			Output::setOutputLog( "console" );
+			LOG_ERROR( "No valid file for log output, switching to console output" );
+
+			// be nice
+			Output::outputLog( level, log );
+			return;
+		}
+
 		_file << "- " << NowTime() << " " << getStrLogLevel( level ) << ": " << log << std::endl;
 		_file.flush();
 		checkFile( _logProperties, false );
@@ -130,6 +149,15 @@ namespace bafprp
 	{
 		LOG_TRACE( "File::record" );
 		checkFile( _recordProperties, true );
+		if( !_file.is_open() )
+		{
+			LOG_ERROR( "No valid file for record output, switching to console output" );
+			Output::setOutputRecord( "console" );
+
+			// be nice
+			Output::outputRecord( record );
+			return;
+		}
 
 		const IField* field;
 		DWORD lastUID = 0;
@@ -139,7 +167,7 @@ namespace bafprp
 		_file << "--------------------------------------------------------------------------" << std::endl;
 		_file << "Length of record: " << record->getSize() << ", CRC32: " << record->getCRC() << std::endl;
 		_file << "--------------------------------------------------------------------------" << std::endl;
-		_file << "File: " << BafFile::getFilename() << std::endl;
+		_file << "File: " << record->getFilename() << std::endl;
 		_file << "--------------------------------------------------------------------------" << std::endl;
 		_file << "Position: " << record->getFilePosition() << std::endl;
 		_file << "--------------------------------------------------------------------------" << std::endl;
@@ -159,26 +187,43 @@ namespace bafprp
 	}
 
 
-	// This function is in dire need of some cleaning...
+	// Function explanation:
+	//
+	// Well basically this function is the heart of file output.
+	// You would think writing to a file would be nice and easy but consider a sitatuation
+	// where the user set record output to "record.log", error output to "error.log", and log
+	// output to "log.log".  
+	// Since there is only 1 instance of each output allowed the class needs to be able to switch
+	// between these files seamlessly.
+	// Also, if we generate an log message while printing a record, we need to be able to 
+	// close the current file, open the log file, write the log, close THAT file, and restore the previous file
+	// so record output continues like nothing happened.
+	// Basically this function connects all three output worlds in a nice and seamless manner so the individual
+	// functions do not have to worry about things like this.
 	void File::checkFile( property_map& props, bool start )
 	{
-		// We must use printf here because if log output is set to file we could get outselves
-		// into a nice infinite loop here.
-
-
+		// The property should have a filename parameter
 		property_map::iterator filename = props.find( "filename" );
-		// add check for filename == props.end()
+		if( filename == props.end() )
+		{
+			printf( "Error: no 'filename' property for output\n" );
+			return;	
+		}
 
+		// If the function is at the begining, we need to make sure the right file is open
 		if( start )
 		{
-			if( _file.is_open() )
+			if( _file.is_open() ) 
 			{
-				if( _filename != filename->second )
+				if( _filename != filename->second )  // Is the RIGHT file open?
 				{
+					// If not, we need to store the current file's name, and open the correct file
 					_storedFilenames.push_back( _filename );
 					_filename = "";
 					_file.close();
 
+					// If the filename we are opening has been used before we need to open it to APPEND, however
+					// if it has NOT been used before, open it normally, wiping out the previous contents.
 					bool bFound = false;
 					for( std::vector<std::string>::iterator itr = _usedFilenames.begin(); itr != _usedFilenames.end(); itr++ )
 					{
@@ -190,29 +235,37 @@ namespace bafprp
 					}
 
 					if( !bFound )
-						_file.open( filename->second.c_str() );
+						_file.open( filename->second.c_str() );  // Clear original file
 					else
-						_file.open( filename->second.c_str(), std::ios::app );
+						_file.open( filename->second.c_str(), std::ios::app );  // Append
 
-					// add checks to see if file is actually open
+					// does not matter if file opened or not, individual functions check and make better errors then
+					// we could dream of making
 
 					_filename = filename->second;
-					_usedFilenames.push_back( _filename );
+					_usedFilenames.push_back( _filename );  // Make sure we open it for APPENDING next time
 				}
 				// current open file matches desired file.
 			}
-			else // Need to open a new file for output
+			else // No file is open, need to open a new file for output
 			{
+				// Since there should ALWAYS been one file open, we can assume this is the first time this
+				// file is being opened and not check for appending.
+				// If you encounter a bug where your files are being cleared in the middle of the program,
+				// you are probably doing some very weird things to your output, but if need be, we can copy 
+				// the used file check here.
 				_file.open( filename->second.c_str() );
 
-				// add file open check
+				// does not matter if file opened or not, individual functions check and make better errors then
+				// we could dream of making
 
 				_filename = filename->second;
-				_usedFilenames.push_back( _filename );
+				_usedFilenames.push_back( _filename );  // Open for appending next time
 			}
 		}
 		else  // end of function file check
 		{
+			// The function is ending, we need to restore the previous open file, if there was one.
 			if( _storedFilenames.size() > 0 )  // we had to push off another file to output
 			{
 				// restore that file
