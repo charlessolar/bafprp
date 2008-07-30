@@ -26,14 +26,14 @@ namespace bafprp
 
 	const r625Maker r625Maker::registerThis;
 
-	IBafRecord* r625Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r625Maker::make( const BYTE* data, int length, const std::string filename, long filePos ) const
 	{
 		LOG_TRACE( "r625Maker::make" );
 		LOG_TRACE( "/r625Maker::make" );
-		return new r625( data, length, filePos );
+		return new r625( data, length, filename, filePos );
 	}
 
-	r625::r625( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r625::r625( const BYTE* data, int length, const std::string filename, long filePos ) : IBafRecord( data, length, filename, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 

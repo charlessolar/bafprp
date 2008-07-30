@@ -44,10 +44,11 @@ namespace bafprp
 		long getFilePosition() const { return _filePos; }
 
 		DWORD getCRC() const { return _crc; }
+		std::string getFilename() const { return _filename; }
 
 		virtual ~IBafRecord();	
 	protected:
-		IBafRecord( const BYTE* data, int length, long filePos );
+		IBafRecord( const BYTE* data, int length, const std::string filename, long filePos );
 
 		void addField( const std::string name );
 		void decodeModules();
@@ -66,6 +67,7 @@ namespace bafprp
 	private:
 		bool _modules;
 		DWORD _crc;
+		std::string _filename;
 		long _filePos;
 		const BYTE* _data;  // This one needs to stay constant since we have to delete it later
 	};
@@ -82,13 +84,13 @@ namespace bafprp
 		}
 		RecordMaker() {}
 	public:
-		static IBafRecord* newRecord( const BYTE* data, int length, long filePos );
+		static IBafRecord* newRecord( const BYTE* data, int length, const std::string filename, long filePos );
 	protected:
 		RecordMaker( int type )
 		{
 			getReg().insert ( std::make_pair ( type, this ) );
 		}
-		virtual IBafRecord* make( const BYTE* data, int length, long filePos ) const = 0;
+		virtual IBafRecord* make( const BYTE* data, int length, const std::string filename, long filePos ) const = 0;
 	};
 
 	bool recordequal( const IBafRecord* left, const IBafRecord* right );

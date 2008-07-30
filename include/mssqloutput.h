@@ -32,6 +32,7 @@ namespace bafprp
 	public:
 		// Register the output type
 		MSSQL() : Output( "mssql" ) {}
+		~MSSQL() { disconnect(); }
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string error );
@@ -39,8 +40,9 @@ namespace bafprp
 
 	private:
 		void checkDB( property_map& props, bool start );
-		void connect( std::string database, std::string server, std::string user, std::string password );
+		void connect( const std::string database, const std::string server, const std::string user, const std::string password );
 		void disconnect();
+		std::string sanitize( const std::string& string );
 
 		// property variables
 		std::string _database;

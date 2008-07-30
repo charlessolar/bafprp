@@ -28,8 +28,6 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-	std::string BafFile::_filename = "";
-
 	BafFile::BafFile() : _offset(0), _fileSize(0), _fileData(NULL), _length_of_record(0)
 	{
 	}
@@ -104,7 +102,7 @@ namespace bafprp
 			}
 
 			LOG_DEBUG( "Reading record of length " << _length_of_record << " at file offset " << _offset );
-			IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _offset ); 
+			IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _filename, _offset ); 
 			LOG_DEBUG( "Read " << record->getType() << " at " << record->getFilePosition() );
 			if( record )
 				_records.push_back( record );

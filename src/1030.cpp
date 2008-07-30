@@ -26,14 +26,14 @@ namespace bafprp
 
 	const r1030Maker r1030Maker::registerThis;
 
-	IBafRecord* r1030Maker::make( const BYTE* data, int length, long filePos ) const
+	IBafRecord* r1030Maker::make( const BYTE* data, int length, const std::string filename, long filePos ) const
 	{
 		LOG_TRACE( "r1030Maker::make" );
 		LOG_TRACE( "/r1030Maker::make" );
-		return new r1030( data, length, filePos );
+		return new r1030( data, length, filename, filePos );
 	}
 
-	r1030::r1030( const BYTE* data, int length, long filePos ) : IBafRecord( data, length, filePos )
+	r1030::r1030( const BYTE* data, int length, const std::string filename, long filePos ) : IBafRecord( data, length, filename, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 

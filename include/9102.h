@@ -33,7 +33,7 @@ namespace bafprp
 
 		~r9102();
 	protected:
-		r9102( const BYTE* data, int length, long filePos );
+		r9102( const BYTE* data, int length, const std::string filename, long filePos );
 	};
 
 	class r9102Maker : public RecordMaker
@@ -41,7 +41,7 @@ namespace bafprp
 	public:
 		r9102Maker() : RecordMaker( 9102 ) {}
 	protected:
-		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+		IBafRecord* make( const BYTE* data, int length, const std::string filename, long filePos ) const;
 	private:
 		static const r9102Maker registerThis;
 	};

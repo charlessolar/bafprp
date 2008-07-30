@@ -89,7 +89,7 @@ namespace bafprp
 		os << "* Details: Type: " << std::setw(41) << record->getType() << " *" << std::endl;
 		os << "*          Length: " << std::setw(39) << record->getSize() << " *" << std::endl;
 		os << "*          Position: " << std::setw(37) << record->getFilePosition() << " *" << std::endl;
-		os << "*          Filename: " << std::setw(37) << BafFile::getFilename() << " *" << std::endl;
+		os << "*          Filename: " << std::setw(37) << record->getFilename() << " *" << std::endl;
 
 		os << "*                                                          *" << std::endl;
 		std::string bytes = record->getData();
@@ -200,7 +200,7 @@ namespace bafprp
 		os << "--------------------------------------------------------------------------" << std::endl;
 		os << "Length of record: " << record->getSize() << std::endl;
 		os << "--------------------------------------------------------------------------" << std::endl;
-		os << "File: " << BafFile::getFilename() << std::endl;
+		os << "File: " << record->getFilename() << std::endl;
 		os << "--------------------------------------------------------------------------" << std::endl;
 		os << "Position: " << record->getFilePosition() << std::endl;
 		os << "--------------------------------------------------------------------------" << std::endl;

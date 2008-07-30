@@ -33,7 +33,7 @@ namespace bafprp
 
 		~r360();
 	protected:
-		r360( const BYTE* data, int length, long filePos );
+		r360( const BYTE* data, int length, const std::string filename, long filePos );
 	};
 
 	class r360Maker : public RecordMaker
@@ -41,7 +41,7 @@ namespace bafprp
 	public:
 		r360Maker() : RecordMaker( 360 ) {}
 	protected:
-		IBafRecord* make( const BYTE* data, int length, long filePos ) const;
+		IBafRecord* make( const BYTE* data, int length, const std::string filename, long filePos ) const;
 	private:
 		static const r360Maker registerThis;
 	};
