@@ -18,9 +18,6 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdio.h>
-#include <memory.h>
-
 #include "ibafrecord.h"
 #include "output.h"
 #include "crc32.h"
@@ -49,6 +46,7 @@ namespace bafprp
 		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 			if( *itr ) delete (*itr);
 		_fields.clear();
+		_field_types.clear();
 		LOG_TRACE( "/IBafRecord::~IBafRecord" );
 	}
 
@@ -114,10 +112,13 @@ namespace bafprp
 			return NULL;
 		}
 
-		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		field_vector::const_iterator itr2 = _fields.begin();
+		for( field_type_vector::const_iterator itr = _field_types.begin();
+			itr != _field_types.end() && itr2 != _fields.end();
+			itr++, itr2++ )
 		{
-			if( (*itr)->getName() == name )
-				return *itr;
+			if( *itr == name )
+				return *itr2;
 		}
 		
 		LOG_WARN( "Did not find field named: " << name );
@@ -161,6 +162,7 @@ namespace bafprp
 				ERROR_OUTPUT( this, "Could not convert field '" << field->getName() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
 			}
 			_fields.push_back( field );
+			_field_types.push_back( name );
 		}
 		// update data position, the mod is to make the size even for nice division
 		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;

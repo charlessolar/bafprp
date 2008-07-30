@@ -123,7 +123,7 @@ int main( int argc, char* argv[] )
 					break;
 				default:
 					printf( "Invalid option selected: %s\n", argv[ii] );
-					usage_error = TRUE;
+					usage_error = true;
 				}
 			}
 		}
@@ -207,7 +207,7 @@ void print_usage()
 		"\n"
 		"-d    List duplicates as an info log message before removal\n"
 		"\n"
-		"-s    Only log FATAL messages\n"
+		"-s    Only log FATAL messages, not recomended\n"
 		"\n"
 		"file  Any number of files with wildcards such as * and ?\n"
 		"\n"

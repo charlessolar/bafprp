@@ -32,7 +32,11 @@ namespace bafprp
 	{
 		if( records.size() == 0 ) return;
 
-		std::sort( records.begin(), records.end(), recordsort );
+		std::vector<IBafRecord*> myrecords( records );  // Make a copy because we do not want to disturb the natural order 
+														// Should not be a problem since the vector is just thousands of
+														// pointers
+
+		std::sort( myrecords.begin(), myrecords.end(), recordsort );
 
 		// Notes:
 		// This statement did not work for me.  I do not know if it was working but giving the wrong output,
@@ -45,13 +49,23 @@ namespace bafprp
 
 		//records.erase( std::unique( records.begin(), records.end(), recordequal ), records.end() );
 
-		for(std::vector<IBafRecord*>::iterator itr = records.begin() + 1; itr != records.end(); itr++ )
+		for(std::vector<IBafRecord*>::iterator itr = myrecords.begin() + 1; itr != myrecords.end(); itr++ )
 		{
 			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
 			{
-				if( *itr ) delete *itr;
-				itr = records.erase( itr );
-				if( itr == records.end() ) break;   // We need this in case we end up deleting the iterator right before the end().  If that happens the iterator would be
+				// Probably a better way
+				for( std::vector<IBafRecord*>::iterator itr2 = records.begin(); itr2 != records.end(); itr2++ )
+				{
+					if( (*itr2)->getCRC() == (*itr)->getCRC() )
+					{
+						if( *itr2 ) delete *itr2;
+						records.erase( itr2 );
+						break;
+					}
+				}
+				//if( *itr ) delete *itr;
+				//itr = records.erase( itr );
+				//if( itr == records.end() ) break;   // We need this in case we end up deleting the iterator right before the end().  If that happens the iterator would be
 													// incremented and would produce a very bad error
 			}
 		}
@@ -59,10 +73,15 @@ namespace bafprp
 
 	void Duplicate::list( std::vector<IBafRecord*>& records )
 	{
-		std::sort( records.begin(), records.end(), recordsort );
-		//std::vector<IBafRecord*>::iterator itr = std::unique( records.begin(), records.end(), recordequal );
+		if( records.size() == 0 ) return;
 
-		for(std::vector<IBafRecord*>::iterator itr = records.begin() + 1; itr != records.end(); itr++ )
+		std::vector<IBafRecord*> myrecords( records );  // Make a copy because we do not want to disturb the natural order 
+														// Should not be a problem since the vector is just thousands of
+														// pointers
+
+		std::sort( myrecords.begin(), myrecords.end(), recordsort );
+
+		for(std::vector<IBafRecord*>::iterator itr = myrecords.begin() + 1; itr != myrecords.end(); itr++ )
 		{
 			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
 			{
