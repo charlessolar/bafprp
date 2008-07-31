@@ -49,7 +49,7 @@ namespace bafprp
 	}
 
 	// Best to avert your eyes.
-	void File::error( const IBafRecord* record, const std::string error )
+	void File::error( const IBafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "File::error" );
 		checkFile( _errorProperties, true );
@@ -136,7 +136,7 @@ namespace bafprp
 		LOG_TRACE( "/File::error" );
 	}
 
-	void File::log( LOG_LEVEL level, const std::string log )
+	void File::log( LOG_LEVEL level, const std::string& log )
 	{
 		checkFile( _logProperties, true );
 		if( !_file.is_open() )

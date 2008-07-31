@@ -77,9 +77,9 @@ namespace bafprp
 		}
 		FieldMaker() {}
 	public:
-		static IField* newField( const std::string type );
+		static IField* newField( const std::string& type );
 	protected:
-		FieldMaker( std::string type )
+		FieldMaker( const std::string& type )
 		{
 			getReg().insert( std::make_pair ( type, this ) );
 		}

@@ -33,8 +33,8 @@ namespace bafprp
 	{
 		friend class RecordMaker;
 	public:
-		bool hasField( const std::string name ) const;
-		const IField* getField( const std::string name ) const;
+		bool hasField( const std::string& name ) const;
+		const IField* getField( const std::string& name ) const;
 		const IField* getNextField( DWORD last = 0 ) const;
 
 		virtual std::string getType() const = 0;
@@ -49,9 +49,9 @@ namespace bafprp
 
 		virtual ~IBafRecord();	
 	protected:
-		IBafRecord( const BYTE* data, int length, const std::string filename, long filePos );
+		IBafRecord( const BYTE* data, int length, const std::string& filename, long filePos );
 
-		void addField( const std::string name );
+		void addField( const std::string& name );
 		void decodeModules();
 
 		typedef std::vector<IField*> field_vector;
@@ -85,13 +85,13 @@ namespace bafprp
 		}
 		RecordMaker() {}
 	public:
-		static IBafRecord* newRecord( const BYTE* data, int length, const std::string filename, long filePos );
+		static IBafRecord* newRecord( const BYTE* data, int length, const std::string& filename, long filePos );
 	protected:
 		RecordMaker( int type )
 		{
 			getReg().insert ( std::make_pair ( type, this ) );
 		}
-		virtual IBafRecord* make( const BYTE* data, int length, const std::string filename, long filePos ) const = 0;
+		virtual IBafRecord* make( const BYTE* data, int length, const std::string& filename, long filePos ) const = 0;
 	};
 
 	bool recordequal( const IBafRecord* left, const IBafRecord* right );

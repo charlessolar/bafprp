@@ -30,7 +30,7 @@ namespace bafprp
 	Output::property_map Output::_logProperties;
 	LOG_LEVEL Output::_level;
 
-	Output::Output( const std::string name )
+	Output::Output( const std::string& name )
 	{
 		getReg().insert( std::make_pair( name, this ) );
 	}
@@ -50,7 +50,7 @@ namespace bafprp
 		LOG_TRACE( "/Output::outputRecord" );
 	}
 
-	void Output::outputError( const IBafRecord* record, const std::string error )
+	void Output::outputError( const IBafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "Output::outputError" );
 		output_map::iterator itr = getReg().find( _outputError );
@@ -61,7 +61,7 @@ namespace bafprp
 		LOG_TRACE( "/Output::outputError" );
 	}
 
-	void Output::outputLog( LOG_LEVEL level, const std::string log )
+	void Output::outputLog( LOG_LEVEL level, const std::string& log )
 	{
 		if( _level < level ) return;
 
@@ -123,7 +123,7 @@ namespace bafprp
 		}
 	}
 
-	void Output::setErrorProperty( const std::string name, const std::string value )
+	void Output::setErrorProperty( const std::string& name, const std::string& value )
 	{
 		property_map::iterator itr = _errorProperties.find( name );
 		if( itr != _errorProperties.end() )
@@ -132,7 +132,7 @@ namespace bafprp
 			_errorProperties.insert( std::make_pair( name, value ) );
 	}
 
-	void Output::setRecordProperty( const std::string name, const std::string value )
+	void Output::setRecordProperty( const std::string& name, const std::string& value )
 	{
 		property_map::iterator itr = _recordProperties.find( name );
 		if( itr != _recordProperties.end() )
@@ -141,7 +141,7 @@ namespace bafprp
 			_recordProperties.insert( std::make_pair( name, value ) );
 	}
 
-	void Output::setLogProperty( const std::string name, const std::string value )
+	void Output::setLogProperty( const std::string& name, const std::string& value )
 	{
 		property_map::iterator itr = _logProperties.find( name );
 		if( itr != _logProperties.end() )
@@ -150,7 +150,7 @@ namespace bafprp
 			_logProperties.insert( std::make_pair( name, value ) );
 	}
 
-	void Output::setOutputRecord( const std::string name )
+	void Output::setOutputRecord( const std::string& name )
 	{
 		output_map::iterator itr = getReg().find( name );
 		if( itr != getReg().end() )
@@ -159,7 +159,7 @@ namespace bafprp
 			printf( "Output type %s does not exist\n", name.c_str() );
 	}
 
-	void Output::setOutputError( const std::string name )
+	void Output::setOutputError( const std::string& name )
 	{
 		output_map::iterator itr = getReg().find( name );
 		if( itr != getReg().end() )
@@ -168,7 +168,7 @@ namespace bafprp
 			printf( "Output type %s does not exist\n", name.c_str() );
 	}
 
-	void Output::setOutputLog( const std::string name )
+	void Output::setOutputLog( const std::string& name )
 	{
 		output_map::iterator itr = getReg().find( name );
 		if( itr != getReg().end() )

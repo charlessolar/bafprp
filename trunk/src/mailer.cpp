@@ -412,7 +412,7 @@ void mailer::operator()() {
       returnstring = "451 Requested action aborted: No MX records ascertained";
    }
 
-   const std::string OK("250");
+   const std::string& OK("250");
    const std::vector<char> smtpheader(makesmtpmessage());
    const int buffsize(1024);
    char buff[buffsize] = "";
@@ -707,7 +707,7 @@ std::vector<char> mailer::makesmtpmessage() const {
    ret.insert(ret.end(), headerline.begin(), headerline.end());
    // end adding To: Cc: Bcc: lines to the header
 
-   const std::string boundary("bounds=_NextP_0056wi_0_8_ty789432_tp");
+   const std::string& boundary("bounds=_NextP_0056wi_0_8_ty789432_tp");
    bool MIME(false);
    if(attachments.size() || messageHTML.size())
       MIME = true;
@@ -760,7 +760,7 @@ std::vector<char> mailer::makesmtpmessage() const {
          headerline = "\r\n\r\n--" + boundary + "\r\n";
       }
       else { // make it multipart/alternative as we have html
-         const std::string innerboundary("inner_jfd_0078hj_0_8_part_tp");
+         const std::string& innerboundary("inner_jfd_0078hj_0_8_part_tp");
          headerline += "Content-Type: multipart/alternative;\r\n"
                        "\tboundary=\"" + innerboundary + "\"\r\n";
          

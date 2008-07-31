@@ -61,12 +61,12 @@ namespace bafprp
 	protected:
 	
 		// For registering subclasses
-		Output( const std::string name );
+		Output( const std::string& name );
 		
 		// virtual methods for processing data
 		virtual void record( const IBafRecord* record ) = 0;
-		virtual void error( const IBafRecord* record, const std::string error ) = 0;
-		virtual void log( LOG_LEVEL level, const std::string log ) = 0;
+		virtual void error( const IBafRecord* record, const std::string& error ) = 0;
+		virtual void log( LOG_LEVEL level, const std::string& log ) = 0;
 
 		typedef std::map<std::string, std::string> property_map;
 		static property_map _recordProperties;
@@ -99,18 +99,18 @@ namespace bafprp
 		static LOG_LEVEL getLogLevel() { return _level; }
 		static std::string getStrLogLevel( LOG_LEVEL level );
 
-		static void setOutputRecord( const std::string name );
-		static void setRecordProperty( const std::string name, const std::string value );
+		static void setOutputRecord( const std::string& name );
+		static void setRecordProperty( const std::string& name, const std::string& value );
 
-		static void setOutputError( const std::string name );
-		static void setErrorProperty( const std::string name, const std::string value );
+		static void setOutputError( const std::string& name );
+		static void setErrorProperty( const std::string& name, const std::string& value );
 
-		static void setOutputLog( const std::string name );
-		static void setLogProperty( const std::string name, const std::string value );
+		static void setOutputLog( const std::string& name );
+		static void setLogProperty( const std::string& name, const std::string& value );
 
 		static void outputRecord( const IBafRecord* record );
-		static void outputError( const IBafRecord* record, const std::string error );
-		static void outputLog( LOG_LEVEL level, const std::string log );
+		static void outputError( const IBafRecord* record, const std::string& error );
+		static void outputLog( LOG_LEVEL level, const std::string& log );
 
 	};
 	

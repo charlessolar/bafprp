@@ -31,7 +31,7 @@ namespace bafprp
 {
 	const Email Email::registerThis;
 
-	void Email::error( const IBafRecord* record, const std::string error )
+	void Email::error( const IBafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "Email::error" );
 		checkProperties( _errorProperties );
@@ -118,7 +118,7 @@ namespace bafprp
 		LOG_TRACE( "/Email::error" );
 	}
 
-	void Email::log( LOG_LEVEL level, const std::string log )
+	void Email::log( LOG_LEVEL level, const std::string& log )
 	{
 		checkProperties( _logProperties );
 		static int cache = 0;

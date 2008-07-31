@@ -34,9 +34,9 @@ namespace bafprp
 		BafFile();
 		~BafFile();
 
-		bool read( const std::string filename );
-		bool parse( const std::string filename );
-		bool process( const std::string filename, bool listDups = false );
+		bool read( const std::string& filename );
+		bool parse( const std::string& filename );
+		bool process( const std::string& filename, bool listDups = false );
 		bool clear();  // reset 
 
 		std::string getFilename() { return _filename; }

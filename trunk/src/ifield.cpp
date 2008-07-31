@@ -24,7 +24,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-	IField* FieldMaker::newField( std::string type )
+	IField* FieldMaker::newField( const std::string& type )
 	{
 		maker_map::iterator itr = getReg().find ( type );
 		if ( itr != getReg().end() )

@@ -26,14 +26,14 @@ namespace bafprp
 
 	const r360Maker r360Maker::registerThis;
 
-	IBafRecord* r360Maker::make( const BYTE* data, int length, const std::string filename, long filePos ) const
+	IBafRecord* r360Maker::make( const BYTE* data, int length, const std::string& filename, long filePos ) const
 	{
 		LOG_TRACE( "r360Maker::make" );
 		LOG_TRACE( "/r360Maker::make" );
 		return new r360( data, length, filename, filePos );
 	}
 
-	r360::r360( const BYTE* data, int length, const std::string filename, long filePos ) : IBafRecord( data, length, filename, filePos )
+	r360::r360( const BYTE* data, int length, const std::string& filename, long filePos ) : IBafRecord( data, length, filename, filePos )
 	{
 		// make the real structure
 		addField( "structuretype" ); 
