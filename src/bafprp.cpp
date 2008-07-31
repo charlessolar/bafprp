@@ -152,6 +152,7 @@ int main( int argc, char* argv[] )
 	{
 		if( argv[ii][0] != '-' )
 		{
+			std::string filename = "";
 		#ifdef _WIN32
 			findh = FindFirstFileA( argv[ii], &fdata );
 			if (findh == INVALID_HANDLE_VALUE)
@@ -162,19 +163,22 @@ int main( int argc, char* argv[] )
 			}
 			do
 			{
-		#endif
 				std::string dir = std::string( argv[ii] ).substr( 0, std::string( argv[ii] ).find_last_of( "\\" ) + 1 );
-				LOG_INFO( "Processing " << fdata.cFileName << " started" );
-				if ( !file->process( dir + string( fdata.cFileName ), listDups ) )
+				filename = dir + fdata.cFilename;
+		#else
+				filename = argv[ii];
+		#endif
+				LOG_INFO( "Processing " << filename << " started" );
+				if ( !file->process( filename, listDups ) )
 				{
-					LOG_ERROR( "Error processing " << dir << fdata.cFileName );
+					LOG_ERROR( "Error processing " << filename );
 				}
-				LOG_INFO( "Processing " << dir << fdata.cFileName << " ended" );
+				LOG_INFO( "Processing " << filename << " ended" );
 				
 				LOG_INFO( "Cleanup started" );
 				if( !file->clear() )
 				{
-					LOG_ERROR( "Error clearing " << dir << fdata.cFileName << " record data" );
+					LOG_ERROR( "Error clearing " << filename << " record data" );
 				}
 				LOG_INFO( "Cleanup ended" );
 

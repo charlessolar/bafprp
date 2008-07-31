@@ -181,10 +181,10 @@ namespace bafprp
 	{  
 		char timestamp[100] = "";
 		time_t ltime; 
-		struct tm mytm;
+		struct tm* mytm;
 		ltime = time( NULL );  
-		localtime_s( &mytm, &ltime );  
-		strftime( timestamp, sizeof( timestamp ), "%m/%d/%y %H:%M:%S", &mytm );
+		mytm = localtime( &ltime );  
+		strftime( timestamp, sizeof( timestamp ), "%m/%d/%y %H:%M:%S", mytm );
 		return std::string( timestamp );  
 	}  
 
