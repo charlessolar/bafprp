@@ -25,7 +25,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 namespace bafprp
 {
 
-	IBafRecord::IBafRecord( const BYTE* data, int length, const std::string filename, long filePos ) : _length( length ), _filename(filename), _filePos( filePos ), _crc(0)
+	IBafRecord::IBafRecord( const BYTE* data, int length, const std::string& filename, long filePos ) : _length( length ), _filename(filename), _filePos( filePos ), _crc(0)
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
 		
@@ -51,7 +51,7 @@ namespace bafprp
 	}
 
 
-	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, const std::string filename, long filePos )
+	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, const std::string& filename, long filePos )
 	{
 		LOG_TRACE( "IBafRecord::newRecord" );
 		// This function will take the full record data, extract the structure type, and create a new
@@ -103,7 +103,7 @@ namespace bafprp
 		return NULL;
 	}
 
-	bool IBafRecord::hasField( const std::string name ) const
+	bool IBafRecord::hasField( const std::string& name ) const
 	{
 		LOG_TRACE( "IBafRecord::hasField" );
 		if( _fields.empty() ) return false;
@@ -123,7 +123,7 @@ namespace bafprp
 	}
 
 
-	const IField* IBafRecord::getField( const std::string name ) const
+	const IField* IBafRecord::getField( const std::string& name ) const
 	{
 		LOG_TRACE( "IBafRecord::getField" );
 		if( _fields.empty() ) 
@@ -166,7 +166,7 @@ namespace bafprp
 		return *_fields.begin();
 	}
 
-	void IBafRecord::addField( const std::string name )
+	void IBafRecord::addField( const std::string& name )
 	{
 		LOG_TRACE( "IBafRecord::addField" );
 		IField* field = FieldMaker::newField( name );

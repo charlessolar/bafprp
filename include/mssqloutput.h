@@ -35,12 +35,12 @@ namespace bafprp
 		~MSSQL() { disconnect(); }
 
 		void record( const IBafRecord* record );
-		void error( const IBafRecord* record, const std::string error );
-		void log( LOG_LEVEL level, const std::string log );
+		void error( const IBafRecord* record, const std::string& error );
+		void log( LOG_LEVEL level, const std::string& log );
 
 	private:
 		void checkDB( property_map& props, bool start );
-		void connect( const std::string database, const std::string server, const std::string user, const std::string password );
+		void connect( const std::string& database, const std::string& server, const std::string& user, const std::string& password );
 		void disconnect();
 		std::string sanitize( const std::string& string );
 

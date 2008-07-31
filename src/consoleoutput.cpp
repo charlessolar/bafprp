@@ -29,7 +29,7 @@ namespace bafprp
 {
 	const Console Console::registerThis;
 
-	void Console::error( const IBafRecord* record, const std::string error )
+	void Console::error( const IBafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "Console::error" );
 
@@ -103,7 +103,7 @@ namespace bafprp
 		LOG_TRACE( "/Console::error" );
 	}
 
-	void Console::log( LOG_LEVEL level, const std::string log )
+	void Console::log( LOG_LEVEL level, const std::string& log )
 	{
 		std::cout << "- " << NowTime() << " " << getStrLogLevel( level ) << ": " << log << std::endl;
 	}

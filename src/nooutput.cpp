@@ -32,12 +32,12 @@ namespace bafprp
 	{
 	}
 
-	void No::error( const IBafRecord* record, const std::string error )
+	void No::error( const IBafRecord* record, const std::string& error )
 	{
 		// Do nothing!
 	}
 
-	void No::log( LOG_LEVEL level, const std::string log )
+	void No::log( LOG_LEVEL level, const std::string& log )
 	{
 		// Do nothing!
 	}

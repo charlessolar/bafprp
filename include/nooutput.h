@@ -33,8 +33,8 @@ namespace bafprp
 		~No();
 
 		void record( const IBafRecord* record );
-		void error( const IBafRecord* record, const std::string error );
-		void log( LOG_LEVEL level, const std::string log );
+		void error( const IBafRecord* record, const std::string& error );
+		void log( LOG_LEVEL level, const std::string& log );
 
 	private:
 		// This variable simply initializes a class that registers with the main output code

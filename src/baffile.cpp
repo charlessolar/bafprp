@@ -72,7 +72,7 @@ namespace bafprp
 		return true;
 	}
 
-	bool BafFile::parse( const std::string filename )
+	bool BafFile::parse( const std::string& filename )
 	{
 		LOG_TRACE( "BafFile::parse" );
 		if( filename != _filename ) 
@@ -118,7 +118,7 @@ namespace bafprp
 		return true;
 	}
 
-	bool BafFile::read( const std::string filename )
+	bool BafFile::read( const std::string& filename )
 	{
 		LOG_TRACE( "BafFile::read" );
 		_offset = 0;
@@ -145,7 +145,7 @@ namespace bafprp
 		return true;
 	}
 
-	bool BafFile::process( const std::string filename, bool listDups )
+	bool BafFile::process( const std::string& filename, bool listDups )
 	{
 		if( filename != _filename ) 
 		{

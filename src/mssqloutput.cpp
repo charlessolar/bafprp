@@ -33,7 +33,7 @@ namespace bafprp
 {
 	const MSSQL MSSQL::registerThis;
 
-	void MSSQL::error( const IBafRecord* record, const std::string error )
+	void MSSQL::error( const IBafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "MSSQL::error" );
 		checkDB( _errorProperties, true );
@@ -76,7 +76,7 @@ namespace bafprp
 		LOG_TRACE( "/MSSQL::error" );
 	}
 
-	void MSSQL::log( LOG_LEVEL level, const std::string log )
+	void MSSQL::log( LOG_LEVEL level, const std::string& log )
 	{
 		checkDB( _logProperties, true );
 
@@ -343,7 +343,7 @@ namespace bafprp
 		_dbConnected = false;
 	}
 
-	void MSSQL::connect( const std::string database, const std::string server, const std::string user, const std::string password )
+	void MSSQL::connect( const std::string& database, const std::string& server, const std::string& user, const std::string& password )
 	{
 		// We disconnect before the check because if the information passed is invalid, we want the program to
 		// not corrupt the current database.
