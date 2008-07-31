@@ -55,5 +55,4 @@ namespace bafprp
 	};
 
 }
-
 #endif
