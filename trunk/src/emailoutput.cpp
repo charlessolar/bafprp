@@ -129,8 +129,8 @@ namespace bafprp
 			if( _iCache == 0 ) return; // Dont clear an empty cache
 			if( _to == "" || _from == "" ) 
 			{
-				Output::setOutputLog( "console" );
-				LOG_ERROR( "To or From property of email output is wrong" );
+				Output::setOutputLog( "file" );
+				LOG_ERROR( "To or From property of email output is wrong, falling back to file output" );
 				return;
 			}
 

@@ -18,6 +18,20 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/* NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES
+// 
+// It is very important that this class does not change
+// Do not edit it, copy it, or in the worst case, delete it
+// When output encounters a problem it will default to this
+// form of output, and if this class is changed you will encounter
+// unexpected results.
+//
+NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES */
+
+
+
+
 #ifndef BAFPRPFILE_H
 #define BAFPRPFILE_H
 

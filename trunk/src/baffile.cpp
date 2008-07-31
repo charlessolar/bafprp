@@ -103,9 +103,11 @@ namespace bafprp
 
 			LOG_DEBUG( "Reading record of length " << _length_of_record << " at file offset " << _offset );
 			IBafRecord* record = RecordMaker::newRecord( _fileData + _offset, _length_of_record, _filename, _offset ); 
-			LOG_DEBUG( "Read " << record->getType() << " at " << record->getFilePosition() );
 			if( record )
+			{
+				LOG_DEBUG( "Read " << record->getType() << " at " << record->getFilePosition() );
 				_records.push_back( record );
+			}
 			
 			_offset += _length_of_record;
 		}

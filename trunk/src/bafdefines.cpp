@@ -54,11 +54,41 @@ namespace bafprp
 		std::string ret;
 		ret.resize( length );
 
+		for( int i = 0; i < length; i++ )
+		{
+			if( i % 2 == 1 )
+			{
+				ret[i] = hex[ ( *data & 0x0F ) ];
+				data++;
+			}
+			else
+				ret[i] = hex[ ( ( *data & 0xF0 ) >> 4 ) ];
+
+		}
+
+		// If length is even, we need to decrement the data pointer
+		// Since all valid fields end with a 'C' all fields will be odd.
+		// The only time we should get an even length is when they also want the C
+		// When this happens we of course give them the C, but in order to pass this
+		// upcomming check we have to backtrack 1 space so the next space WILL be
+		// a C instead of 00's from the next field or record.
+		if( length % 2 == 0 ) data--;
+
+		if( hex[( *data & 0x0F )] != 'C' && hex[( *data & 0x0F )] != 'F' )
+			LOG_DEBUG( "Decoded a field without a terminating 'C'  This is usually a sign of an incorrect field size. Length of field: " << length );
+
+/*
+		I used to read the data backwards since structure type is a field that sits in the middle of a byte.
+		However this caused some other issues that I fixed after some tinkering with these systems
+		In case I ever need to read backwards again I am keeping this code here.
+
+		**************************************************************************************
+
 		// Increase the data pointer because we will be reading the data backwards.
 		data += ( length + length % 2 ) / 2;
 
 		if( hex[( *data & 0x0F )] != 'C' && hex[( *data & 0x0F )] != 'F' )
-			LOG_DEBUG( "Decoding a record without a terminating 'C'  This is usually a sign of an incorrect field size. Length of field: " << length );
+			LOG_DEBUG( "Decoding a field without a terminating 'C'  This is usually a sign of an incorrect field size. Length of field: " << length );
 
 		// We are reading the data backwards to be more compatable with varying field sizes.
 		// The old way was to read starting at the beginning of a byte and continue 
@@ -81,7 +111,7 @@ namespace bafprp
 			else
 				ret[i-1] = hex[ ( *data & 0x0F ) ];
 		}
-		
+		*/
 		return ret;
 	}
 }

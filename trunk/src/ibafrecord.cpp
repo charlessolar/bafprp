@@ -103,6 +103,26 @@ namespace bafprp
 		return NULL;
 	}
 
+	bool IBafRecord::hasField( const std::string name ) const
+	{
+		LOG_TRACE( "IBafRecord::hasField" );
+		if( _fields.empty() ) return false;
+
+		bool bFound = false;
+		for( field_type_vector::const_iterator itr = _field_types.begin(); itr != _field_types.end(); itr++ )
+		{
+			if( *itr == name )
+			{
+				bFound = true;
+				break;
+			}
+		}
+
+		LOG_TRACE( "/IBafRecord::hasField" );
+		return bFound;
+	}
+
+
 	const IField* IBafRecord::getField( const std::string name ) const
 	{
 		LOG_TRACE( "IBafRecord::getField" );
@@ -112,6 +132,7 @@ namespace bafprp
 			return NULL;
 		}
 
+		// This is gross
 		field_vector::const_iterator itr2 = _fields.begin();
 		for( field_type_vector::const_iterator itr = _field_types.begin();
 			itr != _field_types.end() && itr2 != _fields.end();
@@ -155,7 +176,7 @@ namespace bafprp
 			_fieldData += 4;  // aprox avg length of a field
 			return;
 		}
-		if( *( _fieldData + 1 ) != 0xFF )  // If field is used, else data will be just FFFFFFFF
+		if( *( _fieldData ) != 0xFF )  // If field is used, else data will be just FFFFFFFF
 		{
 			if( !field->convert( _fieldData ) )
 			{
