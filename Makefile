@@ -68,7 +68,6 @@ dialingpresubindicator.cpp \
 duplicate.cpp \
 duration.cpp \
 emailoutput.cpp \
-endofrecord.cpp \
 fileblocks.cpp \
 fileoutput.cpp \
 filesequenceno.cpp \
