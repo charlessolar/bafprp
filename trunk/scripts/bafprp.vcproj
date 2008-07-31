@@ -410,11 +410,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\PresentDate.cpp"
+					RelativePath="..\src\presentdate.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\PresentTime.cpp"
+					RelativePath="..\src\presenttime.cpp"
 					>
 				</File>
 				<File
