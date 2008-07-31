@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "NumberIdentity.h"
+#include "numberidentity.h"
 #include "output.h"
 
 namespace bafprp
