@@ -18,6 +18,16 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/* NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES
+// 
+// It is very important that this class does not change
+// Do not edit it, copy it, or in the worst case, delete it
+// When output encounters a problem it will default to this
+// form of output, and if this class is changed you will encounter
+// unexpected results.
+//
+NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES */
+
 #include <iomanip>
 #include <ios>
 
@@ -31,7 +41,6 @@ namespace bafprp
 
 	File::File() : Output( "file" )
 	{
-		//_file.setf( std::ios::left );
 	}
 
 	File::~File()
@@ -46,8 +55,8 @@ namespace bafprp
 		checkFile( _errorProperties, true );
 		if( !_file.is_open() )
 		{
-			LOG_ERROR( "No valid file for error output, falling back to console output" );
-			Output::setOutputError( "console" );
+			LOG_ERROR( "No valid file for error output, falling back to file output" );
+			Output::setOutputError( "file" );
 
 			// be nice
 			Output::outputError( record, error );
@@ -132,8 +141,8 @@ namespace bafprp
 		checkFile( _logProperties, true );
 		if( !_file.is_open() )
 		{
-			Output::setOutputLog( "console" );
-			LOG_ERROR( "No valid file for log output, switching to console output" );
+			Output::setOutputLog( "file" );
+			LOG_ERROR( "No valid file for log output, falling back to file output" );
 
 			// be nice
 			Output::outputLog( level, log );
@@ -151,8 +160,8 @@ namespace bafprp
 		checkFile( _recordProperties, true );
 		if( !_file.is_open() )
 		{
-			LOG_ERROR( "No valid file for record output, switching to console output" );
-			Output::setOutputRecord( "console" );
+			LOG_ERROR( "No valid file for record output, falling back to file output" );
+			Output::setOutputRecord( "file" );
 
 			// be nice
 			Output::outputRecord( record );

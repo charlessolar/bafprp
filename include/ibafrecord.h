@@ -33,6 +33,7 @@ namespace bafprp
 	{
 		friend class RecordMaker;
 	public:
+		bool hasField( const std::string name ) const;
 		const IField* getField( const std::string name ) const;
 		const IField* getNextField( DWORD last = 0 ) const;
 
@@ -40,7 +41,7 @@ namespace bafprp
 
 		int getSize() const { return _length + 5; }
 
-		std::string getData() const { return getChars( _data, _length * 2 ); }
+		std::string getData() const { return getChars( _data, _length  * 2   ); }
 		long getFilePosition() const { return _filePos; }
 
 		DWORD getCRC() const { return _crc; }

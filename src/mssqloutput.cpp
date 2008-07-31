@@ -39,8 +39,8 @@ namespace bafprp
 		checkDB( _errorProperties, true );
 		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
 		{
-			Output::setOutputError( "console" );
-			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to console output" );
+			Output::setOutputError( "file" );
+			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to file output" );
 
 			// Play nice
 			Output::outputError( record, error );
@@ -64,8 +64,8 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			Output::setOutputError( "console" );
-			LOG_ERROR( "Failed to insert error message into database, falling back to console output" );
+			Output::setOutputError( "file" );
+			LOG_ERROR( "Failed to insert error message into database, falling back to file output" );
 
 			Output::outputError( record, error );
 		}
@@ -82,7 +82,7 @@ namespace bafprp
 
 		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
 		{
-			Output::setOutputLog( "console" );
+			Output::setOutputLog( "file" );
 			LOG_ERROR( "Failed to connect to the database, check your properties\n" );
 
 			// Play nice
@@ -98,8 +98,8 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			Output::setOutputLog( "console" );
-			LOG_ERROR( "Failed to insert log into database, falling back to console output" );
+			Output::setOutputLog( "file" );
+			LOG_ERROR( "Failed to insert log into database, falling back to file output" );
 
 			Output::outputLog( level, log );
 		}
@@ -116,8 +116,8 @@ namespace bafprp
 		
 		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
 		{
-			Output::setOutputRecord( "console" );
-			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to console output" );
+			Output::setOutputRecord( "file" );
+			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to file output" );
 
 			// Play nice
 			Output::outputRecord( record );
@@ -133,8 +133,8 @@ namespace bafprp
 		os << "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			Output::setOutputError( "console" );
-			LOG_ERROR( "Failed to query columns in database, falling back to console output" );
+			Output::setOutputError( "file" );
+			LOG_ERROR( "Failed to query columns in database, falling back to file output" );
 			SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 			return;
 		}
@@ -197,6 +197,8 @@ namespace bafprp
 				continue;
 			}
 
+			if( !record->hasField( itr->first ) ) continue; // Skip fields the record does not have
+
 			// Find field in record (if it exists)
 			const IField* field = record->getField( itr->first );
 
@@ -230,7 +232,7 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			LOG_WARN( "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery );
+			ERROR_OUTPUT( record, "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery );
 		}
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
@@ -322,6 +324,7 @@ namespace bafprp
 
 	void MSSQL::disconnect()
 	{
+		if( !_dbConnected ) return;
 		SQLDisconnect( _dbc );
 		SQLFreeHandle( SQL_HANDLE_DBC, _dbc );
 		SQLFreeHandle( SQL_HANDLE_ENV, _env );

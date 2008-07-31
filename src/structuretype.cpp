@@ -66,7 +66,7 @@ namespace bafprp
 	{
 		LOG_TRACE( "StructureType::getLong" );
 		LOG_TRACE( "/StructureType::getLong" );
-		return atol( _return.c_str() );
+		return atol( _return.substr(1).c_str() );
 	}
 
 	int StructureType::getInt() const
@@ -80,7 +80,7 @@ namespace bafprp
 			ret = 0;
 		}
 		else
-			ret = atoi( _return.c_str() );
+			ret = atoi( _return.substr(1).c_str() );
 
 		LOG_TRACE( "/StructureType::getInt" );
 		return ret;
@@ -97,7 +97,7 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+			ret = _return.substr(1);
 
 		LOG_TRACE( "/StructureType::getString" );
 		return ret;

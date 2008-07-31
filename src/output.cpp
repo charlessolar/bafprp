@@ -70,7 +70,7 @@ namespace bafprp
 			itr->second->log( level, log );
 		else
 		{
-			Output::setOutputLog( "console" );
+			Output::setOutputLog( "file" );
 			LOG_ERROR( "Output type " + _outputLog + " does not exist." );		// If output is set wrong, use one that works.
 		}
 																								
