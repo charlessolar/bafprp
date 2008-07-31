@@ -47,7 +47,6 @@ namespace bafprp
 		// property variables
 		std::string _database;
 		std::string _server;
-		int _serverPort;
 		std::string _user;
 		std::string _password;
 
@@ -57,7 +56,6 @@ namespace bafprp
 		SQLHENV _env;
 		SQLHDBC _dbc;
 		bool _dbConnected;
-		std::string _connDatabase;
 
 		std::vector<std::string> _storedDatabases;
 		

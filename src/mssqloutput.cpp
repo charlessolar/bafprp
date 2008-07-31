@@ -37,7 +37,7 @@ namespace bafprp
 	{
 		LOG_TRACE( "MSSQL::error" );
 		checkDB( _errorProperties, true );
-		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
+		if( !_dbConnected ) 
 		{
 			Output::setOutputError( "file" );
 			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to file output" );
@@ -80,7 +80,7 @@ namespace bafprp
 	{
 		checkDB( _logProperties, true );
 
-		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
+		if( !_dbConnected ) 
 		{
 			Output::setOutputLog( "file" );
 			LOG_ERROR( "Failed to connect to the database, check your properties\n" );
@@ -114,7 +114,7 @@ namespace bafprp
 		LOG_TRACE( "MSSQL::record" );
 		checkDB( _recordProperties, true );
 		
-		if( _database == "" || _server == "" || _table == "" || !_dbConnected ) 
+		if( !_dbConnected ) 
 		{
 			Output::setOutputRecord( "file" );
 			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to file output" );
@@ -245,41 +245,42 @@ namespace bafprp
 	{
 		LOG_TRACE( "MSSQL::checkDB" );
 
+		std::string database;
+		std::string server;
+		std::string port;
+		std::string user;
+		std::string password;
+		std::string table;
+
 		property_map::iterator itr = props.find( "database" );
 		if( itr != props.end() )
-			_database = itr->second;
+			database = itr->second;
 		else
-			_database = "";
+			database = "";
 
 		itr = props.find( "server" );
 		if( itr != props.end() )
-			_server = itr->second;
+			server = itr->second;
 		else
-			_server = "localhost";
-
-		itr = props.find( "port" );
-		if( itr != props.end() )
-			_serverPort = atoi( itr->second.c_str() );
-		else
-			_serverPort = 1433;
+			server = "localhost";
 
 		itr = props.find( "user" );
 		if( itr != props.end() )
-			_user = itr->second;
+			user = itr->second;
 		else
-			_user = "";
+			user = "";
 
 		itr = props.find( "password" );
 		if( itr != props.end() )
-			_password = itr->second;
+			password = itr->second;
 		else
-			_password = "";
+			password = "";
 
 		itr = props.find( "table" );
 		if( itr != props.end() )
-			_table = itr->second;
+			table = itr->second;
 		else
-			_table = "";
+			table = "";
 
 
 		// Check database connection
@@ -287,18 +288,21 @@ namespace bafprp
 		{
 			if( _dbConnected )
 			{
-				if( _database != _connDatabase )
+				if( database != _database || server != _server || user != _user || password != _password )
 				{
-					_storedDatabases.push_back( _connDatabase );
+					_storedDatabases.push_back( _database );
+					_storedDatabases.push_back( _server );
+					_storedDatabases.push_back( _user );
+					_storedDatabases.push_back( _password );
 					disconnect();
-					connect( _database, _server, _user, _password );
+					connect( database, server, user, password );
 				}
 				// Current database matches desired
 			}
 			else
 			{
 				// No database connected, so connect
-				connect( _database, _server, _user, _password );
+				connect( database, server, user, password );
 			}
 		}
 		else
@@ -308,7 +312,15 @@ namespace bafprp
 			{
 				// restore the previous database connection
 				disconnect();
-				connect( _storedDatabases.back(), _server, _user, _password );
+				password = _storedDatabases.back();
+				_storedDatabases.pop_back();
+				user = _storedDatabases.back();
+				_storedDatabases.pop_back();
+				server = _storedDatabases.back();
+				_storedDatabases.pop_back();
+				database = _storedDatabases.back();
+				_storedDatabases.pop_back();
+				connect( database, server, user, password );
 			}
 		}
 
@@ -375,7 +387,10 @@ namespace bafprp
 	
 		if( SQL_SUCCEEDED( ret ) )
 		{
-			_connDatabase = database;
+			_database = database;
+			_server = server;
+			_user = user;
+			_password = password;
 			_dbConnected = true;
 		}
 		else
@@ -390,9 +405,7 @@ namespace bafprp
 		std::string retVal = string;
 		int pos = 0;
 		while( ( pos = retVal.find( "'" ) ) != std::string::npos )
-		{
 			retVal = retVal.replace( pos, 1, "\"" );
-		}
 		
 		return retVal;
 	}
