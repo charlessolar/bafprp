@@ -120,13 +120,23 @@ namespace bafprp
 
 	void Email::log( LOG_LEVEL level, const std::string& log )
 	{
-		checkProperties( _logProperties );
 		static int cache = 0;
-		cache++;
 
+		// We need to clear the cache when being destroyed.  However there is a problem,
+		// there is a chance that out output class has already been destroyed.  In fact, this
+		// is very likely to be the case.  As such _logProperties will be null and we will
+		// crash in a firey ball of error messages if we try to get any data from it.
+		// Obviously we do not want this to happen so we must check before using it.
+		// HOWEVER, this is annoying because if for whatever reason the email properties
+		// changed since the last cache empty these changes will not show up in this final
+		// email.  Unfortunetly I can not think of a better solution for this at the moment
+		if( log != "" ) checkProperties( _logProperties );
+		
 		if( cache >= _iCache || log == "" )
 		{
-			if( _iCache == 0 ) return; // Dont clear an empty cache
+			if( cache == 0 ) return; // Dont clear an empty cache
+
+
 			if( _to == "" || _from == "" ) 
 			{
 				Output::setOutputLog( "file" );
@@ -153,18 +163,29 @@ namespace bafprp
 		std::string logstr = NowTime() + " " + getStrLogLevel( level ) + ": " + log;
 
 		_cachedLogs.push_back( logstr );
+		cache++;
 	}
 
 	void Email::record( const IBafRecord* record )
 	{
 		LOG_TRACE( "Email::record" );
-		checkProperties( _recordProperties );
+		// We need to clear the cache when being destroyed.  However there is a problem,
+		// there is a chance that out output class has already been destroyed.  In fact, this
+		// is very likely to be the case.  As such _recordProperties will be null and we will
+		// crash in a firey ball of error messages if we try to get any data from it.
+		// Obviously we do not want this to happen so we must check before using it.
+		// HOWEVER, this is annoying because if for whatever reason the email properties
+		// changed since the last cache empty these changes will not show up in this final
+		// email.  Unfortunetly I can not think of a better solution for this at the moment
+		if( record != NULL ) checkProperties( _recordProperties );
+
 		static int cache = 0;
-		cache++;
 
 		// sending null will clear out the cache (for use at the end of the program)
 		if( cache >= _iCache || record == NULL )
 		{
+			if( cache == 0 ) return; // Dont clear an empty cache
+
 			if( _to == "" || _from == "" ) 
 			{
 				LOG_ERROR( "To or From property of email output is wrong" );
@@ -213,6 +234,7 @@ namespace bafprp
 		}
 
 		_cachedRecords.push_back( os.str() );
+		cache++;
 
 		LOG_TRACE( "/Email::record" );
 	}

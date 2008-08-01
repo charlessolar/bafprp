@@ -35,8 +35,8 @@ namespace bafprp
 			// Sending empty data will make the functions clear the cache.
 			// This makes it so that when the program ends records or logs
 			// that are still in the cache will not be lost.
-			//record( NULL );
-			//log( 0, "" );
+			record( NULL );
+			log( LOG_LEVEL_FATAL, "" );
 		}
 
 		void record( const IBafRecord* record );
