@@ -44,11 +44,18 @@ int main( int argc, char* argv[] )
 	Output::setLogLevel( LOG_LEVEL_INFO );
 
 	Output::setOutputRecord( "file" );
-	Output::setRecordProperty( "filename", "record.log" );
 	Output::setOutputError( "file" );
-	Output::setErrorProperty( "filename", "error.log" );
 	Output::setOutputLog( "file" );
+
+#ifdef _WIN32
+	Output::setRecordProperty( "filename", "record.log" );
+	Output::setErrorProperty( "filename", "error.log" );
 	Output::setLogProperty( "filename", "log.log" );
+#else
+	Output::setRecordProperty( "filename", "/var/log/bafprp/record.log" );
+	Output::setErrorProperty( "filename", "/var/log/bafprp/error.log" );
+	Output::setLogProperty( "filename", "/var/log/bafprp/log.log" );
+#endif
 
 
 	bool usage_error = true;
@@ -164,7 +171,7 @@ int main( int argc, char* argv[] )
 			do
 			{
 				std::string dir = std::string( argv[ii] ).substr( 0, std::string( argv[ii] ).find_last_of( "\\" ) + 1 );
-				filename = dir + fdata.cFilename;
+				filename = dir + fdata.cFileName;
 		#else
 				filename = argv[ii];
 		#endif
