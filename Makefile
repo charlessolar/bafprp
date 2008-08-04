@@ -134,14 +134,9 @@ trunkidentification.cpp
 
 BIN_DIR = bin
 
-ifeq ( $(DEBUG), true )
-	CFLAGS = $(DEBUG_FLAGS)
-else
-	CFLAGS = $(OPT_FLAGS)
-endif
+#CFLAGS = $(DEBUG_FLAGS)
+CFLAGS = $(OPT_FLAGS)
  
-
-
 CFLAGS += -v -fpermissive -D_LINUX -DNDEBUG -fPIC \
 -Wno-deprecated -static-libgcc
 
@@ -157,8 +152,13 @@ all:
 bafprp: $(OBJ_LINUX)
 	$(CPP) $(INCLUDE) $(CFLAGS) $(OBJ_LINUX) $(LDFLAGS) -o$(BIN_DIR)/$(BINARY)
 
-debug:
-	$(MAKE) all DEBUG=true
+install: bafprp
+	cp $(BIN_DIR)/$(BINARY) /usr/bin/$(BINARY)
+	mkdir -p /var/log/bafprp
+
+uninstall:
+	rm -f /usr/bin/$(BINARY)
+	rm -rf /var/log/bafprp
 
 default: all
 
