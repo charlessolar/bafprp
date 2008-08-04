@@ -39,8 +39,8 @@ namespace bafprp
 		void log( LOG_LEVEL level, const std::string& log );
 
 	private:
-		void checkDB( property_map& props, bool start );
-		void connect( const std::string& database, const std::string& server, const std::string& user, const std::string& password );
+		void checkDB( property_map& props );
+		void connect();
 		void disconnect();
 		std::string sanitize( const std::string& string );
 		void extractError( char* fn, SQLHANDLE handle, SQLSMALLINT type );
@@ -57,8 +57,6 @@ namespace bafprp
 		SQLHENV _env;
 		SQLHDBC _dbc;
 		bool _dbConnected;
-
-		std::vector<std::string> _storedDatabases;
 		
 		// This variable simply initializes a class that registers with the main output code
 		static const MSSQL registerThis;

@@ -36,7 +36,7 @@ namespace bafprp
 	void MSSQL::error( const IBafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "MSSQL::error" );
-		checkDB( _errorProperties, true );
+		checkDB( _errorProperties );
 		if( !_dbConnected || _table == "" ) 
 		{
 			Output::setOutputError( "file" );
@@ -74,13 +74,12 @@ namespace bafprp
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
-		checkDB( _errorProperties, false );
 		LOG_TRACE( "/MSSQL::error" );
 	}
 
 	void MSSQL::log( LOG_LEVEL level, const std::string& log )
 	{
-		checkDB( _logProperties, true );
+		checkDB( _logProperties );
 
 		if( !_dbConnected || _table == "" ) 
 		{
@@ -109,14 +108,12 @@ namespace bafprp
 		}
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
-		
-		checkDB( _logProperties, false );
 	}
 
 	void MSSQL::record( const IBafRecord* record )
 	{
 		LOG_TRACE( "MSSQL::record" );
-		checkDB( _recordProperties, true );
+		checkDB( _recordProperties );
 		
 		if( !_dbConnected || _table == "" ) 
 		{
@@ -241,99 +238,58 @@ namespace bafprp
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
-		checkDB( _recordProperties, false );
 		LOG_TRACE( "/MSSQL::record" );
 	}
 
-	void MSSQL::checkDB( property_map& props, bool start )
+	void MSSQL::checkDB( property_map& props )
 	{
 		LOG_TRACE( "MSSQL::checkDB" );
 
-		std::string database;
-		std::string server;
-		std::string port;
-		std::string user;
-		std::string password;
+		// Only allow 1 database connection for the whole program.  Properties only change the table name if need be once connected.
+		// Through exparimentation it seems that switching databases and/or servers produces errors on the server when connecting and disconnecting so fast.
 
-		property_map::iterator itr = props.find( "database" );
-		if( itr != props.end() )
-			database = itr->second;
-		else
-			database = "";
-
-		itr = props.find( "server" );
-		if( itr != props.end() )
-			server = itr->second;
-		else
-			server = "localhost";
-
-		itr = props.find( "user" );
-		if( itr != props.end() )
-			user = itr->second;
-		else
-			user = "";
-
-		itr = props.find( "password" );
-		if( itr != props.end() )
-			password = itr->second;
-		else
-			password = "";
-
-		itr = props.find( "table" );
+		property_map::iterator itr = props.find( "table" );
 		if( itr != props.end() )
 			_table = itr->second;
 		else
 			_table = "";
 
+		if( _dbConnected ) return;
 
-		// Check database connection
-		if( start )
-		{
-			if( _dbConnected )
-			{
-				if( database != _database || server != _server || user != _user || password != _password )
-				{
-					_storedDatabases.push_back( _database );
-					_storedDatabases.push_back( _server );
-					_storedDatabases.push_back( _user );
-					_storedDatabases.push_back( _password );
-					disconnect();
-					connect( database, server, user, password );
-				}
-				// Current database matches desired
-			}
-			else
-			{
-				// No database connected, so connect
-				connect( database, server, user, password );
-			}
-		}
+		itr = props.find( "database" );
+		if( itr != props.end() )
+			_database = itr->second;
 		else
-		{
-			// End of function database check
-			if( _storedDatabases.size() > 0 )
-			{
-				// restore the previous database connection
-				disconnect();
-				password = _storedDatabases.back();
-				_storedDatabases.pop_back();
-				user = _storedDatabases.back();
-				_storedDatabases.pop_back();
-				server = _storedDatabases.back();
-				_storedDatabases.pop_back();
-				database = _storedDatabases.back();
-				_storedDatabases.pop_back();
-				connect( database, server, user, password );
-			}
-		}
+			_database = "";
+
+		itr = props.find( "server" );
+		if( itr != props.end() )
+			_server = itr->second;
+		else
+			_server = "localhost";
+
+		itr = props.find( "user" );
+		if( itr != props.end() )
+			_user = itr->second;
+		else
+			_user = "";
+
+		itr = props.find( "password" );
+		if( itr != props.end() )
+			_password = itr->second;
+		else
+			_password = "";
+
+
+		// No database connected, so connect
+		connect();
 
 		// Should always be connected to 1 database
 		if( !_dbConnected )
 		{
-			printf( "Failed to connect to the database: %s, ms sql output will not be available\n", database.c_str() );
+			printf( "Failed to connect to the database: %s, ms sql output will not be available\n", _database.c_str() );
 		}
 
-		
 		LOG_TRACE( "/MSSQL::checkDB" );
 	}
 
@@ -346,13 +302,13 @@ namespace bafprp
 		_dbConnected = false;
 	}
 
-	void MSSQL::connect( const std::string& database, const std::string& server, const std::string& user, const std::string& password )
+	void MSSQL::connect()
 	{
 		// We disconnect before the check because if the information passed is invalid, we want the program to
 		// not corrupt the current database.
 		if( _dbConnected ) disconnect();
 
-		if( database == "" || server == "" || user == "" || password == "" )
+		if( _database == "" || _server == "" || _user == "" || _password == "" )
 		{
 			printf( "Not enough information to connect to sql database\n" );
 			return;
@@ -385,22 +341,16 @@ namespace bafprp
 		}
 
 #ifdef _WIN32
-		std::string dsn = "DRIVER=sql server;DATABASE=" + database + ";SERVER=" + server + ";Uid=" + user + ";Pwd=" + password + ";";
+		std::string dsn = "DRIVER=sql server;DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";";
 #else
 		// We assume SQL Server 2005
-		std::string dsn = "DRIVER=FreeTDS;SERVER=" + server + ";Uid=" + user + ";Pwd=" + password + ";DATABASE=" + database + ";TDS_VERSION=8.0;Port=1433;";
+		std::string dsn = "DRIVER=FreeTDS;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";TDS_VERSION=8.0;Port=1433;";
 #endif
 	
 		ret = SQLDriverConnectA( _dbc, NULL, (SQLCHAR*)dsn.c_str(), SQL_NTS, OutConnStr, sizeof( OutConnStr ), &OutConnStrLen, SQL_DRIVER_COMPLETE );
 
 		if( SQL_SUCCEEDED( ret ) )
-		{
-			_database = database;
-			_server = server;
-			_user = user;
-			_password = password;
 			_dbConnected = true;
-		}
 		else
 		{
 			extractError( "SQLDriverConnect", _dbc, SQL_HANDLE_DBC );
