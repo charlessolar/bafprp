@@ -1,0 +1,5 @@
+#summary Details for output form 'No'
+
+= No =
+
+Will print no output, thus, no properties are available for customization.
