@@ -1,0 +1,79 @@
+#summary Details for output form 'Microsoft SQL Server'
+
+= Microsoft SQL Server =
+
+Will send data to a sql server specified by the user.  
+
+
+== Properties ==
+
+  * database - the destination database
+  * server - the server
+  * user - user name with INSERT and SELECT privileges
+  * password - password for user
+  * table - table for inserting records
+
+*NOTE* Only 1 database, server, user, and password will be used for all 3 types of output.  If you specify different values, the first one used will be used throughout the duration of the program.
+
+== Tables ==
+
+=== Log Table ===
+
+{{{
+create table logs
+(
+id bigint IDENTITY(1,1),
+ts datetime,
+loglevel smallint,
+msg text
+)
+}}}
+
+It is recommended to make id the primary key and create an index for loglevel
+
+=== Error Table ===
+
+{{{
+create table errors
+(
+id bigint IDENTITY(1,1),
+ts datetime not null,
+error text not null,
+filename varchar(255),
+filepos int,
+type varchar(255),
+length int,
+bytes text
+)
+}}}
+
+It is recommended to make id the primary key
+
+=== Records ===
+
+The record table operates a little differently.  It has no specific structure like log or error, instead when it comes time to insert a record bafprp will first query the Information Schema for a list of the column names.  It will then match those column names to elements that are in the current record.
+
+For example, if we wanted to record the calling number, the called number, and the elapsed time we would make a table like this
+
+{{{
+create table records
+(
+id bigint IDENTITY(1,1),
+callingnumber varchar(25) not null,
+callednumber varchar(25) not null,
+duration bigint not null
+)
+}}}
+
+The function will automatically match those columns and insert the data accordingly.  There are a couple of things to note while using this behavior.  Firstly, if a record has no data in common with the sql table, it will not be recorded.  Secondly, if there is a n error inserting the record an error message will be created through the error output type.  These should be checked often.  
+
+For a complete list of the different field types in a record, please download the source, a wiki page will be up later.
+
+In addition to these field types there are also special fields recognized by the output function.  
+  * type - the type of record
+  * size - the size of the record
+  * crc - the crc32 hash 
+  * filename - the filename of the baf file
+  * filepos - the position of this record in the baf file
+
+You may add these columns to your records table for extra data.
