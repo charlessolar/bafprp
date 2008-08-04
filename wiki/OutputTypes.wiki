@@ -27,3 +27,13 @@ Sends formated output straight to an email address, no default settings so the u
 
 == [[Microsoft SQL Server]] ==
 Sends logs and errors to generic tables on a server of the user's preference.  Record output is handled a bit differently, see the article for details.
+
+= Command Line =
+
+To change between these forms of output you must supply the appropriate options when running bafprp.  
+To switch outputs, prepend the output type abbreviation with the desired output form.  r for record, e for error, l for log.
+Example:
+-remail -efile -lconsole
+Will set record, error, and log output to email, file, and console, respectively.
+
+Please see the [[command line options]] article for full detail of all options.  
