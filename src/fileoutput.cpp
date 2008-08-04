@@ -129,6 +129,7 @@ namespace bafprp
 		}
 		_file << "*                                                          *" << std::endl;
 		_file << "************************************************************" << std::endl;
+		_file << std::endl;
 
 		_file.flush();
 	

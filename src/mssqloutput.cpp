@@ -327,7 +327,7 @@ namespace bafprp
 		// Should always be connected to 1 database
 		if( !_dbConnected )
 		{
-			printf( "Failed to connect to any database, sql output will not be available\n" );
+			printf( "Failed to connect to the database: %s, ms sql output will not be available\n", database.c_str() );
 		}
 
 		
@@ -384,7 +384,7 @@ namespace bafprp
 		std::string dsn = "DRIVER=sql server;DATABASE=" + database + ";SERVER=" + server + ";Uid=" + user + ";Pwd=" + password + ";";
 
 		ret = SQLDriverConnectA( _dbc, NULL, (SQLCHAR*)dsn.c_str(), SQL_NTS, OutConnStr, sizeof( OutConnStr ), &OutConnStrLen, SQL_DRIVER_COMPLETE );
-	
+
 		if( SQL_SUCCEEDED( ret ) )
 		{
 			_database = database;
@@ -395,6 +395,7 @@ namespace bafprp
 		}
 		else
 		{
+			extractError( "SQLDriverConnect", _dbc, SQL_HANDLE_DBC );
 			disconnect();
 		}
 	}
@@ -408,6 +409,32 @@ namespace bafprp
 			retVal = retVal.replace( pos, 1, "\"" );
 		
 		return retVal;
+	}
+
+	void MSSQL::extractError( char* fn, SQLHANDLE handle, SQLSMALLINT type )
+	{
+		SQLINTEGER	 i = 0;
+		SQLINTEGER	 native;
+		SQLCHAR	 state[ 7 ];
+		SQLCHAR	 text[256];
+		SQLSMALLINT	 len;
+		SQLRETURN	 ret;
+
+		fprintf(stderr,
+				"\n"
+				"The driver reported the following diagnostics whilst running "
+				"%s\n\n",
+				fn);
+
+		do
+		{
+			ret = SQLGetDiagRecA(type, handle, ++i, state, &native, text,
+								sizeof(text), &len );
+			if (SQL_SUCCEEDED(ret))
+				printf("%s:%ld:%ld:%s\n", state, i, native, text);
+		}
+		while( ret == SQL_SUCCESS );
+
 	}
 
 }

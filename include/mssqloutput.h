@@ -43,6 +43,7 @@ namespace bafprp
 		void connect( const std::string& database, const std::string& server, const std::string& user, const std::string& password );
 		void disconnect();
 		std::string sanitize( const std::string& string );
+		void extractError( char* fn, SQLHANDLE handle, SQLSMALLINT type );
 
 		// property variables
 		std::string _database;
