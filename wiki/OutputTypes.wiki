@@ -13,10 +13,10 @@ These are critical errors bafprp encounters while parsing a record.  It is impor
 
 = Forms of Output =
 
-== [[No]] ==
+== No ==
 No output, use is discouraged
 
-== [[Console]] ==
+== Console ==
 Output is formatted and printed to the console
 
 == [[File]] ==
@@ -27,4 +27,3 @@ Sends formated output straight to an email address, no default settings so the u
 
 == [[Microsoft SQL Server]] ==
 Sends logs and errors to generic tables on a server of the user's preference.  Record output is handled a bit differently, see the article for details.
-
