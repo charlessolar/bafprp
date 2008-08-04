@@ -99,6 +99,7 @@ namespace bafprp
 		}
 		std::cout << "*                                                          *" << std::endl;
 		std::cout << "************************************************************" << std::endl;
+		std::cout << std::endl;
 
 		LOG_TRACE( "/Console::error" );
 	}
@@ -132,6 +133,8 @@ namespace bafprp
 			lastUID = field->getUID();
 			std::cout << field->getName() << ": " << field->getString() << std::endl;
 		}
+
+		std::cout << std::endl;
 
 		LOG_TRACE( "/Console::record" );
 	}
