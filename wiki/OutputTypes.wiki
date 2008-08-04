@@ -25,7 +25,7 @@ Output is formatted and printed to a filename of your choosing.  Default filenam
 == [[Email]] ==
 Sends formated output straight to an email address, no default settings so the user must set these themselves.
 
-== [[Microsoft SQL Server]] ==
+== [[MSSQL]] ==
 Sends logs and errors to generic tables on a server of the user's preference.  Record output is handled a bit differently, see the article for details.
 
 = Command Line =
@@ -36,4 +36,4 @@ Example:
 -remail -efile -lconsole
 Will set record, error, and log output to email, file, and console, respectively.
 
-Please see the [[command line options]] article for full detail of all options.  
+Please see the [[command_line_options]] article for full detail of all options.  
