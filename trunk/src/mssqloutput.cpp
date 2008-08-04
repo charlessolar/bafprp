@@ -37,10 +37,10 @@ namespace bafprp
 	{
 		LOG_TRACE( "MSSQL::error" );
 		checkDB( _errorProperties, true );
-		if( !_dbConnected ) 
+		if( !_dbConnected || _table == "" ) 
 		{
 			Output::setOutputError( "file" );
-			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to file output" );
+			LOG_ERROR( "Failed to connect to the database, or you failed to supply a table, check your properties, falling back to file output" );
 
 			// Play nice
 			Output::outputError( record, error );
@@ -64,6 +64,8 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
+			printf( "%s\n", os.str().c_str() );
+			extractError( "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
 			Output::setOutputError( "file" );
 			LOG_ERROR( "Failed to insert error message into database, falling back to file output" );
 
@@ -80,10 +82,10 @@ namespace bafprp
 	{
 		checkDB( _logProperties, true );
 
-		if( !_dbConnected ) 
+		if( !_dbConnected || _table == "" ) 
 		{
 			Output::setOutputLog( "file" );
-			LOG_ERROR( "Failed to connect to the database, check your properties\n" );
+			LOG_ERROR( "Failed to connect to the database, or you failed to supply a table, check your properties\n" );
 
 			// Play nice
 			Output::outputLog( level, log );
@@ -98,6 +100,8 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
+			printf( "%s\n", os.str().c_str() );
+			extractError( "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
 			Output::setOutputLog( "file" );
 			LOG_ERROR( "Failed to insert log into database, falling back to file output" );
 
@@ -114,10 +118,10 @@ namespace bafprp
 		LOG_TRACE( "MSSQL::record" );
 		checkDB( _recordProperties, true );
 		
-		if( !_dbConnected ) 
+		if( !_dbConnected || _table == "" ) 
 		{
 			Output::setOutputRecord( "file" );
-			LOG_ERROR( "Failed to connect to the database, check your properties, falling back to file output" );
+			LOG_ERROR( "Failed to connect to the database, or you failed to supply a table, check your properties, falling back to file output" );
 
 			// Play nice
 			Output::outputRecord( record );
@@ -250,7 +254,6 @@ namespace bafprp
 		std::string port;
 		std::string user;
 		std::string password;
-		std::string table;
 
 		property_map::iterator itr = props.find( "database" );
 		if( itr != props.end() )
@@ -278,9 +281,9 @@ namespace bafprp
 
 		itr = props.find( "table" );
 		if( itr != props.end() )
-			table = itr->second;
+			_table = itr->second;
 		else
-			table = "";
+			_table = "";
 
 
 		// Check database connection
@@ -381,8 +384,13 @@ namespace bafprp
 			return;
 		}
 
+#ifdef _WIN32
 		std::string dsn = "DRIVER=sql server;DATABASE=" + database + ";SERVER=" + server + ";Uid=" + user + ";Pwd=" + password + ";";
-
+#else
+		// We assume SQL Server 2005
+		std::string dsn = "DRIVER=FreeTDS;SERVER=" + server + ";Uid=" + user + ";Pwd=" + password + ";DATABASE=" + database + ";TDS_VERSION=8.0;Port=1433;";
+#endif
+	
 		ret = SQLDriverConnectA( _dbc, NULL, (SQLCHAR*)dsn.c_str(), SQL_NTS, OutConnStr, sizeof( OutConnStr ), &OutConnStrLen, SQL_DRIVER_COMPLETE );
 
 		if( SQL_SUCCEEDED( ret ) )
