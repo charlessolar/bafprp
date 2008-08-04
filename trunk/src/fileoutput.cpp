@@ -55,8 +55,8 @@ namespace bafprp
 		checkFile( _errorProperties, true );
 		if( !_file.is_open() )
 		{
-			LOG_ERROR( "No valid file for error output, falling back to file output" );
-			Output::setOutputError( "file" );
+			LOG_ERROR( "No valid file for error output, falling back to console output" );
+			Output::setOutputError( "console" );
 
 			// be nice
 			Output::outputError( record, error );
@@ -141,8 +141,8 @@ namespace bafprp
 		checkFile( _logProperties, true );
 		if( !_file.is_open() )
 		{
-			Output::setOutputLog( "file" );
-			LOG_ERROR( "No valid file for log output, falling back to file output" );
+			Output::setOutputLog( "console" );
+			LOG_ERROR( "No valid file for log output, falling back to console output" );
 
 			// be nice
 			Output::outputLog( level, log );
@@ -160,8 +160,8 @@ namespace bafprp
 		checkFile( _recordProperties, true );
 		if( !_file.is_open() )
 		{
-			LOG_ERROR( "No valid file for record output, falling back to file output" );
-			Output::setOutputRecord( "file" );
+			LOG_ERROR( "No valid file for record output, falling back to console output" );
+			Output::setOutputRecord( "console" );
 
 			// be nice
 			Output::outputRecord( record );

@@ -78,7 +78,6 @@ int main( int argc, char* argv[] )
 				case 'V':
 					while( argv[ii][i] == 'v' || argv[ii][i] == 'V' )
 						Output::setLogLevel( i++ );
-					printf( "Log level set to %d\n\n", i-1 );
 					break;
 				case 'd':
 				case 'D':
