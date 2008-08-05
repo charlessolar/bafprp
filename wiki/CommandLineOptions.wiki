@@ -14,7 +14,7 @@ bafprp -rfile -lconsole
 
 == Supplying Properties ==
 
-Some more complicated output forms require certain properties to be supplied.  To see what options are available for each for please refer to the [[OutputForms]] page.  To set these properties you use the following syntax
+Some more complicated output forms require certain properties to be supplied.  To see what options are available for each for please refer to the [[OutputTypes]] page.  To set these properties you use the following syntax
 
 {{{
 -p(type)(property):(value)
