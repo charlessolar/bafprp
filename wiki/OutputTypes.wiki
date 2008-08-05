@@ -2,6 +2,8 @@
 
 = Output Types =
 
+There are 3 different types of output.  Each can be assigned to a different output form for mixed results.
+
 == Records ==
 A record is a single instance in a baf file.  It can contain many different things, but most of the time it will be a simple call record.
 
