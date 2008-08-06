@@ -17,6 +17,8 @@ Will send data to a sql server specified by the user.
 
 *CLARIFICATION* This does not mean that using ms sql for one output type will override the output forms of the other two types.  Only that if you are output both logs and records to ms sql, the first database it connects to will be the one it uses for both types of output.
 
+In linux you must install unixODBC and FreeTDS.  You must then edit your odbcinst.ini to include freetds as a driver.  After that bafprp will handle the connection details.
+
 == Tables ==
 
 === Log Table ===
