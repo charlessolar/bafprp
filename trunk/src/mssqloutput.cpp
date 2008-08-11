@@ -125,34 +125,40 @@ namespace bafprp
 			return;
 		}
 
-		// Query table to find out what the column names are
 		SQLHSTMT stmt;
-		SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
-
-		std::ostringstream os;
-
-		os << "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
-		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
+		
+		// We do not need to query the table info each time, cache the result for five minutes
+		if( ( time( NULL ) - _cacheAge ) > 300000 )
 		{
-			Output::setOutputError( "file" );
-			LOG_ERROR( "Failed to query columns in database, falling back to file output" );
+			_cacheAge = time( NULL );
+
+			// Query table to find out what the column names are
+			
+			SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
+
+			std::ostringstream os;
+
+			os << "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
+			if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
+			{
+				Output::setOutputError( "file" );
+				LOG_ERROR( "Failed to query columns in database, falling back to file output" );
+				SQLFreeHandle( SQL_HANDLE_STMT, stmt );
+				return;
+			}
+
+			SQLCHAR columnName[50];
+			SQLCHAR columnType[50];
+			SQLINTEGER cbData;
+			while( SQLFetch(stmt) == SQL_SUCCESS )
+			{
+			  SQLGetData( stmt, 1, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
+			  SQLGetData( stmt, 2, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
+			  _columnCache.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
+			}
+
 			SQLFreeHandle( SQL_HANDLE_STMT, stmt );
-			return;
 		}
-
-		std::map<std::string,std::string> columns;
-
-		SQLCHAR columnName[50];
-		SQLCHAR columnType[50];
-		SQLINTEGER cbData;
-		while( SQLFetch(stmt) == SQL_SUCCESS )
-		{
-		  SQLGetData( stmt, 1, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
-		  SQLGetData( stmt, 2, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
-		  columns.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
-		}
-
-		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 
 		// Construct an insert query from the record values corresponding to those names
 		// Two part query, see below
@@ -162,7 +168,7 @@ namespace bafprp
 		query1 << "INSERT INTO " << _table << " ( ";
 		query2 << "VALUES ( ";
 		
-		for( std::map<std::string,std::string>::iterator itr = columns.begin(); itr != columns.end(); itr++ )
+		for( std::map<std::string,std::string>::iterator itr = _columnCache.begin(); itr != _columnCache.end(); itr++ )
 		{
 			if( itr->first == "id" ) continue;  // Skip 'id' field
 
