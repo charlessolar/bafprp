@@ -53,6 +53,9 @@ namespace bafprp
 
 		std::string _table;
 
+		std::map<std::string,std::string> _columnCache;
+		time_t _cacheAge;
+
 		// private non-property variables
 		SQLHENV _env;
 		SQLHDBC _dbc;
