@@ -71,7 +71,7 @@ namespace bafprp
 		switch( field->getInt() )
 		{
 		case 47:
-			ret = "Default AIN";
+			ret = "Record 220: Default AIN";
 			break;
 		case 119:
 			ret = "Record 220: Incoming CDR";
