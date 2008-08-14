@@ -114,6 +114,13 @@ namespace bafprp
 
 		m.setmessage( os.str() );
 		m.send();
+		if( m.response().find( "OK" ) == std::string::npos )
+		{
+			LOG_ERROR( "Could not send email error, falling back to file output" );
+			Output::setOutputError( "file" );
+
+			Output::error( record, error );
+		}
 
 		LOG_TRACE( "/Email::error" );
 	}
@@ -154,6 +161,19 @@ namespace bafprp
 			m.setmessage( message.c_str() );
 			
 			m.send();
+			if( m.response().find( "OK" ) == std::string::npos )
+			{
+				LOG_ERROR( "Could not send email log, falling back to file output" );
+				Output::setOutputLog( "file" );
+
+				for( std::vector<std::string>::iterator itr = _cachedLogs.begin(); itr != _cachedLogs.end(); itr++ )
+				{
+					// Can't really pick out the real log level at this point, oh well.
+					Output::log( LOG_LEVEL_WARN, *itr );
+				}
+				// Current log has not bee recorded yet.
+				Output::log( level, log );
+			}
 			_cachedLogs.clear();
 			cache = 0;
 
@@ -202,6 +222,19 @@ namespace bafprp
 			m.setmessage( message.c_str() );
 			
 			m.send();
+			if( m.response().find( "OK" ) == std::string::npos )
+			{
+				LOG_ERROR( "Could not send email log, falling back to file output" );
+				Output::setOutputLog( "file" );
+
+				for( std::vector<std::string>::iterator itr = _cachedRecord.begin(); itr != _cachedRecords.end(); itr++ )
+				{
+					// Can't really pick out the real log level at this point, oh well.
+					Output::record( *itr );
+				}
+				// Current log has not bee recorded yet.
+				Output::record( record );
+			}
 			_cachedRecords.clear();
 			cache = 0;
 
