@@ -62,6 +62,20 @@ namespace bafprp
 		return _converted;
 	}
 
+	int ICINCIndicator::getInt() const
+	{
+		LOG_TRACE( "ICINCIndicator::getInt" );
+		LOG_TRACE( "/ICINCIndicator::getInt" );
+		return atoi( _return.substr( 0,4 ).c_str() );
+	}
+
+	long ICINCIndicator::getLong() const
+	{
+		LOG_TRACE( "ICINCIndicator::getLong" );
+		LOG_TRACE( "/ICINCIndicator::getLong" );
+		return atol( _return.substr( 0, 4 ).c_str() );
+	}
+
 	std::string ICINCIndicator::getString() const
 	{
 		LOG_TRACE( "ICINCIndicator::getString" );

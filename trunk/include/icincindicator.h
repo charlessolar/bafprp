@@ -29,6 +29,8 @@ namespace bafprp
 	{
 		friend class ICINCIndicatorFieldMaker;
 	public:
+		int getInt() const;
+		long getLong() const;
 		std::string getString() const;
 
 		bool convert ( const BYTE* data );
