@@ -141,7 +141,7 @@ namespace bafprp
 			os << "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.Columns WHERE TABLE_NAME = '" << _table << "'";
 			if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 			{
-				Output::setOutputError( "file" );
+				Output::setOutputRecord( "file" );
 				LOG_ERROR( "Failed to query columns in database, falling back to file output" );
 				SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 				return;

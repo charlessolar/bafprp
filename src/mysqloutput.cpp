@@ -96,7 +96,7 @@ namespace bafprp
 
 		std::ostringstream os;
 		os << "INSERT INTO " << _table << " ( ts, loglevel, msg ) VALUES ( '" << NowTime() << "', '" << level << "', '" << sanitize( log ) << "' )";
-
+		printf( "%s\n", os.str().c_str() );
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
 			printf( "%s\n", os.str().c_str() );
@@ -138,10 +138,10 @@ namespace bafprp
 
 			std::ostringstream os;
 
-			os << "DESCRIBE '" << _table << "'";
+			os << "DESCRIBE " << _table;
 			if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 			{
-				Output::setOutputError( "file" );
+				Output::setOutputRecord( "file" );
 				LOG_ERROR( "Failed to query columns in database, falling back to file output" );
 				SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 				return;
@@ -154,6 +154,8 @@ namespace bafprp
 			{
 			  SQLGetData( stmt, 1, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
 			  SQLGetData( stmt, 2, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
+			  char* space = strchr( (char*)columnType, ' ' );
+			  if( space ) space = '\0'; // trim off atributes
 			  _columnCache.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
 			  printf( "NAME: %s TYPE: %s\n", columnName, columnType );
 			}
@@ -350,7 +352,7 @@ namespace bafprp
 		std::ostringstream os;
 #ifdef _WIN32
 		//std::string dsn = "DRIVER=myodbc5;DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";";
-		std::string dsn = "Driver={MySQL ODBC 3.51 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
+		std::string dsn = "Driver={MySQL ODBC 5.1 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
 		//std::string dsn = "DRIVER={MySQL ODBC 3.51 Driver};DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";OPTIONS=3;";
 		//os << "DRIVER={MySQL ODBC 3.51 Driver};SERVER=" << _server << ";UID=" << _user << ";PWD=" << _password << ";DATABASE=" << _database << ";" << "OPTION=3;";// << (1 + 2 + 8 + 32 + 2048 + 163841);
 		//os << "DSN=noequalg;";
