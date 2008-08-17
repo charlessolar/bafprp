@@ -184,7 +184,7 @@ namespace bafprp
 		struct tm* mytm;
 		ltime = time( NULL );  
 		mytm = localtime( &ltime );  
-		strftime( timestamp, sizeof( timestamp ), "%m/%d/%y %H:%M:%S", mytm );
+		strftime( timestamp, sizeof( timestamp ), "%Y-%m-%d %H:%M:%S", mytm );
 		return std::string( timestamp );  
 	}  
 

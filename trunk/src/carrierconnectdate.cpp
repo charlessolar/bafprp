@@ -83,7 +83,7 @@ namespace bafprp
 			year[3] = _return[0];
 
 			std::ostringstream os;
-			os << _return[1] << _return[2] << "/" << _return[3] << _return[4] << "/" << year;
+			os << year << "-" << _return[1] << _return[2] << "-" << _return[3] << _return[4];;
 			// In case you live in europe
 			// os << _return[3] << _return[4] << "/" << _return[1] << _return[2] << "/" << year;
 
