@@ -94,6 +94,7 @@
 			OutputDirectory="$(SolutionDir)../bin/$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)../build/$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -118,7 +119,7 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -539,6 +540,10 @@
 				</File>
 				<File
 					RelativePath="..\src\mssqloutput.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\mysqloutput.cpp"
 					>
 				</File>
 				<File
@@ -1037,6 +1042,10 @@
 				</File>
 				<File
 					RelativePath="..\include\mssqloutput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\mysqloutput.h"
 					>
 				</File>
 				<File
