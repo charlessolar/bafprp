@@ -351,16 +351,11 @@ namespace bafprp
 
 		std::ostringstream os;
 #ifdef _WIN32
-		//std::string dsn = "DRIVER=myodbc5;DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";";
-		std::string dsn = "Driver={MySQL ODBC 5.1 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
-		//std::string dsn = "DRIVER={MySQL ODBC 3.51 Driver};DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";OPTIONS=3;";
-		//os << "DRIVER={MySQL ODBC 3.51 Driver};SERVER=" << _server << ";UID=" << _user << ";PWD=" << _password << ";DATABASE=" << _database << ";" << "OPTION=3;";// << (1 + 2 + 8 + 32 + 2048 + 163841);
-		//os << "DSN=noequalg;";
+		std::string dsn = "Driver={MySQL ODBC 3.51 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
 #else
 		std::string dsn = "DRIVER=myodbc3;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";";
 #endif
-		//ret = SQLConnectA( _dbc, (SQLCHAR*)"DSN=noequalg;", NULL, (SQLCHAR*)"noequalg_tester", 0, (SQLCHAR*)"pfby", 0 );
-	
+
 		ret = SQLDriverConnectA( _dbc, NULL, (SQLCHAR*)dsn.c_str(), SQL_NTS, OutConnStr, sizeof( OutConnStr ), &OutConnStrLen, SQL_DRIVER_COMPLETE );
 
 		if( SQL_SUCCEEDED( ret ) )
