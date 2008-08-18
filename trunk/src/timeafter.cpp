@@ -75,7 +75,7 @@ namespace bafprp
 		else
 		{
 			std::ostringstream os;
-			os << _return[0] << _return[1] << ":" << _return[2] << _return[3] << ":" << _return[4] << _return[5] << "." << _return[6];
+			os << _return[0] << _return[1] << ":" << _return[2] << _return[3] << ":" << _return[4] << _return[5];
 			ret = os.str();
 		}
 
