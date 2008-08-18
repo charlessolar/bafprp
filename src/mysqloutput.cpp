@@ -25,7 +25,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <sql.h>
 #include <sqlext.h>
 
-#include "MYSQLoutput.h"
+#include "mysqloutput.h"
 #include "baffile.h"
 
 
@@ -154,8 +154,8 @@ namespace bafprp
 			{
 			  SQLGetData( stmt, 1, SQL_C_CHAR, columnName, sizeof( columnName ), &cbData );
 			  SQLGetData( stmt, 2, SQL_C_CHAR, columnType, sizeof( columnType ), &cbData );
-			  char* space = strchr( (char*)columnType, ' ' );
-			  if( space ) space = '\0'; // trim off atributes
+			  char* space = strchr( (char*)columnType, '(' );
+			  if( space ) *space = '\0'; // trim off atributes
 			  _columnCache.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
 			  printf( "NAME: %s TYPE: %s\n", columnName, columnType );
 			}

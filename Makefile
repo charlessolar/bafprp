@@ -87,6 +87,7 @@ lrn.cpp \
 mailer.cpp \
 modulenumber.cpp \
 mssqloutput.cpp \
+mysqloutput.cpp \
 networkinterworking.cpp \
 nooutput.cpp \
 number.cpp \
