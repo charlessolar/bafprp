@@ -73,7 +73,7 @@ namespace bafprp
 			ret = 0;
 		}
 		else
-			ret = atoi( _return.c_str() );
+			ret = atoi( _return.substr(1).c_str() );
 
 		LOG_TRACE( "/CountryCode::getInt" );
 		return ret;
@@ -90,7 +90,7 @@ namespace bafprp
 			ret = 0;
 		}
 		else
-			ret = atol( _return.c_str() );
+			ret = atol( _return.substr(1).c_str() );
 
 		LOG_TRACE( "/CountryCode::getLong" );
 		return ret;
