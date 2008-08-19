@@ -96,7 +96,6 @@ namespace bafprp
 
 		std::ostringstream os;
 		os << "INSERT INTO " << _table << " ( ts, loglevel, msg ) VALUES ( '" << NowTime() << "', '" << level << "', '" << sanitize( log ) << "' )";
-		printf( "%s\n", os.str().c_str() );
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
 			printf( "%s\n", os.str().c_str() );
@@ -157,7 +156,6 @@ namespace bafprp
 			  char* space = strchr( (char*)columnType, '(' );
 			  if( space ) *space = '\0'; // trim off atributes
 			  _columnCache.insert( std::make_pair( (char*)columnName, (char*)columnType ) );
-			  printf( "NAME: %s TYPE: %s\n", columnName, columnType );
 			}
 
 			SQLFreeHandle( SQL_HANDLE_STMT, stmt );
@@ -351,7 +349,7 @@ namespace bafprp
 
 		std::ostringstream os;
 #ifdef _WIN32
-		std::string dsn = "Driver={MySQL ODBC 3.51 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
+		std::string dsn = "Driver={MySQL ODBC 5.1 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
 #else
 		std::string dsn = "DRIVER=myodbc3;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";";
 #endif
