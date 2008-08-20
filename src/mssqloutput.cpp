@@ -320,7 +320,7 @@ namespace bafprp
 		// not corrupt the current database.
 		if( _dbConnected ) disconnect();
 
-		if( _dsn == "" && _database == "" || _server == "" || _user == "" || _password == "" )
+		if( _dsn == "" && ( _database == "" || _server == "" || _user == "" || _password == "" ) )
 		{
 			printf( "Not enough information to connect to sql database\n" );
 			return;
