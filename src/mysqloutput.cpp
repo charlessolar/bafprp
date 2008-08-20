@@ -263,6 +263,12 @@ namespace bafprp
 
 		if( _dbConnected ) return;
 
+		itr = props.find( "dsn" );
+		if( itr != props.end() )
+			_dsn = itr->second;
+		else
+			_dsn = "";
+
 		itr = props.find( "database" );
 		if( itr != props.end() )
 			_database = itr->second;
@@ -315,7 +321,7 @@ namespace bafprp
 		// not corrupt the current database.
 		if( _dbConnected ) disconnect();
 
-		if( _database == "" || _server == "" || _user == "" || _password == "" )
+		if( _dsn == "" && _database == "" || _server == "" || _user == "" || _password == "" )
 		{
 			printf( "Not enough information to connect to sql database\n" );
 			return;
@@ -348,11 +354,17 @@ namespace bafprp
 		}
 
 		std::ostringstream os;
-#ifdef _WIN32
-		std::string dsn = "Driver={MySQL ODBC 5.1 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
-#else
-		std::string dsn = "DRIVER=myodbc3;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";";
-#endif
+		std::string dsn;
+		if( _dsn != "" )
+			dsn = "DSN=" + _dsn;
+		else
+		{
+	#ifdef _WIN32
+			dsn = "Driver={MySQL ODBC 5.1 Driver};Server=" + _server + ";Database=" + _database + ";User=" + _user + "; Password=" + _password + ";Option=3;";
+	#else
+			dsn = "DRIVER=myodbc3;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";";
+	#endif
+		}
 
 		ret = SQLDriverConnectA( _dbc, NULL, (SQLCHAR*)dsn.c_str(), SQL_NTS, OutConnStr, sizeof( OutConnStr ), &OutConnStrLen, SQL_DRIVER_COMPLETE );
 

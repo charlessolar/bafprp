@@ -262,6 +262,12 @@ namespace bafprp
 
 		if( _dbConnected ) return;
 
+		itr = props.find( "dsn" );
+		if( itr != props.end() )
+			_dsn = itr->second;
+		else
+			_dsn = "";
+
 		itr = props.find( "database" );
 		if( itr != props.end() )
 			_database = itr->second;
@@ -314,7 +320,7 @@ namespace bafprp
 		// not corrupt the current database.
 		if( _dbConnected ) disconnect();
 
-		if( _database == "" || _server == "" || _user == "" || _password == "" )
+		if( _dsn == "" && _database == "" || _server == "" || _user == "" || _password == "" )
 		{
 			printf( "Not enough information to connect to sql database\n" );
 			return;
@@ -346,13 +352,19 @@ namespace bafprp
 			return;
 		}
 
-#ifdef _WIN32
-		std::string dsn = "DRIVER=sql server;DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";";
-#else
-		// We assume SQL Server 2005
-		std::string dsn = "DRIVER=FreeTDS;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";TDS_VERSION=8.0;Port=1433;";
-#endif
-	
+		std::string dsn;
+		if( _dsn != "" )
+			dsn = "DSN=" + _dsn;
+		else
+		{
+	#ifdef _WIN32
+			dsn = "DRIVER=sql server;DATABASE=" + _database + ";SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";";
+	#else
+			// We assume SQL Server 2005
+			dsn = "DRIVER=FreeTDS;SERVER=" + _server + ";Uid=" + _user + ";Pwd=" + _password + ";DATABASE=" + _database + ";TDS_VERSION=8.0;Port=1433;";
+	#endif
+		}
+
 		ret = SQLDriverConnectA( _dbc, NULL, (SQLCHAR*)dsn.c_str(), SQL_NTS, OutConnStr, sizeof( OutConnStr ), &OutConnStrLen, SQL_DRIVER_COMPLETE );
 
 		if( SQL_SUCCEEDED( ret ) )
