@@ -130,6 +130,7 @@ namespace bafprp
 			itr->second = value;
 		else
 			_errorProperties.insert( std::make_pair( name, value ) );
+		printf( "Set error property %s to %s\n", name.c_str(), value.c_str() );
 	}
 
 	void Output::setRecordProperty( const std::string& name, const std::string& value )
@@ -139,6 +140,7 @@ namespace bafprp
 			itr->second = value;
 		else
 			_recordProperties.insert( std::make_pair( name, value ) );
+		printf( "Set record property %s to %s\n", name.c_str(), value.c_str() );
 	}
 
 	void Output::setLogProperty( const std::string& name, const std::string& value )
@@ -148,13 +150,17 @@ namespace bafprp
 			itr->second = value;
 		else
 			_logProperties.insert( std::make_pair( name, value ) );
+		printf( "Set log property %s to %s\n", name.c_str(), value.c_str() );
 	}
 
 	void Output::setOutputRecord( const std::string& name )
 	{
 		output_map::iterator itr = getReg().find( name );
 		if( itr != getReg().end() )
+		{
 			_outputRecord = name;
+			printf( "Set record output to %s\n", name.c_str() );
+		}
 		else
 			printf( "Output type %s does not exist\n", name.c_str() );
 	}
@@ -163,7 +169,10 @@ namespace bafprp
 	{
 		output_map::iterator itr = getReg().find( name );
 		if( itr != getReg().end() )
+		{
 			_outputError = name;
+			printf( "Set error output to %s\n", name.c_str() );
+		}
 		else
 			printf( "Output type %s does not exist\n", name.c_str() );
 	}
@@ -172,7 +181,10 @@ namespace bafprp
 	{
 		output_map::iterator itr = getReg().find( name );
 		if( itr != getReg().end() )
+		{
 			_outputLog = name;
+			printf( "Set log output to %s\n", name.c_str() );
+		}		
 		else
 			printf( "Output type %s does not exist\n", name.c_str() );
 	}
