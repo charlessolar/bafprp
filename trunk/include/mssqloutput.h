@@ -46,6 +46,7 @@ namespace bafprp
 		void extractError( char* fn, SQLHANDLE handle, SQLSMALLINT type );
 
 		// property variables
+		std::string _dsn;
 		std::string _database;
 		std::string _server;
 		std::string _user;
