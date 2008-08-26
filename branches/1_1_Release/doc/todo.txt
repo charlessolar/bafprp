@@ -1,0 +1,11 @@
+1. Make generic type classes for fields 
+			There are to many different types of header files that do exactly the same thing
+			Make a system where we keep 4 or 5 generic field types like 'date', 'time', 'integer', etc
+			And allow individual fields to customize it for their information, name, type, string display, etc.
+			
+2. Once this is done, fix getField to reference the field type name, not the type description.
+			Who the hell thought of referencing the type description anyway, geese
+			
+3. Might be interesting to allow multiple types of output for one log, record, or error message
+
+4. MySQL OUTPUT!

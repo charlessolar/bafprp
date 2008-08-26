@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bafview", "bafview.vcproj", "{F4777D22-B555-4DF5-BA56-16CF9DA635AB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bafprp", "bafprp.vcproj", "{1F3CAD36-95CD-4EDF-B1DD-A4374B9936F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D818D26E-C597-4733-9A37-A64EA29B8D82}"
+	ProjectSection(SolutionItems) = preProject
+		changes.txt = changes.txt
+		..\doc\gpl.txt = ..\doc\gpl.txt
+		..\doc\todo.txt = ..\doc\todo.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4777D22-B555-4DF5-BA56-16CF9DA635AB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F4777D22-B555-4DF5-BA56-16CF9DA635AB}.Debug|Win32.Build.0 = Debug|Win32
+		{F4777D22-B555-4DF5-BA56-16CF9DA635AB}.Release|Win32.ActiveCfg = Release|Win32
+		{F4777D22-B555-4DF5-BA56-16CF9DA635AB}.Release|Win32.Build.0 = Release|Win32
+		{1F3CAD36-95CD-4EDF-B1DD-A4374B9936F4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1F3CAD36-95CD-4EDF-B1DD-A4374B9936F4}.Debug|Win32.Build.0 = Debug|Win32
+		{1F3CAD36-95CD-4EDF-B1DD-A4374B9936F4}.Release|Win32.ActiveCfg = Release|Win32
+		{1F3CAD36-95CD-4EDF-B1DD-A4374B9936F4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		CodeStyleEnforcer_RulesLocation = 0
+		CodeStyleEnforcer_Active = -1
+		VisualSVNWorkingCopyRoot = ..
+	EndGlobalSection
+EndGlobal
