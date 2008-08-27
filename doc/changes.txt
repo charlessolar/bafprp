@@ -1,0 +1,8 @@
+8/20/08
+Rewriting field design
+
+8/17/08
+MySQL output, DSN connections
+
+8/11/08
+Added Simple cacheing to store sql table's column names

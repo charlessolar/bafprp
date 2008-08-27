@@ -45,7 +45,7 @@ namespace bafprp
 	{
 		LOG_TRACE( "IBafRecord::~IBafRecord" );
 		
-		for( field_map::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+		for( field_map::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 		{
 			if( itr->second )
 				delete itr->second;
@@ -142,7 +142,7 @@ namespace bafprp
 		return NULL;
 	}
 
-	const IField* IBafRecord::getNextField() const
+	const IField* IBafRecord::getNextField( DWORD last ) const
 	{
 		LOG_TRACE( "IBafRecord::getNextField" );
 		if( _fields.empty() ) return NULL;
@@ -151,7 +151,7 @@ namespace bafprp
 		{
 			if( !itr->second ) // If the field is null, we create it
 			{
-				itr->second = FieldMaker::newField( name );
+				itr->second = FieldMaker::newField( itr->first );
 				
 				if( !itr->second )
 				{
