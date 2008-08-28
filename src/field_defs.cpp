@@ -184,7 +184,7 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "calledpartyanswerindicator", "04:NCD, CAS, Blocked After Answer" );
 		FieldMaker::setFieldProperty( "calledpartyanswerindicator", "05:NCD, CAS, Blocked Before Answer" );
 		FieldMaker::setFieldProperty( "calledpartyanswerindicator", "07:Service Features Not Provided, Call Answered" );
-		FieldMaker::setFieldProperty( "calledpartyanswerindicator", "08:Serivce Features Not Provided, Call Unanswered" );
+		FieldMaker::setFieldProperty( "calledpartyanswerindicator", "08:Service Features Not Provided, Call Unanswered" );
 		// Table 10
 		makeField( "servicetrafficind", "switch", "1", "Service-Observed/Traffic-Sampled Indicator" );
 		FieldMaker::setFieldProperty( "servicetrafficind", "switch:0" );

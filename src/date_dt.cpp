@@ -87,7 +87,7 @@ namespace bafprp
 			if( itr != _properties.end() && itr->second.find( "Y" ) != std::string::npos && itr->second.find( "M" ) != std::string::npos && itr->second.find( "D" ) != std::string::npos )
 			{
 				ret = itr->second;
-				ret.replace( ret.find("Y"), strlen( year ), year );
+				ret.replace( ret.find("Y"), 1, year );
 				ret.replace( ret.find("M"), 1, _return.substr(1,2) );
 				ret.replace( ret.find("D"), 1, _return.substr(3,2) );
 			}
