@@ -37,6 +37,8 @@ namespace bafprp
 
 		CRC32::Encode( _data, _length, _crc );
 
+		getNextItr = _fields.begin();
+
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
 	}
 
@@ -123,7 +125,7 @@ namespace bafprp
 	}
 
 	
-	IField* IBafRecord::getField( const std::string& name, IField*& field ) const
+	IField* IBafRecord::getField( const std::string& name ) const
 	{
 		LOG_TRACE( "IBafRecord::getField" );
 		if( _fields.empty() ) 
@@ -153,11 +155,30 @@ namespace bafprp
 		return ret;
 	}
 
-	IField* IBafRecord::getNextField( DWORD last ) const
+	IField* IBafRecord::getNextField( bool reset ) const
 	{
 		LOG_TRACE( "IBafRecord::getNextField" );
+		if( reset ) getNextItr = _fields.begin();
 		if( _fields.empty() ) return NULL;
+	
+		IField* ret = NULL;
 
+		if( getNextItr != _fields.end() ) 
+		{
+			ret = FieldMaker::newField( name );
+			if( !ret->convert( _data + itr->second ) )
+			{
+				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
+				return NULL;
+			}
+		}
+		else
+		{ 
+			LOG_WARN( "Did not find field named " << name << " in record type " << getType() );
+		}
+		getNextItr++;
+
+		/*
 		for( field_map::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
 		{
 			if( !itr->second ) // If the field is null, we create it
@@ -198,9 +219,9 @@ namespace bafprp
 				delete itr->second;
 			itr->second = NULL;
 		}
-
+		*/
 		LOG_TRACE( "/IBafRecord::getNextField" );
-		return NULL;
+		return ret;
 	}
 
 	void IBafRecord::addField( const std::string& name, DWORD offset )

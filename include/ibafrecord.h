@@ -36,7 +36,7 @@ namespace bafprp
 		bool hasField( const std::string& name ) const;
 
 		IField* getField( const std::string& name ) const;
-		IField* getNextField( DWORD last = 0 ) const;
+		IField* getNextField( bool reset = false ) const;
 
 		virtual std::string getType() const = 0;
 
@@ -66,6 +66,7 @@ namespace bafprp
 		std::string _filename;
 		long _filePos;
 		const BYTE* _data;  // This one needs to stay constant since we have to delete it later
+		field_map::iterator getNextItr;
 	};
 
 	class RecordMaker
