@@ -34,8 +34,9 @@ namespace bafprp
 		friend class RecordMaker;
 	public:
 		bool hasField( const std::string& name ) const;
-		const IField* getField( const std::string& name ) const;
-		const IField* getNextField( DWORD last = 0 ) const;
+
+		IField* getField( const std::string& name ) const;
+		IField* getNextField( DWORD last = 0 ) const;
 
 		virtual std::string getType() const = 0;
 
@@ -51,16 +52,14 @@ namespace bafprp
 	protected:
 		IBafRecord( const BYTE* data, int length, const std::string& filename, long filePos );
 
-		void addField( const std::string& name );
+		void addField( const std::string& name, DWORD offset );
 		void decodeModules();
 
 	
-		typedef std::map<std::string, IField*> field_map;  
+		typedef std::map<std::string, DWORD> field_map;  
 		field_map _fields;
 
 		int _length;
-		
-		const BYTE* _fieldData;  // The data pointer we are allowed to modify
 	private:
 		bool _modules;
 		DWORD _crc;

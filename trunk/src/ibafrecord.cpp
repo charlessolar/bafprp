@@ -30,12 +30,12 @@ namespace bafprp
 	{
 		LOG_TRACE( "IBafRecord::IBafRecord" );
 		
-		_data = _fieldData = data;
+		_data = data;
 
 		// Module flag is 4 for some reason, and no its not the number of modules
 		_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
 
-		CRC32::Encode( _fieldData, _length, _crc );
+		CRC32::Encode( _data, _length, _crc );
 
 		LOG_TRACE( "/IBafRecord::IBafRecord" );
 	}
@@ -122,8 +122,8 @@ namespace bafprp
 		return false;
 	}
 
-
-	const IField* IBafRecord::getField( const std::string& name ) const
+	
+	IField* IBafRecord::getField( const std::string& name, IField*& field ) const
 	{
 		LOG_TRACE( "IBafRecord::getField" );
 		if( _fields.empty() ) 
@@ -132,17 +132,28 @@ namespace bafprp
 			return NULL;
 		}
 
-		field_map::const_iterator itr = _fields.find( name );
-		if( itr->second != NULL ) return itr->second;
-		// create the field
+		IField* ret = NULL;
 
+		field_map::const_iterator itr = _fields.find( name );
+		if( itr != _fields.end() ) 
+		{
+			ret = FieldMaker::newField( name );
+			if( !ret->convert( _data + itr->second ) )
+			{
+				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
+				return NULL;
+			}
+		}
+		else
+		{ 
+			LOG_WARN( "Did not find field named " << name << " in record type " << getType() );
+		}
 		
-		LOG_WARN( "Did not find field named: " << name );
 		LOG_TRACE( "/IBafRecord::getField" );
-		return NULL;
+		return ret;
 	}
 
-	const IField* IBafRecord::getNextField( DWORD last ) const
+	IField* IBafRecord::getNextField( DWORD last ) const
 	{
 		LOG_TRACE( "IBafRecord::getNextField" );
 		if( _fields.empty() ) return NULL;
@@ -192,12 +203,12 @@ namespace bafprp
 		return NULL;
 	}
 
-	void IBafRecord::addField( const std::string& name )
+	void IBafRecord::addField( const std::string& name, DWORD offset )
 	{
 		LOG_TRACE( "IBafRecord::addField" );
 
-		_fields.insert( std::make_pair( name, NULL ) );
-		
+		_fields.insert( std::make_pair( name, offset ) );
+	
 		LOG_TRACE( "/IBafRecord::addField" );
 		return;
 		/*
