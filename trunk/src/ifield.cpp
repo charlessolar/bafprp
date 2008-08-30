@@ -79,11 +79,28 @@ namespace bafprp
 
 	void FieldMaker::setFieldProperty( const std::string& fieldtype, const std::string& prop )
 	{
-		// 'name' property is special, we use it to associate data types and field names
-		if( prop.substr( 0, prop.find( ":" ) ) == "datatype" )
-			_fields.insert( std::make_pair( fieldtype, prop.substr( prop.find( ":" ) + 1 ) ) );
+		// 'ndatatype' property is special, we use it to associate data types and field names
+		std::string object = prop.substr( 0, prop.find( ":" ) );
+		std::string value = prop.substr( prop.find( ":" ) + 1 );
+		if( object == "datatype" )
+		{
+			_fields.insert( std::make_pair( fieldtype, value ) ) );
+
+			//Make sure global type properties are created with new field type
+			props_pair props = _typeProps.equal_range( value );
+			for( property_map::const_iterator prop = props.first; prop != props.second; prop++ )
+			{
+				int pos = prop->second.find( ":" );
+				if( pos == std::string::npos ) 
+				{
+					LOG_WARN( "Tried to set an invalid property: " << prop->second << " for field type: " << type );
+				}
+				else
+					_fieldProps.insert( fieldtype, std::make_pair( prop->second.substr( 0, pos ), prop->second.substr( pos + 1 ) ) );
+			}
+		}
 		else
-			_fieldProps.insert( std::make_pair( fieldtype, prop ) );
+			_fieldProps.insert( std::make_pair( fieldtype, std::make_pair( object, value ) ) );
 	}
 
 	void FieldMaker::setTypeProperty( const std::string& fieldtype, const std::string& prop )
@@ -91,8 +108,9 @@ namespace bafprp
 			_typeProps.insert( std::make_pair( fieldtype, prop ) );
 	}
 
-	void IField::setProperty( const std::string& prop, const std::string& value )
+	void IField::setProperties( props_pair props )
 	{
+		_props = props;
 		if( prop == "id" ) 
 			_id = value;
 		else if( prop == "desc" )
@@ -122,5 +140,22 @@ namespace bafprp
 			else
 			_properties.insert( std::make_pair( prop, value ) );		
 		}
+	}
+
+	int getSize() const
+	{
+		std::find_end( _props.first, _props.end, 
+	}
+
+	std::string getID() const
+	{
+	}
+
+	std::string getDesc() const
+	{
+	}
+
+	bool filter() const
+	{
 	}
 }
