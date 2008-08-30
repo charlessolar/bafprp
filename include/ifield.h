@@ -49,10 +49,10 @@ namespace bafprp
 		// useful for sql output
 		virtual std::string getType() const = 0;
 		
-		int getSize() const { return _size; }
-		std::string getID() const { return _id; }
-		std::string getDesc() const { return _desc; }
-		bool filter() const { return _filter; }
+		int getSize() const;
+		std::string getID() const;
+		std::string getDesc() const;
+		bool filter() const;
 		void setProperty( const std::string& prop, const std::string& value );
 
 		~IField() {}
@@ -75,7 +75,7 @@ namespace bafprp
 		bool _filter;  // Will not return data if true
 		typedef std::multimap<std::string, std::string> property_map;
 		typedef std::pair<property_map::const_iterator, property_map::const_iterator> props_pair;
-		property_map _properties; // For individual field type properties
+		props_pair _properties; // For individual field type properties
 		std::vector<std::string> _replaceProperties; // a list of properties that our field would REPLACE, not multimap
 	private:
 		DWORD _uid;
@@ -87,7 +87,7 @@ namespace bafprp
 		typedef std::map<std::string, FieldMaker*> maker_map;
 		typedef std::multimap<std::string, std::string> property_map;
 		typedef std::pair<property_map::const_iterator, property_map::const_iterator> props_pair;
-		typedef std::map<std::string, std::string> field_map;
+		typedef std::map<std::string, property_map> field_map;
 
 		static maker_map& getReg()
 		{

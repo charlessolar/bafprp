@@ -78,20 +78,20 @@ namespace bafprp
 		length -= 1;
 		// We should now be standing on the structure type field
 
-		IField* structuretype = FieldMaker::newField( "structuretype" );
-		if( !structuretype ) 
+		IField* structurecode = FieldMaker::newField( "structurecode" );
+		if( !structurecode ) 
 		{
-			LOG_ERROR( "Could not retrieve 'structuretype' field" );
+			LOG_ERROR( "Could not retrieve 'structurecode' field" );
 			return NULL;
 		}
-		if( !structuretype->convert( data ) )
+		if( !structurecode->convert( data ) )
 		{
 			LOG_ERROR( "Could not convert structure type" );
-			delete structuretype;
+			delete structurecode;
 			return NULL;
 		}
-		int type = structuretype->getInt();
-		delete structuretype;
+		int type = structurecode->getInt();
+		delete structurecode;
 		
 		
 		maker_map::iterator itr = getReg().find ( type );
@@ -184,9 +184,16 @@ namespace bafprp
 			}
 			_fields.push_back( field );
 			_field_types.push_back( name );
+			// update data position, the mod is to make the size even for nice division
+			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
 		}
-		// update data position, the mod is to make the size even for nice division
-		_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
+		else
+		{
+			// update data position, the mod is to make the size even for nice division
+			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
+			delete field;
+		}
+		
 				
 		if( ( _fieldData - _data ) > _length ) // overstepping our bounds here, not a good place to be
 		{
@@ -209,7 +216,7 @@ namespace bafprp
 		{
 			count++;
 
-			addField( "modulenumber" );
+			addField( "modulecode" );
 		
 			// Will be the mudule number
 			LOG_DEBUG( "Decoding module number " << _fields.back()->getInt() );
@@ -219,14 +226,14 @@ namespace bafprp
 				// All done here
 				return;
 			case 21:
-				addField( "icincindicator" );
+				addField( "icincid" );
 				addField( "carrierconnectdate" );
 				addField( "carrierconnecttime" );
 				addField( "carrierelapsedtime" );
 				addField( "icinccalleventstatus" );
 				addField( "trunkgroupnumber" );
-				addField( "icincroutingindicator" );
-				addField( "dialingpresubindicator" );
+				addField( "icincrouting" );
+				addField( "dialingpresubind" );
 				addField( "anicpnindicator" );
 				break;
 			case 22:
@@ -249,7 +256,7 @@ namespace bafprp
 				break;
 			case 40:
 				addField( "digitsid" );
-				addField( "significantdigits" );
+				addField( "sigdigs" );
 				addField( "digits" );
 				addField( "digitslong" );
 				break;
@@ -278,15 +285,15 @@ namespace bafprp
 				addField( "trunkgroupnumber" );
 				break;
 			case 102:
-				addField( "significantdigits" );
-				addField( "number" );
+				addField( "sigdigs" );
+				addField( "digits" );
 				break;
 			case 103:
-				addField( "significantdigits" );
-				addField( "number" );
+				addField( "sigdigs" );
+				addField( "digits" );
 				break;
 			case 104:
-				addField( "trunkidentification" );
+				addField( "trunkid" );
 				break;
 			case 109:
 				addField( "classfeaturecode" );
@@ -301,8 +308,8 @@ namespace bafprp
 			case 164:
 				addField( "numberidentity" );
 				addField( "countrycode" );
-				addField( "significantdigits" );
-				addField( "number" );
+				addField( "sigdigs" );
+				addField( "digits" );
 				break;
 			case 203:
 				addField( "contextid" );
@@ -312,16 +319,24 @@ namespace bafprp
 			case 204:
 				addField( "indicatorid" );
 				break;
+			case 207:
+				addField( "triggerseqnumber" );
+				addField( "linenumbertype" );
+				addField( "linenpa" );
+				addField( "linenumber" );
+				addField( "directorynumdesc" );
+				break;
 			case 306:
 				addField( "callinglineinfo" );
 				break;
 			case 307:
 				addField( "linenumbertype" );
+				addField( "linenpa" );
 				addField( "linenumber" );
 				break;
 			case 611:
 				addField( "genericcontextid" );
-				addField( "number" );
+				addField( "digits" );
 				break;
 			case 719:
 				addField( "partyid" );
@@ -339,7 +354,6 @@ namespace bafprp
 				LOG_ERROR( "Unknown modules id: " << _fields.back()->getInt() << " at " << _filePos << "." << (DWORD)( _fieldData - _data ) << " record type " << getType() );
 			}
 		}
-
 		if( ( _fieldData - _data ) != _length )
 			LOG_WARN( "The record " << getType() << " was not the correct length to fit the data.  There were " << ( _fieldData - _data ) << " bytes left" );
 

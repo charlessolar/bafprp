@@ -21,6 +21,8 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include "9013.h"
 #include "output.h"
 
+// Checked 8/28/08
+
 namespace bafprp
 {
 
