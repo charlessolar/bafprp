@@ -33,7 +33,6 @@ namespace bafprp
 	PhoneNumberField::PhoneNumberField() : IField()
 	{
 		LOG_TRACE( "PhoneNumberField::PhoneNumber" );
-		_replaceProperties.push_back( "hyphens" );
 		LOG_TRACE( "/PhoneNumberField::PhoneNumber" );
 	}
 
@@ -74,8 +73,8 @@ namespace bafprp
 		}
 		else
 		{
-			property_map::const_iterator itr = _properties.find( "hyphens" );
-			if( itr != _properties.end() && ( itr->second == "no" || itr->second == "false" ) )
+			bool nohyphen = ( getProperty( "hyphens", true ) == "false" );
+			if( nohyphen )
 			{
 				ret = _return;
 			}

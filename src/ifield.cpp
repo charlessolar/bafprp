@@ -32,39 +32,17 @@ namespace bafprp
 	IField* FieldMaker::newField( const std::string& type )
 	{
 		define_default_fields();
-		field_map::iterator datatype = _fields.find ( type );
+		field_map::iterator datatype = _fields.find( type );
 		if ( datatype != _fields.end() )
 		{
 			maker_map::iterator maker = getReg().find( datatype->second );
 			if( maker != getReg().end() )
 			{
 				IField* ret = maker->second->make();
-				ret->setProperty( "id", type );
-				props_pair props;
-				// Set data type global properties
-				props = _typeProps.equal_range( datatype->second );
-				for( property_map::const_iterator prop = props.first; prop != props.second; prop++ )
-				{
-					int pos = prop->second.find( ":" );
-					if( pos == std::string::npos ) 
-					{
-						LOG_WARN( "Tried to set an invalid property: " << prop->second << " for field type: " << type );
-					}
-					else
-						ret->setProperty( prop->second.substr( 0, pos ), prop->second.substr( pos + 1 ) );
-				}
-				// Set field type specific properties
-				props = _fieldProps.equal_range( type );
-				for( property_map::const_iterator prop = props.first; prop != props.second; prop++ )
-				{
-					int pos = prop->second.find( ":" );
-					if( pos == std::string::npos ) 
-					{
-						LOG_WARN( "Tried to set an invalid property: " << prop->second << " for field type: " << type );
-					}
-					else
-						ret->setProperty( prop->second.substr( 0, pos ), prop->second.substr( pos + 1 ) );
-				}
+				property_map::iterator props = _fieldProps.find( type );
+				if( props != _fieldProps.end() )
+					ret->setProperties( props->second );
+				
 				return ret;
 			}
 			else
@@ -84,78 +62,93 @@ namespace bafprp
 		std::string value = prop.substr( prop.find( ":" ) + 1 );
 		if( object == "datatype" )
 		{
-			_fields.insert( std::make_pair( fieldtype, value ) ) );
+			_fields.insert( std::make_pair( fieldtype, value ) );
 
 			//Make sure global type properties are created with new field type
-			props_pair props = _typeProps.equal_range( value );
-			for( property_map::const_iterator prop = props.first; prop != props.second; prop++ )
+			property_map::iterator props = _typeProps.find( value );
+			if( props != _typeProps.end() )
 			{
-				int pos = prop->second.find( ":" );
-				if( pos == std::string::npos ) 
-				{
-					LOG_WARN( "Tried to set an invalid property: " << prop->second << " for field type: " << type );
-				}
-				else
-					_fieldProps.insert( fieldtype, std::make_pair( prop->second.substr( 0, pos ), prop->second.substr( pos + 1 ) ) );
+				_fieldProps.insert( std::make_pair( fieldtype, props->second ) );
 			}
 		}
 		else
-			_fieldProps.insert( std::make_pair( fieldtype, std::make_pair( object, value ) ) );
-	}
-
-	void FieldMaker::setTypeProperty( const std::string& fieldtype, const std::string& prop )
-	{
-			_typeProps.insert( std::make_pair( fieldtype, prop ) );
-	}
-
-	void IField::setProperties( props_pair props )
-	{
-		_props = props;
-		if( prop == "id" ) 
-			_id = value;
-		else if( prop == "desc" )
-			_desc= value;
-		else if( prop == "size" )
-			_size = atoi( value.c_str() );
-		else if( prop == "filter" )
 		{
-			if( value == "yes" || value == "true" || value == "y" || value == "t" || value == "1" )
-				_filter = true;
+			property_map::iterator itr = _fieldProps.find( fieldtype );
+			if( itr != _fieldProps.end() )
+				itr->second.insert( std::make_pair( object, value ) );
 			else
-				_filter = false;
+			{
+				std::multimap<std::string, std::string> temp;                   // This was a horible idea...
+				_fieldProps.insert( std::make_pair( fieldtype, temp ) );
+				itr = _fieldProps.find( fieldtype );
+				itr->second.insert( std::make_pair( object, value ) );
+			}
 		}
+	}
+
+	void FieldMaker::setTypeProperty( const std::string& datatype, const std::string& prop )
+	{
+		std::string object = prop.substr( 0, prop.find( ":" ) );
+		std::string value = prop.substr( prop.find( ":" ) + 1 );
+		property_map::iterator itr = _typeProps.find( datatype );
+		if( itr != _typeProps.end() )
+			itr->second.insert( std::make_pair( object, value ) );
 		else
 		{
-			std::vector<std::string>::iterator itr = std::find( _replaceProperties.begin(), _replaceProperties.end(), prop );
-			property_map::iterator theProp = _properties.find( prop );
-			// To be REPLACED instead of added when set, the property must be in the _replaceProperties vector
-			// or by less then 3 characters long.
-			// The 3 character this is for overriding switch properties, we do not want to add them all to the replace vector
-			// but we might want to over ride their strings
-			if( ( itr != _replaceProperties.end() || prop.length() < 3 ) && theProp != _properties.end() )
-			{
-				// Replace the variable do not simply insert it
-				theProp->second = value;				
-			}
-			else
-			_properties.insert( std::make_pair( prop, value ) );		
+			std::multimap<std::string, std::string> temp;
+			_typeProps.insert( std::make_pair( datatype, temp ) );
+			itr = _typeProps.find( datatype );
+			itr->second.insert( std::make_pair( object, value ) );
 		}
 	}
 
-	int getSize() const
+	void IField::setProperties( property_map& props )
 	{
-		std::find_end( _props.first, _props.end, 
+		_properties = &props;
 	}
 
-	std::string getID() const
+	std::vector<std::string> IField::getProperty( const std::string& name ) const
 	{
+		std::vector<std::string> ret;
+		props_pair props = _properties->equal_range( name );
+		for( property_map::const_iterator itr = props.first; itr != props.second; itr++ )
+		{
+			ret.push_back( itr->second );
+		}
+		return ret;
 	}
 
-	std::string getDesc() const
+	// Second parameter only exists to distingwish the two functions for the compiler
+	std::string IField::getProperty( const std::string& name, bool one ) const
 	{
+		std::string ret = "";
+		props_pair props = _properties->equal_range( name );
+		if( props.first == props.second ) return "";
+		property_map::const_iterator prop = props.second;  // The 'second' iterator is the element right after the element we were looking for, and is NOT the element we were looking for
+															// So in order to get the last element that we WERE looking for, decrement this guy.
+		prop--;
+		return prop->second;
 	}
 
-	bool filter() const
+	int IField::getSize() const
 	{
+		return atoi( getProperty( "size", true ).c_str() ); 
+	}
+
+	std::string IField::getID() const
+	{
+		return getProperty( "id", true );
+	}
+
+	std::string IField::getDesc() const
+	{
+		return getProperty( "desc", true );
+	}
+
+	bool IField::filter() const
+	{
+		if( getProperty( "filter", true ) == "true" )
+			return true;
+		return false;
 	}
 }

@@ -35,7 +35,6 @@ namespace bafprp
 	DateField::DateField() : IField()
 	{
 		LOG_TRACE( "DateField::Date" );
-		_replaceProperties.push_back( "format" );
 		LOG_TRACE( "/DateField::Date" );
 	}
 
@@ -83,10 +82,10 @@ namespace bafprp
 			year[3] = _return[0];
 
 			
-			property_map::const_iterator itr = _properties.find( "format" );
-			if( itr != _properties.end() && itr->second.find( "Y" ) != std::string::npos && itr->second.find( "M" ) != std::string::npos && itr->second.find( "D" ) != std::string::npos )
+			std::string format = getProperty( "format", true );
+			if( format != "" && format.find( "Y" ) != std::string::npos && format.find( "M" ) != std::string::npos && format.find( "D" ) != std::string::npos )
 			{
-				ret = itr->second;
+				ret = format;
 				ret.replace( ret.find("Y"), 1, year );
 				ret.replace( ret.find("M"), 1, _return.substr(1,2) );
 				ret.replace( ret.find("D"), 1, _return.substr(3,2) );

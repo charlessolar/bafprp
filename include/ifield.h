@@ -33,6 +33,10 @@ namespace bafprp
 	class IField
 	{
 		friend class FieldMaker;
+	protected:
+		typedef std::multimap<std::string, std::string> property_map;
+		typedef std::pair<property_map::const_iterator, property_map::const_iterator> props_pair;
+
 	public:
 		virtual bool getBool() const { return 0; }
 		virtual int getInt() const { return 0; }
@@ -53,7 +57,7 @@ namespace bafprp
 		std::string getID() const;
 		std::string getDesc() const;
 		bool filter() const;
-		void setProperty( const std::string& prop, const std::string& value );
+		void setProperties( property_map& props );
 
 		~IField() {}
 	protected:
@@ -64,6 +68,9 @@ namespace bafprp
 			_uid = uid_counter++;
 		}
 
+		std::vector<std::string> getProperty( const std::string& name ) const;
+		std::string getProperty( const std::string& name, bool one ) const;
+
 		bool _converted;
 		std::string _return;
 		std::string _lastError;
@@ -73,10 +80,8 @@ namespace bafprp
 		std::string _desc;
 		int _size;
 		bool _filter;  // Will not return data if true
-		typedef std::multimap<std::string, std::string> property_map;
-		typedef std::pair<property_map::const_iterator, property_map::const_iterator> props_pair;
-		props_pair _properties; // For individual field type properties
-		std::vector<std::string> _replaceProperties; // a list of properties that our field would REPLACE, not multimap
+		
+		property_map* _properties; // For individual field type properties
 	private:
 		DWORD _uid;
 	};
@@ -85,9 +90,10 @@ namespace bafprp
 	{
 	private:
 		typedef std::map<std::string, FieldMaker*> maker_map;
-		typedef std::multimap<std::string, std::string> property_map;
+		typedef std::map<std::string, std::multimap<std::string, std::string>> property_map;
 		typedef std::pair<property_map::const_iterator, property_map::const_iterator> props_pair;
-		typedef std::map<std::string, property_map> field_map;
+		typedef std::map<std::string, std::string> field_map;
+		typedef std::multimap<std::string, std::string> field_props;
 
 		static maker_map& getReg()
 		{

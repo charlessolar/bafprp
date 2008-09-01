@@ -107,33 +107,33 @@ namespace bafprp
 		}
 		else
 		{
-			props_pair switches = _properties.equal_range( "switch" );
+			std::vector<std::string> switches = getProperty( "switch" );
 			std::string sw;
-			if( switches.first == switches.second )
+			if( switches.empty() )
 			{
 				// No "switch" property so assume we switch on character 0
 				sw = "0" + _return;
 				sw.resize( 2 );
-				property_map::const_iterator string = _properties.find( sw );
-				if( string != _properties.end() )
-					ret = string->second + " ";
+				std::string string = getProperty( sw, true );
+				if( string != "" )
+					ret = string + " ";
 				else
 					ret = "Unknown: " + sw.substr(1);
 			}
 			else
 			{
-				for( property_map::const_iterator pos = switches.first; pos != switches.second; pos++ )
+				for( std::vector<std::string>::iterator pos = switches.begin(); pos != switches.end(); pos++ )
 				{
-					sw = pos->second + (char*)&_return[ atoi( pos->second.c_str() ) ];
+					sw = (*pos) + (char*)&_return[ atoi( (*pos).c_str() ) ];
 					sw.resize(2);
-					property_map::const_iterator string = _properties.find( sw );
-					property_map::const_iterator desc = _properties.find( pos->second );
-					if( string != _properties.end() )
+					std::string string = getProperty( sw, true );
+					std::string desc = getProperty( *pos, true );
+					if( string != "" )
 					{
-						if( desc != _properties.end() ) 
-							ret += desc->second + " = " + string->second + " : ";
+						if( desc != "" ) 
+							ret += desc + " = " + string + " : ";
 						else
-							ret += string->second + " : ";
+							ret += string + " : ";
 					}
 					else
 						ret += "Unknown: " + sw.substr(1) + " : ";
