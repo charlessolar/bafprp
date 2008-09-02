@@ -66,7 +66,11 @@ namespace bafprp
 		// Table 6
 		makeField( "carrierconnectdate", "date", "5", "Carrier Connect Date" );
 		// Table 6
-		makeField( "presentdata", "data", "5", "Present or Deactivation Date" );
+		makeField( "presentdate", "date", "5", "Present or Deactivation Date" );
+		// Table 6
+		makeField( "datebefore", "date", "5", "Date Before Change" );
+		// Table 6
+		makeField( "dateafter", "date", "5", "Date After Change" );
 		// Table 7
 		makeField( "timingindicator", "switch", "5", "Timing Indicator" );
 		FieldMaker::setFieldProperty( "timingindicator", "switch:0" );
@@ -246,6 +250,10 @@ namespace bafprp
 		makeField( "carrierconnecttime", "time", "7", "Carrier Connect Time" );
 		// Table 18
 		makeField( "presenttime", "time", "7", "Present or Deactivation Time" );
+		// Table 18
+		makeField( "timebefore", "time", "7", "Time Before Change" );
+		// Table 18
+		makeField( "timeafter", "time", "7", "Time After Change" );
 		// Table 19
 		makeField( "elapsedtime", "duration", "9", "Elapsed Time" );
 		// Table 19
