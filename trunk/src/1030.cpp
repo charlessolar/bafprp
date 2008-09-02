@@ -52,8 +52,8 @@ namespace bafprp
 		addField( "time" );
 		addField( "elapsedtime" );
 		addField( "classfunctions" );
-		addField( "screenlistfeatstat" );
-		addField( "screenlistsizescfa" );
+		addField( "classfeaturestatus" );
+		addField( "screenlistsizescf" );
 		addField( "screenlistsizescr" );
 		addField( "screenlistsizedrcw" );
 		decodeModules();

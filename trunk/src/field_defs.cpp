@@ -65,6 +65,8 @@ namespace bafprp
 		makeField( "date", "date", "5", "Date" );
 		// Table 6
 		makeField( "carrierconnectdate", "date", "5", "Carrier Connect Date" );
+		// Table 6
+		makeField( "presentdata", "data", "5", "Present or Deactivation Date" );
 		// Table 7
 		makeField( "timingindicator", "switch", "5", "Timing Indicator" );
 		FieldMaker::setFieldProperty( "timingindicator", "switch:0" );
@@ -242,6 +244,8 @@ namespace bafprp
 		makeField( "time", "time", "7", "Time" );
 		// Table 18
 		makeField( "carrierconnecttime", "time", "7", "Carrier Connect Time" );
+		// Table 18
+		makeField( "presenttime", "time", "7", "Present or Deactivation Time" );
 		// Table 19
 		makeField( "elapsedtime", "duration", "9", "Elapsed Time" );
 		// Table 19
@@ -536,6 +540,19 @@ namespace bafprp
 		// Table 280
 		makeField( "completionindicator", "number", "3", "Completion Indicator" );
 
+		// Table 330
+		makeField( "classfunctions", "switch", "3", "CLASS Functions" );
+		FieldMaker::setFieldProperty( "classfunctions", "switch:2" );
+		FieldMaker::setFieldProperty( "classfunctions", "00:None" );
+		FieldMaker::setFieldProperty( "classfunctions", "01:Active" );
+		FieldMaker::setFieldProperty( "classfunctions", "02:Inactive" );
+		FieldMaker::setFieldProperty( "classfunctions", "03:Delete" );
+		FieldMaker::setFieldProperty( "classfunctions", "04:Create Active" );
+		FieldMaker::setFieldProperty( "classfunctions", "05:Create Inactive" );
+		FieldMaker::setFieldProperty( "classfunctions", "06:Session Aborted" );
+		// Table 331
+		makeField( "classfeaturestatus", "number", "3", "Class Feature Status" );
+
 		// Table 410
 		makeField( "networkinterworking", "switch", "1", "Network Interworking" );
 		FieldMaker::setFieldProperty( "networkinterworking", "switch:0" );
@@ -599,6 +616,9 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "sigsuppservusage", "92:Feature Used" );
 		FieldMaker::setFieldProperty( "sigsuppservusage", "number:96" ); // Cheat a little bit because switch does not support 2 digits, yet.
 
+		// Table 415
+		makeField( "classfeaturecode", "number", "3", "CLASS Feature Code" );
+
 		// Table 423
 		makeField( "linenumbertype", "number", "3", "Line Number Type" );
 
@@ -629,8 +649,18 @@ namespace bafprp
 		makeField( "filesequenceno", "number", "3", "File Sequence Number" );
 		// Table 802
 		makeField( "triggerseqnum", "number", "3", "Trigger Sequence Number" );
+		// Table 802
+		makeField( "screenlistsizescf", "number", "3", "Screening List Size for Selective Call Forwarding" );
+		// Table 802
+		makeField( "screenlistsizescr", "number", "3", "Screening List Size for Selective Call Rejection" );
+		// Table 802
+		makeField( "screenlistsizedrcw", "number", "3", "Screening List Size for Distinctive Call Waiting" );
 		// Table 803
 		makeField( "blockcount", "number", "5", "Block Count" );
+		// Table 803
+		makeField( "callcountinfodeliv", "number", "5", "Call Count - Information Delivered" );
+		// Table 803
+		makeField( "callcountinfoanon", "number", "5", "Call Count - Information Anonymous" );
 		// Table 804
 		makeField( "recordcount", "number", "7", "Record Count" );
 		// Table 804

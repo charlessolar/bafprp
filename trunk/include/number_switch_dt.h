@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPNumberSwitch_H
-#define BAFPRPNumberSwitch_H
+#ifndef BAFPRPNUMBERSWITCH_H
+#define BAFPRPNUMBERSWITCH_H
 
 #include "ifield.h"
 
