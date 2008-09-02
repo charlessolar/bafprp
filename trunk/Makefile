@@ -34,7 +34,6 @@ OBJECTS = \
 bafdefines.cpp \
 baffile.cpp \
 bafprp.cpp \
-bafrecords.cpp \
 base64.cpp \
 compat.cpp \
 consoleoutput.cpp \
@@ -55,8 +54,8 @@ duration_dt.cpp \
 number_dt.cpp \
 phonenumber_dt.cpp \
 switch_dt.cpp \
-time_dt.cpp 
-
+time_dt.cpp \
+number_switch_dt.cpp
 
 BIN_DIR = bin
 

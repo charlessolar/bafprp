@@ -20,7 +20,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <algorithm>
 
-#include "Switch_dt.h"
+#include "switch_dt.h"
 #include "output.h"
 
 namespace bafprp
