@@ -90,7 +90,7 @@ namespace bafprp
 	{
 	private:
 		typedef std::map<std::string, FieldMaker*> maker_map;
-		typedef std::map<std::string, std::multimap<std::string, std::string>> property_map;
+		typedef std::map<std::string, std::multimap<std::string, std::string> > property_map;
 		typedef std::pair<property_map::const_iterator, property_map::const_iterator> props_pair;
 		typedef std::map<std::string, std::string> field_map;
 		typedef std::multimap<std::string, std::string> field_props;
