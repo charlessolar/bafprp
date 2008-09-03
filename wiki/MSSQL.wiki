@@ -6,7 +6,9 @@ Will send data to a sql server specified by the user.
 
 
 == Properties ==
-
+  * table - table for inserting records
+  * dsn - the database dsn
+or for string connections
   * database - the destination database
   * server - the server
   * user - user name with INSERT and SELECT privileges
@@ -26,21 +28,21 @@ In linux you must install unixODBC and FreeTDS.  You must then edit your odbcins
 {{{
 create table logs
 (
-id bigint IDENTITY(1,1),
+id bigint IDENTITY(1,1) primary key,
 ts datetime,
 loglevel smallint,
 msg text
 )
 }}}
 
-It is recommended to make id the primary key and create an index for loglevel
+It is recommended to create an index for loglevel
 
 === Error Table ===
 
 {{{
 create table errors
 (
-id bigint IDENTITY(1,1),
+id bigint IDENTITY(1,1) primary key,
 ts datetime not null,
 error text not null,
 filename varchar(255),
@@ -51,7 +53,6 @@ bytes text
 )
 }}}
 
-It is recommended to make id the primary key
 
 === Records ===
 
@@ -65,7 +66,7 @@ create table records
 id bigint IDENTITY(1,1),
 callingnumber varchar(25) not null,
 callednumber varchar(25) not null,
-duration bigint not null
+elapsedtime bigint not null
 )
 }}}
 
