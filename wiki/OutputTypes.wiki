@@ -40,4 +40,4 @@ Example:
 -remail -efile -lconsole
 Will set record, error, and log output to email, file, and console, respectively.
 
-Please see the [[command_line_options]] article for full detail of all options.  
+Please see the [CommandLineOptions command line option article] for full detail of all options.  
