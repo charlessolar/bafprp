@@ -1,4 +1,5 @@
 #summary List of the different output types available
+#labels Phase-Deploy
 
 = Output Types =
 
@@ -21,14 +22,15 @@ No output, use is discouraged
 == Console ==
 Output is formatted and printed to the console
 
-== [[File]] ==
+== [File] ==
 Output is formatted and printed to a filename of your choosing.  Default filenames are records.log, log.log, and error.log.  In windows these files are created in the root folder, in linux they are created in /var/log/bafprp/
 
-== [[Email]] ==
+== [Email] ==
 Sends formated output straight to an email address, no default settings so the user must set these themselves.
 
-== [[MSSQL]] ==
+== [MSSQL] or [MySQL] ==
 Sends logs and errors to generic tables on a server of the user's preference.  Record output is handled a bit differently, see the article for details.
+
 
 = Command Line =
 
