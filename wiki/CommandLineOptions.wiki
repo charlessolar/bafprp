@@ -40,3 +40,29 @@ It should also be noted that supplying extra properties will not hurt the progra
 bafprp -remail -prfilename:records.log -prto:me@test.net -prfrom:bafprp -prserver:mail.test.net
 }}}
 Notice the extra filename property.
+
+= Advanced Properties =
+
+In Bafprp v1.2 and greater, we introduced the ability to supply program altering properties.  These properties can do everything from defining a completely new field for immediate use in the program, to removing the hyphens from phone numbers.
+
+To use these properties two new property types were created, *t* and *f*.  These types refer to field type and field name respectively.  When setting properties the user has two choices.  They can choose to add a property to a single exact field type ( ex. originatingnumber ), by using *f*.  They can also set a property on the entire phone number field type by using *t*.  Here is how this process works.
+
+We will construct some simple examples
+
+To remove hyphens from all originating numbers
+{{{ -pforiginatingnumber:hyphens:false }}}
+
+To remove hyphens from ALL phone numbers
+{{{ -ptphonenumber:hyphens:false }}}
+
+To filter a specific field type
+{{{ -pfsensorid:filter:true }}}
+
+To filter all number type fields
+{{{ -ptnumber:filter:true }}}
+
+To change the format of all dates in the program
+{{{ -ptdate:format:M-Y-D }}}
+In this string only D, M, and Y are significant, these will be replaced by the appropriate data at runtime.
+
+For a more detailed view on all properties and field types please refer to [fields the complete field guide]
