@@ -1,5 +1,5 @@
 #summary How to use the command options
-#labels Featured
+#labels Featured,Phase-Deploy
 
 = Command Line Options =
 
