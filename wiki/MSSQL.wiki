@@ -1,4 +1,5 @@
 #summary Details for output form 'Microsoft SQL Server'
+#labels Phase-Deploy
 
 = Microsoft SQL Server =
 
@@ -64,15 +65,17 @@ For example, if we wanted to record the calling number, the called number, and t
 create table records
 (
 id bigint IDENTITY(1,1),
-callingnumber varchar(25) not null,
-callednumber varchar(25) not null,
+originatingnpa varchar(6) not null,
+originatingnumber varchar(8) not null,
+terminatingnpa varchar(6) not null,
+terminatingnumber varchar(8) not null,
 elapsedtime bigint not null
 )
 }}}
 
 The function will automatically match those columns and insert the data accordingly.  There are a couple of things to note while using this behavior.  Firstly, if a record has no data in common with the sql table, it will not be recorded.  Secondly, if there is a n error inserting the record an error message will be created through the error output type.  These should be checked often.  
 
-For a complete list of the different field types in a record, please download the source, a wiki page will be up later.
+For a complete list of the different field types in a record, please download the source and review field_defs.cpp in the src directory, a wiki page will be up later.
 
 In addition to these field types there are also special fields recognized by the output function.  
   * type - the type of record
