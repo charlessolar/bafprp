@@ -238,6 +238,7 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "overseasindicator", "09:Operator Inward-Dialed Code is in the Called Number Field" );
 		// Table 16
 		makeField( "terminatingnpa", "number", "5", "Terminating NPA" );
+		FieldMaker::setFieldProperty( "terminatingnpa", "trim:true" );
 		// Table 16
 		makeField( "linenpa", "number", "5", "Line NPA" );
 		// Table 17
