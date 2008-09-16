@@ -104,7 +104,20 @@ namespace bafprp
 			ret = "";
 		}
 		else
-			ret = _return;
+		{
+			// Trim leading zeros?
+			bool trim = ( getProperty( "trim", true ) == "true" );
+			if( !trim )	ret = _return;
+			else
+			{
+				ret = _return;
+				std::string::size_type pos = ret.find_first_not_of('0');
+				if(pos != std::string::npos) 
+					ret.erase(0, pos);
+				else 
+					ret.erase(ret.begin(), ret.end());
+			}
+		}
 
 		LOG_TRACE( "/NumberField::getString" );
 		return ret;
