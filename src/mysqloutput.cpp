@@ -64,10 +64,10 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			printf( "%s\n", os.str().c_str() );
-			extractError( "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
+			os << "Error: ";
+			extractError( os, "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
 			Output::setOutputError( "file" );
-			LOG_ERROR( "Failed to insert error message into database, falling back to file output" );
+			LOG_ERROR( "Failed to insert error message into database, falling back to file output. Query: " << os.str() );
 
 			Output::outputError( record, error );
 		}
@@ -98,10 +98,10 @@ namespace bafprp
 		os << "INSERT INTO " << _table << " ( ts, loglevel, msg ) VALUES ( '" << NowTime() << "', '" << level << "', '" << sanitize( log ) << "' )";
 		if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			printf( "%s\n", os.str().c_str() );
-			extractError( "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
+			os << "Error: ";
+			extractError( os, "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
 			Output::setOutputLog( "file" );
-			LOG_ERROR( "Failed to insert log into database, falling back to file output" );
+			LOG_ERROR( "Failed to insert log into database, falling back to file output. Query: " << os.str() );
 
 			Output::outputLog( level, log );
 		}
@@ -141,7 +141,9 @@ namespace bafprp
 			if( SQLExecDirectA(stmt, (SQLCHAR*)os.str().c_str(), SQL_NTS) == SQL_ERROR )
 			{
 				Output::setOutputRecord( "file" );
-				LOG_ERROR( "Failed to query columns in database, falling back to file output" );
+				std::ostringstream os;
+				extractError( os, "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
+				LOG_ERROR( "Failed to query columns in database, falling back to file output. Error: " << os.str() );
 				SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 				return;
 			}
@@ -241,7 +243,9 @@ namespace bafprp
 
 		if( SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS) == SQL_ERROR )
 		{
-			ERROR_OUTPUT( record, "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery );
+			std::ostringstream os;
+			extractError( os, "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
+			ERROR_OUTPUT( record, "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery << " Error: " << os.str() );
 		}
 
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
@@ -373,7 +377,9 @@ namespace bafprp
 			_dbConnected = true;
 		else
 		{
-			extractError( "SQLDriverConnect", _dbc, SQL_HANDLE_DBC );
+			std::ostringstream os;
+			extractError( os, "SQLDriverConnect", _dbc, SQL_HANDLE_DBC );
+			printf( "%s\n", os.str().c_str() );
 			disconnect();
 		}
 	}
@@ -389,27 +395,22 @@ namespace bafprp
 		return retVal;
 	}
 
-	void MYSQL::extractError( char* fn, SQLHANDLE handle, SQLSMALLINT type )
+	void MYSQL::extractError( std::ostringstream& os, char* fn, SQLHANDLE handle, SQLSMALLINT type )
 	{
-		SQLINTEGER	 i = 0;
+		SQLSMALLINT	 i = 0;
 		SQLINTEGER	 native;
 		SQLCHAR	 state[ 7 ];
 		SQLCHAR	 text[256];
 		SQLSMALLINT	 len;
 		SQLRETURN	 ret;
 
-		fprintf(stderr,
-				"\n"
-				"The driver reported the following diagnostics whilst running "
-				"%s\n\n",
-				fn);
-
+		os << "Error while running " << fn << ": ";
 		do
 		{
 			ret = SQLGetDiagRecA(type, handle, ++i, state, &native, text,
 								sizeof(text), &len );
 			if (SQL_SUCCEEDED(ret))
-				printf("%s:%ld:%ld:%s\n", state, i, native, text);
+				os << state << ":" << i << ":" << native << ":" << text;
 		}
 		while( ret == SQL_SUCCESS );
 
