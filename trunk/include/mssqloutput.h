@@ -43,7 +43,7 @@ namespace bafprp
 		void connect();
 		void disconnect();
 		std::string sanitize( const std::string& string );
-		void extractError( char* fn, SQLHANDLE handle, SQLSMALLINT type );
+		void extractError( std::ostringstream& os, char* fn, SQLHANDLE handle, SQLSMALLINT type );
 
 		// property variables
 		std::string _dsn;
