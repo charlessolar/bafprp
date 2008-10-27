@@ -10,7 +10,7 @@ In addition to this type system bafprp 1.2 introduced the ability to change the 
 
 Also due to technical limitations with the argument list, properties with spaces will not work correctly.  This is a known issue but currently has no time period for a solution.
 
-While the command line will set these properties, it is recommended that users edit the field_def.cpp and recompile the program to add properties just for the sake of simplicity and compatibility.  
+While the command line will set these properties, it is recommended that users edit the field_defs.cpp and recompile the program to add properties just for the sake of simplicity and compatibility.  
 
 == Date ==
 This field type stores and converts date information.  
