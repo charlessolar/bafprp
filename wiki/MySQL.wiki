@@ -79,7 +79,7 @@ index( elapsedtime )
 
 The function will automatically match those columns and insert the data accordingly.  There are a couple of things to note while using this behavior.  Firstly, if a record has no data in common with the sql table, it will not be recorded.  Secondly, if there is a n error inserting the record an error message will be created through the error output type.  These should be checked often.  
 
-For a complete list of the different field types in a record, please download the source and review the field_defs.cpp file in the src directory, a wiki page will be up later.
+For a complete list of the different field types in a record, see [fields]
 
 In addition to these field types there are also special fields recognized by the output function.  
   * type - the type of record
