@@ -60,6 +60,39 @@ namespace bafprp
 		return _converted;
 	}
 
+	int PhoneNumberField::getInt() const
+	{
+		LOG_TRACE( "PhoneNumberField::getInt" );
+
+		int ret;
+		if( !_converted )
+		{
+			LOG_WARN( "Tried to get int before field was converted" );
+			ret = 0;
+		}
+		else
+			ret = atoi( _return.c_str() );
+
+		LOG_TRACE( "/PhoneNumberField::getInt" );
+		return ret;
+	}
+
+	long PhoneNumberField::getLong() const
+	{
+		LOG_TRACE( "PhoneNumberField::getLong" );
+
+		long ret;
+		if( !_converted )
+		{
+			LOG_WARN( "Tried to get long before field was converted" );
+			ret = 0;
+		}
+		else
+			ret = atol( _return.c_str() );
+
+		LOG_TRACE( "/PhoneNumberField::getLong" );
+		return ret;
+	}
 	
 	std::string PhoneNumberField::getString() const
 	{
