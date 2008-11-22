@@ -35,6 +35,8 @@ namespace bafprp
 		friend class PhoneNumberFieldMaker;
 	public:
 		std::string getString() const;
+		int getInt() const;
+		long getLong() const;
 
 		bool convert ( const BYTE* data );
 
