@@ -85,6 +85,7 @@ namespace bafprp
 		{
 			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
 			{
+				ERROR_OUTPUT( (*itr), "Record is a duplicate" );
 				LOG_INFO( "* " << std::setw(30) << (*itr)->getType() << "\t" << (*itr)->getSize() << "\t" << (*itr)->getFilePosition() << "\t" << (*itr)->getCRC() << " collided with " << std::setw(30) << (*(itr - 1))->getType() << "\t" << (*(itr - 1))->getSize() << "\t" << (*(itr - 1))->getFilePosition() << "\t" << (*(itr - 1))->getCRC() );
 			}
 		}
