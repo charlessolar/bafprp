@@ -49,9 +49,6 @@ namespace bafprp
 		addField( "servicetrafficind" );
 		addField( "operatoraction" );
 		addField( "servicefeaturecode" );
-		addField( "originatingnpa" );
-		addField( "originatingnumber" );
-		addField( "overseasindicator" );
 		addField( "terminatingnpa" );
 		addField( "terminatingnumber" );
 		addField( "time" );

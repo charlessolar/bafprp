@@ -375,9 +375,9 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "icincid", "4F:Error" );
 		FieldMaker::setFieldProperty( "icincid", "number:04" );
 		FieldMaker::setFieldProperty( "icincid", "number_only:true" );
-
+		// Table 58
 		makeField( "icinccalleventstatus", "number", "3", "IC/INC Call Event Status" );
-
+		// Table 59
 		makeField( "icincrouting", "switch", "1", "IC/INC Routing Indicator" );
 		FieldMaker::setFieldProperty( "icincrouting", "switch:0" );
 		FieldMaker::setFieldProperty( "icincrouting", "00:Direct" );
