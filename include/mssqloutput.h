@@ -32,7 +32,12 @@ namespace bafprp
 	public:
 		// Register the output type
 		MSSQL() : Output( "mssql" ) {}
-		~MSSQL() { disconnect(); }
+		~MSSQL()
+		{ 
+			record( NULL );
+			log( LOG_LEVEL_FATAL, "" );
+			disconnect(); 
+		}
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string& error );
@@ -61,6 +66,11 @@ namespace bafprp
 		SQLHENV _env;
 		SQLHDBC _dbc;
 		bool _dbConnected;
+
+		bool _bCache;
+		int _iCache;
+
+		std::multimap<std::string, std::string> _cachedRecords;
 		
 		// This variable simply initializes a class that registers with the main output code
 		static const MSSQL registerThis;
