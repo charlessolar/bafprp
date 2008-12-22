@@ -113,22 +113,14 @@ namespace bafprp
 	void MSSQL::record( const IBafRecord* record )
 	{
 		LOG_TRACE( "MSSQL::record" );
-		checkDB( _recordProperties );
-		
-		if( !_dbConnected || _table == "" ) 
-		{
-			Output::setOutputRecord( "file" );
-			LOG_ERROR( "Failed to connect to the database, or you failed to supply a table, check your properties, falling back to file output" );
+		if( record != NULL ) checkDB( _recordProperties );
 
-			// Play nice
-			Output::outputRecord( record );
-			return;
-		}
+		static int cache = 0;
 
 		SQLHSTMT stmt;
-		
+			
 		// We do not need to query the table info each time, cache the result for five minutes
-		if( ( time( NULL ) - _cacheAge ) > 300000 )
+		if( _columnCache.size() == 0 )
 		{
 			_cacheAge = time( NULL );
 
@@ -162,13 +154,61 @@ namespace bafprp
 			SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 		}
 
-		// Construct an insert query from the record values corresponding to those names
-		// Two part query, see below
-		std::ostringstream query1; 
-		std::ostringstream query2;
+		// sending null will clear out the cache (for use at the end of the program)
+		if( cache >= _iCache || record == NULL )
+		{
+			if( cache == 0 ) return; // Dont clear an empty cache
+	
+			if( !_dbConnected || _table == "" ) 
+			{
+				Output::setOutputRecord( "file" );
+				LOG_ERROR( "Failed to connect to the database, or you failed to supply a table, check your properties, falling back to file output" );
 
-		query1 << "INSERT INTO " << _table << " ( ";
-		query2 << "VALUES ( ";
+				// Play nice
+				Output::outputRecord( record );
+				return;
+			}
+
+			std::string fullQuery = "";
+			std::string currentColumns = "";
+
+			for( std::multimap<std::string,std::string>::iterator itr = _cachedRecords.begin(); itr != _cachedRecords.end(); itr++ )
+			{
+				if( currentColumns != itr->first ) // New column configuration, submit current query and reset
+				{
+					if( fullQuery != "" )
+					{
+						SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
+
+						if( SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS) == SQL_ERROR )
+						{
+							std::ostringstream os;
+							extractError( os, "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
+							ERROR_OUTPUT( record, "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery << " Error: " << os.str() );
+						}
+						
+						SQLFreeHandle( SQL_HANDLE_STMT, stmt );
+						fullQuery = "";
+					}
+					currentColumns = itr->first;
+				}
+
+				if( fullQuery == "" )
+					fullQuery += "INSERT INTO " + _table + " (" + currentColumns + ") SELECT " + itr->second;
+				else
+					fullQuery += "UNION ALL SELECT " + itr->second;
+
+			}
+			
+			_cachedRecords.clear();
+			cache = 0;
+			// Obviously there is no actual record to log
+			if( record == NULL ) return;
+		}
+
+		std::ostringstream columns;
+		std::ostringstream values;
+
 		
 		for( std::map<std::string,std::string>::iterator itr = _columnCache.begin(); itr != _columnCache.end(); itr++ )
 		{
@@ -177,32 +217,32 @@ namespace bafprp
 			// Check for 'special' columns
 			if( itr->first == "filename" )
 			{
-				query1 << "filename, ";
-				query2 << "'" << sanitize( record->getFilename() ) << "', ";
+				columns << "filename, ";
+				values << "'" << sanitize( record->getFilename() ) << "', ";
 				continue;
 			}
 			if( itr->first == "filepos" )
 			{
-				query1 << "filepos, ";
-				query2 << "'" << record->getFilePosition() << "', ";
+				columns << "filepos, ";
+				values << "'" << record->getFilePosition() << "', ";
 				continue;
 			}
 			if( itr->first == "type" )
 			{
-				query1 << "type, ";
-				query2 << "'" << sanitize( record->getType() ) << "', ";
+				columns << "type, ";
+				values << "'" << sanitize( record->getType() ) << "', ";
 				continue;
 			}
 			if( itr->first == "size" )
 			{
-				query1 << "size, ";
-				query2 << "'" << record->getSize() << "', ";
+				columns << "size, ";
+				values << "'" << record->getSize() << "', ";
 				continue;
 			}
 			if( itr->first == "crc" )
 			{
-				query1 << "crc, ";
-				query2 << "'" << record->getCRC() << "', ";
+				columns << "crc, ";
+				values << "'" << record->getCRC() << "', ";
 				continue;
 			}
 
@@ -221,34 +261,23 @@ namespace bafprp
 
 			if( itr->second == "int" || itr->second == "bigint" )
 			{
-				query1 << itr->first << ", ";
-				query2 << "'" << field->getLong() << "', ";
+				columns << itr->first << ", ";
+				values << "'" << field->getLong() << "', ";
 			}
 			else if( itr->second == "decimal" || itr->second == "float" )
 			{
-				query1 << itr->first << ", ";
-				query2 << "'" << field->getFloat() << "', ";
+				columns << itr->first << ", ";
+				values << "'" << field->getFloat() << "', ";
 			}
 			else
 			{
-				query1 << itr->first << ", ";
-				query2 << "'" << sanitize( field->getString() ) << "', ";
+				columns << itr->first << ", ";
+				values << "'" << sanitize( field->getString() ) << "', ";
 			}
 		}
 
-		// Make the full query, trimming off the surplus commas
-		std::string fullQuery = query1.str().substr( 0, query1.str().length() - 2 ) + ") " + query2.str().substr( 0, query2.str().length() - 2 ) + ")";
-
-		SQLAllocHandle(SQL_HANDLE_STMT, _dbc, &stmt);
-
-		if( SQLExecDirectA(stmt, (SQLCHAR*)fullQuery.c_str(), SQL_NTS) == SQL_ERROR )
-		{
-			std::ostringstream os;
-			extractError( os, "SQLExecDirectA", stmt, SQL_HANDLE_STMT );
-			ERROR_OUTPUT( record, "Failed to insert record: " << record->getType() << " into database.  Query: " << fullQuery << " Error: " << os.str() );
-		}
-
-		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
+		_cachedRecords.insert( std::make_pair( columns.str(), values.str() ) );
+		cache++;
 
 		LOG_TRACE( "/MSSQL::record" );
 	}
