@@ -30,6 +30,7 @@ namespace bafprp
 
 	void Duplicate::remove( std::vector<IBafRecord*>& records )
 	{
+		LOG_TRACE( "Duplicate::remove" );
 		if( records.size() == 0 ) return;
 
 		std::vector<IBafRecord*> myrecords( records );  // Make a copy because we do not want to disturb the natural order 
@@ -37,6 +38,7 @@ namespace bafprp
 														// pointers
 
 		std::sort( myrecords.begin(), myrecords.end(), recordsort );
+		//std::sort( myrecords.begin(), myrecords.end() );
 
 		// Notes:
 		// This statement did not work for me.  I do not know if it was working but giving the wrong output,
@@ -48,31 +50,42 @@ namespace bafprp
 		// and add my own since once the records are sorted its fairly easy (and fast) to do it myself.
 
 		//records.erase( std::unique( records.begin(), records.end(), recordequal ), records.end() );
+		//records.erase( std::unique( records.begin(), records.end() ), records.end() );
 
-		for(std::vector<IBafRecord*>::iterator itr = myrecords.begin() + 1; itr != myrecords.end(); itr++ )
+		std::vector<IBafRecord*>::iterator first = myrecords.begin();
+
+		// For storing duplicates designated for deletion
+		// This is to make this process safe for multiple cpu's
+		std::vector<IBafRecord*> trashbin;
+
+		// copy std::unique a bit
+		for( std::vector<IBafRecord*>::iterator itr; (itr = first) != myrecords.end() && ++first != myrecords.end(); )
 		{
-			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
+			if( (*itr)->getCRC() == (*first)->getCRC() )
 			{
-				// Probably a better way
 				for( std::vector<IBafRecord*>::iterator itr2 = records.begin(); itr2 != records.end(); itr2++ )
 				{
-					if( (*itr2)->getCRC() == (*itr)->getCRC() )
+					if( (*itr2)->getCRC() == (*first)->getCRC() )
 					{
-						if( *itr2 ) delete *itr2;
+						trashbin.push_back( *itr2 );
 						records.erase( itr2 );
 						break;
 					}
 				}
-				//if( *itr ) delete *itr;
-				//itr = records.erase( itr );
-				//if( itr == records.end() ) break;   // We need this in case we end up deleting the iterator right before the end().  If that happens the iterator would be
-													// incremented and would produce a very bad error
 			}
 		}
+
+		for( std::vector<IBafRecord*>::iterator itr = trashbin.begin(); itr != trashbin.end(); itr++ )
+		{
+			if( *itr ) delete *itr;
+			*itr = NULL;
+		}
+		LOG_TRACE( "/Duplicate::remove" );
 	}
 
 	void Duplicate::list( std::vector<IBafRecord*>& records )
 	{
+		LOG_TRACE( "Duplicate::list" );
 		if( records.size() == 0 ) return;
 
 		std::vector<IBafRecord*> myrecords( records );  // Make a copy because we do not want to disturb the natural order 
@@ -85,10 +98,11 @@ namespace bafprp
 		{
 			if( (*itr)->getCRC() == (*(itr - 1))->getCRC() )
 			{
-				ERROR_OUTPUT( (*itr), "Record is a duplicate" );
+				ERROR_OUTPUT( (*itr), "Record is a duplicate." );
 				LOG_INFO( "* " << std::setw(30) << (*itr)->getType() << "\t" << (*itr)->getSize() << "\t" << (*itr)->getFilePosition() << "\t" << (*itr)->getCRC() << " collided with " << std::setw(30) << (*(itr - 1))->getType() << "\t" << (*(itr - 1))->getSize() << "\t" << (*(itr - 1))->getFilePosition() << "\t" << (*(itr - 1))->getCRC() );
 			}
 		}
+		LOG_TRACE( "/Duplicate::list" );
 	}
 
 
