@@ -44,9 +44,14 @@ namespace bafprp
 		std::string rest = "";
 		int space = 0;
 
-		space = error.substr( 0, 48 ).find_last_of( " " );
-		if( space == std::string::npos )
-				space = 48;
+		if( error.length() > 48 )
+		{
+			space = error.substr( 0, 48 ).find_last_of( " " );
+			if( space == std::string::npos )
+					space = 48;
+		}
+		else
+			space = 48;
 
 		std::cout << "* Report: " << std::setw( 48 ) << error.substr( 0, space ) << " *" << std::endl;
 
