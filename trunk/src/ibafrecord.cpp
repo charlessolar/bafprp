@@ -309,7 +309,7 @@ namespace bafprp
 				addField( "numberidentity" );
 				addField( "countrycode" );
 				addField( "sigdigs" );
-				addField( "digits" );
+				addField( "largedigits" );
 				break;
 			case 203:
 				addField( "contextid" );
