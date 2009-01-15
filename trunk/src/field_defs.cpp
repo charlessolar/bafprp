@@ -546,6 +546,19 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "trunkid", "number:14" );
 		FieldMaker::setFieldProperty( "trunkid", "number:54" );
 
+		// Table 272
+		makeField( "trunkgroupinfo", "number", "13", "Trunk Group Information" );
+
+		// Table 273
+		makeField( "carrierinterface", "switch", "3", "Carrier Interface" );
+		FieldMaker::setFieldProperty( "carrierinterface", "switch:2" );
+		FieldMaker::setFieldProperty( "carrierinterface", "21:Feature Group D" );
+		FieldMaker::setFieldProperty( "carrierinterface", "22:Feature Group D with Tandem Signaling" );
+		FieldMaker::setFieldProperty( "carrierinterface", "23:Telecommunications Relay Service" );
+		FieldMaker::setFieldProperty( "carrierinterface", "24:Type 2A" );
+		FieldMaker::setFieldProperty( "carrierinterface", "25:Type 2B" );
+		FieldMaker::setFieldProperty( "carrierinterface", "26:Type 2D" );
+
 		// Table 280
 		makeField( "completionindicator", "number", "3", "Completion Indicator" );
 
@@ -631,6 +644,9 @@ namespace bafprp
 		// Table 423
 		makeField( "linenumbertype", "number", "3", "Line Number Type" );
 
+		// Table 488
+		makeField( "networkidentifier", "number", "7", "Carrier / Network Identifier" );
+
 		// Table 701
 		makeField( "serviceproviderid", "number", "9", "Service Provider Identifier" );
 
@@ -651,6 +667,9 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "supportinginfo", "03:Incoming Signalling" );
 		FieldMaker::setFieldProperty( "supportinginfo", "04:Switch LRN/GUBB LNP Database" );
 		FieldMaker::setFieldProperty( "supportinginfo", "number:12" );
+
+		// Table 610
+		makeField( "indicatorid", "number", "3", "Indicator ID" );
 
 		// Table 801
 		makeField( "numtrunklegsused", "number", "1", "Number of trunk Legs Used" );
