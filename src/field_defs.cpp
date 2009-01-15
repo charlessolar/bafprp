@@ -510,8 +510,12 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "billingid", "03:Third Number" );
 		FieldMaker::setFieldProperty( "billingid", "04:Collect" );
 
-		//Table 126
-		makeField( "digits", "number", "15", "Digits" );		
+		// Table 126
+		makeField( "digits", "number", "15", "Digits" );	
+
+		// Table 126
+		makeField( "largedigits", "number", "15", "Digits" );
+		FieldMaker::setFieldProperty( "largedigits", "trim:true" );
 
 
 		// Table 140
