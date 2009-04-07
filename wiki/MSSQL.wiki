@@ -27,31 +27,33 @@ In linux you must install unixODBC and FreeTDS.  You must then edit your odbcins
 === Log Table ===
 
 {{{
-create table logs
+CREATE TABLE logs
 (
-id bigint IDENTITY(1,1) primary key,
-ts datetime,
-loglevel smallint,
-msg text
-)
+id BIGINT IDENTITY(1,1) PRIMARY KEY,
+ts DATETIME,
+loglevel SMALLINT,
+msg TEXT
+);
+CREATE NONCLUSTERED INDEX IX_loglevel on calllogs ( loglevel );
+CREATE NONCLUSTERED INDEX IX_ts on calllogs ( ts );
 }}}
-
-It is recommended to create an index for loglevel
 
 === Error Table ===
 
 {{{
-create table errors
+CREATE TABLE errors
 (
-id bigint IDENTITY(1,1) primary key,
-ts datetime not null,
-error text not null,
-filename varchar(255),
-filepos int,
-type varchar(255),
-length int,
-bytes text
+id BIGINT IDENTITY(1,1) PRIMARY KEY,
+ts DATETIME NOT NULL,
+error TEXT NOT NULL,
+filename VARCHAR(255),
+filepos INT,
+type VARCHAR(255),
+length INT,
+bytes TEXT
 )
+CREATE NONCLUSTERED INDEX IX_ts on callerrors ( ts );
+CREATE NONCLUSTERED INDEX IX_filename on callerrors ( filename );
 }}}
 
 
@@ -59,21 +61,46 @@ bytes text
 
 The record table operates a little differently.  It has no specific structure like log or error, instead when it comes time to insert a record bafprp will first query the Information Schema for a list of the column names.  It will then match those column names to elements that are in the current record.
 
-For example, if we wanted to record the calling number, the called number, and the elapsed time we would make a table like this
+An example table for use in a production billing system would be the following
 
 {{{
-create table records
-(
-id bigint IDENTITY(1,1),
-originatingnpa varchar(6) not null,
-originatingnumber varchar(8) not null,
-terminatingnpa varchar(6) not null,
-terminatingnumber varchar(8) not null,
-elapsedtime bigint not null
-)
+create table callrecords (
+id bigint IDENTITY(1,1) not null primary key,
+originatingnpa smallint default 0,
+originatingnumber bigint default 0,
+terminatingnpa int default 0,
+terminatingnumber bigint default 0,
+largedigits varchar(16), -- Extra long terminating npa's go here
+elapsedtime bigint,  -- milliseconds
+calltype int not null,
+type varchar(255),
+overseasindicator int default 0,
+icincid int default 0,
+date datetime,
+time datetime,
+size int,
+crc bigint,
+filename varchar(255),
+filepos bigint,
+);
+CREATE NONCLUSTERED INDEX IX_orignpa ON callrecords (originatingnpa);
+CREATE NONCLUSTERED INDEX IX_orignum ON callrecords (originatingnumber);
+-- This prevents a baf record from being uploaded twice
+CREATE UNIQUE NONCLUSTERED INDEX UX_crc_filename ON callrecords (crc,filename);
+CREATE NONCLUSTERED INDEX IX_termnpa ON callrecords (terminatingnpa);
+CREATE NONCLUSTERED INDEX IX_termnum ON callrecords (terminatingnumber);
+CREATE NONCLUSTERED INDEX IX_largedigits ON callrecords (largedigits);
+CREATE NONCLUSTERED INDEX IX_calltype ON callrecords ( calltype );
+CREATE NONCLUSTERED INDEX IX_elapsedtime ON callrecords ( elapsedtime );
+CREATE NONCLUSTERED INDEX IX_elapsed_dna ON callrecords ( elapsed_dna_minutes );
+CREATE NONCLUSTERED INDEX IX_date_time ON callrecords ( date, time );
+CREATE NONCLUSTERED INDEX IX_date ON callrecords ( date );
+CREATE NONCLUSTERED INDEX IX_time ON callrecords (time);
+CREATE NONCLUSTERED INDEX IX_overseas ON callrecords ( overseasindicator );
+CREATE NONCLUSTERED INDEX IX_icincid ON callrecords ( icincid );
 }}}
 
-The function will automatically match those columns and insert the data accordingly.  There are a couple of things to note while using this behavior.  Firstly, if a record has no data in common with the sql table, it will not be recorded.  Secondly, if there is a n error inserting the record an error message will be created through the error output type.  These should be checked often.  
+The function will automatically match those columns and insert the data accordingly.  There are a couple of things to note while using this behavior.  Firstly, if a record has no data in common with the sql table, it will not be recorded.  Secondly, if there is an error inserting the record an error message will be created through the error output type.  These should be checked often.  
 
 For a complete list of the different field types in a record, see [fields]
 
