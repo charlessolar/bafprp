@@ -51,7 +51,7 @@ filepos INT,
 type VARCHAR(255),
 length INT,
 bytes TEXT
-)
+);
 CREATE NONCLUSTERED INDEX IX_ts on callerrors ( ts );
 CREATE NONCLUSTERED INDEX IX_filename on callerrors ( filename );
 }}}
@@ -70,7 +70,7 @@ originatingnpa smallint default 0,
 originatingnumber bigint default 0,
 terminatingnpa int default 0,
 terminatingnumber bigint default 0,
-largedigits varchar(16), -- Extra long terminating npa's go here
+largedigits varchar(16), -- Extra long terminating npas go here
 elapsedtime bigint,  -- milliseconds
 calltype int not null,
 type varchar(255),
