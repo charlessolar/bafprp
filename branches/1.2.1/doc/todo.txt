@@ -1,0 +1,8 @@
+1. Change record system to better integrate with new field system
+
+2. Add the ability to use config files for setting properties and output
+
+3. House Cleaning
+			
+4. Might be interesting to allow multiple types of output for one log, record, or error message
+
