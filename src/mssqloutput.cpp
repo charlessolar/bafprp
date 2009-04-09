@@ -326,7 +326,7 @@ namespace bafprp
 		// not corrupt the current database.
 		if( _dbConnected ) disconnect();
 
-		if( _dsn == "" && ( _database == "" || _server == "" || _user == "" || _password == "" ) )
+		if( ( _dsn == "" || _user == "" || _password == "" ) && ( _database == "" || _server == "" || _user == "" || _password == "" ) )
 		{
 			printf( "Not enough information to connect to sql database\n" );
 			return;
@@ -360,7 +360,7 @@ namespace bafprp
 
 		std::string dsn;
 		if( _dsn != "" )
-			dsn = "DSN=" + _dsn;
+			dsn = "DSN=" + _dsn + ";Uid=" + _user + ";Pwd=" + _password + ";";
 		else
 		{
 	#ifdef _WIN32
