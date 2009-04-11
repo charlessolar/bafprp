@@ -9,6 +9,8 @@ Will send data to a sql server specified by the user.
 == Properties ==
   * table - table for inserting records
   * dsn - the database dsn
+  * user - username with INSERT and SELECT provileges
+  * password - password for user
 or for string connections
   * database - the destination database
   * server - the server
