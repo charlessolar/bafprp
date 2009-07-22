@@ -30,13 +30,15 @@ namespace bafprp
 	class MSSQL : public Output
 	{
 	public:
-		// Register the output type
-		MSSQL() : Output( "mssql" ) {}
-		~MSSQL() { disconnect(); }
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string& error );
 		void log( LOG_LEVEL level, const std::string& log );
+
+	protected:
+		// Register the output type
+		MSSQL() : Output( "mssql" ) {}
+		~MSSQL() { disconnect(); }
 
 	private:
 		void checkDB( property_map& props );

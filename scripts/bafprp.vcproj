@@ -193,6 +193,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\csvoutput.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\emailoutput.cpp"
 					>
 				</File>
@@ -392,6 +396,10 @@
 				>
 				<File
 					RelativePath="..\include\consoleoutput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\csvoutput.h"
 					>
 				</File>
 				<File

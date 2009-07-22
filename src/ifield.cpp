@@ -57,14 +57,14 @@ namespace bafprp
 
 	void FieldMaker::setFieldProperty( const std::string& fieldtype, const std::string& prop )
 	{
-		// 'ndatatype' property is special, we use it to associate data types and field names
+		// 'datatype' property is special, we use it to associate data types and field names
 		std::string object = prop.substr( 0, prop.find( ":" ) );
 		std::string value = prop.substr( prop.find( ":" ) + 1 );
 		if( object == "datatype" )
 		{
 			_fields.insert( std::make_pair( fieldtype, value ) );
 
-			//Make sure global type properties are created with new field type
+			// Make sure global type properties are created with new field type
 			property_map::iterator props = _typeProps.find( value );
 			if( props != _typeProps.end() )
 			{
