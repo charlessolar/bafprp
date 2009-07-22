@@ -30,13 +30,15 @@ namespace bafprp
 	class MYSQL : public Output
 	{
 	public:
-		// Register the output type
-		MYSQL() : Output( "mysql" ) {}
-		~MYSQL() { disconnect(); }
 
 		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string& error );
 		void log( LOG_LEVEL level, const std::string& log );
+
+	protected:
+		// Register the output type
+		MYSQL() : Output( "mysql" ) {}
+		~MYSQL() { disconnect(); }
 
 	private:
 		void checkDB( property_map& props );

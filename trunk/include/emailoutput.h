@@ -28,6 +28,12 @@ namespace bafprp
 	class Email : public Output
 	{
 	public:
+
+		void record( const IBafRecord* record );
+		void error( const IBafRecord* record, const std::string& error );
+		void log( LOG_LEVEL level, const std::string& log );
+
+	protected:
 		// Register the output type
 		Email() : Output( "email" ) {}
 		~Email()
@@ -38,10 +44,6 @@ namespace bafprp
 			record( NULL );
 			log( LOG_LEVEL_FATAL, "" );
 		}
-
-		void record( const IBafRecord* record );
-		void error( const IBafRecord* record, const std::string& error );
-		void log( LOG_LEVEL level, const std::string& log );
 
 	private:
 		void checkProperties( property_map& props );

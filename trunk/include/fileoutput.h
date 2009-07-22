@@ -39,20 +39,25 @@ NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES */
 
 #include "output.h"
 
+// Some functions are virtual because the csv output type derives from this class
+
 namespace bafprp
 {
 	class File : public Output
 	{
 	public:
-		// Register the output type
-		File();
-		~File();
-
-		void record( const IBafRecord* record );
+	
+		virtual void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string& error );
 		void log( LOG_LEVEL level, const std::string& log );
 
-	private:
+	protected:
+		// For subclasses
+		File( const std::string& type ) : Output( type ) {}
+		// Register the output type
+		File() : Output( "file" ) {}
+		virtual ~File();
+
 		void checkFile( property_map& props, bool start );
 
 		std::ofstream _file;

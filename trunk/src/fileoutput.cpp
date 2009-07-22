@@ -39,10 +39,6 @@ namespace bafprp
 {
 	const File File::registerThis;
 
-	File::File() : Output( "file" )
-	{
-	}
-
 	File::~File()
 	{
 		if( _file.is_open() ) _file.close();
