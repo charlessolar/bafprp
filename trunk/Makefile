@@ -46,6 +46,7 @@ ifield.cpp \
 mailer.cpp \
 mssqloutput.cpp \
 mysqloutput.cpp \
+csvoutput.cpp \
 nooutput.cpp \
 output.cpp \
 field_defs.cpp \
