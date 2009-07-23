@@ -22,6 +22,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #define BAFPRPOUTPUT_H
 
 #include <map>
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <time.h>

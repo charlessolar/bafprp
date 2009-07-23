@@ -21,6 +21,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPBAFFILE_H
 #define BAFPRPBAFFILE_H
 
+#include <cstring>
 #include <string>
 
 #include "bafdefines.h"
