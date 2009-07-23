@@ -24,6 +24,7 @@
 #ifndef __MAILER_H__
 #define __MAILER_H__
 
+#include <cstring>
 #include <string>
 #include <vector>
 #include "compat.h"

@@ -21,6 +21,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPIFIELD_H
 #define BAFPRPIFIELD_H
 
+#include <cstdlib>
 #include <string>
 #include <map>
 #include <vector>
