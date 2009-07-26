@@ -7,10 +7,10 @@ The solution file for Microsoft Visual Studio 9 is located in the scripts folder
 
 Because some of the solution settings are not stored on the svn to run the program in visual studio you need to first set bafprp as the start up project, then go into Project->bafprp Properties
 select configuration properties -> Debugging
-and put this text in the Command field: $(TargetPath)
-and put this text in the working directory path: $(SolutionDir)../bin/$(ConfigurationName)
+and put this text in the Command field: {{{$(TargetPath)}}}
+and put this text in the working directory path: {{{$(SolutionDir)../bin/$(ConfigurationName)}}}
 
-For your reference the build objects are stored in the build directory, and the exe will be in the bin/${ConfigurationName} directory.
+For your reference the build objects are stored in the build directory, and the exe will be in the {{{bin/${ConfigurationName}}}} directory.
 
 If you are using a different compiler, eg, codeblocks, eclipse, nmake, then I am afraid you are on your own.  You should know how to build a new project in codeblocks and eclipse.
 
