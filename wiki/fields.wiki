@@ -12,6 +12,9 @@ Also due to technical limitations with the argument list, properties with spaces
 
 While the command line will set these properties, it is recommended that users edit the field_defs.cpp and recompile the program to add properties just for the sake of simplicity and compatibility.  
 
+For a list of all compatible field types in bafprp refer to the field_def.cpp file.  This file will tell you the name of the individual field as well as a brief description.
+Someday a complete list of each field name may be posted but that project is not a priority at the moment.
+
 == Date ==
 This field type stores and converts date information.  
 
