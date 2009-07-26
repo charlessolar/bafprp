@@ -87,7 +87,7 @@ namespace bafprp
 				// My issue is that it seems kind of dangerous to insert a local multimap like this
 				// But I guess it works...  The program must be coping the multimap instead of using
 				// the reference.
-				LOG_DEBUG( "First field property for datatype " << datatype );
+				LOG_DEBUG( "First field property for field type " << fieldtype );
 				std::multimap<std::string, std::string> temp;                   // This was a horible idea...
 				_fieldProps.insert( std::make_pair( fieldtype, temp ) );
 				itr = _fieldProps.find( fieldtype );
