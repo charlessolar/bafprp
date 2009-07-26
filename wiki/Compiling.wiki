@@ -14,6 +14,9 @@ For your reference the build objects are stored in the build directory, and the 
 
 If you are using a different compiler, eg, codeblocks, eclipse, nmake, then I am afraid you are on your own.  You should know how to build a new project in codeblocks and eclipse.
 
+Note:
+In order to use (and compile with) the SQL output methods you must install the Windows SDK available at http://msdn.microsoft.com/en-us/windows/bb980924.aspx
+
 
 = Linux =
 
