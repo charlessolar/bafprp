@@ -18,10 +18,6 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-// General purpose testing while building converters.
-
-
 #include <cstring>
 #include <iostream>
 #include <cstdio>

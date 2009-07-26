@@ -54,6 +54,15 @@ namespace bafprp
 			return;
 		}
 
+		// Some people might want to push all fields into the csv file
+		// this setup will only allow the user to output a fixed set
+		// of fields.
+		// Allowing all fields to be printed per line is no simple task.
+		// Each record differs in the number of fields and the type of field
+		// therefore if you want to print the entire record each line, each
+		// line will end up different and there would be no defined columns 
+		// in your output. :(
+
 		std::string delim = ",";
 		itr = _recordProperties.find( "delimeter" );
 		if( itr != _recordProperties.end() )
@@ -100,7 +109,11 @@ namespace bafprp
 				continue;
 			}
 
-			if( !record->hasField( *itr ) ) continue; // Skip fields the record does not have
+			if( !record->hasField( *itr ) ) 
+			{
+				_file << delim;  // So the columns do not get misaligned just because 1 record was missing a field
+				continue; // Skip fields the record does not have
+			}
 
 			// Find field in record (if it exists)
 			const IField* field = record->getField( *itr );
@@ -110,7 +123,11 @@ namespace bafprp
 				LOG_WARN( "Failed to retreive field " << *itr << " from record for CSV output" );
 				continue;
 			}
-			if( field->filter() ) continue;
+			if( field->filter() ) 
+			{
+				_file << delim;
+				continue;
+			}
 
 			_file << field->getString() << delim;
 		}
