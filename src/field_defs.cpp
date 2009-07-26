@@ -22,6 +22,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
+	// A function to make defining fields easier
 	void makeField( const std::string& id, const std::string& datatype, const std::string& size, const std::string& desc ) 
 	{
 		FieldMaker::setFieldProperty( id, "datatype:" + datatype ); 

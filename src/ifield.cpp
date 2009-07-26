@@ -51,12 +51,13 @@ namespace bafprp
 			}	
 		}
 
-		LOG_ERROR( "Field of type \"" << type << "\" could not be made" );
+		LOG_ERROR( "Field of type '" << type << "' could not be made" );
 		return NULL;
 	}
 
 	void FieldMaker::setFieldProperty( const std::string& fieldtype, const std::string& prop )
 	{
+		LOG_TRACE( "FieldMaker::setFieldProperty" );
 		// 'datatype' property is special, we use it to associate data types and field names
 		std::string object = prop.substr( 0, prop.find( ":" ) );
 		std::string value = prop.substr( prop.find( ":" ) + 1 );
@@ -78,16 +79,27 @@ namespace bafprp
 				itr->second.insert( std::make_pair( object, value ) );
 			else
 			{
+				// I am writing this comment because at this time I am unsure why I did this
+				// It looks like I create a temporary multimap to place into field props
+				// so that I can in turn insert a new property object and value.
+				// from what I can tell this only happens when the fieldtype is new and thus
+				// does not have a multimap.
+				// My issue is that it seems kind of dangerous to insert a local multimap like this
+				// But I guess it works...  The program must be coping the multimap instead of using
+				// the reference.
+				LOG_DEBUG( "First field property for datatype " << datatype );
 				std::multimap<std::string, std::string> temp;                   // This was a horible idea...
 				_fieldProps.insert( std::make_pair( fieldtype, temp ) );
 				itr = _fieldProps.find( fieldtype );
 				itr->second.insert( std::make_pair( object, value ) );
 			}
 		}
+		LOG_TRACE( "/FieldMaker::setFieldProperty" );
 	}
 
 	void FieldMaker::setTypeProperty( const std::string& datatype, const std::string& prop )
 	{
+		LOG_TRACE( "FieldMaker::setTypeProperty" );
 		std::string object = prop.substr( 0, prop.find( ":" ) );
 		std::string value = prop.substr( prop.find( ":" ) + 1 );
 		property_map::iterator itr = _typeProps.find( datatype );
@@ -95,11 +107,13 @@ namespace bafprp
 			itr->second.insert( std::make_pair( object, value ) );
 		else
 		{
+			LOG_DEBUG( "First type property for datatype " << datatype );
 			std::multimap<std::string, std::string> temp;
 			_typeProps.insert( std::make_pair( datatype, temp ) );
 			itr = _typeProps.find( datatype );
 			itr->second.insert( std::make_pair( object, value ) );
 		}
+		LOG_TRACE( "/FieldMaker::setTypeProperty" );
 	}
 
 	void IField::setProperties( property_map& props )
@@ -107,6 +121,7 @@ namespace bafprp
 		_properties = &props;
 	}
 
+	// This function will return all properties matching name
 	std::vector<std::string> IField::getProperty( const std::string& name ) const
 	{
 		std::vector<std::string> ret;
@@ -118,7 +133,9 @@ namespace bafprp
 		return ret;
 	}
 
-	// Second parameter only exists to distingwish the two functions for the compiler
+	// This function will return the most recent property matching name
+	// This is used incase you have a property like filter which can be set
+	// false at the beginging, then set true by the user later on.
 	std::string IField::getProperty( const std::string& name, bool one ) const
 	{
 		std::string ret = "";
