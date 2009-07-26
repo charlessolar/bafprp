@@ -44,7 +44,7 @@ fileoutput.cpp \
 ibafrecord.cpp \
 ifield.cpp \
 mailer.cpp \
-mssqloutput.cpp \ 
+mssqloutput.cpp \
 mysqloutput.cpp \
 csvoutput.cpp \
 nooutput.cpp \

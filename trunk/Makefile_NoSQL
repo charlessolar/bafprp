@@ -44,8 +44,6 @@ fileoutput.cpp \
 ibafrecord.cpp \
 ifield.cpp \
 mailer.cpp \
-#mssqloutput.cpp \  # uncomment this to add MSSQL compatability
-#mysqloutput.cpp \  # uncomment this to add MySQL compatability
 csvoutput.cpp \
 nooutput.cpp \
 output.cpp \
