@@ -1,0 +1,34 @@
+#summary how to compile in windows and linux
+#labels Phase-Deploy
+
+= Windows =
+
+The solution file for Microsoft Visual Studio 9 is located in the scripts folder.  If you have visual studio 9 open that file and you can compile the project like normally.
+
+Because some of the solution settings are not stored on the svn to run the program in visual studio you need to first set bafprp as the start up project, then go into Project->bafprp Properties
+select configuration properties -> Debugging
+and put this text in the Command field: $(TargetPath)
+and put this text in the working directory path: $(SolutionDir)../bin/$(ConfigurationName)
+
+For your reference the build objects are stored in the build directory, and the exe will be in the bin/${ConfigurationName} directory.
+
+If you are using a different compiler, eg, codeblocks, eclipse, nmake, then I am afraid you are on your own.  You should know how to build a new project in codeblocks and eclipse.
+
+
+= Linux =
+
+Bafprp comes with three different Makefiles.  
+
+===Makefile (default)===
+  * Requires unixodbc-dev and freetds-dev packages
+  * Includes MSSQL and MySQL output support
+
+===Makefile_NoMSSQL===
+  * Requires unixodbc-dev
+  * Includes only MySQL output support
+
+===Makefile_NoSQL===
+  * Requires no extra packages
+  * Has NO SQL output support
+
+Choose whichever one suits your desire and rename it to Makefile or use {{{make -f 'filename'}}}
