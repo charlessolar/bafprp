@@ -652,6 +652,9 @@ namespace bafprp
 		// Table 488
 		makeField( "networkidentifier", "number", "7", "Carrier / Network Identifier" );
 
+		// Table 610
+		makeField( "indicatorid", "number", "3", "Indicator ID" );
+
 		// Table 701
 		makeField( "serviceproviderid", "number", "9", "Service Provider Identifier" );
 
@@ -672,9 +675,6 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "supportinginfo", "03:Incoming Signalling" );
 		FieldMaker::setFieldProperty( "supportinginfo", "04:Switch LRN/GUBB LNP Database" );
 		FieldMaker::setFieldProperty( "supportinginfo", "number:12" );
-
-		// Table 610
-		makeField( "indicatorid", "number", "3", "Indicator ID" );
 
 		// Table 801
 		makeField( "numtrunklegsused", "number", "1", "Number of trunk Legs Used" );

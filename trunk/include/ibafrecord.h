@@ -93,10 +93,6 @@ namespace bafprp
 		}
 		virtual IBafRecord* make( const BYTE* data, int length, const std::string& filename, long filePos ) const = 0;
 	};
-
-	bool recordequal( const IBafRecord* left, const IBafRecord* right );
-	bool recordsort( const IBafRecord* left, const IBafRecord* right );
-
 }
 
 #endif

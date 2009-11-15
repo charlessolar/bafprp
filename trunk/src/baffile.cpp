@@ -48,14 +48,7 @@ namespace bafprp
 			_length_of_record = 0;
 			_filename.clear();
 
-			// Clean up records
-			if( _records.size() > 0 )
-			{
-				for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
-					if( *itr ) delete *itr;
-			}
-
-			_records.clear();
+			_recordCRCs.clear();
 
 			if( _fileData )
 			{
@@ -72,9 +65,12 @@ namespace bafprp
 		return true;
 	}
 
-	bool BafFile::parse( const std::string& filename )
+	bool BafFile::parse( const std::string& filename, bool listDups )
 	{
 		LOG_TRACE( "BafFile::parse" );
+		
+		int dups = 0;
+
 		if( filename != _filename ) 
 		{
 			if( !read( filename ) )
@@ -106,13 +102,25 @@ namespace bafprp
 			if( record )
 			{
 				LOG_DEBUG( "Read " << record->getType() << " at " << record->getFilePosition() );
-				_records.push_back( record );
+				if( _recordCRCs.find( record->getCRC() ) != _recordCRCs.end() )
+				{
+					if( listDups )
+						ERROR_OUTPUT( record, "Record is a duplicate." );
+					dups++;
+				}
+				else
+				{
+					Output::outputRecord( record );
+					_recordCRCs.insert( record->getCRC() );
+				}
+				delete record;
 			}
 			
 			_offset += _length_of_record;
 		}
 
-		LOG_INFO( "Parsed " << _records.size() << " records" );
+		LOG_INFO( "Parsed " << _recordCRCs.size() << " records" );
+		LOG_INFO( "Removed " << dups << " duplicates" );
 
 		LOG_TRACE( "/BafFile::parse" );
 		return true;
@@ -142,32 +150,6 @@ namespace bafprp
 		_filename = filename;
 
 		LOG_TRACE( "/BafFile::read" );
-		return true;
-	}
-
-	bool BafFile::process( const std::string& filename, bool listDups )
-	{
-		if( filename != _filename ) 
-		{
-			if( !parse( filename ) ) // has the effect of calling both read and parse
-			{
-				LOG_ERROR( "File::Process failed to parse the file" );
-				return false;
-			}
-		}
-
-		long size = _records.size();
-
-		if( listDups ) Duplicate::list( _records );
-		Duplicate::remove( _records );
-		
-		LOG_INFO( "Removed " << size - _records.size() << " duplicates" );
-
-		for( std::vector<IBafRecord*>::iterator itr = _records.begin(); itr != _records.end(); itr++ )
-		{
-			if( *itr ) Output::outputRecord( *itr );
-		}
-		
 		return true;
 	}
 }

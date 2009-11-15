@@ -76,11 +76,18 @@ namespace bafprp
 			char year[5] = "";
 			time_t ltime; 
 			struct tm* mytm;
-			ltime = time( NULL );  
-			mytm = localtime( &ltime );  
+			ltime = time( NULL );
+			mytm = localtime( &ltime );
 			strftime( year, sizeof( year ), "%Y", mytm );
 			year[3] = _return[0];
 
+			if( mytm->tm_year < atoi( year ) )
+			{
+				LOG_WARN( "The year read from the baf file " << year << " is greater than the current system year " << mytm->tm_year << " assuming decade mismatch, subtracting 10 from baf file year" );
+				year[2]--;  // playing with the ascii code, not bothering to convert to int
+				if( year[2] < '0' )
+					year[2] = '9';
+			}
 			
 			std::string format = getProperty( "format", true );
 			if( format != "" && format.find( "Y" ) != std::string::npos && format.find( "M" ) != std::string::npos && format.find( "D" ) != std::string::npos )
