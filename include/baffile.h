@@ -22,6 +22,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #define BAFPRPBAFFILE_H
 
 #include <cstring>
+#include <set>
 #include <string>
 
 #include "bafdefines.h"
@@ -36,8 +37,7 @@ namespace bafprp
 		~BafFile();
 
 		bool read( const std::string& filename );
-		bool parse( const std::string& filename );
-		bool process( const std::string& filename, bool listDups = false );
+		bool parse( const std::string& filename, bool listdups = false );
 		bool clear();  // reset 
 
 		std::string getFilename() { return _filename; }
@@ -51,7 +51,7 @@ namespace bafprp
 		long _offset;
 		int _length_of_record;
 
-		std::vector<IBafRecord*> _records;
+		std::set<DWORD> _recordCRCs;
 	};
 } 
 #endif

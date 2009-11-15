@@ -178,7 +178,7 @@ int main( int argc, char* argv[] )
 				filename = argv[ii];
 		#endif
 				LOG_INFO( "Processing " << filename << " started" );
-				if ( !file->process( filename, listDups ) )
+				if ( !file->parse( filename, listDups ) )
 				{
 					LOG_ERROR( "Error processing " << filename );
 				}

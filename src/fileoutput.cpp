@@ -211,6 +211,17 @@ namespace bafprp
 	// so record output continues like nothing happened.
 	// Basically this function connects all three output worlds in a nice and seamless manner so the individual
 	// functions do not have to worry about things like this.
+	//
+	// Note from the future
+	// I looked back on this about a year after writing it and I am wondering why I did not just keep three 
+	// file pointers around.  It took a day to remember but when I originally wrote this I was expecting
+	// the posibility of filenames changing mid program.
+	// The problem with that is this class is never notified about property changes, it just has access to its properties.
+	// It would be easy yes to check that the filenames and the open files match each time we want to write to a file,
+	// and in fact that would be the 'proper' way to do those.
+	// To be honest I am not exactly sure why I thought I only had access to 1 file pointer for the entire 
+	// program, I must not have been thinking.
+	// I would fix it, but wise man once said, why fix what aint broke?
 	void File::checkFile( property_map& props, bool start )
 	{
 		// The property should have a filename parameter

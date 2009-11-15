@@ -310,14 +310,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Process"
-				>
-				<File
-					RelativePath="..\src\duplicate.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Tools"
 				>
 				<File
@@ -514,12 +506,8 @@
 					RelativePath="..\include\ibafrecord.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="Process"
-				>
 				<File
-					RelativePath="..\include\duplicate.h"
+					RelativePath="..\include\record.h"
 					>
 				</File>
 			</Filter>
@@ -587,12 +575,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
 		</Filter>
 	</Files>
 	<Globals>

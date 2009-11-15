@@ -98,7 +98,7 @@ namespace bafprp
 		if ( itr != getReg().end() )
 			return itr->second->make( data, length, filename, filePos );
 
-		LOG_ERROR( "Could not find record of type \"" << type << "\"" );
+		LOG_ERROR( "Could not find record of type '" << type << "'" );
 		LOG_TRACE( "/IBafRecord::newRecord" );
 		return NULL;
 	}
@@ -358,15 +358,5 @@ namespace bafprp
 			LOG_WARN( "The record " << getType() << " was not the correct length to fit the data.  There were " << ( _fieldData - _data ) << " bytes left" );
 
 		LOG_TRACE( "/IBafRecord::decodeModules" );
-	}
-
-	bool recordequal( const IBafRecord* left, const IBafRecord* right )
-	{
-		return ( left->getCRC() == right->getCRC() );
-	}
-
-	bool recordsort( const IBafRecord* left, const IBafRecord* right )
-	{
-		return ( left->getCRC() < right->getCRC() );
 	}
 }
