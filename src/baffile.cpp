@@ -23,8 +23,6 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include "baffile.h"
 #include "output.h"
 
-#include "duplicate.h"
-
 namespace bafprp
 {
 
