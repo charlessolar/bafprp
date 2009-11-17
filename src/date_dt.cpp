@@ -81,7 +81,7 @@ namespace bafprp
 			strftime( year, sizeof( year ), "%Y", mytm );
 			year[3] = _return[0];
 
-			if( mytm->tm_year < atoi( year ) )
+			if( ( mytm->tm_year + 1900 ) < atoi( year ) )
 			{
 				LOG_WARN( "The year read from the baf file " << year << " is greater than the current system year " << mytm->tm_year << " assuming decade mismatch, subtracting 10 from baf file year" );
 				year[2]--;  // playing with the ascii code, not bothering to convert to int
