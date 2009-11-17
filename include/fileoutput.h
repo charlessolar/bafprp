@@ -47,13 +47,11 @@ namespace bafprp
 	{
 	public:
 	
-		virtual void record( const IBafRecord* record );
+		void record( const IBafRecord* record );
 		void error( const IBafRecord* record, const std::string& error );
 		void log( LOG_LEVEL level, const std::string& log );
 
 	protected:
-		// For subclasses
-		File( const std::string& type ) : Output( type ) {}
 		// Register the output type
 		File() : Output( "file" ) {}
 		virtual ~File();
