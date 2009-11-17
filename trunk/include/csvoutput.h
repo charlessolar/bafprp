@@ -21,19 +21,31 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BAFPRPCSV_H
 #define BAFPRPCSV_H
 
-#include "fileoutput.h"
+#include <fstream>
+
+#include "output.h"
 
 namespace bafprp
 {
-	class CSV : public File
+	class CSV : public Output
 	{
 	public:
 
 		void record( const IBafRecord* record );
+		void error( const IBafRecord* record, const std::string& error );
+		void log( LOG_LEVEL level, const std::string& log );
 		
 	protected:
 		// Register the output type
-		CSV() : File( "csv" ) {}
+		CSV() : Output( "csv" ) {}
+		virtual ~CSV();
+
+		void checkFile( property_map& props, bool start );
+
+		std::ofstream _file;
+		std::string _filename;
+		std::vector<std::string> _storedFilenames;  // For different output with different filenames
+		std::vector<std::string> _usedFilenames;
 
 	private:
 		void StringExplode( std::string str, const std::string& separator, std::vector<std::string>* results );
