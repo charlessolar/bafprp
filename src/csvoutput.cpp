@@ -32,7 +32,7 @@ namespace bafprp
 		if( _file.is_open() ) _file.close();
 	}
 
-	void CSV::error( const IBafRecord* record, const std::string& error )
+	void CSV::error( const BafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "CSV::error" );
 		checkFile( _errorProperties, true );
@@ -81,7 +81,7 @@ namespace bafprp
 		checkFile( _logProperties, false );
 	}
 
-	void CSV::record( const IBafRecord* record )
+	void CSV::record( const BafRecord* record )
 	{
 		LOG_TRACE( "CSV::record" );
 		checkFile( _recordProperties, true );

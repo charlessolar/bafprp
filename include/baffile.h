@@ -26,7 +26,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 
 #include "bafdefines.h"
-#include "ibafrecord.h"
+#include "BafRecord.h"
 
 namespace bafprp
 {

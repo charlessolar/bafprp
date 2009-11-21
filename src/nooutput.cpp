@@ -32,7 +32,7 @@ namespace bafprp
 	{
 	}
 
-	void No::error( const IBafRecord* record, const std::string& error )
+	void No::error( const BafRecord* record, const std::string& error )
 	{
 		// Do nothing!
 	}
@@ -42,7 +42,7 @@ namespace bafprp
 		// Do nothing!
 	}
 
-	void No::record( const IBafRecord* record )
+	void No::record( const BafRecord* record )
 	{
 		// Do nothing!
 	}

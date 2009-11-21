@@ -18,44 +18,84 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ibafrecord.h"
-#include "output.h"
+#include "bafrecord.h"
 #include "crc32.h"
+#include "output.h"
 
 namespace bafprp
 {
+	RecordMaker::field_map RecordMaker::_recordFields;
+	RecordMaker::property_map RecordMaker::_recordProps;
 
-	IBafRecord::IBafRecord( const BYTE* data, int length, const std::string& filename, long filePos ) : _length( length ), _filename(filename), _filePos( filePos ), _crc(0)
+	BafRecord* RecordMaker::newRecord( const BYTE* data, int length, const std::string& filename, long filePos )
 	{
-		LOG_TRACE( "IBafRecord::IBafRecord" );
+		define_default_records();
+
+		BafRecord* ret = new BafRecord( data, length, filename, filePos );
+		if( !ret || ret->getTypeCode() == 0 )
+			return NULL;
+
+		field_map::const_iterator fields = _recordFields.find( ret->getTypeCode() );
+		if( fields == _recordFields.end() )
+		{
+			LOG_ERROR( "Could not find record of type '" << ret->getTypeCode() << "'" );
+			delete ret;
+			return NULL;
+		}
+
+		if( fields->second.empty() )
+		{
+			LOG_ERROR( "Record type " << ret->getTypeCode() << " has no defined fields!" );
+			delete ret;
+			return NULL;
+		}
+
+		for( std::vector<std::string>::const_iterator itr = fields->second.begin(); itr != fields->second.end(); itr++ )
+			ret->addField( *itr );
+		ret->decodeModules();
 		
-		_data = _fieldData = data;
+		property_map::iterator props = _recordProps.find( ret->getTypeCode() );
+		if( props != _recordProps.end() )
+			ret->setProperties( props->second );
 
-		// Module flag is 4 for some reason, and no its not the number of modules
-		_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
-
-		CRC32::Encode( _fieldData, _length, _crc );
-
-		LOG_TRACE( "/IBafRecord::IBafRecord" );
+		return ret;		
 	}
 
-
-	IBafRecord::~IBafRecord()
+	void RecordMaker::setRecordField( int record, const std::string& fieldName )
 	{
-		LOG_TRACE( "IBafRecord::~IBafRecord" );
-		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
-			if( *itr ) delete (*itr);
-		_fields.clear();
-		_field_types.clear();
-		LOG_TRACE( "/IBafRecord::~IBafRecord" );
+		field_map::iterator itr = _recordFields.find( record );
+		if( itr == _recordFields.end() )
+		{
+			std::vector<std::string> temp;
+			_recordFields.insert( std::make_pair( record, temp ) );
+			itr = _recordFields.find( record );
+			itr->second.push_back( fieldName );
+		}
+		else
+			itr->second.push_back( fieldName );
 	}
 
-
-	IBafRecord* RecordMaker::newRecord( const BYTE* data, int length, const std::string& filename, long filePos )
+	void RecordMaker::setRecordProp( int record, const std::string& prop )
 	{
-		LOG_TRACE( "IBafRecord::newRecord" );
-		// This function will take the full record data, extract the structure type, and create a new
-		// record object from that type
+		std::string object = prop.substr( 0, prop.find( ":" ) );
+		std::string value = prop.substr( prop.find( ":" ) + 1 );
+		property_map::iterator itr = _recordProps.find( record );
+		if( itr != _recordProps.end() )
+			itr->second.insert( std::make_pair( object, value ) );
+		else
+		{
+			LOG_DEBUG( "First property for record " << record );
+			std::multimap<std::string,std::string> temp;
+			_recordProps.insert( std::make_pair( record, temp ) );
+			itr = _recordProps.find( record );
+			itr->second.insert( std::make_pair( object, value ) );
+		}
+	}
+
+	BafRecord::BafRecord( const BYTE* data, int length, const std::string& filename, long filePos )
+	{
+		// Need to peel off the structure code type
+		_type = 0;
 
 		data += 2; // ignore the length
 		length -= 2;
@@ -72,7 +112,6 @@ namespace bafprp
 		{
 			// No matter what AA always starts a valid record
 			LOG_WARN( "Record did not have 0xAA prefix, or we failed to find it" );
-			return NULL; 
 		}
 		data++;
 		length -= 1;
@@ -81,31 +120,33 @@ namespace bafprp
 		IField* structurecode = FieldMaker::newField( "structurecode" );
 		if( !structurecode ) 
 		{
-			LOG_ERROR( "Could not retrieve 'structurecode' field" );
-			return NULL;
+			LOG_FATAL( "Could not retrieve 'structurecode' field" );
+			return;
 		}
 		if( !structurecode->convert( data ) )
 		{
-			LOG_ERROR( "Could not convert structure type" );
+			LOG_FATAL( "Could not convert structure type" );
 			delete structurecode;
-			return NULL;
+			return;
 		}
-		int type = structurecode->getInt();
+		_type = structurecode->getInt();
 		delete structurecode;
-		
-		
-		maker_map::iterator itr = getReg().find ( type );
-		if ( itr != getReg().end() )
-			return itr->second->make( data, length, filename, filePos );
 
-		LOG_ERROR( "Could not find record of type '" << type << "'" );
-		LOG_TRACE( "/IBafRecord::newRecord" );
-		return NULL;
+		_data = _fieldData = data;
+		_filename = filename;
+		_length = length;
+		_filePos = filePos;
+		_crc = 0;
+
+		// Module flag is 4 for some reason, and no its not the number of modules
+		_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
+
+		CRC32::Encode( _fieldData, _length, _crc );
 	}
 
-	bool IBafRecord::hasField( const std::string& name ) const
+	bool BafRecord::hasField( const std::string& name ) const
 	{
-		LOG_TRACE( "IBafRecord::hasField" );
+		LOG_TRACE( "BafRecord::hasField" );
 		if( _fields.empty() ) return false;
 
 		bool bFound = false;
@@ -118,14 +159,14 @@ namespace bafprp
 			}
 		}
 
-		LOG_TRACE( "/IBafRecord::hasField" );
+		LOG_TRACE( "/BafRecord::hasField" );
 		return bFound;
 	}
 
 
-	const IField* IBafRecord::getField( const std::string& name ) const
+	const IField* BafRecord::getField( const std::string& name ) const
 	{
-		LOG_TRACE( "IBafRecord::getField" );
+		LOG_TRACE( "BafRecord::getField" );
 		if( _fields.empty() ) 
 		{
 			LOG_WARN( "Tried to pull a field from a record with no fields" );
@@ -143,13 +184,13 @@ namespace bafprp
 		}
 		
 		LOG_WARN( "Did not find field named: " << name );
-		LOG_TRACE( "/IBafRecord::getField" );
+		LOG_TRACE( "/BafRecord::getField" );
 		return NULL;
 	}
 
-	const IField* IBafRecord::getNextField( DWORD lastUID ) const
+	const IField* BafRecord::getNextField( DWORD lastUID ) const
 	{
-		LOG_TRACE( "IBafRecord::getNextField" );
+		LOG_TRACE( "BafRecord::getNextField" );
 		if( _fields.empty() ) return NULL;
 
 		for( field_vector::const_iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
@@ -162,17 +203,17 @@ namespace bafprp
 		}
 
 		// last not found, assume they sent 0 meaning start at begining
-		LOG_TRACE( "/IBafRecord::getNextField" );
+		LOG_TRACE( "/BafRecord::getNextField" );
 		return *_fields.begin();
 	}
 
-	void IBafRecord::addField( const std::string& name )
+	void BafRecord::addField( const std::string& field_type )
 	{
-		LOG_TRACE( "IBafRecord::addField" );
-		IField* field = FieldMaker::newField( name );
+		LOG_TRACE( "BafRecord::addField" );
+		IField* field = FieldMaker::newField( field_type );
 		if( !field )
 		{
-			LOG_ERROR( "Could not find field name '" << name << ".'  We will continue processing this record, but the record will be corrupt" );
+			LOG_ERROR( "Could not find field name '" << field_type << ".'  We will continue processing this record, but the record will be corrupt" );
 			_fieldData += 4;  // aprox avg length of a field
 			return;
 		}
@@ -183,7 +224,7 @@ namespace bafprp
 				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
 			}
 			_fields.push_back( field );
-			_field_types.push_back( name );
+			_field_types.push_back( field_type );
 			// update data position, the mod is to make the size even for nice division
 			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
 		}
@@ -200,15 +241,21 @@ namespace bafprp
 			LOG_ERROR( "Record has outgrown its stated length of " << _length << ". It is now " << ( _fieldData - _data ) );
 		}
 
-		LOG_TRACE( "/IBafRecord::addField" );
+		LOG_TRACE( "/BafRecord::addField" );
 	}
 
+	std::string BafRecord::getType() const
+	{
+		// get type id field
+		// match type id to description
+		return "";
+	}
 
 	// Modules are extra fields attached to the record.  Therefore we will use a giant switch
-	void IBafRecord::decodeModules()
+	void BafRecord::decodeModules()
 	{
 		if( !_modules ) return;
-		LOG_TRACE( "IBafRecord::decodeModules" );
+		LOG_TRACE( "BafRecord::decodeModules" );
 
 		int count = 0;
 		// Just to be safe
@@ -357,6 +404,6 @@ namespace bafprp
 		if( ( _fieldData - _data ) != _length )
 			LOG_WARN( "The record " << getType() << " was not the correct length to fit the data.  There were " << ( _fieldData - _data ) << " bytes left" );
 
-		LOG_TRACE( "/IBafRecord::decodeModules" );
+		LOG_TRACE( "/BafRecord::decodeModules" );
 	}
 }

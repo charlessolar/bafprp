@@ -29,8 +29,8 @@ namespace bafprp
 	{
 	public:
 
-		void record( const IBafRecord* record );
-		void error( const IBafRecord* record, const std::string& error );
+		void record( const BafRecord* record );
+		void error( const BafRecord* record, const std::string& error );
 		void log( LOG_LEVEL level, const std::string& log );
 
 	protected:
