@@ -33,7 +33,7 @@ namespace bafprp
 {
 	const MSSQL MSSQL::registerThis;
 
-	void MSSQL::error( const IBafRecord* record, const std::string& error )
+	void MSSQL::error( const BafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "MSSQL::error" );
 		checkDB( _errorProperties );
@@ -110,7 +110,7 @@ namespace bafprp
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 	}
 
-	void MSSQL::record( const IBafRecord* record )
+	void MSSQL::record( const BafRecord* record )
 	{
 		LOG_TRACE( "MSSQL::record" );
 		checkDB( _recordProperties );

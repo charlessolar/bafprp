@@ -35,6 +35,7 @@ namespace bafprp
 		// Only setup types once.
 		static bool first = true;
 		if( !first ) return;
+		first = false;
 
 		// Table 0
 		makeField( "structurecode", "numberswitch", "5", "Structure Code" );
@@ -720,7 +721,5 @@ namespace bafprp
 		makeField( "calls", "number", "9", "Calls" );
 		// Table 805
 		makeField( "amacalls", "number", "9", "AMA Calls" );
-
-		first = false;
 	}
 } // namespace

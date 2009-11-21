@@ -31,7 +31,7 @@ namespace bafprp
 {
 	const Email Email::registerThis;
 
-	void Email::error( const IBafRecord* record, const std::string& error )
+	void Email::error( const BafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "Email::error" );
 		checkProperties( _errorProperties );
@@ -191,7 +191,7 @@ namespace bafprp
 		cache++;
 	}
 
-	void Email::record( const IBafRecord* record )
+	void Email::record( const BafRecord* record )
 	{
 		LOG_TRACE( "Email::record" );
 		// We need to clear the cache when being destroyed.  However there is a problem,

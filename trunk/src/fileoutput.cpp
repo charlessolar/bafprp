@@ -45,7 +45,7 @@ namespace bafprp
 	}
 
 	// Best to avert your eyes.
-	void File::error( const IBafRecord* record, const std::string& error )
+	void File::error( const BafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "File::error" );
 		checkFile( _errorProperties, true );
@@ -156,7 +156,7 @@ namespace bafprp
 		checkFile( _logProperties, false );
 	}
 
-	void File::record( const IBafRecord* record )
+	void File::record( const BafRecord* record )
 	{
 		LOG_TRACE( "File::record" );
 		checkFile( _recordProperties, true );

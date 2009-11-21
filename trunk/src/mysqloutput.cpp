@@ -33,7 +33,7 @@ namespace bafprp
 {
 	const MYSQL MYSQL::registerThis;
 
-	void MYSQL::error( const IBafRecord* record, const std::string& error )
+	void MYSQL::error( const BafRecord* record, const std::string& error )
 	{
 		LOG_TRACE( "MYSQL::error" );
 		checkDB( _errorProperties );
@@ -109,7 +109,7 @@ namespace bafprp
 		SQLFreeHandle( SQL_HANDLE_STMT, stmt );
 	}
 
-	void MYSQL::record( const IBafRecord* record )
+	void MYSQL::record( const BafRecord* record )
 	{
 		LOG_TRACE( "MYSQL::record" );
 		checkDB( _recordProperties );

@@ -28,7 +28,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>
 
 #include "bafdefines.h"
-#include "ibafrecord.h"
+#include "BafRecord.h"
 
 namespace bafprp
 {
@@ -65,8 +65,8 @@ namespace bafprp
 		Output( const std::string& name );
 		
 		// virtual methods for processing data
-		virtual void record( const IBafRecord* record ) = 0;
-		virtual void error( const IBafRecord* record, const std::string& error ) = 0;
+		virtual void record( const BafRecord* record ) = 0;
+		virtual void error( const BafRecord* record, const std::string& error ) = 0;
 		virtual void log( LOG_LEVEL level, const std::string& log ) = 0;
 
 		typedef std::map<std::string, std::string> property_map;
@@ -109,8 +109,8 @@ namespace bafprp
 		static void setOutputLog( const std::string& name );
 		static void setLogProperty( const std::string& name, const std::string& value );
 
-		static void outputRecord( const IBafRecord* record );
-		static void outputError( const IBafRecord* record, const std::string& error );
+		static void outputRecord( const BafRecord* record );
+		static void outputError( const BafRecord* record, const std::string& error );
 		static void outputLog( LOG_LEVEL level, const std::string& log );
 
 	};
