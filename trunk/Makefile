@@ -3,6 +3,7 @@ BINARY = bafprp
 
 SOURCE_DIR = src
 BIN_DIR = bin
+BUILD_DIR = build
 
 INCLUDE = -Iinclude
 LDFLAGS=-lodbc -lstdc++
@@ -48,13 +49,15 @@ VPATH=$(SOURCE_DIR)
 CFLAGS = $(OPT_FLAGS) -fpermissive -D_LINUX -DNDEBUG -Wno-deprecated
 DCFLAGS = $(DEBUG_FLAGS) -v -fpermissive -D_LINUX -D_DEBUG -Wno-deprecated
  
-OBJ_LINUX := $(OBJECTS:%.cpp=$(BIN_DIR)/%.o)
-DOBJ_LINUX := $(OBJECTS:%.cpp=$(BIN_DIR)/%_d.o)
+OBJ_LINUX := $(OBJECTS:%.cpp=$(BUILD_DIR)/%.o)
+DOBJ_LINUX := $(OBJECTS:%.cpp=$(BUILD_DIR)/%_d.o)
 
-$(BIN_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+	mkdir -p $(BUILD_DIR)
 	$(CPP) $(INCLUDE) $(CFLAGS) -o $@ -c $<
 	
-$(BIN_DIR)/%_d.o: $(SOURCE_DIR)/%.cpp
+$(BUILD_DIR)/%_d.o: $(SOURCE_DIR)/%.cpp
+	mkdir -p $(BUILD_DIR)
 	$(CPP) $(INCLUDE) $(DCFLAGS) -o $@ -c $<
 
 default: all
@@ -62,10 +65,12 @@ default: all
 all: $(BINARY) $(BINARY)_debug
 
 $(BINARY): $(OBJ_LINUX)
+	mkdir -p $(BIN_DIR)
 	$(CPP) $^ $(LDFLAGS) -s -o$(BIN_DIR)/$(BINARY)
 
 $(BINARY)_debug: $(DOBJ_LINUX)
-	$(CPP) $^ $(LDFLAGS) -o$(BIN_DIR)/$(BINARY)
+	mkdir -p $(BIN_DIR)
+	$(CPP) $^ $(LDFLAGS) -o$(BIN_DIR)/$(BINARY)_d
 
 install: $(BINARY)
 	cp $(BIN_DIR)/$(BINARY) /usr/bin/$(BINARY)
@@ -76,4 +81,4 @@ uninstall:
 	rm -rf /var/log/$(BINARY)
 
 clean:
-	rm -rf $(BIN_DIR)/*.o
+	rm -rf $(BUILD_DIR)
