@@ -11,7 +11,7 @@ LDFLAGS=-lodbc -lstdc++
 OPT_FLAGS = -O3 -pipe -s -funroll-loops -fno-rtti
 DEBUG_FLAGS = -g -ggdb3
 
-OBJECTS = \
+SOURCES = \
 bafdefines.cpp \
 baffile.cpp \
 bafprp.cpp \
@@ -19,7 +19,6 @@ base64.cpp \
 compat.cpp \
 consoleoutput.cpp \
 crc32.cpp \
-duplicate.cpp \
 emailoutput.cpp \
 fileoutput.cpp \
 bafrecord.cpp \
@@ -43,41 +42,44 @@ number_switch_dt.cpp
 # Do not edit below
 #
 
-VPATH=$(SOURCE_DIR)
+# The default rule is all (default because its the first rule, making it 'default')
+default: all
 
 CFLAGS = $(OPT_FLAGS) -fpermissive -D_LINUX -DNDEBUG -Wno-deprecated
 DCFLAGS = $(DEBUG_FLAGS) -v -fpermissive -D_LINUX -D_DEBUG -Wno-deprecated
  
-OBJ_LINUX := $(OBJECTS:%.cpp=$(BUILD_DIR)/%.o)
-DOBJ_LINUX := $(OBJECTS:%.cpp=$(BUILD_DIR)/%_d.o)
+OBJ_LINUX := $(SOURCES:%.cpp=$(BUILD_DIR)/%.o)
+DOBJ_LINUX := $(SOURCES:%.cpp=$(BUILD_DIR)/%_d.o)
 
-$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+$(OBJ_LINUX): $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 	mkdir -p $(BUILD_DIR)
 	$(CPP) $(INCLUDE) $(CFLAGS) -o $@ -c $<
-	
-$(BUILD_DIR)/%_d.o: $(SOURCE_DIR)/%.cpp
+
+$(DOBJ_LINUX): $(BUILD_DIR)/%_d.o: $(SOURCE_DIR)/%.cpp
 	mkdir -p $(BUILD_DIR)
 	$(CPP) $(INCLUDE) $(DCFLAGS) -o $@ -c $<
 
-default: all
+.PHONY: default all clean rebuild release debug install uninstall
 
-all: $(BINARY) $(BINARY)_debug
+all: release debug
 
-$(BINARY): $(OBJ_LINUX)
+rebuild: clean all
+
+release: $(OBJ_LINUX)
 	mkdir -p $(BIN_DIR)
 	$(CPP) $^ $(LDFLAGS) -s -o$(BIN_DIR)/$(BINARY)
 
-$(BINARY)_debug: $(DOBJ_LINUX)
+debug: $(DOBJ_LINUX)
 	mkdir -p $(BIN_DIR)
 	$(CPP) $^ $(LDFLAGS) -o$(BIN_DIR)/$(BINARY)_d
 
-install: $(BINARY)
+install: release
 	cp $(BIN_DIR)/$(BINARY) /usr/bin/$(BINARY)
 	mkdir -p /var/log/$(BINARY)
 
 uninstall:
-	rm -f /usr/bin/$(BINARY)
-	rm -rf /var/log/$(BINARY)
+	$(RM) -f /usr/bin/$(BINARY)
+	$(RM) -rf /var/log/$(BINARY)
 
 clean:
-	rm -rf $(BUILD_DIR)
+	$(RM) -rf $(BUILD_DIR)
