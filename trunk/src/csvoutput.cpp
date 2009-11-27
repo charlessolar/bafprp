@@ -47,7 +47,7 @@ namespace bafprp
 		}
 
 		std::string delim = ";";
-		property_map::iterator itr = _recordProperties.find( "delimeter" );
+		property_map::iterator itr = _recordProperties.find( "delimiter" );
 		if( itr != _recordProperties.end() )
 			delim = itr->second;
 
@@ -72,7 +72,7 @@ namespace bafprp
 		}
 
 		std::string delim = ";";
-		property_map::iterator itr = _recordProperties.find( "delimeter" );
+		property_map::iterator itr = _recordProperties.find( "delimiter" );
 		if( itr != _recordProperties.end() )
 			delim = itr->second;
 
@@ -118,7 +118,7 @@ namespace bafprp
 		// in your output. :(
 
 		std::string delim = ";";
-		itr = _recordProperties.find( "delimeter" );
+		itr = _recordProperties.find( "delimiter" );
 		if( itr != _recordProperties.end() )
 			delim = itr->second;
 
@@ -185,12 +185,9 @@ namespace bafprp
 
 			_file << field->getString() << delim;
 		}
-				
-		// I thought about trimming off the last delim but its not that big of a deal imo
-		// There is no way to trim of a character once its written to fstream so if you really want to
-		// get rid of that extra delim write all fields to a string then trim the string and THEN write the string to 
-		// _file.
 
+		// Trim off last delimiter
+		_file.seekp( -1, std::ios_base::cur );
 		_file << std::endl;
 		_file.flush();
 
