@@ -260,7 +260,7 @@ namespace bafprp
 		const IField* field = getField( "calltype" );
 		if( !field ) 
 		{
-			LOG_ERROR( "No 'calltype' field in record 1" );
+			LOG_ERROR( "No 'calltype' field in record " << _type );
 			return "";
 		}
 
