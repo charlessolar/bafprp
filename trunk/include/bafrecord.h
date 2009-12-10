@@ -48,7 +48,7 @@ namespace bafprp
 		DWORD getCRC() const { return _crc; }
 		std::string getFilename() const { return _filename; }
 
-		virtual ~BafRecord() {}
+		virtual ~BafRecord();
 	private:
 		BafRecord( const BYTE* data, int length, const std::string& filename, long filePos );
 
