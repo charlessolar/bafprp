@@ -144,6 +144,13 @@ namespace bafprp
 		CRC32::Encode( _fieldData, _length, _crc );
 	}
 
+	BafRecord::~BafRecord()
+	{
+		for( field_vector::iterator itr = _fields.begin(); itr != _fields.end(); itr++ )
+			delete *itr;
+	}
+
+
 	bool BafRecord::hasField( const std::string& name ) const
 	{
 		LOG_TRACE( "BafRecord::hasField" );
@@ -248,7 +255,69 @@ namespace bafprp
 	{
 		// get type id field
 		// match type id to description
-		return "";
+		std::ostringstream os;
+
+		const IField* field = getField( "calltype" );
+		if( !field ) 
+		{
+			LOG_ERROR( "No 'calltype' field in record 1" );
+			return "";
+		}
+
+		switch( field->getInt() )
+		{
+		case 5:
+			os << "Record " << _type << ": Local message rate call";
+			break;
+		case 6:
+			os << "Record " << _type << ": Toll call or non-US";
+			break;
+		case 9:
+			os << "Record " << _type << ": 411 Directory Assistance";
+			break;
+		case 26:
+			os << "Record " << _type << ": Conference Trunk Usage";
+			break;
+		case 42:
+			os << "Record " << _type << ": Time change marker";
+			break;
+		case 47:
+			os << "Record " << _type << ": Default AIN";
+			break;
+		case 90:
+			os << "Record " << _type << ": Sensor Audit Record";
+			break;
+		case 110:
+			os << "Record " << _type << ": Interlata call";
+			break;
+		case 119:
+			os << "Record " << _type << ": Incoming CDR";
+			break;
+		case 330:
+			{
+				const IField* featurecode = getField( "classfeaturecode" );
+				if( !featurecode ) 
+				{
+					LOG_ERROR( "No 'classfeaturecode' field in record " << _type );
+					os << "Record " << _type << ": Unknown";
+					break;
+				}
+				if( featurecode->getInt() == 1 || featurecode->getInt() == 2 || featurecode->getInt() == 3 )
+					os << "Record " << _type << ": CLASS feature: Outgoing Call Barring";
+				else
+					os << "Record " << _type << ": CLASS feature: Anonymous call rejection";
+				break;
+			}
+		default:
+			if( _type == 9014 )
+				os << "Record " << _type << ": File end marker";
+			else if( _type == 9013 )
+				os << "Record " << _type << ": File start marker";
+			else
+				os << "Record " << _type << ": Unknown";
+		}
+
+		return os.str();
 	}
 
 	// Modules are extra fields attached to the record.  Therefore we will use a giant switch
