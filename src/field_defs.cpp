@@ -373,7 +373,7 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "icincid", "45:FGB, IC/INC Involvement Unknown" );
 		FieldMaker::setFieldProperty( "icincid", "47:CIC Unknown, IC/INC Involved" );
 		FieldMaker::setFieldProperty( "icincid", "48:CIC Unknown, IC/INC Not Involved" );
-		FieldMaker::setFieldProperty( "icincid", "49:CIC Unknwon, IC/INC Involvement Unknown" );
+		FieldMaker::setFieldProperty( "icincid", "49:CIC Unknown, IC/INC Involvement Unknown" );
 		FieldMaker::setFieldProperty( "icincid", "4F:Error" );
 		FieldMaker::setFieldProperty( "icincid", "number:04" );
 		FieldMaker::setFieldProperty( "icincid", "number_only:true" );
