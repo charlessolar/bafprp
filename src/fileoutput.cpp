@@ -183,11 +183,13 @@ namespace bafprp
 		_file << "Position: " << record->getFilePosition() << std::endl;
 		_file << "--------------------------------------------------------------------------" << std::endl;
 
-		// sending a last name of "" effectively returns us the begining, getting the ball rolling.
+		// sending a lastUID of 0 effectively returns us the begining, getting the ball rolling.
 		while( ( field = record->getNextField( lastUID ) ) != NULL )
 		{
 			lastUID = field->getUID();
-			if( !field->filter() ) _file << field->getDesc() << ": " << field->getString() << std::endl;
+			if( !field->filter() )
+				_file << field->getDesc() << ": " << field->getID() << ": " << field->getString() << std::endl;
+
 		}
 
 		_file << std::endl;

@@ -154,7 +154,7 @@ namespace bafprp
 
 	std::string IField::getID() const
 	{
-		return getProperty( "id", true );
+		return _id;
 	}
 
 	std::string IField::getDesc() const

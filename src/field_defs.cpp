@@ -60,7 +60,7 @@ namespace bafprp
 		// Table 5
 		makeField( "recordofficeid", "numberswitch", "7", "Record Office Identification" );
 		FieldMaker::setFieldProperty( "recordofficeid", "switch:0" );
-		FieldMaker::setFieldProperty( "recordofficeid", "00:Defualt" );
+		FieldMaker::setFieldProperty( "recordofficeid", "00:Default" );
 		FieldMaker::setFieldProperty( "recordofficeid", "01:Record is From a Sensor Undergoing Validation Testing" );
 		FieldMaker::setFieldProperty( "recordofficeid", "number:16" );
 		// Table 6

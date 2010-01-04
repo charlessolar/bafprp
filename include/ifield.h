@@ -56,6 +56,7 @@ namespace bafprp
 		
 		int getSize() const;
 		std::string getID() const;
+		void setID( const std::string& id ) { _id = id; }
 		std::string getDesc() const;
 		bool filter() const;
 		void setProperties( property_map& props );

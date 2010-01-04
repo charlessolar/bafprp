@@ -53,6 +53,7 @@ namespace bafprp
 		BafRecord( const BYTE* data, int length, const std::string& filename, long filePos );
 
 		void addField( const std::string& field_type );
+		void addModuleField( unsigned int module, const std::string& field_type );
 		void setProperties( property_map& props ) { _properties = &props; }
 
 		void decodeModules();

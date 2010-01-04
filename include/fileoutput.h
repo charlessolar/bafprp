@@ -60,6 +60,7 @@ namespace bafprp
 
 		std::ofstream _file;
 		std::string _filename;
+		bool _detailed;
 		std::vector<std::string> _storedFilenames;  // For different output with different filenames
 		std::vector<std::string> _usedFilenames;
 

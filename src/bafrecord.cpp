@@ -231,6 +231,7 @@ namespace bafprp
 				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
 			}
 			_fields.push_back( field );
+			field->setID( field_type );
 			_field_types.push_back( field_type );
 			// update data position, the mod is to make the size even for nice division
 			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
@@ -249,6 +250,44 @@ namespace bafprp
 		}
 
 		LOG_TRACE( "/BafRecord::addField" );
+	}
+
+	void BafRecord::addModuleField( unsigned int module, const std::string& field_type )
+	{
+		LOG_TRACE( "BafRecord::addModuleField" );
+		IField* field = FieldMaker::newField( field_type );
+		if( !field )
+		{
+			LOG_ERROR( "Could not find field name '" << field_type << ".'  We will continue processing this record, but the record will be corrupt" );
+			_fieldData += 4;  // aprox avg length of a field
+			return;
+		}
+		if( *( _fieldData ) != 0xFF )  // If field is used, else data will be just FFFFFFFF
+		{
+			if( !field->convert( _fieldData ) )
+			{
+				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
+			}
+			_fields.push_back( field );
+			// This is a module field, so append the module number to the field name so names do not overlap
+			std::ostringstream os;
+			os << "m" << module << "." << field_type;
+			field->setID( os.str() );
+			_field_types.push_back( os.str() );
+			// update data position, the mod is to make the size even for nice division
+			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
+		}
+		else
+		{
+			// update data position, the mod is to make the size even for nice division
+			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
+			delete field;
+		}
+		if( ( _fieldData - _data ) > _length ) // overstepping our bounds here, not a good place to be
+		{
+			LOG_ERROR( "Record has outgrown its stated length of " << _length << ". It is now " << ( _fieldData - _data ) );
+		}
+		LOG_TRACE( "/BafRecord::addModuleField" );
 	}
 
 	std::string BafRecord::getType() const
@@ -342,129 +381,129 @@ namespace bafprp
 				// All done here
 				return;
 			case 21:
-				addField( "icincid" );
-				addField( "carrierconnectdate" );
-				addField( "carrierconnecttime" );
-				addField( "carrierelapsedtime" );
-				addField( "icinccalleventstatus" );
-				addField( "trunkgroupnumber" );
-				addField( "icincrouting" );
-				addField( "dialingpresubind" );
-				addField( "anicpnindicator" );
+				addModuleField( 21, "icincid" );
+				addModuleField( 21, "carrierconnectdate" );
+				addModuleField( 21, "carrierconnecttime" );
+				addModuleField( 21, "carrierelapsedtime" );
+				addModuleField( 21, "icinccalleventstatus" );
+				addModuleField( 21, "trunkgroupnumber" );
+				addModuleField( 21, "icincrouting" );
+				addModuleField( 21, "dialingpresubind" );
+				addModuleField( 21, "anicpnindicator" );
 				break;
 			case 22:
-				addField( "presentdate" );
-				addField( "presenttime" );
+				addModuleField( 22, "presentdate" );
+				addModuleField( 22, "presenttime" );
 				break;
 			case 25:
-				addField( "date" );
-				addField( "time" );
+				addModuleField( 25, "date" );
+				addModuleField( 25, "time" );
 				break;
 			case 27:
-				addField( "businessid" );
+				addModuleField( 27, "businessid" );
 				break;
 			case 29:
-				addField( "altbillnumber" );
+				addModuleField( 29, "altbillnumber" );
 				break;
 			case 30:
-				addField( "contextid" );
-				addField( "transsetfield" );
+				addModuleField( 30, "contextid" );
+				addModuleField( 30, "transsetfield" );
 				break;
 			case 40:
-				addField( "digitsid" );
-				addField( "sigdigs" );
-				addField( "digits" );
-				addField( "digitslong" );
+				addModuleField( 40, "digitsid" );
+				addModuleField( 40, "sigdigs" );
+				addModuleField( 40, "digits" );
+				addModuleField( 40, "digitslong" );
 				break;
 			case 49:
-				addField( "callcountnameonly" );
-				addField( "callcountnumonly" );
+				addModuleField( 49, "callcountnameonly" );
+				addModuleField( 49, "callcountnumonly" );
 				break;
 			case 68:
-				addField( "calleddndescription" );
+				addModuleField( 68, "calleddndescription" );
 				break;
 			case 70:
-				addField( "bearercaps" );
-				addField( "networkinterworking" );
-				addField( "sigsuppservusage" );
-				addField( "releasecauseind" );
+				addModuleField( 70, "bearercaps" );
+				addModuleField( 70, "networkinterworking" );
+				addModuleField( 70, "sigsuppservusage" );
+				addModuleField( 70, "releasecauseind" );
 				break;
 			case 71:
-				addField( "bearercaps" );
-				addField( "networkinterworking" );
-				addField( "releasecauseindicator" );
+				addModuleField( 71, "bearercaps" );
+				addModuleField( 71, "networkinterworking" );
+				addModuleField( 71, "releasecauseindicator" );
 				break;
 			case 74:
-				addField( "bbg" );
-				addField( "chargeablenpa" );
-				addField( "chargeableepn" );
-				addField( "trunkgroupnumber" );
+				addModuleField( 74, "bbg" );
+				addModuleField( 74, "chargeablenpa" );
+				addModuleField( 74, "chargeableepn" );
+				addModuleField( 74, "trunkgroupnumber" );
 				break;
 			case 102:
-				addField( "sigdigs" );
-				addField( "digits" );
+				addModuleField( 102, "sigdigs" );
+				addModuleField( 102, "digits" );
 				break;
 			case 103:
-				addField( "sigdigs" );
-				addField( "digits" );
+				addModuleField( 103,"sigdigs" );
+				addModuleField( 103, "digits" );
 				break;
 			case 104:
-				addField( "trunkid" );
+				addModuleField( 104, "trunkid" );
 				break;
 			case 109:
-				addField( "classfeaturecode" );
-				addField( "classfunctions" );
-				addField( "screenlistsizegen" );
+				addModuleField( 109, "classfeaturecode" );
+				addModuleField( 109, "classfunctions" );
+				addModuleField( 109, "screenlistsizegen" );
 				break;
 			case 119:
-				addField( "trunkgroupinfo" );
-				addField( "carrierinterface" );
-				addField( "networkidentifier" );
+				addModuleField( 119, "trunkgroupinfo" );
+				addModuleField( 119, "carrierinterface" );
+				addModuleField( 119, "networkidentifier" );
 				break;
 			case 164:
-				addField( "numberidentity" );
-				addField( "countrycode" );
-				addField( "sigdigs" );
-				addField( "largedigits" );
+				addModuleField( 164, "numberidentity" );
+				addModuleField( 164, "countrycode" );
+				addModuleField( 164, "sigdigs" );
+				addModuleField( 164, "largedigits" );
 				break;
 			case 203:
-				addField( "contextid" );
-				addField( "servproviderid" );
-				addField( "amasequencenumber" );
+				addModuleField( 203, "contextid" );
+				addModuleField( 203, "servproviderid" );
+				addModuleField( 203, "amasequencenumber" );
 				break;
 			case 204:
-				addField( "indicatorid" );
+				addModuleField( 204, "indicatorid" );
 				break;
 			case 207:
-				addField( "triggerseqnumber" );
-				addField( "linenumbertype" );
-				addField( "linenpa" );
-				addField( "linenumber" );
-				addField( "directorynumdesc" );
+				addModuleField( 207, "triggerseqnumber" );
+				addModuleField( 207, "linenumbertype" );
+				addModuleField( 207, "linenpa" );
+				addModuleField( 207, "linenumber" );
+				addModuleField( 207, "directorynumdesc" );
 				break;
 			case 306:
-				addField( "callinglineinfo" );
+				addModuleField( 306, "callinglineinfo" );
 				break;
 			case 307:
-				addField( "linenumbertype" );
-				addField( "linenpa" );
-				addField( "linenumber" );
+				addModuleField( 307, "linenumbertype" );
+				addModuleField( 307, "linenpa" );
+				addModuleField( 307, "linenumber" );
 				break;
 			case 611:
-				addField( "genericcontextid" );
-				addField( "digits" );
+				addModuleField( 611, "genericcontextid" );
+				addModuleField( 611, "digits" );
 				break;
 			case 719:
-				addField( "partyid" );
-				addField( "lrn" );
-				addField( "supportinginfo" );
+				addModuleField( 719, "partyid" );
+				addModuleField( 719, "lrn" );
+				addModuleField( 719, "supportinginfo" );
 				break;
 			case 720:
-				addField( "partyid" );
-				addField( "lrn" );
-				addField( "serviceproviderid" );
-				addField( "location" );
-				addField( "supportinginfo" );
+				addModuleField( 720, "partyid" );
+				addModuleField( 720, "lrn" );
+				addModuleField( 720, "serviceproviderid" );
+				addModuleField( 720, "location" );
+				addModuleField( 720, "supportinginfo" );
 				break;
 			default:
 				LOG_ERROR( "Unknown modules id: " << _fields.back()->getInt() << " at " << _filePos << "." << (DWORD)( _fieldData - _data ) << " record type " << getType() );
