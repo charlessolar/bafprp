@@ -67,9 +67,8 @@ namespace bafprp
 												// Seconds
 		milli += atoi( _return.substr( _return.length() - 3, 2 ).c_str() ) * 1000;
 												// Minutes
-		milli += atoi( _return.substr( _return.length() - 5, 2 ).c_str() ) * 60 * 1000;
-												// Hours  - 3 digits are reserved for hours
-		milli += atoi( _return.substr( _return.length() - 8, 3 ).c_str() ) * 60 * 60 * 1000;
+		milli += atoi( _return.substr( _return.length() - 8, 5 ).c_str() ) * 60 * 1000;
+
 		std::ostringstream os;
 		os << milli;
 		_return = os.str();
@@ -151,7 +150,7 @@ namespace bafprp
 			int milli = ( duration % 1000 ) / 100;  // divide by 100 since our ms will always be 1 digit ( we dont need a 3 digit float )
 			int seconds = ( duration / 1000 ) % 60;
 			int minutes = ( duration / 1000 / 60 ) % 60;
-			int hours = ( duration / 1000 / 60 / 60);
+			int hours = ( duration / 1000 / 60 / 60 );
 
 			// This is confusing only because I wanted to format it corectly
 			// Basically it prefixes a '0' if the value is 1 digit
