@@ -272,6 +272,43 @@ namespace bafprp
 		RecordMaker::setRecordField( 500, "time" );
 		RecordMaker::setRecordField( 500, "elapsedtime" );
 
+		RecordMaker::setRecordField( 501, "structurecode" );
+		RecordMaker::setRecordField( 501, "calltype" );
+		RecordMaker::setRecordField( 501, "sensortype" );
+		RecordMaker::setRecordField( 501, "sensorid" );
+		RecordMaker::setRecordField( 501, "recordofficetype" );
+		RecordMaker::setRecordField( 501, "recordofficeid" );
+		RecordMaker::setRecordField( 501, "date" );
+		RecordMaker::setRecordField( 501, "calledpartyanswerindicator" );
+		RecordMaker::setRecordField( 501, "servicefeaturecode" );
+		RecordMaker::setRecordField( 501, "originatingnpa" );
+		RecordMaker::setRecordField( 501, "originatingnumber" );
+		RecordMaker::setRecordField( 501, "overseasindicator" );
+		RecordMaker::setRecordField( 501, "terminatingnpa" );
+		RecordMaker::setRecordField( 501, "terminatingnumber" );
+		RecordMaker::setRecordField( 501, "time" );
+		RecordMaker::setRecordField( 501, "duration" );
+		RecordMaker::setRecordField( 501, "watsindicator" );
+		RecordMaker::setRecordField( 501, "watsband" );
+
+		RecordMaker::setRecordField( 502, "structurecode" );
+		RecordMaker::setRecordField( 502, "calltype" );
+		RecordMaker::setRecordField( 502, "sensortype" );
+		RecordMaker::setRecordField( 502, "sensorid" );
+		RecordMaker::setRecordField( 502, "recordofficetype" );
+		RecordMaker::setRecordField( 502, "recordofficeid" );
+		RecordMaker::setRecordField( 502, "date" );
+		RecordMaker::setRecordField( 502, "calledpartyanswerindicator" );
+		RecordMaker::setRecordField( 502, "servicefeaturecode" );
+		RecordMaker::setRecordField( 502, "originatingnpa" );
+		RecordMaker::setRecordField( 502, "originatingnumber" );
+		RecordMaker::setRecordField( 502, "overseasindicator" );
+		RecordMaker::setRecordField( 502, "terminatingnpa" );
+		RecordMaker::setRecordField( 502, "terminatingnumber" );
+		RecordMaker::setRecordField( 502, "time" );
+		RecordMaker::setRecordField( 502, "duration" );
+		RecordMaker::setRecordField( 502, "watsband" );
+
 		RecordMaker::setRecordField( 614, "structurecode" ); 
 		RecordMaker::setRecordField( 614, "calltype" ); 
 		RecordMaker::setRecordField( 614, "sensortype" ); 
