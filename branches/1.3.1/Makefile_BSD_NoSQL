@@ -1,0 +1,82 @@
+CC = /usr/bin/gcc
+
+INCLUDE = -I. -Iinclude
+
+# This was in the original, but doesn't appear to be used
+#LD = -Llibs
+
+LDFLAGS = -lstdc++
+
+# Uncomment for OpenBSD.
+#LDFLAGS += -lm
+
+#CFLAGS = -v -fpermissive -D_LINUX -DNDEBUG -fPIC \
+#-Wno-deprecated -static-libgcc
+
+CFLAGS = -v -fpermissive -D_LINUX -DNDEBUG -fPIC \
+-Wno-deprecated -shared-libgcc
+
+OPT_FLAGS = -O3 -pipe -s -funroll-loops -fno-rtti
+
+DEBUG_FLAGS = -g -ggdb3
+
+SOURCE_DIR = src
+BIN_DIR = bin
+
+#INSTALL_DIR = /usr/bin 
+INSTALL_DIR = /usr/local/bin
+
+BINARY = bafprp
+
+SOURCES = \
+bafdefines.cpp \
+baffile.cpp \
+bafprp.cpp \
+bafrecord.cpp \
+base64.cpp \
+compat.cpp \
+consoleoutput.cpp \
+crc32.cpp \
+csvoutput.cpp \
+date_dt.cpp \
+duration_dt.cpp \
+emailoutput.cpp \
+field_defs.cpp \
+fileoutput.cpp \
+ifield.cpp \
+mailer.cpp \
+nooutput.cpp \
+number_dt.cpp \
+number_switch_dt.cpp \
+output.cpp \
+phonenumber_dt.cpp \
+record_defs.cpp \
+switch_dt.cpp \
+time_dt.cpp
+
+OBJECTS := ${SOURCES:%.cpp=${BIN_DIR}/%.o}
+
+${INSTALL_DIR}/bafprp: ${OBJECTS}
+	if [ ! -d ${BIN_DIR} ]; then mkdir bin; fi
+	${CC} ${INCLUDE} ${CFLAGS} ${LDFLAGS} -o ${BIN_DIR}/${BINARY} ${OBJECTS}
+
+.for SOURCEFILE in ${SOURCES}
+${BIN_DIR}/${SOURCEFILE:S/cpp$/o/}: ${SOURCE_DIR}/${SOURCEFILE}
+	if [ ! -d ${BIN_DIR} ]; then mkdir bin; fi
+	${CC} ${INCLUDE} ${CFLAGS} -o $@ -c ${SOURCE_DIR}/${SOURCEFILE}
+.endfor
+
+install: ${INSTALL_DIR}/bafprp
+	cp ${BIN_DIR}/${BINARY} ${INSTALL_DIR}/${BINARY}
+	mkdir -p /var/log/bafprp
+
+uninstall:
+	rm -f ${INSTALL_DIR}/${BINARY}
+	rm -rf /var/log/bafprp
+
+clean:
+	rm -rf ${BIN_DIR}/*.o
+
+distclean:
+	rm -rf ${BIN_DIR}
+
