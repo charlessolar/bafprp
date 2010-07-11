@@ -287,7 +287,7 @@ namespace bafprp
 		RecordMaker::setRecordField( 501, "terminatingnpa" );
 		RecordMaker::setRecordField( 501, "terminatingnumber" );
 		RecordMaker::setRecordField( 501, "time" );
-		RecordMaker::setRecordField( 501, "duration" );
+		RecordMaker::setRecordField( 501, "elapsedtime" );
 		RecordMaker::setRecordField( 501, "watsindicator" );
 		RecordMaker::setRecordField( 501, "watsband" );
 
@@ -306,7 +306,7 @@ namespace bafprp
 		RecordMaker::setRecordField( 502, "terminatingnpa" );
 		RecordMaker::setRecordField( 502, "terminatingnumber" );
 		RecordMaker::setRecordField( 502, "time" );
-		RecordMaker::setRecordField( 502, "duration" );
+		RecordMaker::setRecordField( 502, "elapsedtime" );
 		RecordMaker::setRecordField( 502, "watsband" );
 
 		RecordMaker::setRecordField( 614, "structurecode" ); 
