@@ -303,34 +303,120 @@ namespace bafprp
 			return "";
 		}
 
+		os << "Record " << _type << ": ";
+
 		switch( field->getInt() )
 		{
+		case 1:
+			os << "Detailed Message Rate, Timed, with Message Billing Index";
+			break;
 		case 5:
-			os << "Record " << _type << ": Local message rate call";
+			os << "Local message rate call";
 			break;
 		case 6:
-			os << "Record " << _type << ": Toll call or non-US";
+			os << "Toll call or non-US";
 			break;
 		case 9:
-			os << "Record " << _type << ": 411 Directory Assistance";
+			os << "411 Directory Assistance";
+			break;
+		case 11:
+			os << "Foreign Exchange, Automatic Flexible Routing";
+			break;
+		case 13:
+			os << "Default release to Pivot";
+			break;
+		case 21:
+			os << "Common Control Switching Arrangement Sampling";
+			break;
+		case 25:
+			os << "Station Coin Zone";
 			break;
 		case 26:
-			os << "Record " << _type << ": Conference Trunk Usage";
+			os << "Conference Trunk Usage";
+			break;
+		case 32:
+			os << "Tandem Tie Trunk";
+			break;
+		case 41:
+			os << "Local Coin";
 			break;
 		case 42:
-			os << "Record " << _type << ": Time change marker";
+			os << "Time change marker";
+			break;
+		case 45:
+			os << "ISDN User Service";
 			break;
 		case 47:
-			os << "Record " << _type << ": Default AIN";
+			os << "Default AIN";
+			break;
+		case 48:
+			os << "Usage-Sensative Feature Call";
+			break;
+		case 67:
+			os << "Originating Study Record";
+			break;
+		case 83:
+			os << "Inward Call Extended to a Centrex Station";
+			break;
+		case 84:
+			os << "Inward Call Extended to a Tie Trunk";
+			break;
+		case 88:
+			os << "Non-Directory Assistance 555 Call";
 			break;
 		case 90:
-			os << "Record " << _type << ": Sensor Audit Record";
+			os << "Sensor Audit Record";
+			break;
+		case 99:
+			os << "ETS Call Vis CCSA";
 			break;
 		case 110:
-			os << "Record " << _type << ": Interlata call";
+			os << "Interlata call";
 			break;
 		case 119:
-			os << "Record " << _type << ": Incoming CDR";
+			os << "Incoming CDR";
+			break;
+		case 126:
+			os << "Originating Interconnection";
+			break;
+		case 127:
+			os << "Transiting Interconnection";
+			break;
+		case 128:
+			os << "Terminating Interconnection";
+			break;
+		case 132:
+			os << "Feature Group A - Terminating";
+			break;
+		case 159:
+			os << "Message Detail Recording Data";
+			break;
+		case 160:
+			os << "On-Network PVN Calls";
+			break;
+		case 161:
+			os << "PVC On-Network IC Overflow Calls";
+			break;
+		case 162:
+			os << "Off-Network PVN Call";
+			break;
+		case 163:
+			os << "Off-Network PVN Overflow Calls";
+			break;
+		case 164:
+			os << "PVN Call Using Feature Group A";
+			break;
+		case 165:
+			os << "PVN Call Using Foreign Exchange";
+			break;
+		case 166:
+			os << "PVN Call Using OUTWATS";
+			break;
+		case 167:
+			os << "PVN Call Using Tie Trunk";
+			break;
+		case 184:
+			os << "ISDN Terminating User Service Record";
 			break;
 		case 330:
 			{
@@ -338,22 +424,26 @@ namespace bafprp
 				if( !featurecode ) 
 				{
 					LOG_ERROR( "No 'classfeaturecode' field in record " << _type );
-					os << "Record " << _type << ": Unknown";
+					os << "Unknown";
 					break;
 				}
 				if( featurecode->getInt() == 1 || featurecode->getInt() == 2 || featurecode->getInt() == 3 )
-					os << "Record " << _type << ": CLASS feature: Outgoing Call Barring";
+					os << "CLASS feature: Outgoing Call Barring";
 				else
-					os << "Record " << _type << ": CLASS feature: Anonymous call rejection";
+					os << "CLASS feature: Anonymous call rejection";
 				break;
 			}
+		case 721:
+			os << "Default Local Number Portability";
+			break;
+		case 9013:
+			os << "File start marker";
+			break;
+		case 9014:
+			os << "File end marker";
+			break;
 		default:
-			if( _type == 9014 )
-				os << "Record " << _type << ": File end marker";
-			else if( _type == 9013 )
-				os << "Record " << _type << ": File start marker";
-			else
-				os << "Record " << _type << ": Unknown";
+			os << "Unknown";
 		}
 
 		return os.str();
