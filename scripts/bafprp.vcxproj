@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1F3CAD36-95CD-4EDF-B1DD-A4374B9936F4}</ProjectGuid>
+    <RootNamespace>bafprp</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)../bin/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)../build/$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)../bin/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)../build/$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\bafdefines.cpp" />
+    <ClCompile Include="..\src\bafprp.cpp" />
+    <ClCompile Include="..\src\consoleoutput.cpp" />
+    <ClCompile Include="..\src\csvoutput.cpp" />
+    <ClCompile Include="..\src\emailoutput.cpp" />
+    <ClCompile Include="..\src\fileoutput.cpp" />
+    <ClCompile Include="..\src\mssqloutput.cpp" />
+    <ClCompile Include="..\src\mysqloutput.cpp" />
+    <ClCompile Include="..\src\nooutput.cpp" />
+    <ClCompile Include="..\src\output.cpp" />
+    <ClCompile Include="..\src\bafrecord.cpp" />
+    <ClCompile Include="..\src\record_defs.cpp" />
+    <ClCompile Include="..\src\baffile.cpp" />
+    <ClCompile Include="..\src\base64.cpp" />
+    <ClCompile Include="..\src\compat.cpp" />
+    <ClCompile Include="..\src\crc32.cpp" />
+    <ClCompile Include="..\src\mailer.cpp" />
+    <ClCompile Include="..\src\date_dt.cpp" />
+    <ClCompile Include="..\src\duration_dt.cpp" />
+    <ClCompile Include="..\src\field_defs.cpp" />
+    <ClCompile Include="..\src\ifield.cpp" />
+    <ClCompile Include="..\src\number_dt.cpp" />
+    <ClCompile Include="..\src\number_switch_dt.cpp" />
+    <ClCompile Include="..\src\phonenumber_dt.cpp" />
+    <ClCompile Include="..\src\switch_dt.cpp" />
+    <ClCompile Include="..\src\time_dt.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\bafdefines.h" />
+    <ClInclude Include="..\include\consoleoutput.h" />
+    <ClInclude Include="..\include\csvoutput.h" />
+    <ClInclude Include="..\include\emailoutput.h" />
+    <ClInclude Include="..\include\fileoutput.h" />
+    <ClInclude Include="..\include\mssqloutput.h" />
+    <ClInclude Include="..\include\mysqloutput.h" />
+    <ClInclude Include="..\include\nooutput.h" />
+    <ClInclude Include="..\include\output.h" />
+    <ClInclude Include="..\include\bafrecord.h" />
+    <ClInclude Include="..\include\baffile.h" />
+    <ClInclude Include="..\include\base64.h" />
+    <ClInclude Include="..\include\compat.h" />
+    <ClInclude Include="..\include\crc32.h" />
+    <ClInclude Include="..\include\jwsmtp.h" />
+    <ClInclude Include="..\include\mailer.h" />
+    <ClInclude Include="..\include\date_dt.h" />
+    <ClInclude Include="..\include\duration_dt.h" />
+    <ClInclude Include="..\include\ifield.h" />
+    <ClInclude Include="..\include\number_dt.h" />
+    <ClInclude Include="..\include\number_switch_dt.h" />
+    <ClInclude Include="..\include\phonenumber_dt.h" />
+    <ClInclude Include="..\include\switch_dt.h" />
+    <ClInclude Include="..\include\time_dt.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

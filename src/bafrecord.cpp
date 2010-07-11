@@ -272,6 +272,24 @@ namespace bafprp
 			// This is a module field, so append the module number to the field name so names do not overlap
 			std::ostringstream os;
 			os << "m" << module << "." << field_type;
+
+			// WHen 2 of the same modules are attached, names can conflict, so suffix conflicting names with an incrementing number
+			int count = 0;
+			bool found = false;
+			do
+			{
+				found = false;
+				for( field_type_vector::iterator itr = _field_types.begin(); itr != _field_types.end(); ++itr )
+					if( (*itr) == os.str() )
+					{
+						found = true;
+						os.str("");
+						count++;
+						os << "m" << module << "." << field_type << "." << count;
+						break;
+					}
+			} while( found );
+
 			field->setID( os.str() );
 			_field_types.push_back( os.str() );
 			// update data position, the mod is to make the size even for nice division
