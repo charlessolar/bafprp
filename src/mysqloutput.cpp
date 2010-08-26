@@ -221,17 +221,17 @@ namespace bafprp
 
 			if( itr->second == "int" || itr->second == "bigint" )
 			{
-				query1 << itr->first << ", ";
+				query1 << "`" << itr->first << "`, ";
 				query2 << "'" << field->getLong() << "', ";
 			}
 			else if( itr->second == "decimal" || itr->second == "float" )
 			{
-				query1 << itr->first << ", ";
+				query1 << "`" << itr->first << "`, ";
 				query2 << "'" << field->getFloat() << "', ";
 			}
 			else
 			{
-				query1 << itr->first << ", ";
+				query1 << "`" << itr->first << "`, ";
 				query2 << "'" << sanitize( field->getString() ) << "', ";
 			}
 		}
