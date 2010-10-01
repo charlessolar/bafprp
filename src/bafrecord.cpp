@@ -590,7 +590,7 @@ namespace bafprp
 				addModuleField( 207, "directorynumdesc" );
 				break;
 			case 306:
-				addModuleField( 306, "callinglineinfo" );
+				addModuleField( 306, "originatinglineinfo" );
 				break;
 			case 307:
 				addModuleField( 307, "linenumbertype" );
