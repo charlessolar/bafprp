@@ -647,6 +647,9 @@ namespace bafprp
 		// Table 415
 		makeField( "classfeaturecode", "number", "3", "CLASS Feature Code" );
 
+		// Table 421
+		makeField( "originatinglineinfo", "number", "3", "Originating Line Information Parameter (OLIP)" );
+
 		// Table 423
 		makeField( "linenumbertype", "number", "3", "Line Number Type" );
 
