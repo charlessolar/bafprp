@@ -226,12 +226,12 @@ namespace bafprp
 		}
 		if( *( _fieldData ) != 0xFF )  // If field is used, else data will be just FFFFFFFF
 		{
+			field->setID( field_type );
 			if( !field->convert( _fieldData ) )
 			{
 				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
 			}
 			_fields.push_back( field );
-			field->setID( field_type );
 			_field_types.push_back( field_type );
 			// update data position, the mod is to make the size even for nice division
 			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
@@ -542,10 +542,10 @@ namespace bafprp
 				addModuleField( 71, "releasecauseindicator" );
 				break;
 			case 74:
-				addModuleField( 74, "bbg" );
-				addModuleField( 74, "chargeablenpa" );
-				addModuleField( 74, "chargeableepn" );
-				addModuleField( 74, "trunkgroupnumber" );
+				addModuleField( 74, "bbgcalltype" );
+				addModuleField( 74, "bbgbillingnpa" );
+				addModuleField( 74, "bbgbillingcoend" );
+				addModuleField( 74, "simfacgroup" );
 				break;
 			case 102:
 				addModuleField( 102, "sigdigs" );

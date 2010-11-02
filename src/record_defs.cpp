@@ -439,6 +439,25 @@ namespace bafprp
 		RecordMaker::setRecordField( 9014, "recordcount" );
 		RecordMaker::setRecordField( 9014, "blockcount" );
 
+		RecordMaker::setRecordField( 9038, "structurecode" );
+		RecordMaker::setRecordField( 9038, "calltype" );
+		RecordMaker::setRecordField( 9038, "sensortype" );
+		RecordMaker::setRecordField( 9038, "sensorid" );
+		RecordMaker::setRecordField( 9038, "recordofficetype" );
+		RecordMaker::setRecordField( 9038, "recordofficeid" );
+		RecordMaker::setRecordField( 9038, "dateheaderrecorded" );
+		RecordMaker::setRecordField( 9038, "timeheaderrecorded" );
+		RecordMaker::setRecordField( 9038, "amasequencenum" );
+		RecordMaker::setRecordField( 9038, "collectorid" );
+		RecordMaker::setRecordField( 9038, "traceraudittype" );
+		RecordMaker::setRecordField( 9038, "headertype" );
+		RecordMaker::setRecordField( 9038, "sendingunitnumber" );
+		RecordMaker::setRecordField( 9038, "firstblocknumber" );
+		RecordMaker::setRecordField( 9038, "datefirstblock" );
+		RecordMaker::setRecordField( 9038, "timefirstblock" );
+		RecordMaker::setRecordField( 9038, "datetransmitted" );
+		RecordMaker::setRecordField( 9038, "timetransmitted" );
+
 		RecordMaker::setRecordField( 9102, "structurecode" ); 
 		RecordMaker::setRecordField( 9102, "calltype" ); 
 		RecordMaker::setRecordField( 9102, "sensortype" ); 
