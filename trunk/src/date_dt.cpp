@@ -83,7 +83,7 @@ namespace bafprp
 
 			if( ( mytm->tm_year + 1900 ) < atoi( year ) )
 			{
-				LOG_WARN( "The year read from the baf file " << year << " is greater than the current system year " << mytm->tm_year << " assuming decade mismatch, subtracting 10 from baf file year" );
+				LOG_WARN( "The year read from the baf file " << year << " is greater than the current system year " << (mytm->tm_year+1900) << " assuming decade mismatch, subtracting 10 from baf file year" );
 				year[2]--;  // playing with the ascii code, not bothering to convert to int
 				if( year[2] < '0' )
 					year[2] = '9';
