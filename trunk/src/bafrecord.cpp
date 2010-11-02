@@ -436,6 +436,9 @@ namespace bafprp
 		case 184:
 			os << "ISDN Terminating User Service Record";
 			break;
+		case 264:
+			os << "Calling Identify Delivery Record";
+			break;
 		case 330:
 			{
 				const IField* featurecode = getField( "classfeaturecode" );
@@ -451,6 +454,8 @@ namespace bafprp
 					os << "CLASS feature: Anonymous call rejection";
 				break;
 			}
+		case 331:
+			os << "Bulk Calling Line Identification (BCLID)";
 		case 721:
 			os << "Default Local Number Portability";
 			break;
