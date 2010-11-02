@@ -525,8 +525,8 @@ namespace bafprp
 			case 40:
 				addModuleField( 40, "digitsid" );
 				addModuleField( 40, "sigdigs" );
-				addModuleField( 40, "digits" );
-				addModuleField( 40, "digitslong" );
+				addModuleField( 40, "digitsdialed1" );
+				addModuleField( 40, "digitsdialed2" );
 				break;
 			case 49:
 				addModuleField( 49, "callcountnameonly" );
