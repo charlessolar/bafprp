@@ -73,6 +73,12 @@ namespace bafprp
 		makeField( "datebefore", "date", "5", "Date Before Change" );
 		// Table 6
 		makeField( "dateafter", "date", "5", "Date After Change" );
+		// Table 6
+		makeField( "dateheaderrecorded", "date", "5", "Date Header Recorded" );
+		// Table 6
+		makeField( "datefirstblock", "date", "5", "Date First Block was Written" );
+		// Table 6
+		makeField( "datetransmitted", "date", "5", "Date Data was Transmitted to Collector" ); 
 		// Table 7
 		makeField( "timingindicator", "switch", "5", "Timing Indicator" );
 		FieldMaker::setFieldProperty( "timingindicator", "switch:0" );
@@ -257,6 +263,12 @@ namespace bafprp
 		makeField( "timebefore", "time", "7", "Time Before Change" );
 		// Table 18
 		makeField( "timeafter", "time", "7", "Time After Change" );
+		// Table 18
+		makeField( "timeheaderrecorded", "time", "7", "Time Header Recorded" );
+		// Table 18
+		makeField( "timefirstblock", "time", "7", "Time First Block was Written" );
+		// Table 18
+		makeField( "timetransmitted", "time", "7", "Time Data was Transmitted to Collector" );
 		// Table 19
 		makeField( "elapsedtime", "duration", "9", "Elapsed Time" );
 		// Table 19
@@ -388,15 +400,15 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "icincrouting", "03:CAP from AP Tandem" );
 		FieldMaker::setFieldProperty( "icincrouting", "04:Tandem Signaling to TSP - CAP Trunks" );
 		FieldMaker::setFieldProperty( "icincrouting", "05:Tandem from Another LEC" );
-
+		// Table 60
 		makeField( "anicpnindicator", "switch", "1", "ANI/CPN Indicator" );
 		FieldMaker::setFieldProperty( "anicpnindicator", "00:Neither ANI or CPN Info Provided" );
 		FieldMaker::setFieldProperty( "anicpnindicator", "01:ANI Info" );
 		FieldMaker::setFieldProperty( "anicpnindicator", "02:CPN Info" );
 		FieldMaker::setFieldProperty( "anicpnindicator", "03:Both ANI and CPN" );
-
+		// Table 62
 		makeField( "dnicode", "number", "5", "Data Network Identification Code" );
-		
+		// Table 64
 		makeField( "chargepacketind", "switch", "3", "Charging and Packet Indicator" );
 		FieldMaker::setFieldProperty( "chargepacketind", "switch:0" );
 		FieldMaker::setFieldProperty( "chargepacketind", "00:Unused" );
@@ -415,19 +427,21 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "chargepacketind", "23:Third Party" );
 		FieldMaker::setFieldProperty( "chargepacketind", "24:Originating NUI" );
 		FieldMaker::setFieldProperty( "chargepacketind", "25:terminating NUI" );
-		
+		// Table 70
 		makeField( "callednumberdesc", "number", "3", "Called Directory Number Description" );
+		// Table 72
 		makeField( "altroutenumber", "number", "3", "Alternate Route Number" );
-
+		// Table 73
 		makeField( "intntlsvcdiff", "switch", "3", "International Service Difficulty" );
 		FieldMaker::setFieldProperty( "intntlsvcdiff", "switch:1" );
 		FieldMaker::setFieldProperty( "intntlsvcdiff", "11:Wrong Number" );
 		FieldMaker::setFieldProperty( "intntlsvcdiff", "12:Cut Off" );
 		FieldMaker::setFieldProperty( "intntlsvcdiff", "13:Poor Transmission" );
-		
+		// Table 74
 		makeField( "creditmultiplierfactor", "number", "5", "Credit Multiplier Factor" );
+		// Table 75
 		makeField( "chargeamount", "number", "5", "Charge Amount" );
-		
+		// Table 76
 		makeField( "numberidentity", "switch", "1", "Number Identity" );
 		FieldMaker::setFieldProperty( "numberidentity", "switch:0" );
 		FieldMaker::setFieldProperty( "numberidentity", "01:Originating ANI" );
@@ -438,10 +452,11 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "numberidentity", "06:RN" );
 		FieldMaker::setFieldProperty( "numberidentity", "07:OCN" );
 		FieldMaker::setFieldProperty( "numberidentity", "08:Provisioned Billing Number" );
-
+		// Table 77
 		makeField( "servicelogicid", "number", "9", "Service Logic ID" );
+		// Table 78
 		makeField( "digitsid", "number", "3", "Digits Identifier" );
-
+		// Table 81
 		makeField( "npanxxid", "numberswitch", "7", "NPA-NXX Identifier" );
 		FieldMaker::setFieldProperty( "npanxxid", "switch:0" );
 		FieldMaker::setFieldProperty( "npanxxid", "00:Combined Query Counts" );
@@ -455,7 +470,7 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "npanxxid", "08:822" );
 		FieldMaker::setFieldProperty( "npanxxid", "09:Reserved" );
 		FieldMaker::setFieldProperty( "npanxxid", "number:16" );
-
+		// Table 83
 		makeField( "trunkgroupnumber", "numberswitch", "5", "Trunk Group Number" );
 		FieldMaker::setFieldProperty( "trunkgroupnumber", "switch:0" );
 		FieldMaker::setFieldProperty( "trunkgroupnumber", "01:SS7 Direct" );
@@ -466,7 +481,18 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "trunkgroupnumber", "06:SS7 from IC to AT" );
 		FieldMaker::setFieldProperty( "trunkgroupnumber", "09:Signal Type Not Specified" );
 		FieldMaker::setFieldProperty( "trunkgroupnumber", "number:15" );
-
+		// Table 83
+		makeField( "simfacgroup", "numberswitch", "5", "Simulated Facility Group" );
+		FieldMaker::setFieldProperty( "simfacgroup", "switch:0" );
+		FieldMaker::setFieldProperty( "simfacgroup", "01:SS7 Direct" );
+		FieldMaker::setFieldProperty( "simfacgroup", "02:Non-SS7 from IC to AT" );
+		FieldMaker::setFieldProperty( "simfacgroup", "03:SS7 Direct Trunk Group Number" );
+		FieldMaker::setFieldProperty( "simfacgroup", "04:SS7 from IC to AT" );
+		FieldMaker::setFieldProperty( "simfacgroup", "05:Non-SS7 from IC to AT" );
+		FieldMaker::setFieldProperty( "simfacgroup", "06:SS7 from IC to AT" );
+		FieldMaker::setFieldProperty( "simfacgroup", "09:Signal Type Not Specified" );
+		FieldMaker::setFieldProperty( "simfacgroup", "number:15" );
+		// Table 85
 		makeField( "dialingpresubind", "switch", "1", "Dialing and Presubscription Indicator" );
 		FieldMaker::setFieldProperty( "dialingpresubind", "00:Dialed Digits Cannot Be Determined" );
 		FieldMaker::setFieldProperty( "dialingpresubind", "01:CAC not dialed, cust presub, no presub ind" );
@@ -479,7 +505,7 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "dialingpresubind", "08:CAC not dialed, station not presub, no presub ind" );
 		FieldMaker::setFieldProperty( "dialingpresubind", "09:CAC dialed unknown, station presub, presub ind" );
 
-		
+		// Table 87
 		makeField( "customerid", "numberswitch", "11", "Customer Identification" );
 		FieldMaker::setFieldProperty( "customerid", "switch:0" );
 		FieldMaker::setFieldProperty( "customerid", "00:Default" );
@@ -488,22 +514,24 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "customerid", "03:Originating and Terminating" );
 		FieldMaker::setFieldProperty( "customerid", "number:15" );
 		FieldMaker::setFieldProperty( "customerid", "number:55" );
-
+		// Table 88
 		makeField( "modulecode", "number", "3", "Module Code" );
+		// Table 89
 		makeField( "transfield", "number", "3", "Translation-Settable Field" );
-		
+		// Table 91
 		makeField( "servicedifficulty", "switch", "1", "Service Difficulty" );
 		FieldMaker::setFieldProperty( "servicedifficulty", "switch:0" );
 		FieldMaker::setFieldProperty( "servicedifficulty", "00:Not Used" );
 		FieldMaker::setFieldProperty( "servicedifficulty", "01:Wrong Number" );
 		FieldMaker::setFieldProperty( "servicedifficulty", "02:Cut off" );
 		FieldMaker::setFieldProperty( "servicedifficulty", "03:Poor Transmition" );
-		
-		makeField( "numpermin", "number", "3", "Number of Occurrences/Minutes" );
+		// Table 92
+		makeField( "numbermin", "number", "3", "Number of Occurrences/Minutes" );
+		// Table 95
 		makeField( "credit", "money", "5", "Amount of Credit" );
+		// Table 105
 		makeField( "identificationcode", "number", "5", "5-Digit ID Number" );
-		makeField( "softwareid", "number", "5", "Software Release Identification" );
-
+		// Table 117
 		makeField( "billingid", "switch", "1", "Billing type Identification" );
 		FieldMaker::setFieldProperty( "billingid", "switch:0" );
 		FieldMaker::setFieldProperty( "billingid", "00:Not Used" );
@@ -511,6 +539,10 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "billingid", "02:Special Billing Number" );
 		FieldMaker::setFieldProperty( "billingid", "03:Third Number" );
 		FieldMaker::setFieldProperty( "billingid", "04:Collect" );
+		// Table 120
+		makeField( "softwareid", "number", "5", "Software Release Identification" );
+		// Table 120
+		makeField( "collectorid", "number", "5", "Collector Program Generci Number" );
 
 		// Table 126
 		makeField( "digits", "number", "15", "Digits" );	
@@ -533,6 +565,11 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "countrycode", "04:X.121 Number" );
 		FieldMaker::setFieldProperty( "countrycode", "09:E.164 Number, LIDB Cannot Determine Code Length" );
 		FieldMaker::setFieldProperty( "countrycode", "number:14" );
+
+		// Table 188
+		makeField( "bbgbillingnpa", "number", "3", "BBG Billing NPA" );
+		// Table 189
+		makeField( "bbgbillingcoend", "number", "7", "BBG Billing CO-End Point Number" );
 
 		// Table 206
 		makeField( "directorynumdesc", "number", "3", "Directory Number Description" );
@@ -571,15 +608,35 @@ namespace bafprp
 		// Table 330
 		makeField( "classfunctions", "switch", "3", "CLASS Functions" );
 		FieldMaker::setFieldProperty( "classfunctions", "switch:2" );
-		FieldMaker::setFieldProperty( "classfunctions", "00:None" );
-		FieldMaker::setFieldProperty( "classfunctions", "01:Active" );
-		FieldMaker::setFieldProperty( "classfunctions", "02:Inactive" );
-		FieldMaker::setFieldProperty( "classfunctions", "03:Delete" );
-		FieldMaker::setFieldProperty( "classfunctions", "04:Create Active" );
-		FieldMaker::setFieldProperty( "classfunctions", "05:Create Inactive" );
-		FieldMaker::setFieldProperty( "classfunctions", "06:Session Aborted" );
+		FieldMaker::setFieldProperty( "classfunctions", "20:None" );
+		FieldMaker::setFieldProperty( "classfunctions", "21:Active" );
+		FieldMaker::setFieldProperty( "classfunctions", "22:Inactive" );
+		FieldMaker::setFieldProperty( "classfunctions", "23:Delete" );
+		FieldMaker::setFieldProperty( "classfunctions", "24:Create Active" );
+		FieldMaker::setFieldProperty( "classfunctions", "25:Create Inactive" );
+		FieldMaker::setFieldProperty( "classfunctions", "26:Session Aborted" );
 		// Table 331
 		makeField( "classfeaturestatus", "number", "3", "Class Feature Status" );
+
+		// Table 407
+		makeField( "bbgcalltype", "switch", "3", "BBG Call Type" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "switch:1" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "1:BBG Call Type" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "10:Unused ( Vendor Specific )" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "11:Intercom use" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "12:Public network access: Originating outgoing" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "13:Public network access: Incoming terminating" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "14:Private network access: Originating outgoing" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "15:Private network access: Incoming terminating" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "16:Miscellaneous internal connection" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "17:Reserved ( Vendor Specific )" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "18:Reserved ( Vendor Specific )" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "19:Reserved ( Vendor Specific )" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "switch:2" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "2:Control Status" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "20:Not applicable" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "21:Within control limit" );
+		FieldMaker::setFieldProperty( "bbgcalltype", "22:Control overflow, routed" );
 
 		// Table 410
 		makeField( "networkinterworking", "switch", "1", "Network Interworking" );
@@ -593,7 +650,7 @@ namespace bafprp
 		// Table 411
 		makeField( "releasecauseind", "numberswitch", "5", "Release Cause Indicator" );
 		FieldMaker::setFieldProperty( "releasecauseind", "switch:1" );
-		FieldMaker::setFieldProperty( "releasecauseind", "1:Cause Catagory" );
+		FieldMaker::setFieldProperty( "releasecauseind", "1:Cause Category" );
 		FieldMaker::setFieldProperty( "releasecauseind", "10:ITU Standard" );
 		FieldMaker::setFieldProperty( "releasecauseind", "11:National" );
 		FieldMaker::setFieldProperty( "releasecauseind", "12:Network Specific" );
@@ -653,8 +710,14 @@ namespace bafprp
 		// Table 423
 		makeField( "linenumbertype", "number", "3", "Line Number Type" );
 
+		// Table 480
+		makeField( "headertype", "number", "2", "Header Type" );
+
 		// Table 488
 		makeField( "networkidentifier", "number", "7", "Carrier / Network Identifier" );
+
+		// Table 490
+		makeField( "sendingunitnumber", "number", "3", "Sending Unit Number" );
 
 		// Table 610
 		makeField( "indicatorid", "number", "3", "Indicator ID" );
@@ -712,6 +775,8 @@ namespace bafprp
 		makeField( "timingerrorbafrecords", "number", "7", "BAF Records with Timing Errors" );
 		// Table 804
 		makeField( "lostbafrecords", "number", "7", "Lost BAF Records on Block Writes" );
+		// Table 804
+		makeField( "firstblocknumber", "number", "7", "First Block Sequence Number" );
 		// Table 805
 		makeField( "bafrecords", "number", "9", "BAF Records" );
 		// Table 805
