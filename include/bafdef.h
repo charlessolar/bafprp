@@ -6,35 +6,41 @@
 /*                                                                           */
 /* Purpose:   Header file for bafview definitions.                           */
 /*                                                                           */
-/* (C) COPYRIGHT DATA CONNECTION LIMITED 2001 - 2005                         */
+/* (C) COPYRIGHT DATA CONNECTION LIMITED                                     */
 /*                                                                           */
-/* $Revision::   1.29               $ $Modtime::   03 Nov 2005 10:15:38   $  */
+/* $Id:: bafdef.h 12654 2009-09-17 10:16:54Z pf                           $  */
+/* $URL:: http://enfieldsvn/repos/metaswitch/trunk/tools/code/tools/bafvi#$  */
 /*                                                                           */
-/* This program is free software; you can redistribute it and/or modify it   */
-/* under the terms of the GNU General Public License as published by the     */
-/* Free Software Foundation; either version 2 of the License, or (at your    */
-/* option) any later version.                                                */
+/* This program is provided by MetaSwitch at no charge on an "as is" basis   */
+/* and is not part of Licensed Software as defined in our customer           */
+/* agreements.  It is provided without warranty of any kind and any use of   */
+/* the software is at your own risk.  MetaSwitch and its suppliers disclaim  */
+/* all other warranties and conditions, either express or implied,           */
+/* including, but not limited to, implied warranties and conditions of       */
+/* merchantability, fitness for a particular purpose, title and              */
+/* non-infringement.  In no event shall MetaSwitch or its suppliers be       */
+/* liable for any special, incidental, indirect, or consequential damages    */
+/* arising out of the use of or inability to use this program.               */
 /*                                                                           */
-/* This program is distributed in the hope that it will be useful, but       */
-/* WITHOUT ANY WARRANTY; without even the implied warranty of                */
-/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General */
-/* Public License for more details.                                          */
+/* You may install and use this program for internal use only, but you may   */
+/* not distribute it.  If you do not agree with these terms and conditions   */
+/* you should not use the program.                                           */
 /*                                                                           */
-/* You should have received a copy of the GNU General Public License along   */
-/* with this program; if not, write to the Free Software Foundation, Inc.,   */
-/* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.              */
+/* The program is protected by copyright laws and international copyright    */
+/* treaties, as well as other intellectual property laws and treaties.  All  */
+/* rights not expressly granted herein are reserved.                         */
 /*                                                                           */
 /**INC-***********************************************************************/
 
 /*****************************************************************************/
 /* Current version.                                                          */
 /*****************************************************************************/
-#define BAFVIEW_VERSION                 "4.0"
+#define BAFVIEW_VERSION                 "4.2"
 
 /*****************************************************************************/
-/* Start of current decade.                                                  */
+/* Start of current century.                                                 */
 /*****************************************************************************/
-#define BAF_START_OF_CURRENT_DECADE     2000
+#define BAF_START_OF_CURRENT_CENTURY    2000
 
 #define BAF_DECODE_UNKNOWN              (NBB_LONG)0xFFFFFFFF
 
@@ -173,9 +179,9 @@
 #define BAF_F_140_AMA_SEQUENCE_NUMBER   (NBB_LONG)57
 #define BAF_F_152_CONTEXT_ID            (NBB_LONG)58
 #define BAF_F_165_COUNTRY_CODE          (NBB_LONG)59
-#define BAF_F_197_LATA                  (NBB_LONG)60
-#define BAF_F_188_CHARGEABLE_NPA        (NBB_LONG)61
-#define BAF_F_189_CHARGEABLE_EPN        (NBB_LONG)62
+#define BAF_F_188_CHARGEABLE_NPA        (NBB_LONG)60
+#define BAF_F_189_CHARGEABLE_EPN        (NBB_LONG)61
+#define BAF_F_197_LATA                  (NBB_LONG)62
 #define BAF_F_237_GENERIC_CONTEXT_ID    (NBB_LONG)63
 #define BAF_F_244_TRUNK_IDENTIFICATION  (NBB_LONG)64
 #define BAF_F_272_TRUNK_GROUP_INFO      (NBB_LONG)65
@@ -221,8 +227,8 @@
 #define BAF_F_805_NUM_TERM_CALLS        (NBB_LONG)105
 #define BAF_F_805_NUM_OUTGOING_CALLS    (NBB_LONG)106
 #define BAF_F__C1_FILE_SEQUENCE_NO      (NBB_LONG)107
-#define BAF_F__C2_FILE_BLOCKS           (NBB_LONG)108
-#define BAF_F__C3_NUMBER_OF_RECORDS     (NBB_LONG)109
+#define BAF_F__C2_NUMBER_OF_RECORDS     (NBB_LONG)108
+#define BAF_F__C3_FILE_BLOCKS           (NBB_LONG)109
 /*****************************************************************************/
 /* END GROUP                                                                 */
 /*****************************************************************************/
@@ -245,6 +251,16 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
+/* CDRs contain single digit years. These need to be mapped onto the real    */
+/* year which the following array does.                                      */
+/*****************************************************************************/
+#ifdef BAFVIEW_DEFINE_VARS
+NBB_INT baf_year[10];
+#else
+extern NBB_INT baf_year[10];
+#endif
+
+/*****************************************************************************/
 /* Macros.                                                                   */
 /*****************************************************************************/
 #define BAF_DECODE_FIELD(INPUT, LENGTH, FIELD)                               \
@@ -260,12 +276,79 @@
 #define BAF_ERROR_IN_RECORD(VERBOSE)                                          \
           if (baf_verbose)                                                    \
           {                                                                   \
-            printf VERBOSE;                                                   \
+            baf_print VERBOSE;                                                \
           }                                                                   \
           else                                                                \
           {                                                                   \
-            printf("*** encountered error in record ***");                    \
+            baf_print("*** encountered error in record ***");                 \
           }
+
+/*****************************************************************************/
+/* We use this macro when running in statistics mode to check if the         */
+/* structure present in a billing record may contain traffic information. If */
+/* so, we continue with decoding process.                                    */
+/*****************************************************************************/
+#define BAF_IS_STATS_STRUCT(TYPE)                                             \
+          (TYPE == BAF_DECODE_STRUCT_0001) ||                                 \
+          (TYPE == BAF_DECODE_STRUCT_0020) ||                                 \
+          (TYPE == BAF_DECODE_STRUCT_0220) ||                                 \
+          (TYPE == BAF_DECODE_STRUCT_0360) ||                                 \
+          (TYPE == BAF_DECODE_STRUCT_0500) ||                                 \
+          (TYPE == BAF_DECODE_STRUCT_0625) ||                                 \
+          (TYPE == BAF_DECODE_STRUCT_0653)
+
+/*****************************************************************************/
+/* With this macro we check if a field is either 57 (CIC) or 83 (trunk group */
+/* number) or 244 (trunk identification), to avoid decoding unnecessary      */
+/* data.                                                                     */
+/*****************************************************************************/
+#define BAF_IS_STATS_FIELD(TYPE)                                              \
+          (TYPE == BAF_F_057_IC_INC_PREFIX) ||                                \
+          (TYPE == BAF_F_083_TRUNK_GROUP_NUMBER) ||                           \
+          (TYPE == BAF_F_244_TRUNK_IDENTIFICATION)
+
+/*****************************************************************************/
+/* This macro is used to check if the fields 6 (connect date), 18 (connect   */
+/* time), 19 (carrier elapsed time) and 57 (CIC) are useful for traffic      */
+/* statistics. This depends on the combination of structure and module       */
+/* currently being processed.                                                */
+/*****************************************************************************/
+#define BAF_VALID_STATS(MODULE, STRUCTURE)                                    \
+          ((MODULE == -1) &&                                                  \
+           ((STRUCTURE == BAF_DECODE_STRUCT_0360) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0625) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0653)))                           \
+          ||                                                                  \
+          ((MODULE == BAF_DECODE_MODULE_0021) &&                              \
+           ((STRUCTURE == BAF_DECODE_STRUCT_0001) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0020) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0220) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0500)))
+
+/*****************************************************************************/
+/* This macro is used to check if the field 83 (trunk group number) is       */
+/* useful for traffic statistics, according to the combination of structure  */
+/* and module types.                                                         */
+/*****************************************************************************/
+#define BAF_VALID_TRUNK_GROUP_STATS(MODULE, STRUCTURE)                        \
+          ((MODULE == -1) &&                                                  \
+            (STRUCTURE == BAF_DECODE_STRUCT_0360))                            \
+          ||                                                                  \
+          ((MODULE == BAF_DECODE_MODULE_0021) &&                              \
+           ((STRUCTURE == BAF_DECODE_STRUCT_0001) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0020) ||                          \
+            (STRUCTURE == BAF_DECODE_STRUCT_0500)))
+
+/*****************************************************************************/
+/* This macro is used to check if the field 244 (trunk identification) is    */
+/* useful for traffic statistics, according to the combination of structure  */
+/* and module types.                                                         */
+/*****************************************************************************/
+#define BAF_VALID_TRUNK_ID_STATS(MODULE, STRUCTURE)                           \
+          (MODULE == BAF_DECODE_MODULE_0104) &&                               \
+          ((STRUCTURE == BAF_DECODE_STRUCT_0220) ||                           \
+           (STRUCTURE == BAF_DECODE_STRUCT_0625) ||                           \
+           (STRUCTURE == BAF_DECODE_STRUCT_0653))
 
 /*****************************************************************************/
 /* Typedef for functions which decode individual fields.                     */
@@ -281,5 +364,50 @@
 /*                                                                           */
 /*****************************************************************************/
 typedef NBB_BOOL (BAF_FIELD_DECODER)(NBB_BYTE **, NBB_LONG *, NBB_LONG);
+
+/*****************************************************************************/
+/* Size of memory used to build up temporary file names.                     */
+/*****************************************************************************/
+#define BAF_FILE_NAME_SCRATCH_SIZE  50
+
+/*****************************************************************************/
+/* GROUP BAF_START_END_RC                                                    */
+/*****************************************************************************/
+#define BAF_START_END_RC_YES        (NBB_BYTE)1
+#define BAF_START_END_RC_NO         (NBB_BYTE)2
+#define BAF_START_END_RC_FAIL       (NBB_BYTE)3
+/*****************************************************************************/
+/* END GROUP                                                                 */
+/*****************************************************************************/
+
+/*****************************************************************************/
+/* Disclaimer text.                                                          */
+/*****************************************************************************/
+#define BAF_DISCLAIMER  \
+"=============================================================================\n"\
+"This program is provided by MetaSwitch at no charge on an \"as is\" basis and \n"\
+"is not part of Licensed Software as defined in our customer agreements. It is\n"\
+"provided without warranty of any kind and any use of the software is at your\n"\
+"own risk. MetaSwitch and its suppliers disclaim all other warranties and\n"\
+"conditions, either express or implied, including, but not limited to, implied\n"\
+" warranties and conditions of merchantability, fitness for a particular\n"\
+"purpose, title and non-infringement. In no event shall MetaSwitch or its\n"\
+"suppliers be liable for any special, incidental, indirect, or consequential\n"\
+"damages arising out of the use of or inability to use this program.\n\n"\
+"You may install and use this program for internal use only, but you may not\n"\
+"modify, reproduce or distribute it. If you do not agree with these terms and\n"\
+"conditions you should not use the program.\n\n"\
+"The program is protected by copyright laws and international copyright\n"\
+"treaties, as well as other intellectual property laws and treaties. All\n"\
+"rights not expressly granted herein are reserved.\n\n"\
+"=============================================================================\n"
+
+#ifdef BAF_PRINT_TO_BUFFER
+/*****************************************************************************/
+/* The initial size of the BAF print buffer.  If it is not sufficient to     */
+/* print the full message, it will be increased in steps of this size.       */
+/*****************************************************************************/
+#define BAF_PRINT_BUFFER_SIZE_UNIT            10000
+#endif
 
 #endif
