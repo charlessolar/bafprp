@@ -264,11 +264,6 @@ namespace bafprp
 		}
 		if( *( _fieldData ) != 0xFF )  // If field is used, else data will be just FFFFFFFF
 		{
-			if( !field->convert( _fieldData ) )
-			{
-				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
-			}
-			_fields.push_back( field );
 			// This is a module field, so append the module number to the field name so names do not overlap
 			std::ostringstream os;
 			os << "m" << module << "." << field_type;
@@ -291,6 +286,13 @@ namespace bafprp
 			} while( found );
 
 			field->setID( os.str() );
+
+			if( !field->convert( _fieldData ) )
+			{
+				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
+			}
+			_fields.push_back( field );
+			
 			_field_types.push_back( os.str() );
 			// update data position, the mod is to make the size even for nice division
 			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
