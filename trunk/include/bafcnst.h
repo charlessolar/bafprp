@@ -6,36 +6,59 @@
 /*                                                                           */
 /* Purpose:   Constants used by bafview                                      */
 /*                                                                           */
-/* (C) COPYRIGHT DATA CONNECTION LIMITED 2001 - 2005                         */
+/* (C) COPYRIGHT DATA CONNECTION LIMITED                                     */
 /*                                                                           */
-/* $Revision::   1.27               $ $Modtime::   01 Nov 2005 11:54:12   $  */
+/* $Id:: bafcnst.h 11587 2009-08-18 10:33:22Z pf                          $  */
+/* $URL:: http://enfieldsvn/repos/metaswitch/trunk/tools/code/tools/bafvi#$  */
 /*                                                                           */
-/* This program is free software; you can redistribute it and/or modify it   */
-/* under the terms of the GNU General Public License as published by the     */
-/* Free Software Foundation; either version 2 of the License, or (at your    */
-/* option) any later version.                                                */
+/* This program is provided by MetaSwitch at no charge on an "as is" basis   */
+/* and is not part of Licensed Software as defined in our customer           */
+/* agreements. It is provided without warranty of any kind and any use of    */
+/* the software is at your own risk. MetaSwitch and its suppliers disclaim   */
+/* all other warranties and conditions, either express or implied,           */
+/* including, but not limited to, implied warranties and conditions of       */
+/* merchantability, fitness for a particular purpose, title and              */
+/* non-infringement. In no event shall MetaSwitch or its suppliers be liable */
+/* for any special, incidental, indirect, or consequential damages arising   */
+/* out of the use of or inability to use this program.                       */
 /*                                                                           */
-/* This program is distributed in the hope that it will be useful, but       */
-/* WITHOUT ANY WARRANTY; without even the implied warranty of                */
-/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General */
-/* Public License for more details.                                          */
+/* You may install and use this program for internal use only, but you may   */
+/* not distribute it. If you do not agree with these terms and conditions    */
+/* you should not use the program.                                           */
 /*                                                                           */
-/* You should have received a copy of the GNU General Public License along   */
-/* with this program; if not, write to the Free Software Foundation, Inc.,   */
-/* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA               */
+/* The program is protected by copyright laws and international copyright    */
+/* treaties, as well as other intellectual property laws and treaties. All   */
+/* rights not expressly granted herein are reserved.                         */
 /*                                                                           */
 /**INC-***********************************************************************/
 
 #ifndef BAFVIEW_DEFINE_VARS
 extern NBB_BOOL baf_verbose;
 extern NBB_BOOL baf_dump;
+extern NBB_BOOL baf_stats;
 extern NBB_CONST BAF_FIELD baf_field_list[];
 extern NBB_CONST BAF_STRUCTURE baf_structure_descriptions[];
 extern NBB_CONST BAF_MODULE baf_module_descriptions[];
+extern BAF_STATS_DATA stats_data;
+extern NBB_CONST NBB_BYTE baf_mask_byte[];
+#ifdef BAF_PRINT_TO_BUFFER
+extern NBB_CHAR *print_buf_start;
+extern NBB_INT print_buf_size;
+extern NBB_CHAR *print_buf_end;
+extern NBB_CHAR *print_buf_ptr;
+#endif
 #else
 
 NBB_BOOL baf_verbose = FALSE;
 NBB_BOOL baf_dump = FALSE;
+NBB_BOOL baf_stats = FALSE;
+BAF_STATS_DATA stats_data;
+#ifdef BAF_PRINT_TO_BUFFER
+NBB_CHAR *print_buf_start;
+NBB_INT print_buf_size;
+NBB_CHAR *print_buf_end;
+NBB_CHAR *print_buf_ptr;
+#endif
 
 /*****************************************************************************/
 /* List of field names and decoders.                                         */
@@ -128,8 +151,13 @@ NBB_CONST BAF_FIELD baf_field_list[BAF_NUM_FIELDS] =
   /***************************************************************************/
   /* BAF_F_008_STUDY_INDICATOR                                               */
   /***************************************************************************/
-  {NULL, "Study indicator", 8, 1,
-   {{6, 6, 7, {{0, 0, "Default"},
+  {NULL, "Study indicator", 8, 2,
+   {{5, 5, 5, {{0, 0, "Default"},
+               {2, 2, "Called number not anonymous"},
+               {3, 3, "Called number anonymous"},
+               {4, 4, "Calling party anonymous, called party not anonymous"},
+               {5, 5, "Calling and called party anonymous"}}},
+    {6, 6, 7, {{0, 0, "Default"},
                {1, 1, "No originating number"},
                {3, 3, "No terminating number"},
                {4, 4, "No orig. and term. numbers"},
@@ -900,14 +928,14 @@ NBB_CONST BAF_FIELD baf_field_list[BAF_NUM_FIELDS] =
   {NULL, "File Sequence number", 4, 1, {{1, 3}}},
 
   /***************************************************************************/
-  /* BAF_F__C2_FILE_BLOCKS                                                   */
-  /***************************************************************************/
-  {NULL, "File blocks", 6, 1, {{1, 5}}},
-
-  /***************************************************************************/
-  /* BAF_F__C3_NUMBER_OF_RECORDS                                             */
+  /* BAF_F__C2_NUMBER_OF_RECORDS                                             */
   /***************************************************************************/
   {NULL, "Number of records", 8, 1, {{1, 7}}},
+
+  /***************************************************************************/
+  /* BAF_F__C3_FILE_BLOCKS                                                   */
+  /***************************************************************************/
+  {NULL, "File blocks", 6, 1, {{1, 5}}},
 
 };
 
@@ -1356,8 +1384,8 @@ NBB_CONST BAF_STRUCTURE baf_structure_descriptions[BAF_NUM_STRUCTURES] =
     BAF_F_120_GENERIC_ID,
     BAF_F_040_TRACER_AUDIT_TYPE,
     BAF_F__C1_FILE_SEQUENCE_NO,
-    BAF_F__C2_FILE_BLOCKS,
-    BAF_F__C3_NUMBER_OF_RECORDS,
+    BAF_F__C2_NUMBER_OF_RECORDS,
+    BAF_F__C3_FILE_BLOCKS,
     BAF_FIELD_NO_FIELD}},
 
   /***************************************************************************/
@@ -1644,6 +1672,23 @@ NBB_CONST BAF_MODULE baf_module_descriptions[BAF_NUM_MODULES] =
     BAF_FIELD_NO_FIELD}},
 
 };
+
+/*****************************************************************************/
+/* Masks for decoding bytes.                                                 */
+/*****************************************************************************/
+NBB_CONST NBB_BYTE baf_mask_byte[8] =
+{
+ (NBB_BYTE)0xFF,
+ (NBB_BYTE)0x7F,
+ (NBB_BYTE)0x3F,
+ (NBB_BYTE)0x1F,
+ (NBB_BYTE)0xF,
+ (NBB_BYTE)0x7,
+ (NBB_BYTE)0x3,
+ (NBB_BYTE)0x1
+};
+
+
 #endif
 
 #endif

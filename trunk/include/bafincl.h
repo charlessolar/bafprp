@@ -6,29 +6,38 @@
 /*                                                                           */
 /* Purpose:   Include header file for bafview.                               */
 /*                                                                           */
-/* (C) COPYRIGHT DATA CONNECTION LIMITED 2001, 2002, 2005                    */
+/* (C) COPYRIGHT DATA CONNECTION LIMITED                                     */
 /*                                                                           */
-/* $Revision::   1.5                $ $Modtime::   28 Jun 2005 12:30:18   $  */
+/* $Id:: bafincl.h 12654 2009-09-17 10:16:54Z pf                          $  */
+/* $URL:: http://enfieldsvn/repos/metaswitch/trunk/tools/code/tools/bafvi#$  */
 /*                                                                           */
-/* This program is free software; you can redistribute it and/or modify it   */
-/* under the terms of the GNU General Public License as published by the     */
-/* Free Software Foundation; either version 2 of the License, or (at your    */
-/* option) any later version.                                                */
+/* This program is provided by MetaSwitch at no charge on an "as is" basis   */
+/* and is not part of Licensed Software as defined in our customer           */
+/* agreements. It is provided without warranty of any kind and any use of    */
+/* the software is at your own risk. MetaSwitch and its suppliers disclaim   */
+/* all other warranties and conditions, either express or implied,           */
+/* including, but not limited to, implied warranties and conditions of       */
+/* merchantability, fitness for a particular purpose, title and              */
+/* non-infringement. In no event shall MetaSwitch or its suppliers be liable */
+/* for any special, incidental, indirect, or consequential damages arising   */
+/* out of the use of or inability to use this program.                       */
 /*                                                                           */
-/* This program is distributed in the hope that it will be useful, but       */
-/* WITHOUT ANY WARRANTY; without even the implied warranty of                */
-/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General */
-/* Public License for more details.                                          */
+/* You may install and use this program for internal use only, but you may   */
+/* not distribute it. If you do not agree with these terms and conditions    */
+/* you should not use the program.                                           */
 /*                                                                           */
-/* You should have received a copy of the GNU General Public License along   */
-/* with this program; if not, write to the Free Software Foundation, Inc.,   */
-/* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA               */
+/* The program is protected by copyright laws and international copyright    */
+/* treaties, as well as other intellectual property laws and treaties. All   */
+/* rights not expressly granted herein are reserved.                         */
 /*                                                                           */
 /**INC-***********************************************************************/
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include <assert.h>
+#include <malloc.h>
+#include <time.h>
 #include <bafnbase.h>
 #include <bafdef.h>
 #include <bafstrc.h>
