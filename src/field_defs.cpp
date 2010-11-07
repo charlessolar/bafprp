@@ -76,7 +76,11 @@ namespace bafprp
 		// Table 6
 		makeField( "dateheaderrecorded", "date", "5", "Date Header Recorded" );
 		// Table 6
+		makeField( "datetrailerrecorded", "date", "5", "Date Trailer Recorded" );
+		// Table 6
 		makeField( "datefirstblock", "date", "5", "Date First Block was Written" );
+		// Table 6
+		makeField( "datelastblock", "date", "5", "Date Last Block was Written" );
 		// Table 6
 		makeField( "datetransmitted", "date", "5", "Date Data was Transmitted to Collector" ); 
 		// Table 7
@@ -266,7 +270,11 @@ namespace bafprp
 		// Table 18
 		makeField( "timeheaderrecorded", "time", "7", "Time Header Recorded" );
 		// Table 18
+		makeField( "timetrailerrecorded", "time", "7", "Time Trailer Recorded" );
+		// Table 18
 		makeField( "timefirstblock", "time", "7", "Time First Block was Written" );
+		// Table 18
+		makeField( "timelastblock", "time", "7", "Time Last Block was Written" );
 		// Table 18
 		makeField( "timetransmitted", "time", "7", "Time Data was Transmitted to Collector" );
 		// Table 19
@@ -542,7 +550,9 @@ namespace bafprp
 		// Table 120
 		makeField( "softwareid", "number", "5", "Software Release Identification" );
 		// Table 120
-		makeField( "collectorid", "number", "5", "Collector Program Generci Number" );
+		makeField( "collectorid", "number", "5", "Collector Program Generic Number" );
+		// Table 120
+		makeField( "genericissue", "number", "5", "Generic Issue" );
 
 		// Table 126
 		makeField( "digits", "number", "15", "Digits" );	
@@ -777,6 +787,8 @@ namespace bafprp
 		makeField( "lostbafrecords", "number", "7", "Lost BAF Records on Block Writes" );
 		// Table 804
 		makeField( "firstblocknumber", "number", "7", "First Block Sequence Number" );
+		// Table 804
+		makeField( "lastblocknumber", "number", "7", "Last Block Sequence Number" );
 		// Table 805
 		makeField( "bafrecords", "number", "9", "BAF Records" );
 		// Table 805

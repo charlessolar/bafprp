@@ -387,6 +387,9 @@ namespace bafprp
 		case 90:
 			os << "Sensor Audit Record";
 			break;
+		case 98:
+			os << "Collector Audit Record";
+			break;
 		case 99:
 			os << "ETS Call Vis CCSA";
 			break;
