@@ -246,13 +246,14 @@ namespace bafprp
 		RecordMaker::setRecordField( 364, "servicefeaturecode" );
 		RecordMaker::setRecordField( 364, "originatingnpa" );
 		RecordMaker::setRecordField( 364, "originatingnumber" );
+		RecordMaker::setRecordField( 364, "dialednpa" );
 		RecordMaker::setRecordField( 364, "dialednumber" );
 		RecordMaker::setRecordField( 364, "overseasindicator" );
 		RecordMaker::setRecordField( 364, "terminatingnpa" );
 		RecordMaker::setRecordField( 364, "terminatingnumber" );
 		RecordMaker::setRecordField( 364, "time" );
 		RecordMaker::setRecordField( 364, "elapsedtime" );
-		RecordMaker::setRecordField( 364, "rao" );
+		RecordMaker::setRecordField( 364, "roanumber" );
 		RecordMaker::setRecordField( 364, "lata" );
 
 		RecordMaker::setRecordField( 500, "structurecode" ); 

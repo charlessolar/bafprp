@@ -581,6 +581,9 @@ namespace bafprp
 		// Table 189
 		makeField( "bbgbillingcoend", "number", "7", "BBG Billing CO-End Point Number" );
 
+		// Table 197
+		makeField( "lata", "number", "3", "Originating LATA Designation" );
+
 		// Table 206
 		makeField( "directorynumdesc", "number", "3", "Directory Number Description" );
 
