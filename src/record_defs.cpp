@@ -227,8 +227,9 @@ namespace bafprp
 		RecordMaker::setRecordField( 360, "icinceventstatus" );
 		RecordMaker::setRecordField( 360, "trunkgroupnumber" );
 		RecordMaker::setRecordField( 360, "icincroutingind" );
+		RecordMaker::setRecordField( 360, "dialingpresubind" );
 		RecordMaker::setRecordField( 360, "anicpnindicator" );
-		RecordMaker::setRecordField( 360, "rao" );
+		RecordMaker::setRecordField( 360, "raonumber" );
 		RecordMaker::setRecordField( 360, "lata" );
 
 		RecordMaker::setRecordField( 364, "structurecode" ); 

@@ -411,6 +411,9 @@ namespace bafprp
 		case 132:
 			os << "Feature Group A - Terminating";
 			break;
+		case 142:
+			os << "Interexchange Carrier Number Services";
+			break;
 		case 159:
 			os << "Message Detail Recording Data";
 			break;
