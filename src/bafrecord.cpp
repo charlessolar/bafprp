@@ -330,6 +330,15 @@ namespace bafprp
 		case 1:
 			os << "Detailed Message Rate, Timed, with Message Billing Index";
 			break;
+		case 2:
+			os << "Message Rate, Timed, with MBI";
+			break;
+		case 3:
+			os << "Detailed Message Rate, Untimed, with MBI";
+			break;
+		case 4:
+			os << "Message Rate, Untimed, with MBI";
+			break;
 		case 5:
 			os << "Local message rate call";
 			break;
@@ -354,8 +363,17 @@ namespace bafprp
 		case 26:
 			os << "Conference Trunk Usage";
 			break;
+		case 31:
+			os << "Call Forwarding";
+			break;
 		case 32:
 			os << "Tandem Tie Trunk";
+			break;
+		case 33:
+			os << "555 Directory Assistance";
+			break;
+		case 34:
+			os << "Signaling Irregularities";
 			break;
 		case 41:
 			os << "Local Coin";
@@ -372,8 +390,26 @@ namespace bafprp
 		case 48:
 			os << "Usage-Sensative Feature Call";
 			break;
+		case 49:
+			os << "Usage-Sensative Feature-Activation Record";
+			break;
+		case 63:
+			os << "Cellular Mobile Carrier Type-1 or -2B (Originating)";
+			break;
+		case 64:
+			os << "Cellular Mobile Carrier Type-2A (Originating)";
+			break;
+		case 65:
+			os << "Cellular Mobile Carrier Type-1 or -2B (Terminating)";
+			break;
+		case 66:
+			os << "Cellular Mobile Carrier Type-2A (Terminating)";
+			break;
 		case 67:
 			os << "Originating Study Record";
+			break;
+		case 74:
+			os << "Free call";
 			break;
 		case 83:
 			os << "Inward Call Extended to a Centrex Station";
@@ -411,8 +447,14 @@ namespace bafprp
 		case 132:
 			os << "Feature Group A - Terminating";
 			break;
-		case 142:
+		case 134:
+			os << "Feature Group B Origination";
+			break;
+		case 141:
 			os << "Interexchange Carrier Number Services";
+			break;
+		case 142:
+			os << "LEC Number Services";
 			break;
 		case 159:
 			os << "Message Detail Recording Data";
@@ -464,8 +506,15 @@ namespace bafprp
 			}
 		case 331:
 			os << "Bulk Calling Line Identification (BCLID)";
+			break;
+		case 381:
+			os << "Inter-vendor Handoff Back";
+			break;
 		case 721:
 			os << "Default Local Number Portability";
+			break;
+		case 900:
+			os << "SIP Registration";
 			break;
 		case 9013:
 			os << "File start marker";
@@ -560,6 +609,9 @@ namespace bafprp
 				addModuleField( 74, "bbgbillingcoend" );
 				addModuleField( 74, "simfacgroup" );
 				break;
+			case 87:
+				addModuleField( 87, "directorynumdesc" );
+				break;
 			case 102:
 				addModuleField( 102, "sigdigs" );
 				addModuleField( 102, "digits" );
@@ -625,6 +677,46 @@ namespace bafprp
 				addModuleField( 720, "serviceproviderid" );
 				addModuleField( 720, "location" );
 				addModuleField( 720, "supportinginfo" );
+				break;
+			case 901:
+				// Coppercom specific module
+				addModuleField( 901, "recordid" );
+				addModuleField( 901, "originatingshelf" );
+				addModuleField( 901, "originatingcard" );
+				addModuleField( 901, "originatingmodule" );
+				addModuleField( 901, "originatingds1" );
+				addModuleField( 901, "originatingds0" );
+				addModuleField( 901, "terminatingshelf" );
+				addModuleField( 901, "terminatingcard" );
+				addModuleField( 901, "terminatingmodule" );
+				addModuleField( 901, "terminatingds1" );
+				addModuleField( 901, "terminatingds0" );
+				break;
+			case 902:
+				// Coppercom specific module
+				addModuleField( 902, "sigdigs" );
+				addModuleField( 902, "pincodedigits" );
+				break;
+			case 903:
+				// Coppercom specific module
+				addModuleField( 903, "speeddialingcode" );
+				addModuleField( 903, "sigdigs" );
+				addModuleField( 903, "digits" );
+				addModuleField( 903, "digits" );
+				break;
+			case 904:
+				// Coppercom specific module
+				addModuleField( 904, "codectype" );
+				addModuleField( 904, "jitterdelay" );
+				addModuleField( 904, "lostpackets" );
+				addModuleField( 904, "percentlostpackets" );
+				addModuleField( 904, "rcvedpackets" );
+				break;
+			case 905:
+				// Coppercom specific module
+				addModuleField( 905, "partyid" );
+				addModuleField( 905, "uniformid" );
+				addModuleField( 905, "peerfacgroup" );
 				break;
 			default:
 				LOG_ERROR( "Unknown modules id: " << _fields.back()->getInt() << " at " << _filePos << "." << (DWORD)( _fieldData - _data ) << " record type " << getType() );

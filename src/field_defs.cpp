@@ -82,7 +82,9 @@ namespace bafprp
 		// Table 6
 		makeField( "datelastblock", "date", "5", "Date Last Block was Written" );
 		// Table 6
-		makeField( "datetransmitted", "date", "5", "Date Data was Transmitted to Collector" ); 
+		makeField( "datetransmitted", "date", "5", "Date Data was Transmitted to Collector" );
+		// Table 6
+		makeField( "circuitdate", "date", "5", "Circuit Date" ); 
 		// Table 7
 		makeField( "timingindicator", "switch", "5", "Timing Indicator" );
 		FieldMaker::setFieldProperty( "timingindicator", "switch:0" );
@@ -229,8 +231,12 @@ namespace bafprp
 		makeField( "servicefeaturecode", "number", "3", "Service Feature Code" );
 		// Table 13
 		makeField( "originatingnpa", "number", "3", "Originating NPA" );
+		// Table 13
+		makeField( "activatingnpa", "number", "3", "Activating NPA" );
 		// Table 14
 		makeField( "originatingnumber", "phonenumber", "7", "Originating Number" );
+		// Table 14
+		makeField( "activatingnumber", "phonenumber", "7", "Activating Number" );
 		// Table 13
 		makeField( "dialednpa", "number", "3", "Dialed NPA" );
 		// Table 14
@@ -253,10 +259,16 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "terminatingnpa", "trim:true" );
 		// Table 16
 		makeField( "linenpa", "number", "5", "Line NPA" );
+		FieldMaker::setFieldProperty( "linenpa", "trim:true" );
+		// Table 16
+		makeField( "forwardtonpa", "number", "5", "Terminating NPA" );
+		FieldMaker::setFieldProperty( "forwardtonpa", "trim:true" );
 		// Table 17
 		makeField( "terminatingnumber", "phonenumber", "7", "Terminating Number" );
 		// Table 17
 		makeField( "linenumber", "phonenumber", "7", "Line Number" );
+		// Table 17
+		makeField( "forwardtonumber", "phonenumber", "7", "Forward to Number" );
 		// Table 18
 		makeField( "time", "time", "7", "Time" );
 		// Table 18
@@ -294,7 +306,7 @@ namespace bafprp
 		// Table 25
 		makeField( "billingnumber", "number", "11", "Billing Number" );
 		// Table 26
-		makeField( "circuittime", "long_duration", "7", "Circuit Time" );
+		makeField( "circuittime", "time", "7", "Circuit Time" );
 		// Table 28	
 		makeField( "watsindicator", "switch", "1", "WATS Indicator" );
 		FieldMaker::setFieldProperty( "watsindicator", "switch:0" );
@@ -555,12 +567,14 @@ namespace bafprp
 		makeField( "genericissue", "number", "5", "Generic Issue" );
 
 		// Table 126
-		makeField( "digits", "number", "15", "Digits" );	
-
+		makeField( "digits", "number", "15", "Digits" );
+		FieldMaker::setFieldProperty( "digits", "trim:true" );
 		// Table 126
-		makeField( "largedigits", "number", "15", "Digits" );
+		makeField( "largedigits", "number", "15", "Large Digits" );
 		FieldMaker::setFieldProperty( "largedigits", "trim:true" );
-
+		// Table 126
+		makeField( "pincodedigits", "number", "15", "PIN Code Digits" );
+		FieldMaker::setFieldProperty( "largedigits", "trim:true" );
 
 		// Table 140
 		makeField( "amasequencenum", "number", "5", "AMA Sequence Number" );
@@ -758,6 +772,14 @@ namespace bafprp
 
 		// Table 801
 		makeField( "numtrunklegsused", "number", "1", "Number of trunk Legs Used" );
+		// Table 801
+		makeField( "originatingshelf", "number", "1", "Originating Shelf" );
+		// Table 801
+		makeField( "originatingmodule", "number", "1", "Originating Module" );
+		// Table 801
+		makeField( "terminatingshelf", "number", "1", "Terminating Shelf" );
+		// Table 801
+		makeField( "terminatingmodule", "number", "1", "Terminating Module" );
 		// Table 802
 		makeField( "filesequenceno", "number", "3", "File Sequence Number" );
 		// Table 802
@@ -768,6 +790,24 @@ namespace bafprp
 		makeField( "screenlistsizescr", "number", "3", "Screening List Size for Selective Call Rejection" );
 		// Table 802
 		makeField( "screenlistsizedrcw", "number", "3", "Screening List Size for Distinctive Call Waiting" );
+		// Table 802
+		makeField( "originatingcard", "number", "3", "Originating Card" );
+		// Table 802
+		makeField( "originatingds1", "number", "3", "Originating DS-1" );
+		// Table 802
+		makeField( "originatingds0", "number", "3", "Originating DS-0" );
+		// Table 802
+		makeField( "terminatingcard", "number", "3", "Terminating Card" );
+		// Table 802
+		makeField( "terminatingds1", "number", "3", "Terminating DS-1" );
+		// Table 802
+		makeField( "terminatingds0", "number", "3", "Terminating DS-0" );
+		// Table 802
+		makeField( "speeddialingcode", "number", "3", "Speed Dialing Code" );
+		// Table 802
+		makeField( "codectype", "number", "3", "Codec Type" );
+		// Table 802
+		makeField( "percentlostpackets", "number", "3", "Percentage of Lost Packets" );
 		// Table 803
 		makeField( "blockcount", "number", "5", "Block Count" );
 		// Table 803
@@ -792,6 +832,14 @@ namespace bafprp
 		makeField( "firstblocknumber", "number", "7", "First Block Sequence Number" );
 		// Table 804
 		makeField( "lastblocknumber", "number", "7", "Last Block Sequence Number" );
+		// Table 804
+		makeField( "recordid", "number", "7", "Record ID" );
+		// Table 804
+		makeField( "jitterdelay", "number", "7", "Jitter Delay" );
+		// Table 804
+		makeField( "lostpackets", "number", "7", "Lost Packets" );
+		// Table 804
+		makeField( "rcvedpackets", "number", "7", "Number of Received Packets" );
 		// Table 805
 		makeField( "bafrecords", "number", "9", "BAF Records" );
 		// Table 805
@@ -804,5 +852,17 @@ namespace bafprp
 		makeField( "calls", "number", "9", "Calls" );
 		// Table 805
 		makeField( "amacalls", "number", "9", "AMA Calls" );
+
+		// Table 901
+		makeField( "switchid", "number", "20", "Switch Identifier" );
+		// Table 902
+		makeField( "sipuri", "number", "128", "Uniform Resource Identifier" );
+		// Table 903
+		makeField( "peerfacid", "number", "5", "Peer Facility Group Identifier" );
+		// Table 904
+		makeField( "registrationtype", "switch", "1", "Registration Type" );
+		FieldMaker::setFieldProperty( "registrationtype", "switch:0" );
+		FieldMaker::setFieldProperty( "registrationtype", "00:Registration" );
+		FieldMaker::setFieldProperty( "registrationtype", "01:Deregistration" );
 	}
 } // namespace
