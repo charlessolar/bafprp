@@ -84,6 +84,8 @@ namespace bafprp
 		// Table 6
 		makeField( "datetransmitted", "date", "5", "Date Data was Transmitted to Collector" );
 		// Table 6
+		makeField( "activationdate", "date", "5", "Activation Date" );
+		// Table 6
 		makeField( "circuitdate", "date", "5", "Circuit Date" ); 
 		// Table 7
 		makeField( "timingindicator", "switch", "5", "Timing Indicator" );
@@ -289,6 +291,8 @@ namespace bafprp
 		makeField( "timelastblock", "time", "7", "Time Last Block was Written" );
 		// Table 18
 		makeField( "timetransmitted", "time", "7", "Time Data was Transmitted to Collector" );
+		// Table 18
+		makeField( "activationtime", "time", "7", "Activation Time" );
 		// Table 19
 		makeField( "elapsedtime", "duration", "9", "Elapsed Time" );
 		// Table 19
