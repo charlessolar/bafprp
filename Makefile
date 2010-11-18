@@ -32,6 +32,7 @@ output.cpp \
 field_defs.cpp \
 date_dt.cpp \
 duration_dt.cpp \
+shortduration_dt.cpp \
 number_dt.cpp \
 phonenumber_dt.cpp \
 record_defs.cpp \

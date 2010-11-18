@@ -589,6 +589,9 @@ namespace bafprp
 				addModuleField( 49, "callcountnameonly" );
 				addModuleField( 49, "callcountnumonly" );
 				break;
+			case 50:
+				addModuleField( 50, "chargeableopholding" );
+				break;
 			case 68:
 				addModuleField( 68, "calleddndescription" );
 				break;
@@ -601,7 +604,7 @@ namespace bafprp
 			case 71:
 				addModuleField( 71, "bearercaps" );
 				addModuleField( 71, "networkinterworking" );
-				addModuleField( 71, "releasecauseindicator" );
+				addModuleField( 71, "releasecauseind" );
 				break;
 			case 74:
 				addModuleField( 74, "bbgcalltype" );
@@ -654,6 +657,16 @@ namespace bafprp
 				addModuleField( 207, "linenumber" );
 				addModuleField( 207, "directorynumdesc" );
 				break;
+			case 290:
+				addModuleField( 290, "servicelogicid" );
+				addModuleField( 290, "triggerseqnum" );
+				addModuleField( 290, "date" );
+				addModuleField( 290, "timingindicator" );
+				addModuleField( 290, "time" );
+				addModuleField( 290, "elapsedtime" );
+				addModuleField( 290, "resourcetype" );
+				addModuleField( 290, "destinatingnpa" );
+				addModuleField( 290, "destinatingnumber" );
 			case 306:
 				addModuleField( 306, "originatinglineinfo" );
 				break;

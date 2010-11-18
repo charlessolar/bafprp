@@ -235,10 +235,14 @@ namespace bafprp
 		makeField( "originatingnpa", "number", "3", "Originating NPA" );
 		// Table 13
 		makeField( "activatingnpa", "number", "3", "Activating NPA" );
+		// Table 13
+		makeField( "destinatingnpa", "number", "3", "Destination NPA" );
 		// Table 14
 		makeField( "originatingnumber", "phonenumber", "7", "Originating Number" );
 		// Table 14
 		makeField( "activatingnumber", "phonenumber", "7", "Activating Number" );
+		// Table 14
+		makeField( "destinatingnumber", "phonenumber", "7", "Destination Number" );
 		// Table 13
 		makeField( "dialednpa", "number", "3", "Dialed NPA" );
 		// Table 14
@@ -649,6 +653,9 @@ namespace bafprp
 		// Table 331
 		makeField( "classfeaturestatus", "number", "3", "Class Feature Status" );
 
+		// Table 403
+		makeField( "chargeableopholding", "shortduration", "5", "Chargeable Operator Holding Time" );
+
 		// Table 407
 		makeField( "bbgcalltype", "switch", "3", "BBG Call Type" );
 		FieldMaker::setFieldProperty( "bbgcalltype", "switch:1" );
@@ -750,6 +757,9 @@ namespace bafprp
 		// Table 490
 		makeField( "sendingunitnumber", "number", "3", "Sending Unit Number" );
 
+		// Table 608
+		makeField( "resourcetype", "number", "3", "Resource Type" );
+
 		// Table 610
 		makeField( "indicatorid", "number", "3", "Indicator ID" );
 
@@ -759,10 +769,10 @@ namespace bafprp
 		// Table 730
 		makeField( "partyid", "number", "3", "Party Identifier" );
 
-		//Table 731
+		// Table 731
 		makeField( "lrn", "number", "11", "Location Routing Number" );
 
-		//Table 733
+		// Table 733
 		makeField( "location", "number", "15", "Location" );
 
 		// Table 734
