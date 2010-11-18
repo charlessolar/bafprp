@@ -667,6 +667,7 @@ namespace bafprp
 				addModuleField( 290, "resourcetype" );
 				addModuleField( 290, "destinatingnpa" );
 				addModuleField( 290, "destinatingnumber" );
+				break;
 			case 306:
 				addModuleField( 306, "originatinglineinfo" );
 				break;
