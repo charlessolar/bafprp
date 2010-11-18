@@ -40,6 +40,7 @@ crc32.cpp \
 csvoutput.cpp \
 date_dt.cpp \
 duration_dt.cpp \
+shortduration_dt.cpp \
 emailoutput.cpp \
 field_defs.cpp \
 fileoutput.cpp \
