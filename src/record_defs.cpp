@@ -406,9 +406,10 @@ namespace bafprp
 		RecordMaker::setRecordField( 614, "timingindicator" );
 		RecordMaker::setRecordField( 614, "studyindicator" );
 		RecordMaker::setRecordField( 614, "servicefeaturecode" );
-		RecordMaker::setRecordField( 614, "originatingnpa" );
-		RecordMaker::setRecordField( 614, "originatingnumber" );
+		RecordMaker::setRecordField( 614, "activatingnpa" );
+		RecordMaker::setRecordField( 614, "activatingnumber" );
 		RecordMaker::setRecordField( 614, "overseasindicator" );
+		RecordMaker::setRecordField( 614, "forwardtonpa" );
 		RecordMaker::setRecordField( 614, "forwardtonumber" );
 		RecordMaker::setRecordField( 614, "activationtime" );
 
