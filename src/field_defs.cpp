@@ -369,7 +369,7 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "rtatype", "04:Combined Trunk" );
 		FieldMaker::setFieldProperty( "rtatype", "05:RTA Call on Combinded Trunk" );
 		// Table 46
-		makeField( "roanumber", "number", "3", "revenue Accounting Office Number" );
+		makeField( "raonumber", "number", "3", "Revenue Accounting Office Number" );
 		// Table 47
 		makeField( "billingnumbercontent", "switch", "1", "Billing Number Content" );
 		FieldMaker::setFieldProperty( "billingnumbercontent", "switch:0" );
