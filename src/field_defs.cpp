@@ -749,7 +749,12 @@ namespace bafprp
 		makeField( "linenumbertype", "number", "3", "Line Number Type" );
 
 		// Table 480
-		makeField( "headertype", "number", "2", "Header Type" );
+		makeField( "headertype", "switch", "1", "Header Type" );
+		FieldMaker::setFieldProperty( "headertype", "switch:0" );
+		FieldMaker::setFieldProperty( "headertype", "00:Start of a LDS not associated with a hardware state change" );
+		FieldMaker::setFieldProperty( "headertype", "01:LDS's records occurred after a sending unit input transfer" );
+		FieldMaker::setFieldProperty( "headertype", "02:Ending of an LDS not associated with a hardware state change at the switch" );
+		FieldMaker::setFieldProperty( "headertype", "03:LDS's records occurred before a sending unit output transfer" );
 
 		// Table 488
 		makeField( "networkidentifier", "number", "7", "Carrier / Network Identifier" );
