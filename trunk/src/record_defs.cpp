@@ -305,13 +305,13 @@ namespace bafprp
 		RecordMaker::setRecordField( 360, "terminatingnumber" );
 		RecordMaker::setRecordField( 360, "time" );
 		RecordMaker::setRecordField( 360, "elapsedtime" );
-		RecordMaker::setRecordField( 360, "icincprefix" );
+		RecordMaker::setRecordField( 360, "icincid" );
 		RecordMaker::setRecordField( 360, "carrierconnectdate" );
 		RecordMaker::setRecordField( 360, "carrierconnecttime" );
 		RecordMaker::setRecordField( 360, "carrierelapsedtime" );
-		RecordMaker::setRecordField( 360, "icinceventstatus" );
+		RecordMaker::setRecordField( 360, "icinccalleventstatus" );
 		RecordMaker::setRecordField( 360, "trunkgroupnumber" );
-		RecordMaker::setRecordField( 360, "icincroutingind" );
+		RecordMaker::setRecordField( 360, "icincrouting" );
 		RecordMaker::setRecordField( 360, "dialingpresubind" );
 		RecordMaker::setRecordField( 360, "anicpnindicator" );
 		RecordMaker::setRecordField( 360, "raonumber" );
@@ -339,7 +339,7 @@ namespace bafprp
 		RecordMaker::setRecordField( 364, "terminatingnumber" );
 		RecordMaker::setRecordField( 364, "time" );
 		RecordMaker::setRecordField( 364, "elapsedtime" );
-		RecordMaker::setRecordField( 364, "roanumber" );
+		RecordMaker::setRecordField( 364, "raonumber" );
 		RecordMaker::setRecordField( 364, "lata" );
 
 		RecordMaker::setRecordField( 500, "structurecode" ); 
