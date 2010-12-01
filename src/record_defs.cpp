@@ -554,7 +554,7 @@ namespace bafprp
 		RecordMaker::setRecordField( 9039, "recordofficeid" );
 		RecordMaker::setRecordField( 9039, "datetrailerrecorded" );
 		RecordMaker::setRecordField( 9039, "timetrailerrecorded" );
-		RecordMaker::setRecordField( 9039, "genericissue" );
+		RecordMaker::setRecordField( 9039, "collectorid" );
 		RecordMaker::setRecordField( 9039, "traceraudittype" );
 		RecordMaker::setRecordField( 9039, "headertype" );
 		RecordMaker::setRecordField( 9039, "lastblocknumber" );
