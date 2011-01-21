@@ -322,6 +322,8 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "watsindicator", "02:Measured Time" );
 		// Table 29
 		makeField( "watsband", "number", "3", "WATS Band" );
+		// Table 29
+		makeField( "msgbillingindex", "number", "3", "Message Billing Index" );
 		// Table 30
 		makeField( "watsadmin", "number", "5", "WATS Administration" );
 		// Table 31
