@@ -612,6 +612,11 @@ namespace bafprp
 				addModuleField( 74, "bbgbillingcoend" );
 				addModuleField( 74, "simfacgroup" );
 				break;
+			case 75:
+				addModuleField( 75, "ektscapabilities" );
+				addModuleField( 75, "bridgeconnecttime" );
+				addModuleField( 75, "bridgeelapsedtime" );
+				break;
 			case 87:
 				addModuleField( 87, "directorynumdesc" );
 				break;

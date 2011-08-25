@@ -297,10 +297,14 @@ namespace bafprp
 		makeField( "timetransmitted", "time", "7", "Time Data was Transmitted to Collector" );
 		// Table 18
 		makeField( "activationtime", "time", "7", "Activation Time" );
+		// Table 18
+		makeField( "bridgeconnecttime", "time", "7", "Bridge Connect Time" );
 		// Table 19
 		makeField( "elapsedtime", "duration", "9", "Elapsed Time" );
 		// Table 19
 		makeField( "carrierelapsedtime", "duration", "9", "Carrier Elapsed Time" );
+		// Table 19
+		makeField( "bridgeelapsedtime", "duration", "9", "Bridge Elapsed Time" );
 		// Table 20
 		makeField( "trunknetworknumber", "number", "7", "Trunk Network Number" );
 		// Table 21
@@ -677,6 +681,27 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "bbgcalltype", "20:Not applicable" );
 		FieldMaker::setFieldProperty( "bbgcalltype", "21:Within control limit" );
 		FieldMaker::setFieldProperty( "bbgcalltype", "22:Control overflow, routed" );
+
+		//Table 408
+		makeField( "ektscapabilities", "switch", "7", "Activation of Electronic Key Telephone Service Capabilities" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "switch:1" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "11:Activation of User Bridging - Not Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "12:Activation of User Bridging - Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "switch:2" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "21:Activation of Directory Number Bridging - Not Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "22:Activation of Directory Number Bridging - Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "switch:3" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "31:Intercom Calling - Not Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "32:Intercom Calling - Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "switch:4" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "41:Deactivation of Automatic Bridging Call Exclusion - Not Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "42:Deactivation of Automatic Bridging Call Exclusion - Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "switch:5" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "51:Activation of Manual Bridging Call Exclusion - Not Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "52:Activation of Manual Bridging Call Exclusion - Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "switch:6" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "61:Station Ringing Transfer - Not Used" );
+		FieldMaker::setFieldProperty( "ektscapabilities", "62:Station Ringing Transfer - Used" );
 
 		// Table 410
 		makeField( "networkinterworking", "switch", "1", "Network Interworking" );
