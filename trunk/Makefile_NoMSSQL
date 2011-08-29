@@ -68,11 +68,11 @@ rebuild: clean all
 
 release: $(OBJ_LINUX)
 	mkdir -p $(BIN_DIR)
-	$(CPP) $^ $(LDFLAGS) -s -o$(BIN_DIR)/$(BINARY)
+	$(CPP) $^ $(LDFLAGS) -s -o $(BIN_DIR)/$(BINARY)
 
 debug: $(DOBJ_LINUX)
 	mkdir -p $(BIN_DIR)
-	$(CPP) $^ $(LDFLAGS) -o$(BIN_DIR)/$(BINARY)_d
+	$(CPP) $^ $(LDFLAGS) -o $(BIN_DIR)/$(BINARY)_d
 
 install: release
 	cp $(BIN_DIR)/$(BINARY) /usr/bin/$(BINARY)
