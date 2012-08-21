@@ -37,6 +37,90 @@ namespace bafprp
 		if( !first ) return;
 		first = false;
 
+		// AMADNS tables
+		makeField( "sourcecomponentid", "amadns", "1", "Source Component ID" );
+		FieldMaker::setFieldProperty( "sourcecomponentid", "bytes:2" );
+		FieldMaker::setFieldProperty( "sourcecomponentid", "high:4" );
+		FieldMaker::setFieldProperty( "sourcecomponentid", "low:7" );
+		makeField( "sourcecomponenttype", "amadns", "1", "Source Component Type" );
+		FieldMaker::setFieldProperty( "sourcecomponenttype", "bytes:1" );
+		FieldMaker::setFieldProperty( "sourcecomponenttype", "high:0" );
+		FieldMaker::setFieldProperty( "sourcecomponenttype", "low:3" );
+		makeField( "destinationcomponentid", "amadns", "1", "Destination Component ID" );
+		FieldMaker::setFieldProperty( "destinationcomponentid", "bytes:2" );
+		FieldMaker::setFieldProperty( "destinationcomponentid", "high:4" );
+		FieldMaker::setFieldProperty( "destinationcomponentid", "low:7" );
+		makeField( "destinationcomponenttype", "amadns", "1", "Destination Component Type" );
+		FieldMaker::setFieldProperty( "destinationcomponenttype", "bytes:1" );
+		FieldMaker::setFieldProperty( "destinationcomponenttype", "high:0" );
+		FieldMaker::setFieldProperty( "destinationcomponenttype", "low:3" );
+		makeField( "filetype", "amadns", "0", "File Type" );
+		FieldMaker::setFieldProperty( "filetype", "bytes:1" );
+		FieldMaker::setFieldProperty( "filetype", "high:0" );
+		FieldMaker::setFieldProperty( "filetype", "low:4" );
+		makeField( "dateformattype", "amadns", "1", "Date Format Type" );
+		FieldMaker::setFieldProperty( "dateformattype", "bytes:1" );
+		FieldMaker::setFieldProperty( "dateformattype", "high:5" );
+		FieldMaker::setFieldProperty( "dateformattype", "low:7" );
+		makeField( "fieldsuppressiontype", "amadns", "0", "Field Suppression Type" );
+		FieldMaker::setFieldProperty( "fieldsuppressiontype", "bytes:1" );
+		FieldMaker::setFieldProperty( "fieldsuppressiontype", "high:0" );
+		FieldMaker::setFieldProperty( "fieldsuppressiontype", "low:1" );
+		makeField( "fileprioritylevel", "amadns", "0", "File Priority Level" );
+		FieldMaker::setFieldProperty( "fileprioritylevel", "bytes:1" );
+		FieldMaker::setFieldProperty( "fileprioritylevel", "high:2" );
+		FieldMaker::setFieldProperty( "fileprioritylevel", "low:4" );
+		makeField( "restartstatus", "amadns", "0", "Restart Status" );
+		FieldMaker::setFieldProperty( "restartstatus", "bytes:1" );
+		FieldMaker::setFieldProperty( "restartstatus", "high:5" );
+		FieldMaker::setFieldProperty( "restartstatus", "low:5" );
+		makeField( "primarysecondarystatus", "amadns", "0", "Primary/Secondary Status" );
+		FieldMaker::setFieldProperty( "primarysecondarystatus", "bytes:1" );
+		FieldMaker::setFieldProperty( "primarysecondarystatus", "high:6" );
+		FieldMaker::setFieldProperty( "primarysecondarystatus", "low:6" );
+		makeField( "recordsourceinfotype", "amadns", "1", "Record Source Info Type" );
+		FieldMaker::setFieldProperty( "recordsourceinfotype", "bytes:1" );
+		FieldMaker::setFieldProperty( "recordsourceinfotype", "high:7" );
+		FieldMaker::setFieldProperty( "recordsourceinfotype", "low:7" );
+		makeField( "filesequencenumber", "amadns", "3", "File Sequence Number" );
+		FieldMaker::setFieldProperty( "filesequencenumber", "bytes:2" );
+		FieldMaker::setFieldProperty( "filesequencenumber", "high:0" );
+		FieldMaker::setFieldProperty( "filesequencenumber", "low:7" );
+		makeField( "filecreationtime", "amadns", "1", "File Creation Time" );
+		FieldMaker::setFieldProperty( "filecreationtime", "bytes:2" );
+		FieldMaker::setFieldProperty( "filecreationtime", "high:4" );
+		FieldMaker::setFieldProperty( "filecreationtime", "low:7" );
+		makeField( "filecreationdate", "amadns", "5", "File Creation Date" );
+		FieldMaker::setFieldProperty( "filecreationdate", "bytes:3" );
+		FieldMaker::setFieldProperty( "filecreationdate", "high:0" );
+		FieldMaker::setFieldProperty( "filecreationdate", "low:3" );
+		makeField( "filelastmodtime", "amadns", "2", "File Last Modification Time" );
+		FieldMaker::setFieldProperty( "filelastmodtime", "bytes:2" );
+		FieldMaker::setFieldProperty( "filelastmodtime", "high:4" );
+		FieldMaker::setFieldProperty( "filelastmodtime", "low:7" );
+		makeField( "filelastmoddate", "amadns", "5", "File Last Modification Date" );
+		FieldMaker::setFieldProperty( "filelastmoddate", "bytes:3" );
+		FieldMaker::setFieldProperty( "filelastmoddate", "high:0" );
+		FieldMaker::setFieldProperty( "filelastmoddate", "low:3" );
+		makeField( "filelength", "amadns", "7", "File Length" );
+		FieldMaker::setFieldProperty( "filelength", "bytes:4" );
+		FieldMaker::setFieldProperty( "filelength", "high:0" );
+		FieldMaker::setFieldProperty( "filelength", "low:7" );
+		makeField( "recordsinfile", "amadns", "5", "Number of Records in File" );
+		FieldMaker::setFieldProperty( "recordsinfile", "bytes:3" );
+		FieldMaker::setFieldProperty( "recordsinfile", "high:0" );
+		FieldMaker::setFieldProperty( "recordsinfile", "low:7" );
+		makeField( "recordsourcetype", "amadns", "1", "Record Source Type" );
+		FieldMaker::setFieldProperty( "recordsourcetype", "bytes:2" );
+		FieldMaker::setFieldProperty( "recordsourcetype", "high:4" );
+		FieldMaker::setFieldProperty( "recordsourcetype", "low:7" );
+		makeField( "recordsourceid", "amadns", "3", "Record Source Identification Number" );
+		FieldMaker::setFieldProperty( "recordsourceid", "bytes:3" );
+		FieldMaker::setFieldProperty( "recordsourceid", "high:0" );
+		FieldMaker::setFieldProperty( "recordsourceid", "low:3" );
+
+
+
 		// Table 0
 		makeField( "structurecode", "numberswitch", "5", "Structure Code" );
 		FieldMaker::setFieldProperty( "structurecode", "switch:0" );
@@ -610,7 +694,7 @@ namespace bafprp
 		makeField( "bbgbillingcoend", "number", "7", "BBG Billing CO-End Point Number" );
 
 		// Table 197
-		makeField( "lata", "number", "3", "Originating LATA Designation" );
+		makeField( "lata", "number", "3", "Local Access and Transport Area" );
 
 		// Table 206
 		makeField( "directorynumdesc", "number", "3", "Directory Number Description" );
@@ -804,6 +888,9 @@ namespace bafprp
 		// Table 731
 		makeField( "lrn", "number", "11", "Location Routing Number" );
 
+		// Table 732
+		makeField( "serviceproviderid", "number", "3", "Service Provider Identity (NDGR)" );
+
 		// Table 733
 		makeField( "location", "number", "15", "Location" );
 
@@ -898,6 +985,9 @@ namespace bafprp
 		makeField( "calls", "number", "9", "Calls" );
 		// Table 805
 		makeField( "amacalls", "number", "9", "AMA Calls" );
+		
+		// Table 807
+        makeField( "thirteendigitnumber", "number", "13", "13 Digit Number" );
 
 		// Table 901
 		makeField( "switchid", "number", "20", "Switch Identifier" );
@@ -910,5 +1000,58 @@ namespace bafprp
 		FieldMaker::setFieldProperty( "registrationtype", "switch:0" );
 		FieldMaker::setFieldProperty( "registrationtype", "00:Registration" );
 		FieldMaker::setFieldProperty( "registrationtype", "01:Deregistration" );
+		
+		// Table 911
+		makeField( "cpinternalcausecode", "number", "7", "Super-sized digits (Cedar Point proprietary table)" );
+
+		// Table 926
+		makeField( "cpsupersizedigits", "number", "25", "Super-sized digits (Cedar Point proprietary table)" );
+
+		// Table 933
+		makeField( "cplocation", "switch", "5", "Location (Cedar Point proprietary table)" );
+		FieldMaker::setFieldProperty( "cplocation", "switch:2" );
+		FieldMaker::setFieldProperty( "cplocation", "20:user" );
+		FieldMaker::setFieldProperty( "cplocation", "21:private network serving the local user" );
+		FieldMaker::setFieldProperty( "cplocation", "22:public network serving the local user" );
+		FieldMaker::setFieldProperty( "cplocation", "23:transit network" );
+		FieldMaker::setFieldProperty( "cplocation", "24:public network serving the remote user" );
+		FieldMaker::setFieldProperty( "cplocation", "25:private network serving the remote user" );
+		FieldMaker::setFieldProperty( "cplocation", "27:international network" );
+		FieldMaker::setFieldProperty( "cplocation", "switch:3" );
+		FieldMaker::setFieldProperty( "cplocation", "30:beyond" );
+
+		// Table 934
+		makeField( "cppartyname", "number", "31", "Super-sized digits (Cedar Point proprietary table)" );
+
+		// Table 935
+		makeField( "cpcorrelationid", "number", "33", "Correlation ID (Cedar Point proprietary table)" );
+
+		// Table 936
+		makeField( "cpboolean", "number", "1", "boolean (Cedar Point proprietary table)" );
+
+		// Table 950
+		makeField( "cpcallparkeddisp", "numberswitch", "3", "Call Parked disposition (Cedar Point proprietary table)" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "switch:0" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "00:Call Parked Disposition" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "01:Picked up" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "02:Timeout forwarded" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "03:Park Retrieved" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "04:Retrieved" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "05:Call Terminated" );
+		FieldMaker::setFieldProperty( "cpcallparkeddisp", "06:Call answered on re-ring" );
+
+		// Table 976
+		makeField( "cptypeofname", "numberswitch", "1", "Type of Name (Cedar Point proprietary table)" );
+		FieldMaker::setFieldProperty( "cptypeofname", "switch:0" );
+		FieldMaker::setFieldProperty( "cptypeofname", "01:Originating Number (ANI)" );
+		FieldMaker::setFieldProperty( "cptypeofname", "02:Terminating or Destination Number" );
+		FieldMaker::setFieldProperty( "cptypeofname", "03:Originating Calling Party Number (CPN)" );
+		FieldMaker::setFieldProperty( "cptypeofname", "04:Private Number Originating (ANI)" );
+		FieldMaker::setFieldProperty( "cptypeofname", "05:Private Number Originating (CPN)" );
+		FieldMaker::setFieldProperty( "cptypeofname", "06:Redirecting Number" );
+		FieldMaker::setFieldProperty( "cptypeofname", "07:Original Called Number" );
+		FieldMaker::setFieldProperty( "cptypeofname", "08:Provisioned Billing Number" );
+		FieldMaker::setFieldProperty( "cptypeofname", "09:Name from CNAM query" );
+
 	}
 } // namespace

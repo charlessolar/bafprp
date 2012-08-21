@@ -32,7 +32,7 @@ namespace bafprp
 		define_default_records();
 
 		BafRecord* ret = new BafRecord( data, length, filename, filePos );
-		if( !ret || ret->getTypeCode() == 0 )
+		if( !ret || ret->getTypeCode() == -1 )
 			return NULL;
 
 		field_map::const_iterator fields = _recordFields.find( ret->getTypeCode() );
@@ -95,42 +95,61 @@ namespace bafprp
 	BafRecord::BafRecord( const BYTE* data, int length, const std::string& filename, long filePos )
 	{
 		// Need to peel off the structure code type
-		_type = 0;
+		_type = -1;
 
-		data += 2; // ignore the length
-		length -= 2;
-		if( *data == 0x0 )
-		{
-			data += 2;  // Record is usually prefixed by x0000
-			length -= 2;
+		// If AMADNS header
+		if( data[0] == 0x1C )
+		{		
+			_type = 0;
+			data++;
+			length--;
 		}
-		if( *data == 0xAB )
+		else
 		{
-			LOG_WARN( "This record has indicated that it contains errors" );
-		}
-		else if( *data != 0xAA ) 
-		{
-			// No matter what AA always starts a valid record
-			LOG_WARN( "Record did not have 0xAA prefix, or we failed to find it" );
-		}
-		data++;
-		length -= 1;
-		// We should now be standing on the structure type field
+			int padding = 0;
+			// Do some simple scanning to the start of the record
+			while( *data != 0xAB && *data != 0xAA )
+			{
+				data++;
+				length--;
+				padding++;
+			}
 
-		IField* structurecode = FieldMaker::newField( "structurecode" );
-		if( !structurecode ) 
-		{
-			LOG_FATAL( "Could not retrieve 'structurecode' field" );
-			return;
-		}
-		if( !structurecode->convert( data ) )
-		{
-			LOG_FATAL( "Could not convert structure type" );
+			LOG_DEBUG( "Found " << padding << " bytes of padding on the record" );
+			if( padding > 4 )
+				LOG_WARN( "Found " << padding << " bytes of padding on the record" );
+
+			if( *data == 0xAB )
+			{
+				LOG_WARN( "This record has indicated that it contains errors" );
+			}
+			else if( *data != 0xAA ) 
+			{
+				// No matter what AA always starts a valid record
+				LOG_WARN( "Record did not have 0xAA prefix, or we failed to find it" );
+			}
+			data++;
+			length -= 1;
+			// We should now be standing on the structure type field
+
+			IField* structurecode = FieldMaker::newField( "structurecode" );
+			if( !structurecode ) 
+			{
+				LOG_FATAL( "Could not retrieve 'structurecode' field" );
+				return;
+			}
+			if( !structurecode->convert( data ) )
+			{
+				LOG_FATAL( "Could not convert structure type" );
+				delete structurecode;
+				return;
+			}
+			_type = structurecode->getInt();
 			delete structurecode;
-			return;
+
+			// Module flag is 4 for some reason, and no its not the number of modules
+			_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
 		}
-		_type = structurecode->getInt();
-		delete structurecode;
 
 		_data = _fieldData = data;
 		_filename = filename;
@@ -138,8 +157,6 @@ namespace bafprp
 		_filePos = filePos;
 		_crc = 0;
 
-		// Module flag is 4 for some reason, and no its not the number of modules
-		_modules = ( ( *data & 0xF0 ) >> 4 == 0x04 );
 
 		CRC32::Encode( _fieldData, _length, _crc );
 	}
@@ -319,7 +336,8 @@ namespace bafprp
 		const IField* field = getField( "calltype" );
 		if( !field ) 
 		{
-			LOG_ERROR( "No 'calltype' field in record " << _type );
+			if( _type != 0 )
+				LOG_ERROR( "No 'calltype' field in record " << _type );
 			return "";
 		}
 
@@ -585,6 +603,9 @@ namespace bafprp
 				addModuleField( 40, "digitsdialed1" );
 				addModuleField( 40, "digitsdialed2" );
 				break;
+			case 42:
+				addModuleField( 42, "recordcount" );
+				break;
 			case 49:
 				addModuleField( 49, "callcountnameonly" );
 				addModuleField( 49, "callcountnumonly" );
@@ -673,6 +694,15 @@ namespace bafprp
 				addModuleField( 290, "destinatingnpa" );
 				addModuleField( 290, "destinatingnumber" );
 				break;
+			case 300:
+				addModuleField( 300, "sigdigs" );
+				addModuleField( 300, "digitsdialed1" );
+				addModuleField( 300, "digitsdialed2" );
+				break;
+			case 301:
+				addModuleField( 301, "subaccountbillingindicator" );
+				addModuleField( 301, "subaccountbillingnumber" );
+				break;
 			case 306:
 				addModuleField( 306, "originatinglineinfo" );
 				break;
@@ -736,6 +766,11 @@ namespace bafprp
 				addModuleField( 905, "partyid" );
 				addModuleField( 905, "uniformid" );
 				addModuleField( 905, "peerfacgroup" );
+				break;
+			case 941:
+				addModuleField( 941, "releasecauseind" );
+				addModuleField( 941, "cpinternalcausecode" );
+				addModuleField( 941, "cplocation" );
 				break;
 			default:
 				LOG_ERROR( "Unknown modules id: " << _fields.back()->getInt() << " at " << _filePos << "." << (DWORD)( _fieldData - _data ) << " record type " << getType() );

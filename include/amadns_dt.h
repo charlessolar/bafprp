@@ -18,19 +18,45 @@ You should have received a copy of the GNU General Public License
 along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BAFPRPDNADEFINES_H
-#define BAFPRPDNADEFINES_H
+#ifndef BAFPRPAMADNS_H
+#define BAFPRPAMADNS_H
 
-#include <string>
+#include "ifield.h"
+
+/*
+Generic class for converting AMADNS fields
+These fields are specially encoded, hence they need a special field type
+*/
 
 namespace bafprp
 {
-	typedef unsigned char BYTE;
+	class AmaDnsField : public IField
+	{
+		friend class AmaDnsFieldMaker;
+	public:
+		int getInt() const;
+		long getLong() const;
+		std::string getString() const;
 
-	typedef unsigned long DWORD;
+		bool convert ( const BYTE* data );
 
-	std::string getChars( const BYTE* data, int length );
-	std::string decodeBytes( const BYTE* data, int length, int high, int low );
+		std::string getType() const { return "amadns"; }
+
+		~AmaDnsField();
+	private:
+		AmaDnsField();
+	};
+
+	class AmaDnsFieldMaker : public FieldMaker
+	{
+	public:
+		AmaDnsFieldMaker() : FieldMaker ( "amadns" ) {}
+	protected:
+		IField* make() const;
+	private:
+		static const AmaDnsFieldMaker registerThis;
+	};
+
 }
 
 #endif

@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\amadns_dt.cpp" />
     <ClCompile Include="..\src\bafdefines.cpp" />
     <ClCompile Include="..\src\bafprp.cpp" />
     <ClCompile Include="..\src\consoleoutput.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="..\src\time_dt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\amadns_dt.h" />
     <ClInclude Include="..\include\bafdefines.h" />
     <ClInclude Include="..\include\consoleoutput.h" />
     <ClInclude Include="..\include\csvoutput.h" />

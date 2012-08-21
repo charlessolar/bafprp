@@ -29,6 +29,27 @@ namespace bafprp
 		if( !first ) return;
 		first = false;
 
+		RecordMaker::setRecordField( 0, "sourcecomponentid" );
+		RecordMaker::setRecordField( 0, "sourcecomponenttype" );
+		RecordMaker::setRecordField( 0, "destinationcomponentid" );
+		RecordMaker::setRecordField( 0, "destinationcomponenttype" );
+		RecordMaker::setRecordField( 0, "filetype" );
+		RecordMaker::setRecordField( 0, "dateformattype" );
+		RecordMaker::setRecordField( 0, "fieldsuppressiontype" );
+		RecordMaker::setRecordField( 0, "fileprioritylevel" );
+		RecordMaker::setRecordField( 0, "restartstatus" );
+		RecordMaker::setRecordField( 0, "primarysecondarystatus" );
+		RecordMaker::setRecordField( 0, "recordsourceinfotype" );
+		RecordMaker::setRecordField( 0, "filesequencenumber" );
+		RecordMaker::setRecordField( 0, "filecreationtime" );
+		RecordMaker::setRecordField( 0, "filecreationdate" );
+		RecordMaker::setRecordField( 0, "filelastmodtime" );
+		RecordMaker::setRecordField( 0, "filelastmoddate" );
+		RecordMaker::setRecordField( 0, "filelength" );
+		RecordMaker::setRecordField( 0, "recordsinfile" );
+		RecordMaker::setRecordField( 0, "recordsourcetype" );
+		RecordMaker::setRecordField( 0, "recordsourceid" );
+
 		RecordMaker::setRecordField( 1, "structurecode" );
 		RecordMaker::setRecordField( 1, "calltype" ); 
 		RecordMaker::setRecordField( 1, "sensortype" ); 

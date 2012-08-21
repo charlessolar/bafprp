@@ -78,6 +78,23 @@ namespace bafprp
 			}
 		}
 
+		if( _fileData[0] == 0x1C )
+		{
+			LOG_DEBUG( "Decoding AMADNS header information" );
+			BafRecord* record = RecordMaker::newRecord( _fileData, 0x1C, _filename, 0 );
+			if( record )
+			{
+				LOG_DEBUG( "Read AMADNS header" );
+				Output::outputRecord( record );
+				_recordCRCs.insert( record->getCRC() );
+				delete record;
+			}
+			else
+				LOG_WARN( "Failed to read AMADNS header, file may be corrupt" );
+
+			_offset += 0x1C;
+		}
+
 		while( _offset < _fileSize )
 		{
 		

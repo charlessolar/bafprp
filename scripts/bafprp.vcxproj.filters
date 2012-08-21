@@ -116,6 +116,9 @@
     <ClCompile Include="..\src\shortduration_dt.cpp">
       <Filter>Source Files\Fields</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\amadns_dt.cpp">
+      <Filter>Source Files\Fields</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\bafdefines.h">
@@ -191,6 +194,9 @@
       <Filter>Header Files\Fields</Filter>
     </ClInclude>
     <ClInclude Include="..\include\shortduration_dt.h">
+      <Filter>Header Files\Fields</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\amadns_dt.h">
       <Filter>Header Files\Fields</Filter>
     </ClInclude>
   </ItemGroup>
