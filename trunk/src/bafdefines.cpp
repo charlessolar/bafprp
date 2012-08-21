@@ -29,7 +29,7 @@ namespace bafprp
 
 	/*
 	This is the most confusing function in this entire program.
-	Heres the basic idea, our baf file has a string os text packed in nibbles (4 bits)
+	Heres the basic idea, our baf file has a string of text packed in nibbles (4 bits)
 	Usually a character such as 9 is stored as 0x39 (ascii code) in a file, but it is different
 	here.
 	Since this document contains no real 'strings' they opted to store numbers as 4 bits instead of 8.
@@ -113,5 +113,30 @@ namespace bafprp
 		}
 		*/
 		return ret;
+	}
+
+	std::string decodeBytes( const BYTE* data, int length, int high, int low )
+	{
+		assert( data );
+
+		std::ostringstream os;
+
+		static const int masks[] = { 0xFF, 0x7F, 0x3F, 0x1F, 0xF, 0x7, 0x3, 0x1 };
+
+		int total = 0;
+		for( int i = 0; i < length; i++ )
+		{
+			int tempLow = 7;
+			int tempHigh = 0;
+			if( i == 0 ) tempLow = low;
+			if( i == (length-1) ) tempHigh = high;
+			total += ( ( *data >> ( 7 - tempLow ) & masks[ ( 7 - ( tempLow - tempHigh ) ) ] ) << ( i == 0 ? 0 : ( ( 8 * i ) - ( 7 - low ) ) ) );
+			if( i % 2 == 0 )
+				data++;
+		}
+
+		os << total;
+
+		return os.str();
 	}
 }
