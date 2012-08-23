@@ -102,7 +102,6 @@ namespace bafprp
 		{		
 			_type = 0;
 			data++;
-			length--;
 		}
 		else
 		{
@@ -129,7 +128,7 @@ namespace bafprp
 				LOG_WARN( "Record did not have 0xAA prefix, or we failed to find it" );
 			}
 			data++;
-			length -= 1;
+			length--;
 			// We should now be standing on the structure type field
 
 			IField* structurecode = FieldMaker::newField( "structurecode" );
