@@ -97,6 +97,10 @@ namespace bafprp
 
 		while( _offset < _fileSize )
 		{
+			while( _fileData[_offset+4] != 0xAA && _fileData[_offset+4] != 0xAB )
+			{
+				_offset++;
+			}
 		
 			_length_of_record = ( _fileData[_offset] * 256 ) + _fileData[_offset + 1];
 
