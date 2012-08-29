@@ -107,12 +107,14 @@ namespace bafprp
 		{
 			int padding = 0;
 			// Do some simple scanning to the start of the record
-			while( *data != 0xAB && *data != 0xAA )
+			while( data[0] != 0x0 && data[1] != 0x0 && ( data[2] != 0xAB || data[2] != 0xAA ) )
 			{
 				data++;
 				length--;
 				padding++;
 			}
+			data += 2;
+			length -= 2;
 
 			LOG_DEBUG( "Found " << padding << " bytes of padding on the record" );
 			if( padding > 4 )
