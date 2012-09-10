@@ -97,7 +97,7 @@ namespace bafprp
 
 		while( _offset < _fileSize )
 		{
-			while( _fileData[_offset+2] != 0x0 && _fileData[_offset+3] != 0x0 && ( _fileData[_offset+4] != 0xAA || _fileData[_offset+4] != 0xAB ) )
+			while( _fileData[_offset+4] != 0xAA && _fileData[_offset+4] != 0xAB )
 			{
 				_offset++;
 			}
