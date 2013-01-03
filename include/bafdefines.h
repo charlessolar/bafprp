@@ -22,6 +22,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 #define BAFPRPDNADEFINES_H
 
 #include <string>
+#include <cstdio>
 
 namespace bafprp
 {
