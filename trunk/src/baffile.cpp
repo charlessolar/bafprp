@@ -102,6 +102,14 @@ namespace bafprp
 				_offset++;
 				continue;
 			}
+
+			// DIRP format packs records into groups and has a 'container' record that basically just says "this group of records is this long"
+			// This little check skips that
+			if( _fileData[_offset + 4] != 0xAA && _fileData[_offset + 4 ] != 0xAB )
+			{
+				_offset += 4;
+				continue;
+			}
 		
 			_length_of_record = ( _fileData[_offset] * 256 ) + _fileData[_offset + 1];
 

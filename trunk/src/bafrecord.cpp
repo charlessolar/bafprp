@@ -53,7 +53,7 @@ namespace bafprp
 		for( std::vector<std::string>::const_iterator itr = fields->second.begin(); itr != fields->second.end(); itr++ )
 			ret->addField( *itr );
 		ret->decodeModules();
-		
+
 		property_map::iterator props = _recordProps.find( ret->getTypeCode() );
 		if( props != _recordProps.end() )
 			ret->setProperties( props->second );
@@ -128,7 +128,7 @@ namespace bafprp
 				LOG_WARN( "Record did not have 0xAA prefix, or we failed to find it" );
 			}
 			data++;
-			length--;
+			length -= 1;
 			// We should now be standing on the structure type field
 
 			IField* structurecode = FieldMaker::newField( "structurecode" );
@@ -205,7 +205,7 @@ namespace bafprp
 			if( *itr == name )
 				return *itr2;
 		}
-		
+
 		LOG_WARN( "Did not find field named: " << name );
 		LOG_TRACE( "/BafRecord::getField" );
 		return NULL;
@@ -258,8 +258,8 @@ namespace bafprp
 			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
 			delete field;
 		}
-		
-				
+
+
 		if( ( _fieldData - _data ) > _length ) // overstepping our bounds here, not a good place to be
 		{
 			LOG_ERROR( "Record has outgrown its stated length of " << _length << ". It is now " << ( _fieldData - _data ) );
@@ -308,7 +308,7 @@ namespace bafprp
 				ERROR_OUTPUT( this, "Could not convert field '" << field->getID() << "' of type '" << field->getType() << "' and size '" << field->getSize() << "'. ERROR: '" << field->getError() << "'" );
 			}
 			_fields.push_back( field );
-			
+
 			_field_types.push_back( os.str() );
 			// update data position, the mod is to make the size even for nice division
 			_fieldData += ( field->getSize() + ( field->getSize() % 2 ) ) / 2;
@@ -362,8 +362,17 @@ namespace bafprp
 		case 6:
 			os << "Toll call or non-US";
 			break;
+		case 7:
+			os << "WATS station detail recording";
+			break;
+		case 8:
+			os << "INWATS, terminating entry";
+			break;
 		case 9:
 			os << "411 Directory Assistance";
+			break;
+		case 10:
+			os << "Station paid, operator handled";
 			break;
 		case 11:
 			os << "Foreign Exchange, Automatic Flexible Routing";
@@ -371,8 +380,35 @@ namespace bafprp
 		case 13:
 			os << "Default release to Pivot";
 			break;
+		case 14:
+			os << "Station collect";
+			break;
+		case 15:
+			os << "Station special calling";
+			break;
+		case 16:
+			os << "Person paid";
+			break;
+		case 17:
+			os << "Person collect";
+			break;
+		case 18:
+			os << "Person special calling";
+			break;
+		case 19:
+			os << "Automatic collect";
+			break;
 		case 21:
 			os << "Common Control Switching Arrangement Sampling";
+			break;
+		case 22:
+			os << "Station special called";
+			break;
+		case 23:
+			os << "Person special called";
+			break;
+		case 24:
+			os << "DDD operator assisted";
 			break;
 		case 25:
 			os << "Station Coin Zone";
@@ -423,7 +459,16 @@ namespace bafprp
 			os << "Cellular Mobile Carrier Type-2A (Terminating)";
 			break;
 		case 67:
-			os << "Originating Study Record";
+			os << "Flat rate";
+			break;
+		case 68:
+			os << "WATS special billing (SPB)";
+			break;
+		case 71:
+			os << "Inward WATS overflow count";
+			break;
+		case 72:
+			os << "Intra-LATA datapath";
 			break;
 		case 74:
 			os << "Free call";
@@ -434,8 +479,14 @@ namespace bafprp
 		case 84:
 			os << "Inward Call Extended to a Tie Trunk";
 			break;
+		case 85:
+			os << "Electronic tandem switched call";
+			break;
 		case 88:
 			os << "Non-Directory Assistance 555 Call";
+			break;
+		case 89:
+			os << "Frame relay";
 			break;
 		case 90:
 			os << "Sensor Audit Record";
@@ -448,6 +499,15 @@ namespace bafprp
 			break;
 		case 110:
 			os << "Interlata call";
+			break;
+		case 111:
+			os << "Interlata station paid";
+			break;
+		case 114:
+			os << "Interlata WATS, station detail";
+			break;
+		case 117:
+			os << "Interlata datapath";
 			break;
 		case 119:
 			os << "Incoming CDR";
@@ -500,8 +560,50 @@ namespace bafprp
 		case 167:
 			os << "PVN Call Using Tie Trunk";
 			break;
-		case 184:
-			os << "ISDN Terminating User Service Record";
+		case 180:
+			os << "ISDN packet call";
+			break;
+		case 181:
+			os << "ISDN packet call/no frame relay";
+			break;
+		case 183:
+			os << "ISDN daily aggregate of service event deliveries per user";
+			break;
+		case 189:
+			os << "Originating call provided with credit recording service";
+			break;
+		case 190:
+			os << "Originating call provided with carrier identification processing but no service processing";
+			break;
+		case 191:
+			os << "Terminating call provided with carrier identification processing but no service processing";
+			break;
+		case 192:
+			os << "Originating call provided with call completion service";
+			break;
+		case 193:
+			os << "Terminating call provided with call completion service";
+			break;
+		case 194:
+			os << "Originating call provided with a listing services service";
+			break;
+		case 195:
+			os << "Terminating call provided with a listing services service";
+			break;
+		case 196:
+			os << "Originating call provided with a general assistance service";
+			break;
+		case 197:
+			os << "Terminating call provided with a general assistance service";
+			break;
+		case 198:
+			os << "Originating call provided with a busy line verification service";
+			break;
+		case 199:
+			os << "Terminating call provided with a busy line verification service";
+			break;
+		case 215:
+			os << "Terminating call provided with intercept service";
 			break;
 		case 264:
 			os << "Calling Identify Delivery Record";
@@ -524,11 +626,23 @@ namespace bafprp
 		case 331:
 			os << "Bulk Calling Line Identification (BCLID)";
 			break;
+		case 332:
+			os << "Class SUSP CND";
+			break;
 		case 381:
 			os << "Inter-vendor Handoff Back";
 			break;
+		case 550:
+			os << "Automatic meter reading";
+			break;
+		case 720:
+			os << "Connecting network access record (CNAR)";
+			break;
 		case 721:
 			os << "Default Local Number Portability";
+			break;
+		case 722:
+			os << "Last resort AMA";
 			break;
 		case 900:
 			os << "SIP Registration";
@@ -559,7 +673,7 @@ namespace bafprp
 			count++;
 
 			addField( "modulecode" );
-		
+
 			// Will be the mudule number
 			LOG_DEBUG( "Decoding module number " << _fields.back()->getInt() );
 			switch( _fields.back()->getInt() )
