@@ -879,9 +879,6 @@ namespace bafprp
 		// Table 610
 		makeField( "indicatorid", "number", "3", "Indicator ID" );
 
-		// Table 701
-		makeField( "serviceproviderid", "number", "9", "Service Provider Identifier" );
-
 		// Table 730
 		makeField( "partyid", "number", "3", "Party Identifier" );
 
@@ -889,7 +886,7 @@ namespace bafprp
 		makeField( "lrn", "number", "11", "Location Routing Number" );
 
 		// Table 732
-		makeField( "serviceproviderid", "number", "3", "Service Provider Identity (NDGR)" );
+		makeField( "serviceproviderid", "number", "9", "Service Provider Identity (NDGR)" );
 
 		// Table 733
 		makeField( "location", "number", "15", "Location" );
