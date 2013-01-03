@@ -1,6 +1,8 @@
 CPP = /usr/bin/gcc
 BINARY = bafprp
 
+UNAME_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+
 SOURCE_DIR = src
 BIN_DIR = bin
 BUILD_DIR = build
@@ -10,6 +12,10 @@ LDFLAGS=-lstdc++
 
 OPT_FLAGS = -O3 -pipe -s -funroll-loops -fno-rtti
 DEBUG_FLAGS = -g -ggdb3
+
+ifeq ($(UNAME_S), SunOS)
+        LDFLAGS += -lsocket -lnsl
+endif
 
 SOURCES = \
 bafdefines.cpp \
