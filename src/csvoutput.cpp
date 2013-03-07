@@ -124,7 +124,7 @@ namespace bafprp
 
 		// For each element in field property, print the respective field
 		std::vector<std::string> fields;
-		StringExplode( fieldStr, ",", &fields );
+		StringExplode( fieldStr, ";", &fields );
 
 		if( fields.size() <= 0 )
 		{
@@ -136,45 +136,48 @@ namespace bafprp
 
 		for( std::vector<std::string>::iterator itr = fields.begin(); itr != fields.end(); itr++ )
 		{
+			std::vector<std::string> typeinfo;
+			StringExplode( *itr, "!", &typeinfo );
+
 			// Check for 'special' columns
-			if( *itr == "filename" )
+			if( typeinfo[0] == "filename" )
 			{
 				_file << record->getFilename() << delim;
 				continue;
 			}
-			if( *itr == "filepos" )
+			if( typeinfo[0] == "filepos" )
 			{
 				_file << record->getFilePosition() << delim;
 				continue;
 			}
-			if( *itr == "type" )
+			if( typeinfo[0] == "type" )
 			{
 				_file << record->getType() << delim;
 				continue;
 			}
-			if( *itr == "size" )
+			if( typeinfo[0] == "size" )
 			{
 				_file << record->getSize() << delim;
 				continue;
 			}
-			if( *itr == "crc" )
+			if( typeinfo[0] == "crc" )
 			{
 				_file << record->getCRC() << delim;
 				continue;
 			}
 
-			if( !record->hasField( *itr ) ) 
+			if( !record->hasField( typeinfo[0] ) ) 
 			{
 				_file << delim;  // So the columns do not get misaligned just because 1 record was missing a field
 				continue; // Skip fields the record does not have
 			}
 
 			// Find field in record (if it exists)
-			const IField* field = record->getField( *itr );
+			const IField* field = record->getField( typeinfo[0] );
 
 			if( !field ) 
 			{
-				LOG_WARN( "Failed to retreive field " << *itr << " from record for CSV output" );
+				LOG_WARN( "Failed to retreive field " << typeinfo[0] << " from record for CSV output" );
 				continue;
 			}
 			if( field->filter() ) 
@@ -183,7 +186,22 @@ namespace bafprp
 				continue;
 			}
 
-			_file << field->getString() << delim;
+			if( typeinfo.size() == 1 )
+			{
+				_file << field->getString() << delim;
+			}
+			else if( typeinfo[1] == "int" || typeinfo[1] == "bigint" )
+			{
+				_file << field->getLong() << delim;
+			}
+			else if( typeinfo[1] == "decimal" || typeinfo[1] == "float" )
+			{
+				_file << field->getFloat() << delim;
+			}
+			else
+			{
+				_file << field->getString() << delim;
+			}
 		}
 
 		// Trim off last delimiter
