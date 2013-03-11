@@ -51,6 +51,19 @@ namespace bafprp
 		if( itr != _recordProperties.end() )
 			delim = itr->second;
 
+		bool header = false;
+		itr = _recordProperties.find( "header" );
+		if( itr != _recordProperties.end() )
+			header = (itr->second == "true");
+
+		static bool first = true;
+		if( first )
+		{
+			if( header )
+				_file << "time" << delim << "error" << delim << "type" << delim << "size" << delim << "position" << delim << "filename" << delim << "data" << std::endl;
+			first = false;
+		}
+
 		_file << NowTime() << delim << error << delim << record->getType() << delim << record->getSize() << delim << record->getFilePosition() << delim << record->getFilename() << delim << record->getData() << std::endl; 
 		_file.flush();
 	
@@ -75,6 +88,19 @@ namespace bafprp
 		property_map::iterator itr = _recordProperties.find( "delimiter" );
 		if( itr != _recordProperties.end() )
 			delim = itr->second;
+		
+		bool header = false;
+		itr = _recordProperties.find( "header" );
+		if( itr != _recordProperties.end() )
+			header = (itr->second == "true");
+
+		static bool first = true;
+		if( first )
+		{
+			if( header )
+				_file << "time" << delim << "level" << delim << "log" << std::endl;
+			first = false;
+		}
 
 		_file << NowTime() << delim << getStrLogLevel( level ) << delim << log << std::endl;
 		_file.flush();
@@ -94,7 +120,8 @@ namespace bafprp
 			Output::outputRecord( record );
 			return;
 		}
-
+		// For each element in field property, print the respective field
+		std::vector<std::string> fields;
 		// Pull the field property
 		std::string fieldStr;
 		property_map::iterator itr = _recordProperties.find( "fields" );
@@ -102,11 +129,25 @@ namespace bafprp
 			fieldStr = itr->second;
 		else
 		{
-			LOG_ERROR( "No 'fields' property defined for CSV record output, falling back to file output" );
+			LOG_ERROR( "CSV output requires the 'fields' property to be set, falling back to file output" );
 			Output::setOutputRecord( "file" );
 			Output::outputRecord( record );
 			return;
 		}
+
+		
+		if( fieldStr.find_first_of( ';' ) == std::string::npos )
+		{
+			std::ifstream fieldFile;
+			fieldFile.open( fieldStr, std::ios::in );
+			std::string line;
+			while( std::getline( fieldFile, line ) )
+				fields.push_back( line );
+		}
+		else
+			StringExplode( fieldStr, ";", &fields );
+		
+		
 
 		// Some people might want to push all fields into the csv file
 		// this setup will only allow the user to output a fixed set
@@ -122,9 +163,7 @@ namespace bafprp
 		if( itr != _recordProperties.end() )
 			delim = itr->second;
 
-		// For each element in field property, print the respective field
-		std::vector<std::string> fields;
-		StringExplode( fieldStr, ";", &fields );
+		
 
 		if( fields.size() <= 0 )
 		{
@@ -132,6 +171,32 @@ namespace bafprp
 			Output::setOutputRecord( "file" );
 			Output::outputRecord( record );
 			return;
+		}
+
+		
+		bool header = false;
+		itr = _recordProperties.find( "header" );
+		if( itr != _recordProperties.end() )
+			header = (itr->second == "true");
+
+		static bool first = true;
+		if( first )
+		{
+			if( header )
+			{
+				for( std::vector<std::string>::iterator itr = fields.begin(); itr != fields.end(); itr++ )
+				{
+					std::vector<std::string> typeinfo;
+					StringExplode( *itr, "!", &typeinfo ); 
+
+					_file << typeinfo[0] << delim;
+				}
+				// Trim off last delimiter
+				_file.seekp( -1, std::ios_base::cur );
+				_file << std::endl;
+				_file.flush();
+			}
+			first = false;
 		}
 
 		for( std::vector<std::string>::iterator itr = fields.begin(); itr != fields.end(); itr++ )
