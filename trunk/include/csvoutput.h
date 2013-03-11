@@ -49,6 +49,7 @@ namespace bafprp
 
 	private:
 		void StringExplode( std::string str, const std::string& separator, std::vector<std::string>* results );
+		std::string sanitize( const std::string& string, const std::string& delimeter );
 
 		// This variable simply initializes a class that registers with the main output code
 		static const CSV registerThis;

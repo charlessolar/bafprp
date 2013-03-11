@@ -64,7 +64,7 @@ namespace bafprp
 			first = false;
 		}
 
-		_file << NowTime() << delim << error << delim << record->getType() << delim << record->getSize() << delim << record->getFilePosition() << delim << record->getFilename() << delim << record->getData() << std::endl; 
+		_file << NowTime() << delim << sanitize(error, delim) << delim << record->getType() << delim << record->getSize() << delim << record->getFilePosition() << delim << sanitize(record->getFilename(), delim) << delim << sanitize(record->getData(), delim) << std::endl; 
 		_file.flush();
 	
 		checkFile( _errorProperties, false );
@@ -102,7 +102,7 @@ namespace bafprp
 			first = false;
 		}
 
-		_file << NowTime() << delim << getStrLogLevel( level ) << delim << log << std::endl;
+		_file << NowTime() << delim << getStrLogLevel( level ) << delim << sanitize(log, delim) << std::endl;
 		_file.flush();
 		checkFile( _logProperties, false );
 	}
@@ -207,7 +207,7 @@ namespace bafprp
 			// Check for 'special' columns
 			if( typeinfo[0] == "filename" )
 			{
-				_file << record->getFilename() << delim;
+				_file << sanitize( record->getFilename(), delim ) << delim;
 				continue;
 			}
 			if( typeinfo[0] == "filepos" )
@@ -217,7 +217,7 @@ namespace bafprp
 			}
 			if( typeinfo[0] == "type" )
 			{
-				_file << record->getType() << delim;
+				_file << sanitize( record->getType(), delim ) << delim;
 				continue;
 			}
 			if( typeinfo[0] == "size" )
@@ -253,7 +253,7 @@ namespace bafprp
 
 			if( typeinfo.size() == 1 )
 			{
-				_file << field->getString() << delim;
+				_file << sanitize( field->getString(), delim ) << delim;
 			}
 			else if( typeinfo[1] == "int" || typeinfo[1] == "bigint" )
 			{
@@ -265,7 +265,7 @@ namespace bafprp
 			}
 			else
 			{
-				_file << field->getString() << delim;
+				_file << sanitize( field->getString(), delim ) << delim;
 			}
 		}
 
@@ -293,6 +293,17 @@ namespace bafprp
     if(str.length() > 0){
         results->push_back(str);
     }
+	}
+
+	// Sanitize a string so it works in a csv interpreter
+	std::string CSV::sanitize( const std::string& string, const std::string& delimeter )
+	{
+		for( std::string::const_iterator itr = string.begin(); itr != string.end(); itr++ )
+		{
+			if( *itr == delimeter[0] || *itr == '\"' || *itr == '\n' || *itr == '\'' )
+				return '\"' + string + '\"';
+		}
+		return string;
 	}
 
 	void CSV::checkFile( property_map& props, bool start )
