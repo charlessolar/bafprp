@@ -40,12 +40,11 @@ namespace bafprp
 		bool parse( const std::string& filename, bool listdups = false );
 		bool clear();  // reset 
 
-		std::string getFilename() { return _filename; }
-
+		static std::string getFilename() { return _filename; }
 	private:
 		bool readRecord();
 
-		std::string _filename;
+		static std::string _filename;
 		long _fileSize;
 		BYTE* _fileData;
 		long _offset;

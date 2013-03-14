@@ -233,13 +233,33 @@ namespace bafprp
 			printf( "Error: no 'filename' property for output\n" );
 			return;	
 		}
+		
+		std::string desiredFilename = filename->second;
+		while( desiredFilename.find('$') != std::string::npos )
+		{
+			int begin = desiredFilename.find('$');
+			int end = desiredFilename.find( '$', begin + 1 );
+
+			if( end == std::string::npos )
+				break;
+
+			std::string keyword = desiredFilename.substr( begin + 1, end - begin - 1 );
+			
+			if( keyword == "filename" )
+			{
+				std::string processingFile = BafFile::getFilename();
+				if( processingFile == "" ) 
+					processingFile = "bafprp";
+				desiredFilename.replace( begin, end - begin + 1, processingFile );
+			}
+		}
 
 		// If the function is at the begining, we need to make sure the right file is open
 		if( start )
 		{
 			if( _file.is_open() ) 
 			{
-				if( _filename != filename->second )  // Is the RIGHT file open?
+				if( _filename != desiredFilename )  // Is the RIGHT file open?
 				{
 					// If not, we need to store the current file's name, and open the correct file
 					_storedFilenames.push_back( _filename );
@@ -251,7 +271,7 @@ namespace bafprp
 					bool bFound = false;
 					for( std::vector<std::string>::iterator itr = _usedFilenames.begin(); itr != _usedFilenames.end(); itr++ )
 					{
-						if( (*itr) == filename->second )
+						if( (*itr) == desiredFilename )
 						{
 							bFound = true;
 							break;
@@ -259,14 +279,14 @@ namespace bafprp
 					}
 
 					if( !bFound )
-						_file.open( filename->second.c_str() );  // Clear original file
+						_file.open( desiredFilename.c_str() );  // Clear original file
 					else
-						_file.open( filename->second.c_str(), std::ios::app );  // Append
+						_file.open( desiredFilename.c_str(), std::ios::app );  // Append
 
 					// does not matter if file opened or not, individual functions check and make better errors then
 					// we could dream of making
 
-					_filename = filename->second;
+					_filename = desiredFilename;
 					_usedFilenames.push_back( _filename );  // Make sure we open it for APPENDING next time
 				}
 				// current open file matches desired file.
@@ -278,12 +298,12 @@ namespace bafprp
 				// If you encounter a bug where your files are being cleared in the middle of the program,
 				// you are probably doing some very weird things to your output, but if need be, we can copy 
 				// the used file check here.
-				_file.open( filename->second.c_str() );
+				_file.open( desiredFilename.c_str() );
 
 				// does not matter if file opened or not, individual functions check and make better errors then
 				// we could dream of making
 
-				_filename = filename->second;
+				_filename = desiredFilename;
 				_usedFilenames.push_back( _filename );  // Open for appending next time
 			}
 		}
