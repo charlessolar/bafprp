@@ -25,6 +25,9 @@ namespace bafprp
 	std::string Output::_outputRecord;
 	std::string Output::_outputError;
 	std::string Output::_outputLog;
+	int Output::recordCount;
+	int Output::errorCount;
+	int Output::logCount;
 	Output::property_map Output::_errorProperties;
 	Output::property_map Output::_recordProperties;
 	Output::property_map Output::_logProperties;
@@ -47,6 +50,7 @@ namespace bafprp
 			itr->second->record( record );
 		else
 			LOG_ERROR( "Output type " << _outputRecord << " does not exist." );
+		Output::recordCount++;
 		LOG_TRACE( "/Output::outputRecord" );
 	}
 
@@ -58,6 +62,7 @@ namespace bafprp
 			itr->second->error( record, error );
 		else
 			LOG_ERROR( "Output type " << _outputError << " does not exist." );
+		Output::errorCount++;
 		LOG_TRACE( "/Output::outputError" );
 	}
 
@@ -73,7 +78,7 @@ namespace bafprp
 			Output::setOutputLog( "file" );
 			LOG_ERROR( "Output type " + _outputLog + " does not exist." );		// If output is set wrong, use one that works.
 		}
-																								
+		Output::logCount++;																								
 	}
 
 	void Output::setLogLevel( int level )

@@ -92,6 +92,7 @@ namespace bafprp
 		static std::string _outputError;
 		static std::string _outputLog;
 
+
 	public:
 		virtual ~Output();
 
@@ -112,7 +113,10 @@ namespace bafprp
 		static void outputRecord( const BafRecord* record );
 		static void outputError( const BafRecord* record, const std::string& error );
 		static void outputLog( LOG_LEVEL level, const std::string& log );
-
+		
+		static int recordCount;
+		static int errorCount;
+		static int logCount;
 	};
 	
 	std::string NowTime();

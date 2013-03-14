@@ -196,12 +196,14 @@ int main( int argc, char* argv[] )
 		#endif
 		}
 	}
+	LOG_INFO( "Processed a total of " << Output::recordCount << " records" );
+
 	if( file ) delete file;
 	LOG_INFO( "Program Terminated" );
 	
 	LOG_TRACE( "/Global::main" );
 
-	return 0;
+	return (Output::errorCount > 0);
 }
 
 void print_usage()
