@@ -25,6 +25,7 @@ along with bafprp.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bafprp
 {
+	std::string BafFile::_filename;
 
 	BafFile::BafFile() : _offset(0), _fileSize(0), _fileData(NULL), _length_of_record(0)
 	{
