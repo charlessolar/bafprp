@@ -139,7 +139,7 @@ namespace bafprp
 		if( fieldStr.find_first_of( ';' ) == std::string::npos )
 		{
 			std::ifstream fieldFile;
-			fieldFile.open( fieldStr, std::ios::in );
+			fieldFile.open( fieldStr.c_str(), std::ios::in );
 			std::string line;
 			while( std::getline( fieldFile, line ) )
 				fields.push_back( line );
