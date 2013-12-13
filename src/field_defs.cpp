@@ -985,6 +985,8 @@ namespace bafprp
 		
 		// Table 807
         makeField( "thirteendigitnumber", "number", "13", "13 Digit Number" );
+		// Table 808
+		makeField("callcorrelator", "number", "15", "Call Correlator");
 
 		// Table 901
 		makeField( "switchid", "number", "20", "Switch Identifier" );
