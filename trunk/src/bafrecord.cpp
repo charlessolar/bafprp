@@ -840,6 +840,9 @@ namespace bafprp
 				addModuleField( 720, "location" );
 				addModuleField( 720, "supportinginfo" );
 				break;
+			case 800:
+				addModuleField( 800, "callcorrelator");
+				break;
 			case 901:
 				// Coppercom specific module
 				addModuleField( 901, "recordid" );
