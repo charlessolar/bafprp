@@ -94,7 +94,6 @@ CREATE NONCLUSTERED INDEX IX_termnum ON callrecords (terminatingnumber);
 CREATE NONCLUSTERED INDEX IX_largedigits ON callrecords (largedigits);
 CREATE NONCLUSTERED INDEX IX_calltype ON callrecords ( calltype );
 CREATE NONCLUSTERED INDEX IX_elapsedtime ON callrecords ( elapsedtime );
-CREATE NONCLUSTERED INDEX IX_elapsed_dna ON callrecords ( elapsed_dna_minutes );
 CREATE NONCLUSTERED INDEX IX_date_time ON callrecords ( date, time );
 CREATE NONCLUSTERED INDEX IX_date ON callrecords ( date );
 CREATE NONCLUSTERED INDEX IX_time ON callrecords (time);
