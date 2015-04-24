@@ -1,8 +1,2 @@
 
 1. Add the ability to use config files for setting properties and output
-
-2. House Cleaning
-			
-3. Might be interesting to allow multiple types of output for one log, record, or error message
-
-4. Make a perl script to parse the GR1100 and output field_defs.cpp and record_defs.cpp

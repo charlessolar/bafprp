@@ -119,6 +119,9 @@
     <ClCompile Include="..\src\amadns_dt.cpp">
       <Filter>Source Files\Fields</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\pgsqloutput.cpp">
+      <Filter>Source Files\Output</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\bafdefines.h">
@@ -198,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="..\include\amadns_dt.h">
       <Filter>Header Files\Fields</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\pgsqloutput.h">
+      <Filter>Header Files\Output</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
